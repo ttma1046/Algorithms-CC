@@ -80,3 +80,9 @@ public class BFSDemo {
     }
 }
 
+// DFS: usually implemented with recursion
+// * Easy to program
+// * Stack overflow
+
+// BFS: usually implemented with queue
+// * Need to keep states of all nodes of a level (more memory)
