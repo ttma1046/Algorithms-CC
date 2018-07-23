@@ -15,7 +15,9 @@ public class Graph {
         }
     }
 
-    private Node getNode(int id) {}
+    private Node getNode(int id) {
+        return nodeLookup.get(id);
+    }
 
     public void addEdge(int source, int destination) {
         Node s = getNode(source);

@@ -20,7 +20,9 @@ public class Fib {
             return mem[n];
         }
 
-        return fib(n - 1, mem) + fib( n - 2, mem);
+        int f = fib(n - 1, mem) + fib( n - 2, mem);
+        mem[n] = f;
+        return f;
     } // O(N)
 }
 
