@@ -4,7 +4,6 @@ public class Queue {
     private static class Node {
         private int val;
         private Node next;
-
         private Node(int x) {
             this.val = x;
         }
