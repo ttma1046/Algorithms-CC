@@ -32,7 +32,6 @@ public class Stack {
         newNode.next = top;
 
         top = newNode;
-
     }
 
     public int pop() {
