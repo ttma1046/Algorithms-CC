@@ -1,9 +1,10 @@
 package hashtable;
 import java.util.LinkedList;
 
-public class Hashtable {
+public class MyHashtable {
     LinkedList[] data;
 
+    /*
     boolean put(String key, Person value) {
         int hashcode = getHashCode(key);
         int index = convertToIndex(hashCode);
@@ -11,4 +12,5 @@ public class Hashtable {
         list.insert(key, value);
         return true;
     }
+    */
 }
