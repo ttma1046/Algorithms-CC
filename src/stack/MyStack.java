@@ -3,7 +3,7 @@ package stack;
 /**
  * Implement a stack
  */
-public class Stack {
+public class MyStack {
     private static class Node {
         private int val;
         private Node next;

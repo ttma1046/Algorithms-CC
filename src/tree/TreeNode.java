@@ -62,6 +62,9 @@ public class TreeNode { // Binary Search Tree
         }
     }
 
+    boolean checkBST(TreeNode root) {
+        return true;
+    }
 
     public void printPreOrder() {
         // root => left => right
