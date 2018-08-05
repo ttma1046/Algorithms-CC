@@ -49,7 +49,7 @@ public class Paths {
 
 
 
-    public static int countPathsO(int steps) {
+    public static int countPathsI(int steps) {
         if (steps < 0) {
             return 0;
         } else if (steps <= 1 ) {
