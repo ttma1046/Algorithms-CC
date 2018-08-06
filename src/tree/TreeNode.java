@@ -1,6 +1,7 @@
 package tree;
 
-public class TreeNode {
+
+public class TreeNode { // Binary Search Tree
     TreeNode left;
     TreeNode right;
 
@@ -34,7 +35,7 @@ public class TreeNode {
             if (left == null) {
                 return false;
             } else {
-                left.contains(value);
+                return left.contains(value);
             }
         } else {
             if (right == null) {
@@ -44,10 +45,12 @@ public class TreeNode {
             }
         }
 
-        return false;
+        // return false;
     }
 
     public void printInOrder() {
+        // left => root => right
+
         if (left != null) {
             left.printInOrder();
         }
@@ -59,39 +62,33 @@ public class TreeNode {
         }
     }
 
-    public void printInOrderFirtLeft() {
-        if (left != null) {
-            left.printInOrder();
-        }
+    boolean checkBST(TreeNode root) {
+        return true;
+    }
 
+    public void printPreOrder() {
+        // root => left => right
         System.out.println(val);
 
+        if (left != null) {
+            left.printPreOrder();
+        }
+
         if (right != null) {
-            right.printInOrder();
+            right.printPreOrder();
         }
     }
 
-    public void printInOrderFirstRoot() {
-        System.out.println(val);
-
+    public void printPostOrder() {
+        // left => right => root
         if (left != null) {
-            left.printInOrder();
+            left.printPostOrder();
         }
 
         if (right != null) {
-            right.printInOrder();
+            right.printPostOrder();
         }
-    }
 
-    public void printInOrderFirstRight() {
         System.out.println(val);
-
-        if (left != null) {
-            left.printInOrder();
-        }
-
-        if (right != null) {
-            right.printInOrder();
-        }
     }
 }

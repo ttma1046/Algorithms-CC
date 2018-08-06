@@ -53,7 +53,7 @@ public class MinHeap {
 
         size--;
 
-        bubbleDown();
+        heapifyDown();
 
         return item;
     }
@@ -62,10 +62,18 @@ public class MinHeap {
         ensureExtraCapacity();
         items[size] = item;
         size++;
-        bubbleUp();
+        heapifyUp();
     }
 
-    private void bubbleDown() {
+    private void heapifyUp() {
+        int index = size - 1;
+        while (hasParent(index) && parent(index) > items[index]) {
+            swap(getParentIndex(index), index);
+            index = getParentIndex(index);
+        }
+    }
+
+    private void heapifyDown() {
         int index = 0; // start from the root
         while (hasLeftChild(index)) {
             // find the samller child
@@ -81,16 +89,5 @@ public class MinHeap {
             swap(index, smallerChildIndex);
             index = smallerChildIndex;
         }
-
-
-    }
-
-    private void bubbleUp() {
-        int index = size - 1;
-        while (hasParent(index) && parent(index) > items[index]) {
-            swap(getParentIndex(index), index);
-            index = getParentIndex(index);
-        }
-
     }
 }
