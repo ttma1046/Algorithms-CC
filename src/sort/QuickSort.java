@@ -3,6 +3,10 @@ package sort;
 public class QuickSort {
     public static void sort(int[] array) {
         quicksort(array, 0, array.length -1);
+
+        for(int i = 0;i < array.length;i++) {
+            System.out.println(array[i]);
+        }
     }
 
     public static void quicksort(int[] array, int left , int right) {
@@ -43,6 +47,10 @@ public class QuickSort {
         int temp = array[left];
         array[left] = array[right];
         array[right] = temp;
+    }
+
+    public static void main(String[] args) {
+        sort(new int[] {15, 3, 9, 8, 5, 2, 7, 1, 6});
     }
 }
 
