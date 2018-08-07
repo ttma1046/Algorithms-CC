@@ -1,8 +1,11 @@
 package sort;
 
 public class MergeSort {
-    public static void sort(int[] array) {
+    public static void mergesort(int[] array) {
         mergesort(array, new int[array.length], 0, array.length - 1);
+        for(int i = 0;i < array.length;i++) {
+            System.out.println(array[i]);
+        }
     }
 
     public static void mergesort(int[] array, int[] temp, int leftStart, int rightEnd) {
@@ -18,7 +21,7 @@ public class MergeSort {
     }
 
     public static void margeHalves(int[] array, int[] temp, int leftStart, int rightEnd) {
-        int leftEnd = (rightEnd + leftStart) / 2;
+        int leftEnd = (leftStart + rightEnd) / 2;
         int rightStart = leftEnd + 1;
 
         int size = rightEnd - leftStart + 1;
@@ -48,10 +51,19 @@ public class MergeSort {
         // arraycopy: copy from array starting from left to temp starting from index,
         // copy (leftEnd -left + 1) elements
         // only one of the two lines will be valid
+
+        // System.arraycopy(src, srcPos, dest, destPos, length);
         System.arraycopy(array, left, temp, index, leftEnd - left + 1);
+
+        // System.arraycopy(src, srcPos, dest, destPos, length);
         System.arraycopy(array, right, temp, index, rightEnd - right + 1);
 
+        // System.arraycopy(src, srcPos, dest, destPos, length);
         System.arraycopy(temp, leftStart, array, leftStart, size);
+    }
+
+    public static void main(String[] args) {
+        mergesort(new int[] {38, 27, 43, 3, 9, 82, 10});
     }
 }
 
