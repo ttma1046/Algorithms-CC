@@ -7,7 +7,7 @@ public class Paths {
         } else if (steps == 0) {
             return 1;
         }
-        return countPathsR(steps - 1) + countPathsR(steps - 2) + countPathsR(steps - 1);
+        return countPathsR(steps - 1) + countPathsR(steps - 2) + countPathsR(steps - 3);
     }
 
     public static int countPathsMemo(int steps) {
@@ -23,6 +23,7 @@ public class Paths {
         } else if (steps == 0) {
             return 1;
         }
+
         if (memo[steps] == 0) {
             memo[steps] = countPathsMemo(steps - 1, memo) + countPathsMemo(steps - 2, memo) + countPathsMemo(steps - 3, memo);
         }
@@ -33,7 +34,7 @@ public class Paths {
     public static int countPathsDP(int steps) {
         if (steps < 0) {
             return 0;
-        } else if (steps <= 1 ) {
+        } else if (steps <= 1) {
             return 1;
         }
         int[] paths = new int[steps + 1];
