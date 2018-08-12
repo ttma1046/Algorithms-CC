@@ -30,7 +30,7 @@ public class ShortestReach {
         public void addEdge(int first, int second) {
             Node s = getNode(first);
             Node d = getNode(second);
-            s.neighbors.add(d);
+            // s.neighbors.add(d);
         }
 
         public int[] shortestReach(int startId) {
