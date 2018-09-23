@@ -1,6 +1,6 @@
 package binarysearch;
 
-public class BinarySearchRecursive {
+public class BinarySearch {
 
     public static boolean binarySearchIterative(int[] array, int x) {
         int left = 0;

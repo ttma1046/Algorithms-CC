@@ -8,4 +8,14 @@ public class StringDemo {
         sb.append("c");
         sb.append("d");
     }
+
+    String joinWords(String[] words) {
+        StringBuilder sentence = new StringBuilder();
+
+        for (String w : words) {
+            sentence.append(w);
+        }
+
+        return sentence.toString();
+    }
 }

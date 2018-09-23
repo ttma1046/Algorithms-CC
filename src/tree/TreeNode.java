@@ -48,20 +48,6 @@ public class TreeNode { // Binary Search Tree
         // return false;
     }
 
-    public void printInOrder() {
-        // left => root => right
-
-        if (left != null) {
-            left.printInOrder();
-        }
-
-        System.out.println(val);
-
-        if (right != null) {
-            right.printInOrder();
-        }
-    }
-
     boolean checkBST(TreeNode root) {
         return true;
     }
@@ -76,6 +62,20 @@ public class TreeNode { // Binary Search Tree
 
         if (right != null) {
             right.printPreOrder();
+        }
+    }
+
+    public void printInOrder() {
+        // left => root => right
+
+        if (left != null) {
+            left.printInOrder();
+        }
+
+        System.out.println(val);
+
+        if (right != null) {
+            right.printInOrder();
         }
     }
 
