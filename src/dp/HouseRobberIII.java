@@ -22,7 +22,7 @@ public class HouseRobberIII {
 
         memo[0] = current.val;
 
-        current = current.left != null ? root.left : root.right
+        current = current.left != null ? root.left : root.right;
 
         memo[1] = Math.max(memo[0], current.val);
 
@@ -31,7 +31,7 @@ public class HouseRobberIII {
         int x = 3;
 
         while (current != null) {
-            memo[x] = Math.max(memo[(x - 1) / 2], current.val + memo[((x-1)/2 - 1) / 2];
+            memo[x] = Math.max(memo[(x - 1) / 2], current.val + memo[((x-1)/2 - 1) / 2]);
 
             x++;
         }
