@@ -1,2 +1,2 @@
-# Algorithms-BitTiger
-Algorithms BitTiger
+# Algorithms-CC
+Algorithms CC
