@@ -3,6 +3,7 @@ package dp;
 import java.util.Arrays;
 
 public class MinNumberOfCoinsforChange {
+    // O(nd) time | O(n) space
     public static int minNumberOfCoinsForChange(int n, int[] denoms) {
         int [] numOfCoins = new int[n + 1];
         Arrays.fill(numOfCoins, Integer.MAX_VALUE);

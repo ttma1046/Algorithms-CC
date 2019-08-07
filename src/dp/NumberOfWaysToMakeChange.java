@@ -15,6 +15,7 @@ Sample output: 2 (1x1 + 1x5 and 6x1)
  */
 
 public class NumberOfWaysToMakeChange {
+    // O(nd) time | O(n) space
     public static int numberOfWaysToMakeChange(int n, int[] denoms) {
         int [] ways = new int[n + 1];
         ways[0] = 1;
@@ -25,6 +26,7 @@ public class NumberOfWaysToMakeChange {
                 }
             }
         }
+
 
         return ways[n];
     }
