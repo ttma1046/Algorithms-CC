@@ -62,25 +62,7 @@ public class PowersetsII {
         }
     }
 
-
-    public List<List<Integer>> subsetsWithDup(int[] nums) {
-        Arrays.sort(nums);
-        List<List<Integer>> result= new ArrayList<>();
-        dfs(nums,0,new ArrayList<Integer>(),result);
-        return result;
-    }
-
-    public void dfs(int[] nums,int index,List<Integer> path,List<List<Integer>> result){
-        result.add(path);
-        for(int i=index;i<nums.length;i++){
-            if(i>index&&nums[i]==nums[i-1]) continue;
-            List<Integer> nPath= new ArrayList<>(path);
-            nPath.add(nums[i]);
-            dfs(nums,i+1,nPath,result);
-        }
-    }
-
-    public List<List<Integer>> subsetsWithDup(int[] nums) {
+    public List<List<Integer>> subsetsWithDupTwo(int[] nums) {
         if (nums == null || nums.length == 0) {
             return null;
         }
@@ -122,47 +104,106 @@ public class PowersetsII {
     }
 }
 
-// Each recursion level focuses on all the following elements.
-// We scan through all the following elements and decide whether to choose or not choose that element.
-// (Every level split into N branches.)
-class SolutionI {
-    public List<List<Integer>> subsetsWithDup(int[] nums) {
-        Arrays.sort(nums);
-        List<List<Integer>> res = new ArrayList<>();
-        helper(res,new ArrayList<>(),nums,0);
-        return res;
-    }
-
-    public void helper(List<List<Integer>> res, List<Integer> ls, int[] nums, int pos) {
-        res.add(new ArrayList<>(ls));
-        for(int i=pos;i<nums.length;i++) {
-            if(i>pos&&nums[i]==nums[i-1]) continue;
-            ls.add(nums[i]);
-            helper(res,ls,nums,i+1);
-            ls.remove(ls.size()-1);
-        }
-    }
-}
-
 // Each recursion level focuses on one element, we need to decide choose or not choose this element.
 // (Every level split into 2 branches.)
 class SolutionII {
     public List<List<Integer>> subsetsWithDup(int[] nums) {
         Arrays.sort(nums);
-        List<List<Integer>> res = new ArrayList<>();
-        helper(res,new ArrayList<>(),nums,0,false);
-        return res;
+        List<List<Integer>> result = new ArrayList<>();
+        helper(result, new ArrayList<>(), nums,0,false);
+        return result;
     }
 
-    public void helper(List<List<Integer>> res, List<Integer> ls, int[] nums, int pos, boolean choosePre) {
-        if(pos==nums.length) {
-            res.add(new ArrayList<>(ls));
+    public void helper(List<List<Integer>> result, List<Integer> list, int[] nums, int position, boolean choosePre) {
+        if(position == nums.length) {
+            result.add(new ArrayList<>(list));
             return;
         }
-        helper(res,ls,nums,pos+1,false);
-        if(pos>=1&&nums[pos]==nums[pos-1]&&!choosePre) return;
-        ls.add(nums[pos]);
-        helper(res,ls,nums,pos+1,true);
-        ls.remove(ls.size()-1);
+        helper(result, list, nums,position + 1,false);
+        if(position >= 1 && nums[position] == nums[position - 1] && !choosePre) return;
+        list.add(nums[position]);
+        helper(result, list, nums,position + 1,true);
+        list.remove(list.size() - 1);
+    }
+}
+
+// Each recursion level focuses on all the following elements.
+// We scan through all the following elements and decide whether to choose or not choose that element.
+// (Every level split into N branches.)
+class SolutionI {
+    public static void main(String[] args) {
+        System.out.println(new SolutionI().subsetsWithDup(new int[]{1, 2, 2}));
+
+        // System.out.println(new PowersetsII().subsetsWithDupRec(new int[]{1, 2, 2}));
+    }
+
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        Arrays.sort(nums);
+        List<List<Integer>> result = new ArrayList<>();
+        helper(result, new ArrayList<>(), nums,0);
+        return result;
+    }
+
+    public void helper(List<List<Integer>> result, List<Integer> list, int[] nums, int position) {
+        System.out.println("result before:" + result);
+        result.add(new ArrayList<>(list));
+        System.out.println("result after:" + result);
+
+        for(int i = position; i < nums.length; i++) {
+            System.out.println("position:" + position);
+            System.out.println("i:" + i);
+            if(i > position && nums[i] == nums[i - 1]) {
+                continue;
+            }
+
+            list.add(nums[i]);
+            System.out.println("list add:" + list);
+            helper(result, list, nums,i + 1);
+            list.remove(list.size() - 1);
+            System.out.println("list remove:" + list);
+        }
+    }
+}
+
+class SolutionDfs {
+    public static void main(String[] args) {
+        // System.out.println(new SolutionDfs().subsetsWithDupRec(new int[]{1, 2, 2}));
+
+        System.out.println(new SolutionDfs().subsetsWithDup(new int[]{1, 2, 2}));
+    }
+
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        Arrays.sort(nums);
+        List<List<Integer>> result= new ArrayList<List<Integer>>();
+        dfs(nums, 0, new ArrayList<Integer>(), result);
+        return result;
+    }
+
+    public void dfs(int[] nums, int index, List<Integer> path, List<List<Integer>> result){
+        System.out.println("DFS starts by index:" + index);
+        System.out.println("path:" + path);
+        System.out.println("result before:" + result);
+        result.add(path);
+        System.out.println("result after:" + result);
+
+
+        System.out.println("FOR starts by index:" + index);
+        for(int i = index; i < nums.length; i++) {
+            System.out.println("index:" + index);
+            System.out.println("i:" + i);
+
+            if (i > index && nums[i] == nums[i - 1]) {
+                continue;
+            }
+
+            List<Integer> nPath= new ArrayList<Integer>(path);
+            System.out.println("nPath Before:" + nPath);
+
+            nPath.add(nums[i]);
+            System.out.println("nPath After:" + nPath);
+            dfs(nums, i + 1, nPath, result);
+        }
+        System.out.println("FOR ends by index:" + index);
+        System.out.println("DFS ends by index:" + index);
     }
 }
