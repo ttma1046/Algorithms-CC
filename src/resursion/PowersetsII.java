@@ -9,7 +9,7 @@ public class PowersetsII {
         // System.out.println(new PowersetsII().subsetsWithDupRec(new int[]{1, 2, 2}));
     }
 
-    public List<List<Integer>> subsetsWithDupIte(int[] nums) {
+    private List<List<Integer>> subsetsWithDupIte(int[] nums) {
         if (nums == null || nums.length <= 0) {
             return null;
         }
@@ -69,7 +69,7 @@ public class PowersetsII {
 
         Arrays.sort(nums);
         Set<Integer> set = new HashSet<>();
-        List<List<Integer>> result = new ArrayList();
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
         recurse(nums, 0, set, result);
         return result;
     }
@@ -114,7 +114,7 @@ class SolutionII {
         return result;
     }
 
-    public void helper(List<List<Integer>> result, List<Integer> list, int[] nums, int position, boolean choosePre) {
+    private void helper(List<List<Integer>> result, List<Integer> list, int[] nums, int position, boolean choosePre) {
         if(position == nums.length) {
             result.add(new ArrayList<>(list));
             return;
@@ -132,36 +132,45 @@ class SolutionII {
 // (Every level split into N branches.)
 class SolutionI {
     public static void main(String[] args) {
-        System.out.println(new SolutionI().subsetsWithDup(new int[]{1, 2, 2}));
+        System.out.println(new SolutionI().subsetsWithDup(new int[]{44, 55, 66}));
 
         // System.out.println(new PowersetsII().subsetsWithDupRec(new int[]{1, 2, 2}));
     }
 
-    public List<List<Integer>> subsetsWithDup(int[] nums) {
-        Arrays.sort(nums);
+    private List<List<Integer>> subsetsWithDup(int[] numbs) {
+        Arrays.sort(numbs);
         List<List<Integer>> result = new ArrayList<>();
-        helper(result, new ArrayList<>(), nums,0);
+        helper(result, new ArrayList<>(), numbs,0);
         return result;
     }
 
-    public void helper(List<List<Integer>> result, List<Integer> list, int[] nums, int position) {
+    private void helper(List<List<Integer>> result, List<Integer> tempList, int[] numbs, int index) {
+        System.out.println("Recursion starts by index:" + index);
+        System.out.println("temp list:" + tempList);
+
         System.out.println("result before:" + result);
-        result.add(new ArrayList<>(list));
+        result.add(new ArrayList<>(tempList));
         System.out.println("result after:" + result);
 
-        for(int i = position; i < nums.length; i++) {
-            System.out.println("position:" + position);
+        System.out.println("FOR starts by index:" + index);
+        for(int i = index; i < numbs.length; i++) {
+            System.out.println("index:" + index);
             System.out.println("i:" + i);
-            if(i > position && nums[i] == nums[i - 1]) {
+            if(i > index && numbs[i] == numbs[i - 1]) {
                 continue;
             }
 
-            list.add(nums[i]);
-            System.out.println("list add:" + list);
-            helper(result, list, nums,i + 1);
-            list.remove(list.size() - 1);
-            System.out.println("list remove:" + list);
+            System.out.println("temp list before add:" + tempList);
+            tempList.add(numbs[i]);
+            System.out.println("temp list after add:" + tempList);
+            helper(result, tempList, numbs,i + 1);
+
+            System.out.println("temp list before remove:" + tempList);
+            tempList.remove(tempList.size() - 1);
+            System.out.println("temp list remove:" + tempList);
         }
+        System.out.println("FOR ends by index:" + index);
+        System.out.println("Recursion ends by index:" + index);
     }
 }
 
@@ -172,14 +181,14 @@ class SolutionDfs {
         System.out.println(new SolutionDfs().subsetsWithDup(new int[]{1, 2, 2}));
     }
 
-    public List<List<Integer>> subsetsWithDup(int[] nums) {
+    private List<List<Integer>> subsetsWithDup(int[] nums) {
         Arrays.sort(nums);
         List<List<Integer>> result= new ArrayList<List<Integer>>();
         dfs(nums, 0, new ArrayList<Integer>(), result);
         return result;
     }
 
-    public void dfs(int[] nums, int index, List<Integer> path, List<List<Integer>> result){
+    private void dfs(int[] numbs, int index, List<Integer> path, List<List<Integer>> result){
         System.out.println("DFS starts by index:" + index);
         System.out.println("path:" + path);
         System.out.println("result before:" + result);
@@ -188,22 +197,87 @@ class SolutionDfs {
 
 
         System.out.println("FOR starts by index:" + index);
-        for(int i = index; i < nums.length; i++) {
+        for(int i = index; i < numbs.length; i++) {
             System.out.println("index:" + index);
             System.out.println("i:" + i);
 
-            if (i > index && nums[i] == nums[i - 1]) {
+            if (i > index && numbs[i] == numbs[i - 1]) {
                 continue;
             }
 
             List<Integer> nPath= new ArrayList<Integer>(path);
             System.out.println("nPath Before:" + nPath);
 
-            nPath.add(nums[i]);
+            nPath.add(numbs[i]);
             System.out.println("nPath After:" + nPath);
-            dfs(nums, i + 1, nPath, result);
+            dfs(numbs, i + 1, nPath, result);
         }
         System.out.println("FOR ends by index:" + index);
         System.out.println("DFS ends by index:" + index);
     }
 }
+
+class MySolution {
+    public static void main(String[] args) {
+        // System.out.println(new SolutionDfs().subsetsWithDupRec(new int[]{1, 2, 2}));
+
+        System.out.println(new MySolution().subsetsWithDup(new int[]{1, 2, 3}));
+    }
+
+    private List<List<Integer>> subsetsWithDup(int[] numbs) {
+        if (numbs == null || numbs.length <= 0) {
+            return null;
+        }
+
+        Arrays.sort(numbs);
+
+        List<List<Integer>> result = new  ArrayList<List<Integer>>();
+        subsetsWithDupRecur(result, new ArrayList<Integer>(), numbs, 0);
+        return result;
+
+        /*
+        ArrayList<List<Integer>> result = new ArrayList();
+        result.add(new ArrayList<Integer>());
+
+        int base = 0;
+        for(int j = 0; j < numbs.length; j++) {
+            if (j == 0 || numbs[j] != numbs[j - 1]) {
+                base = result.size();
+            }
+
+            int length = result.size();
+            for(int i = length - base;i < length;i++) {
+                List<Integer> temp = new ArrayList<Integer>(result.get(i));
+                temp.add(numbs[j]);
+                result.add(temp);
+            }
+        }
+
+        return result;
+        */
+    }
+
+    private void subsetsWithDupRecur(List<List<Integer>> result, List<Integer> temp, int[] numbs, int index) {
+        result.add(new ArrayList<Integer>(temp));
+
+        for (int i = index; i < numbs.length; i++) {
+            temp.add(numbs[i]);
+            subsetsWithDupRecur(result, temp, numbs, i + 1);
+            temp.remove(temp.size() - 1);
+        }
+    }
+}
+
+/*
+[3] = 3
+[3, 5] = 8
+[3, 5, -9] = -1
+[3, 5, -9, 1] = 1
+[3, 5, -9, 1, 3] = 4
+[3, 5, -9, 1, 3, -2] = 2
+[3, 5, -9, 1, 3, -2, 3] = 5
+[3, 5, -9, 1, 3, -2, 3, 4] = 9
+[3, 5, -9, 1, 3, -2, 3, 4, 7] = 9
+
+maxEndingHere = maxEnding + currentValue || currentVlaue
+*/

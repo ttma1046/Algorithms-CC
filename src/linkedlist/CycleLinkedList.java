@@ -1,7 +1,5 @@
 package linkedlist;
 
-import jdk.nashorn.internal.ir.WhileNode;
-
 import java.util.HashSet;
 
 class ListNode {

@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8affdf22-6fa1-4136-aa11-c166abaae847" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/src/dp/KadanesAlgorithm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linkedlist/CycleLinkedList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linkedlist/CycleLinkedList.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/resursion/PowersetsII.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/resursion/PowersetsII.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -31,10 +34,6 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="width" value="958" />
-    <option name="height" value="1396" />
-  </component>
   <component name="ProjectId" id="1PH8FtOxpwueHHTJlB9g6fzyOOY" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -43,7 +42,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1566744200967" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Color Scheme Font" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -57,9 +56,9 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.SolutionDfs">
-    <configuration name="Fib" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="dp.Fib" />
+  <component name="RunManager" selected="Application.KadanesAlgorithm">
+    <configuration name="KadanesAlgorithm" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="dp.KadanesAlgorithm" />
       <module name="Algorithms" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
@@ -72,8 +71,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Powersets" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="resursion.Powersets" />
+    <configuration name="MySolution" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="resursion.MySolution" />
       <module name="Algorithms" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
@@ -153,19 +152,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.Fib" />
-      <item itemvalue="Application.Powersets" />
       <item itemvalue="Application.PowersetsII" />
       <item itemvalue="Application.SolutionI" />
       <item itemvalue="Application.SolutionDfs" />
+      <item itemvalue="Application.MySolution" />
+      <item itemvalue="Application.KadanesAlgorithm" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.SolutionDfs" />
+        <item itemvalue="Application.KadanesAlgorithm" />
+        <item itemvalue="Application.MySolution" />
         <item itemvalue="Application.SolutionI" />
+        <item itemvalue="Application.SolutionDfs" />
         <item itemvalue="Application.PowersetsII" />
-        <item itemvalue="Application.Powersets" />
-        <item itemvalue="Application.Fib" />
       </list>
     </recent_temporary>
   </component>
