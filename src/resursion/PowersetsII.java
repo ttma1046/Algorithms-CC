@@ -269,15 +269,73 @@ class MySolution {
 }
 
 /*
-[3] = 3
-[3, 5] = 8
-[3, 5, -9] = -1
-[3, 5, -9, 1] = 1
-[3, 5, -9, 1, 3] = 4
-[3, 5, -9, 1, 3, -2] = 2
-[3, 5, -9, 1, 3, -2, 3] = 5
-[3, 5, -9, 1, 3, -2, 3, 4] = 9
-[3, 5, -9, 1, 3, -2, 3, 4, 7] = 9
+    Given a collection of integers that might contain duplicates, nums, return all possible subsets (the power set).
 
-maxEndingHere = maxEnding + currentValue || currentVlaue
+        Note: The solution set must not contain duplicate subsets.
+
+        Example:
+
+        Input: [1,2,2]
+        Output:
+        [[2], [1], [1,2,2], [2,2], [1,2], [] ]
 */
+
+class MySolutionII {
+    public static void main(String [] args) {
+        System.out.println(new MySolutionII().subsetsWithDupRecur(new int [] {1, 2, 3}));
+        System.out.println(new MySolutionII().subsetsWithDupRecur(new int [] {1, 2, 2}));
+        System.out.println(new MySolutionII().subsetsWithDupIte(new int [] {1, 2, 3}));
+        System.out.println(new MySolutionII().subsetsWithDupIte(new int [] {1, 2, 2}));
+    }
+
+    private List<List<Integer>> subsetsWithDupIte(int [] numbs) {
+        if (numbs == null || numbs.length <= 0) {
+            return null;
+        }
+
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        result.add(new ArrayList<Integer>());
+
+        int base = 0;
+        for (int i = 0; i < numbs.length; i++) {
+
+            if (i == 0 || numbs[i] != numbs[i - 1]) {
+                base = result.size();
+            }
+
+            int length = result.size();
+            for (int j = length - base; j < length; j++) {
+                List<Integer> temp = new ArrayList<Integer>(result.get(j));
+                temp.add(numbs[i]);
+                result.add(temp);
+            }
+        }
+
+        return result;
+    }
+
+    private List<List<Integer>> subsetsWithDupRecur(int [] numbs) {
+        if (numbs == null || numbs.length <= 0) {
+            return null;
+        }
+
+        Arrays.sort(numbs);
+        ArrayList<List<Integer>> result = new ArrayList<List<Integer>>();
+        subsetsWithDupRecur(result, new ArrayList<Integer>(), numbs, 0);
+        return result;
+    }
+
+    private void subsetsWithDupRecur(List<List<Integer>> result , List<Integer> tempList ,int [] numbs, int index) {
+        result.add(new ArrayList<Integer>(tempList));
+
+        for (int i = index; i < numbs.length; i++) {
+            if (i > index && numbs[i] == numbs[i - 1]) {
+                continue;
+            }
+
+            tempList.add(numbs[i]);
+            subsetsWithDupRecur(result, tempList, numbs, i + 1);
+            tempList.remove(tempList.size() - 1);
+        }
+    }
+}
