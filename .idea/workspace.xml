@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8affdf22-6fa1-4136-aa11-c166abaae847" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/src/linkedlist/RemoveKthNodeFromEnd.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dp/KadanesAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dp/KadanesAlgorithm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resursion/PowersetsII.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/resursion/PowersetsII.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
