@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8affdf22-6fa1-4136-aa11-c166abaae847" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/heap/MinHeapAlgoExpert.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/heap/MinHeapMy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/dp/MinimumPathSum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/linkedlist/RemoveKthNodeFromEnd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linkedlist/RemoveKthNodeFromEnd.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,6 +19,16 @@
       </list>
     </option>
   </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>hash</find>
+      <find>2-&gt;4&gt;3</find>
+      <find>get</find>
+      <find>length</find>
+      <find>List</find>
+      <find>numIslands</find>
+    </findStrings>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -29,13 +38,12 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1566744200967" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1568029468743" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
-    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Color Scheme Font" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -49,9 +57,23 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.TestLinkedList">
+  <component name="RunManager" selected="Application.MinimumPathSum">
     <configuration name="KadanesAlgorithm" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="dp.KadanesAlgorithm" />
+      <module name="Algorithms" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dp.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MinimumPathSum" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="dp.MinimumPathSum" />
       <module name="Algorithms" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
@@ -106,20 +128,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestLinkedList" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="linkedlist.TestLinkedList" />
-      <module name="Algorithms" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="linkedlist.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method v="2">
@@ -149,11 +157,11 @@
       <item itemvalue="Application.MySolution" />
       <item itemvalue="Application.KadanesAlgorithm" />
       <item itemvalue="Application.MySolutionII" />
-      <item itemvalue="Application.TestLinkedList" />
+      <item itemvalue="Application.MinimumPathSum" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.TestLinkedList" />
+        <item itemvalue="Application.MinimumPathSum" />
         <item itemvalue="Application.MySolutionII" />
         <item itemvalue="Application.KadanesAlgorithm" />
         <item itemvalue="Application.MySolution" />
@@ -214,16 +222,6 @@
           <url>file://$PROJECT_DIR$/src/string/RepeatedString.java</url>
           <line>5</line>
           <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>jrt://D:/Program Files (x86)/Intellij/jbr!/java.base/java/util/ArrayList.class</url>
-          <line>153</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>jrt://D:/Program Files (x86)/Intellij/jbr!/java.base/java/util/ArrayList.class</url>
-          <line>154</line>
-          <option name="timeStamp" value="7" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
