@@ -1,43 +1,57 @@
 package linkedlist;
 import java.util.ArrayList;
 public class RemoveKthNodeFromEnd {
+    public static void removeKthNodeFromEnd(MyLinkedList head, int k) {
+        MyLinkedList pervious = head;
+        MyLinkedList forward = head;
+        int distance = k + 1;
 
-        public static void removeKthNodeFromEnd(LinkedList head, int k) {
-            LinkedList pervious = head;
-            LinkedList forward = head;
-            int distance = k + 1;
-
-            while(forward != null)   {
-                forward = forward.next;
-
-                if (distance == 0) {
-                    pervious = pervious.next;
-                } else {
-                    distance--;
-                }
-            }
+        while(forward != null)   {
+            forward = forward.next;
 
             if (distance == 0) {
-                LinkedList temp = pervious.next;
-                pervious.next = pervious.next.next;
-                temp.next = null;
-            } else if (distance == 1) {
-                head = head.next;
+                pervious = pervious.next;
+            } else {
+                distance--;
             }
         }
 
-        static class LinkedList {
-            int value;
-            LinkedList next = null;
-
-            public LinkedList(int value) {
-                this.value = value;
-            }
+        if (distance == 0) {
+            MyLinkedList temp = pervious.next;
+            pervious.next = pervious.next.next;
+            temp.next = null;
+        } else if (distance == 1) {
+            head.value = head.next.value;
+            head.next = head.next.next;
         }
+    }
 }
 
-class ProgramTest {
-    public void TestCase1() {
+class MyLinkedList {
+    int value;
+    MyLinkedList next = null;
+
+    public MyLinkedList(int value) {
+        this.value = value;
+    }
+
+    public ArrayList<Integer> getNodesInArray() {
+        ArrayList<Integer> nodes = new ArrayList<Integer>();
+        MyLinkedList current = this;
+        while (current != null) {
+            nodes.add(current.value);
+            current = current.next;
+        }
+        return nodes;
+    }
+}
+
+class TestLinkedList extends MyLinkedList {
+    public TestLinkedList(int value) {
+        super(value);
+    }
+
+    public static void main(String [] args) {
         TestLinkedList test = new TestLinkedList(0);
         test.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});
 
@@ -45,10 +59,10 @@ class ProgramTest {
         int[] expected = {1, 2, 3, 4, 5, 6, 7, 8, 9};
         RemoveKthNodeFromEnd.removeKthNodeFromEnd(test, 10);
         System.out.println(test.getNodesInArray());
-        // Utils.assertTrue(compare(test.getNodesInArray(), expected));
+        System.out.println(compare(test.getNodesInArray(), expected));
     }
 
-    public boolean compare(ArrayList<Integer> arr1, int[] arr2) {
+    public static boolean compare(ArrayList<Integer> arr1, int[] arr2) {
         System.out.println(arr1.size());
         System.out.println(arr2.length);
         if (arr1.size() != arr2.length) {
@@ -62,31 +76,24 @@ class ProgramTest {
         return true;
     }
 
-    class TestLinkedList extends RemoveKthNodeFromEnd.LinkedList {
-
-        public TestLinkedList(int value) {
-            super(value);
+    public void addMany(int[] values) {
+        MyLinkedList current = this;
+        while (current.next != null) {
+            current = current.next;
         }
-
-        public void addMany(int[] values) {
-            RemoveKthNodeFromEnd.LinkedList current = this;
-            while (current.next != null) {
-                current = current.next;
-            }
-            for (int value : values) {
-                current.next = new RemoveKthNodeFromEnd.LinkedList(value);
-                current = current.next;
-            }
+        for (int value : values) {
+            current.next = new MyLinkedList(value);
+            current = current.next;
         }
+    }
 
-        public ArrayList<Integer> getNodesInArray() {
-            ArrayList<Integer> nodes = new ArrayList<Integer>();
-            RemoveKthNodeFromEnd.LinkedList current = this;
-            while (current != null) {
-                nodes.add(current.value);
-                current = current.next;
-            }
-            return nodes;
+    public ArrayList<Integer> getNodesInArray() {
+        ArrayList<Integer> nodes = new ArrayList<Integer>();
+        MyLinkedList current = this;
+        while (current != null) {
+            nodes.add(current.value);
+            current = current.next;
         }
+        return nodes;
     }
 }
