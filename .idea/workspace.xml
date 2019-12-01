@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8affdf22-6fa1-4136-aa11-c166abaae847" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/dp/MinimumPathSum.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dp/Fib.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/resursion/Fib.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -57,14 +56,42 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.MinimumPathSum">
+  <component name="RunManager" selected="Application.Fact (1)">
+    <configuration name="Fact (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="resursion.Fact" />
+      <module name="Algorithms" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="resursion.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Fact" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="dp.Fact" />
+      <module name="Algorithms" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="resursion.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="KadanesAlgorithm" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="dp.KadanesAlgorithm" />
       <module name="Algorithms" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="dp.*" />
+          <option name="PATTERN" value="resursion.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -74,20 +101,6 @@
     </configuration>
     <configuration name="MinimumPathSum" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="dp.MinimumPathSum" />
-      <module name="Algorithms" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="dp.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MySolution" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="resursion.MySolution" />
       <module name="Algorithms" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
@@ -102,20 +115,6 @@
     </configuration>
     <configuration name="MySolutionII" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="resursion.MySolutionII" />
-      <module name="Algorithms" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="resursion.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="SolutionI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="resursion.SolutionI" />
       <module name="Algorithms" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
@@ -153,19 +152,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.SolutionI" />
-      <item itemvalue="Application.MySolution" />
       <item itemvalue="Application.KadanesAlgorithm" />
       <item itemvalue="Application.MySolutionII" />
       <item itemvalue="Application.MinimumPathSum" />
+      <item itemvalue="Application.Fact" />
+      <item itemvalue="Application.Fact (1)" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Fact (1)" />
+        <item itemvalue="Application.Fact" />
         <item itemvalue="Application.MinimumPathSum" />
         <item itemvalue="Application.MySolutionII" />
         <item itemvalue="Application.KadanesAlgorithm" />
-        <item itemvalue="Application.MySolution" />
-        <item itemvalue="Application.SolutionI" />
       </list>
     </recent_temporary>
   </component>
