@@ -76,4 +76,8 @@ public class RomanToInteger {
 
         return sum + nums[nums.length - 1];
     }
+
+    public int romanToIntegerIII(String roman) {
+        return 0;
+    }
 }
