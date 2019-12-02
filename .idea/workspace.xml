@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8affdf22-6fa1-4136-aa11-c166abaae847" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/src/array/MoveElementToEnd.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/string/RomanToInteger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/string/RomanToInteger.java" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -35,35 +35,57 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1568029468743" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Color Scheme Font" />
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
-  <component name="RunManager" selected="Application.MinimumPathSum">
+  <component name="RunManager" selected="Application.Fact (1)">
+    <configuration name="Fact (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="resursion.Fact" />
+      <module name="Algorithms" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="resursion.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Fact" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="dp.Fact" />
+      <module name="Algorithms" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="resursion.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="KadanesAlgorithm" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="dp.KadanesAlgorithm" />
       <module name="Algorithms" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="dp.*" />
+          <option name="PATTERN" value="resursion.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -73,20 +95,6 @@
     </configuration>
     <configuration name="MinimumPathSum" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="dp.MinimumPathSum" />
-      <module name="Algorithms" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="dp.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MySolution" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="resursion.MySolution" />
       <module name="Algorithms" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
@@ -101,20 +109,6 @@
     </configuration>
     <configuration name="MySolutionII" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="resursion.MySolutionII" />
-      <module name="Algorithms" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="resursion.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="SolutionI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="resursion.SolutionI" />
       <module name="Algorithms" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
@@ -152,21 +146,33 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.SolutionI" />
-      <item itemvalue="Application.MySolution" />
+      <item itemvalue="Application.Fact (1)" />
+      <item itemvalue="Application.Fact" />
       <item itemvalue="Application.KadanesAlgorithm" />
-      <item itemvalue="Application.MySolutionII" />
       <item itemvalue="Application.MinimumPathSum" />
+      <item itemvalue="Application.MySolutionII" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Fact (1)" />
+        <item itemvalue="Application.Fact" />
         <item itemvalue="Application.MinimumPathSum" />
         <item itemvalue="Application.MySolutionII" />
         <item itemvalue="Application.KadanesAlgorithm" />
-        <item itemvalue="Application.MySolution" />
-        <item itemvalue="Application.SolutionI" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -193,6 +199,24 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="739" y="360" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1575201378394">
+      <screen x="0" y="0" width="2560" height="1396" />
+    </state>
+    <state x="739" y="360" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1396@0.0.2560.1396" timestamp="1575201378394" />
+    <state x="1135" y="594" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1575201407032">
+      <screen x="0" y="0" width="2560" height="1396" />
+    </state>
+    <state x="1135" y="594" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.2560.1396@0.0.2560.1396" timestamp="1575201407032" />
+    <state x="809" y="334" key="SettingsEditor" timestamp="1575205353522">
+      <screen x="0" y="0" width="2560" height="1396" />
+    </state>
+    <state x="809" y="334" key="SettingsEditor/0.0.2560.1396@0.0.2560.1396" timestamp="1575205353522" />
+    <state x="1003" y="531" key="com.intellij.ide.util.TipDialog" timestamp="1575201779019">
+      <screen x="0" y="0" width="2560" height="1396" />
+    </state>
+    <state x="1003" y="531" key="com.intellij.ide.util.TipDialog/0.0.2560.1396@0.0.2560.1396" timestamp="1575201779019" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

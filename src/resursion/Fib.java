@@ -1,4 +1,6 @@
-package dp;
+package resursion;
+
+import java.util.HashMap;
 
 public class Fib {
     static int fib(int n) {
@@ -69,3 +71,42 @@ class Program {
             fib(3) fib(2) fib(2) fib(1) fib(2) fib(1)          fib(2) fib(1)
 
 */
+
+class Fact {
+    private static int mem [] = new int[100];
+    private static HashMap<Integer, Integer> myHash = new HashMap<Integer, Integer>();
+
+    private static int getNthFactWithMem(int n) {
+        if (n <= 1) {
+            return 1;
+        } else if (mem[n] > 0) {
+            System.out.println("return from memo");
+            return mem[n];
+        }
+
+        mem[n] = n * getNthFactWithMem(n - 1);
+
+        return mem[n];
+    }
+
+
+    private static int getNthFactWithHashMap(int n) {
+        if (n <= 1) {
+            return 1;
+        } else if (myHash.containsKey(n)) {
+            System.out.println("return from memo");
+            return myHash.get(n);
+        }
+
+        int result = n * getNthFactWithHashMap(n - 1);
+        myHash.put(n, result);
+        return result;
+    }
+
+    public static void main(String[] args) {
+        // System.out.println(getNthFactWithMem(6));
+        // System.out.println(getNthFactWithMem(5));
+        System.out.println(getNthFactWithHashMap(5));
+        System.out.println(getNthFactWithHashMap(6));
+    }
+}
