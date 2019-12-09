@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8affdf22-6fa1-4136-aa11-c166abaae847" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/array/MoveElementToEnd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/array/DuplicateZeros.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/string/RomanToInteger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/string/RomanToInteger.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,6 +41,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1568029468743" />
@@ -50,7 +51,21 @@
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Color Scheme Font" />
   </component>
-  <component name="RunManager" selected="Application.Fact (1)">
+  <component name="RunManager" selected="Application.AddtoArrayFormofInteger_989">
+    <configuration name="AddtoArrayFormofInteger_989" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="array.AddtoArrayFormofInteger_989" />
+      <module name="Algorithms" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="array.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Fact (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="resursion.Fact" />
       <module name="Algorithms" />
@@ -67,20 +82,6 @@
     </configuration>
     <configuration name="Fact" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="dp.Fact" />
-      <module name="Algorithms" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="resursion.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="KadanesAlgorithm" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="dp.KadanesAlgorithm" />
       <module name="Algorithms" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
@@ -148,17 +149,17 @@
     <list>
       <item itemvalue="Application.Fact (1)" />
       <item itemvalue="Application.Fact" />
-      <item itemvalue="Application.KadanesAlgorithm" />
       <item itemvalue="Application.MinimumPathSum" />
       <item itemvalue="Application.MySolutionII" />
+      <item itemvalue="Application.AddtoArrayFormofInteger_989" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.AddtoArrayFormofInteger_989" />
         <item itemvalue="Application.Fact (1)" />
         <item itemvalue="Application.Fact" />
         <item itemvalue="Application.MinimumPathSum" />
         <item itemvalue="Application.MySolutionII" />
-        <item itemvalue="Application.KadanesAlgorithm" />
       </list>
     </recent_temporary>
   </component>
@@ -205,18 +206,44 @@
       <screen x="0" y="0" width="2560" height="1396" />
     </state>
     <state x="739" y="360" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1396@0.0.2560.1396" timestamp="1575201378394" />
-    <state x="1135" y="594" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1575201407032">
-      <screen x="0" y="0" width="2560" height="1396" />
+    <state x="285" y="226" key="#com.intellij.ide.util.MemberChooser" timestamp="1575857912463">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="285" y="226" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1575857912463" />
+    <state x="851" y="443" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1575857223471">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="851" y="443" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1575857223471" />
     <state x="1135" y="594" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.2560.1396@0.0.2560.1396" timestamp="1575201407032" />
+    <state width="1874" height="261" key="GridCell.Tab.0.bottom" timestamp="1575871212115">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1874" height="261" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1575871212115" />
+    <state width="1874" height="261" key="GridCell.Tab.0.center" timestamp="1575871212115">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1874" height="261" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1575871212115" />
+    <state width="1874" height="261" key="GridCell.Tab.0.left" timestamp="1575871212115">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1874" height="261" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1575871212115" />
+    <state width="1874" height="261" key="GridCell.Tab.0.right" timestamp="1575871212115">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1874" height="261" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1575871212115" />
     <state x="809" y="334" key="SettingsEditor" timestamp="1575205353522">
       <screen x="0" y="0" width="2560" height="1396" />
     </state>
     <state x="809" y="334" key="SettingsEditor/0.0.2560.1396@0.0.2560.1396" timestamp="1575205353522" />
-    <state x="1003" y="531" key="com.intellij.ide.util.TipDialog" timestamp="1575201779019">
-      <screen x="0" y="0" width="2560" height="1396" />
+    <state x="752" y="396" key="com.intellij.ide.util.TipDialog" timestamp="1575857001719">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="752" y="396" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1575857001719" />
     <state x="1003" y="531" key="com.intellij.ide.util.TipDialog/0.0.2560.1396@0.0.2560.1396" timestamp="1575201779019" />
+    <state x="623" y="230" width="672" height="678" key="search.everywhere.popup" timestamp="1575858346479">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="230" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1575858346479" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
