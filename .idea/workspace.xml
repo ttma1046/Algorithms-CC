@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8affdf22-6fa1-4136-aa11-c166abaae847" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/array/DuplicateZeros.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/array/AddtoArrayFormofInteger_989.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/array/AddtoArrayFormofInteger_989.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -202,6 +202,10 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
+    <state x="236" y="361" key="#Project_Structure" timestamp="1575891118816">
+      <screen x="0" y="0" width="2560" height="1396" />
+    </state>
+    <state x="236" y="361" key="#Project_Structure/0.0.2560.1396@0.0.2560.1396" timestamp="1575891118816" />
     <state x="739" y="360" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1575201378394">
       <screen x="0" y="0" width="2560" height="1396" />
     </state>
