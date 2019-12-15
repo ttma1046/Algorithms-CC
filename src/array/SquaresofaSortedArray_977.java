@@ -1,4 +1,5 @@
-class Solution {
+package array;
+class SquaresofaSortedArray_977 {
     public int[] sortedSquares(int[] A) {
         if (A == null || A.length <= 0) {
             return null;
@@ -13,7 +14,7 @@ class Solution {
         return A;
     }
 
-    public int[] sortedSquares(int[] A) {
+    public int[] sortedSquaresII(int[] A) {
         int n = A.length;
         int[] result = new int[n];
         int i = 0, j = n - 1;

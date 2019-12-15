@@ -1,4 +1,5 @@
-class Solution {
+package array;
+class SumofEvenNumbersAfterQueries_985 {
     public int[] sumEvenAfterQueries(int[] A, int[][] queries) {
         if (A == null || queries == null) {
             return null;

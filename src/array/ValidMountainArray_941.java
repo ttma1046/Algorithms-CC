@@ -1,4 +1,5 @@
-class Solution {
+package array;
+class ValidMountainArray_941 {
     public boolean validMountainArray(int[] A) {
 
         int i = 0, j = A.length - 1;
