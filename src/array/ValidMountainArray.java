@@ -1,5 +1,5 @@
 package array;
-class ValidMountainArray_941 {
+class ValidMountainArray {
     public boolean validMountainArray(int[] A) {
 
         int i = 0, j = A.length - 1;

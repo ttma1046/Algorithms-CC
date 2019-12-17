@@ -1,5 +1,5 @@
 package array;
-class SquaresofaSortedArray_977 {
+class SquaresofaSortedArray {
     public int[] sortedSquares(int[] A) {
         if (A == null || A.length <= 0) {
             return null;

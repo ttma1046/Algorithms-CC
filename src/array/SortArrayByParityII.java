@@ -1,4 +1,6 @@
-class Solution {
+package array;
+
+class SortArrayByParityII {
     public int[] sortArrayByParity(int[] A) {
         int length = A.length;
         int[] ans = new int[length];
@@ -41,6 +43,7 @@ class Solution {
                 i += 2;
             }
         }
+        return A;
     }
 
     public int[] sortArrayByParityIII(int[] A) {

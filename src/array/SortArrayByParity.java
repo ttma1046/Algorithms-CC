@@ -19,7 +19,7 @@ Given an array A of non-negative integers, return an array consisting of all the
         0 <= A[i] <= 5000
 */
 
-class Solution {
+class SortArrayByParity {
     public int[] sortArrayByParity(int[] A) {
         if (A == null || A.length <= 0) {
             return null;

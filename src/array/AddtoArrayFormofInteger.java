@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddtoArrayFormofInteger_989 {
+public class AddtoArrayFormofInteger {
     /*
         For a non-negative integer X, the array-form of X is an array of its digits in left to right order.  For example, if X = 1231, then the array form is [1,2,3,1].
 
@@ -64,7 +64,7 @@ public class AddtoArrayFormofInteger_989 {
     }
 
     public static void main(String[] args) {
-        int[] result = new AddtoArrayFormofInteger_989().addToArrayForm(new int[] { 2,5,1 }, 806);
+        int[] result = new AddtoArrayFormofInteger().addToArrayForm(new int[] { 2,5,1 }, 806);
         for(int num: result) {
             System.out.println(num);
         }

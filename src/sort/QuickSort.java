@@ -14,7 +14,7 @@ public class QuickSort {
             return;
         }
 
-        int pivot = array[(left + (right - left) / 2];
+        int pivot = array[left + (right - left) / 2];
 
         int index = partition(array, left, right, pivot);
 

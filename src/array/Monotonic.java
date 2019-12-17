@@ -1,6 +1,6 @@
 package array;
 
-public class Monotonic_896 {
+public class Monotonic {
     public static boolean isMonotonicMy(int[] A) {
         if (A == null || A.length <= 0) {
             return false;
