@@ -20,7 +20,7 @@ class FairCandySwap_888 {
 
         int delta = sumB - sumA / 2;
 
-        var setB = new HashSet<Integer>();
+        Set<Integer> setB = new HashSet<Integer>();
         for (int x: B) { setB.add(x); }
         for (int x: A) {
             if (setB.contains(x + delta)) {
