@@ -10,11 +10,9 @@ class FairCandySwap_888 {
     2x = A - B + 2y
     x = (A - B) / 2 + y
     y = (B - A) / 2 - x;
-    */
-
-    A-y+x = B-x+y
+    A - y + x = B - x + y
     x = (B - A)/2 + y
-
+    */
     public int[] FairCandySwap(int[] A, int[] B) {
         if (A.length <= 0 || B.length <=0) return new int[0];
         int sumA = 0, sumB = 0;
