@@ -1,3 +1,8 @@
+package array;
+
+import java.util.HashSet;
+import java.util.Set;
+
 class FairCandySwap_888 {
     /*
     A - x + y = B - y + x;
@@ -34,22 +39,33 @@ class FairCandySwap_888 {
 
 
     public int[] fairCandySwap(int[] A, int[] B) {
-        if (A.length <= 0 || A == null || B.length <= 0 || B == null) return null;
-        int [] result = new int[2];
+        if (A.length <= 0  || B.length <= 0) return null;
         
         int sumA = 0;
         int sumB = 0;
 
-        for (int i = 0, j = 0; i < A.length, j < B.length; i++, j++) {
-            sumA += A[i];
-            sumB += B[j];
+        for (int x: A) {
+            sumA += x;
+        }
 
-            if (Math.abs(sumA - sumB) / 2 == (A[i] - B[j])) {
-                result.add(A[i]);
-                result.add(B[j]);
+        for (int x: B) {
+            sumB += x;
+        }
+
+        int delta = sumB - sumA / 2;
+
+        Set<Integer> setB = new HashSet<Integer>();
+        for (int x: B) { setB.add(x); }
+        for (int x: A) {
+            if (setB.contains(x + delta)) {
+                return new int[] {x, x + delta};
             }
         }
         
-        return result;
+        return new int[0];
+    }
+
+    public static void main(String[] args) {
+        System.out.println("test");
     }
 }
