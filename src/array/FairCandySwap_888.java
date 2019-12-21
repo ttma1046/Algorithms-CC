@@ -27,7 +27,7 @@ class FairCandySwap_888 {
 
         for (int y: B) {
             if (myset.contains(delta + y)) {
-                return new int[2] {delta + y, y}
+                return new int[] {delta + y, y};
             }
         }
 
