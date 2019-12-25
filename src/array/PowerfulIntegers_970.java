@@ -51,4 +51,11 @@ public class PowerfulIntegers_970 {
         }
         return new ArrayList<>(s);
     }
+
+    public static void main(String[] args) {
+        var list = new PowerfulIntegers_970().powerfulIntegers(2, 3, 10);
+        for (int i: list) {
+            System.out.println(i);
+        }
+    }
 }
