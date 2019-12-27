@@ -1,18 +1,22 @@
 package hashtable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class PowerfulIntegers_970 {
     public List<Integer> powerfulIntegers(int x, int y, int bound) {
-        List<Integer> result = new ArrayList<Integer>();
-        HashMap<Integer, Integer> count = new HashMap<Integer, Integer>();
+        Set<Integer> mySet = new HashSet<>();
 
-        for (int i = 0,j = 0; Math.pow(x, i) + Math.pow(y, j) < bound; i++, j++) {
-            count.put(i, j);
+        for (int a = 1; a < bound; a *= x) {
+            for (int b = 1; a + b <= bound; b *= y) {
+                mySet.add(a + b);
+                if(y == 1) break;
+            }
+            if(x == 1) break;
         }
 
-        return null;
+        return new ArrayList<>(mySet);
     }
 }
