@@ -18,7 +18,7 @@ public class JewelsandStones_771 {
          */
 
         int result = 0;
-        for (Character j: S.toCharArray()) {
+        for (char j: S.toCharArray()) {
             if (J.indexOf(j) > -1) {
                 result++;
             }
