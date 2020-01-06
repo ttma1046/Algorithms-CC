@@ -1,3 +1,5 @@
+package hashtable;
+
 import java.util.*;
 
 /*
@@ -53,8 +55,25 @@ public class Sentence_Similarity_734 {
             }
         }
 
-        if (words1.length != words2.length) return false;
+        /*
+        Map<String, Set<String>> myMap = new HashMap<String, Set<String>>();
+        for (List<String> pair : pairs) {
+            myMap.putIfAbsent(pair.get(0), new HashSet<>());
+            myMap.putIfAbsent(pair.get(1), new HashSet<>());
+            myMap.get(pair.get(0)).add(pair.get(1));
+            myMap.get(pair.get(1)).add(pair.get(0));
+        }
+        Set<String> words2Set = new HashSet<String>();
 
+        for (String word: words2) {
+            words2Set.add(word);
+        }
+
+        for (String word: words1) {
+            // if ((myMap.containsKey(word) && words2Set.contains(myMap.get(word))))
+        }
+        */
+        
         Set<String> pairset = new HashSet();
         for (List<String> pair: pairs)
             pairset.add(pair.get(0) + "#" + pair.get(1));
@@ -66,6 +85,9 @@ public class Sentence_Similarity_734 {
                 return false;
         }
         return true;
+
+
+
     }
 
     public static void main(String[] args) {
