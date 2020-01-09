@@ -1,8 +1,6 @@
 package dfs;
 
 public class ConnectedCells {
-
-
     public static int getRegionSize(int[][] matrix, int row, int column) {
         if(row < 0 || column < 0 || row >= matrix.length || column >= matrix[row].length) {
             return 0;
