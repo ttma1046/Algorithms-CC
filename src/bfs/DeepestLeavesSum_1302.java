@@ -1,42 +1,33 @@
 package bfs;
 
-import com.sun.source.tree.Tree;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class DeepestLeavesSum_1302 {
+    private int maxLevel = -1;
+    private int sum = 0;
     public int deepestLeavesSum(TreeNode root) {
-        if (root == null) {
-            return -1;
-        }
-
-        int level = 0;
-        int result = 0;
-
-        return checkNode(root, level, result, 0);
+        if (root == null) { return 0; }
+        maxLevel = 0;
+        sum = 0;
+        calSum(root, 0);
+        return sum;
     }
 
-    public int checkNode(TreeNode node, int currentLevel, int deepestLevel, int result) {
-        if (node == null) {
-            return result;
-        }
-        currentLevel++;
-        if (node.left != null || node.right != null) {
-            if (currentLevel > deepestLevel) {
-                deepestLevel = currentLevel;
-            }
+    private void calSum(TreeNode node, int level) {
+        if (node == null) return;
 
-            checkNode(node.left, currentLevel, deepestLevel, result);
-            checkNode(node.right, currentLevel, deepestLevel, result);
-        } else {
-            if (currentLevel == deepestLevel) {
-                result += node.val;
-            } else if (currentLevel > deepestLevel) {
-                deepestLevel = currentLevel;
-                result = node.val;
-            }
+        if (level > maxLevel) {
+            sum = node.val;
+            maxLevel = level;
+        } else if (level == maxLevel) {
+            sum += node.val;
         }
 
-        return result;
+        calSum(node.left, level+1);
+        calSum(node.right, level+1);
     }
+
 
     public int deepestLeavesSumII(TreeNode root) {
         int[] maxDepth = new int[1];
@@ -47,19 +38,19 @@ public class DeepestLeavesSum_1302 {
 
     public void findDepth(TreeNode root, int[] maxDepth, int[] sumOfDeepestLeaves,
                           int currDepth) {
-        if(root == null) {
+        if (root == null) {
             return;
         }
 
-        if(root.left == null && root.right == null) {
-            /** If depth of the current leaf is equal to existing maximum depth,
+        if (root.left == null && root.right == null) {
+            /* If depth of the current leaf is equal to existing maximum depth,
              add the value of this leaf to the existing sum of deepest leaves. */
-            if(maxDepth[0] == currDepth) {
+            if (maxDepth[0] == currDepth) {
                 sumOfDeepestLeaves[0] += root.val;
                 return;
                 /** If depth of the current leaf is less than the existing maximum depth,
                  dont change the existing sum of deepest leaves and return. */
-            } else if(currDepth < maxDepth[0]) {
+            } else if (currDepth < maxDepth[0]) {
                 return;
                 /** If depth of the current leaf is greater than the existing maximum depth,
                  set max depth to current depth and also initialize the sum of deepest leaves
@@ -71,47 +62,48 @@ public class DeepestLeavesSum_1302 {
             }
         }
 
-        findDepth(root.left, maxDepth, sumOfDeepestLeaves, currDepth+1);
-        findDepth(root.right, maxDepth, sumOfDeepestLeaves, currDepth+1);
+        findDepth(root.left, maxDepth, sumOfDeepestLeaves, currDepth + 1);
+        findDepth(root.right, maxDepth, sumOfDeepestLeaves, currDepth + 1);
         return;
     }
 
-    public int deepestLeavesSumIII(TreeNode root) {
-        int maxDepth = 0;
-        int sumOfDeepestLeaves = 0;
-        findDepth(root, maxDepth, sumOfDeepestLeaves, 1);
-        return sumOfDeepestLeaves;
-    }
 
-    public void findDepth(TreeNode root, int maxDepth, int sumOfDeepestLeaves,
-                          int currDepth) {
-        if(root == null) {
-            return;
-        }
+    public int deepestLeavesSumBFS(TreeNode root) {
+        if (root == null) return 0;
 
-        if(root.left == null && root.right == null) {
-            /** If depth of the current leaf is equal to existing maximum depth,
-             add the value of this leaf to the existing sum of deepest leaves. */
-            if(maxDepth == currDepth) {
-                sumOfDeepestLeaves += root.val;
-                return;
-                /** If depth of the current leaf is less than the existing maximum depth,
-                 dont change the existing sum of deepest leaves and return. */
-            } else if(currDepth < maxDepth) {
-                return;
-                /** If depth of the current leaf is greater than the existing maximum depth,
-                 set max depth to current depth and also initialize the sum of deepest leaves
-                 as the current node val */
-            } else {
-                sumOfDeepestLeaves = root.val;
-                maxDepth = currDepth;
-                return;
+        int sum = 0, i;
+        LinkedList<TreeNode> bfsQueue = new LinkedList<TreeNode>();
+
+        bfsQueue.add(root);
+
+        while(!bfsQueue.isEmpty()) {
+            int currentSize = bfsQueue.size();
+            sum = 0;
+            for (i = currentSize - 1; i >= 0; --i) {
+                TreeNode node = bfsQueue.poll();
+                sum += node.val;
+
+                if (node.left != null) bfsQueue.add(node.left);
+                if (node.right != null) bfsQueue.add(node.right);
             }
         }
 
-        findDepth(root.left, maxDepth, sumOfDeepestLeaves, currDepth+1);
-        findDepth(root.right, maxDepth, sumOfDeepestLeaves, currDepth+1);
-        return;
+        return sum;
+    }
+
+    public int deepestLeavesSumIII(TreeNode root) {
+        int res = 0, i;
+        LinkedList<TreeNode> q = new LinkedList<TreeNode>();
+        q.add(root);
+        while (!q.isEmpty()) {
+            for (i = q.size() - 1, res = 0; i >= 0; --i) {
+                TreeNode node = q.poll();
+                res += node.val;
+                if (node.right != null) q.add(node.right);
+                if (node.left  != null) q.add(node.left);
+            }
+        }
+        return res;
     }
 
     public static void main(String[] args) {
@@ -132,9 +124,13 @@ public class DeepestLeavesSum_1302 {
         one.left = two;
 
         DeepestLeavesSum_1302 abc = new DeepestLeavesSum_1302();
-        abc.traversePreOrder(one);
-        abc.traverseInOrder(one);
-        abc.traversePostOrder(one);
+
+        System.out.println(abc.deepestLeavesSum(one));
+        System.out.println(abc.deepestLeavesSumBFS(one));
+
+        // abc.traversePreOrder(one);
+        // abc.traverseInOrder(one);
+        // abc.traversePostOrder(one);
 
         /*
         TreeNode four = new TreeNode(4);
