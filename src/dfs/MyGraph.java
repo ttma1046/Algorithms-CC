@@ -26,12 +26,19 @@ public class MyGraph {
         s.adjacent.add(d);
     }
 
-    public boolean hasPath(int source, int destination) {
+    public boolean hasPathDFS(int source, int destination) {
         Node s = getNode(source);
         Node d = getNode(destination);
 
         HashSet<Integer> visited = new HashSet<Integer>();
         return hasPathDFS(s, d, visited);
+    }
+
+    public boolean hasPathBFS(int source, int destination) {
+        Node s = getNode(source);
+        Node d = getNode(destination);
+
+        HashSet<Integer> visited = new HashSet<Integer>();
         return hasPathBFS(s, d);
     }
 
