@@ -1,12 +1,14 @@
 package tree;
 
-class Node {
-    int data;
-    Node left;
-    Node right;
-}
+
 
 public class BinarySearchTree {
+    class Node {
+        int data;
+        Node left;
+        Node right;
+    }
+
     boolean checkBST(Node root, int min, int max) {
         if (root == null) {
             return true;

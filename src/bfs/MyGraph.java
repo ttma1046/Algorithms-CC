@@ -1,4 +1,4 @@
-package dfs;
+package bfs;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -26,41 +26,12 @@ public class MyGraph {
         s.adjacent.add(d);
     }
 
-    public boolean hasPathDFS(int source, int destination) {
-        Node s = getNode(source);
-        Node d = getNode(destination);
-
-        HashSet<Integer> visited = new HashSet<Integer>();
-        return hasPathDFS(s, d, visited);
-    }
-
     public boolean hasPathBFS(int source, int destination) {
         Node s = getNode(source);
         Node d = getNode(destination);
 
         HashSet<Integer> visited = new HashSet<Integer>();
         return hasPathBFS(s, d);
-    }
-
-    private boolean hasPathDFS(Node sourceNode, Node destinationNode, HashSet<Integer> isVisited) {
-        if (isVisited.contains(sourceNode.id)) {
-            return false;
-        }
-
-        if (sourceNode == destinationNode) {
-            return true;
-        }
-
-        isVisited.add(sourceNode.id);
-        if (sourceNode.adjacent != null && sourceNode.adjacent.size() > 0) {
-            for(Node childNode: sourceNode.adjacent) {
-                if (hasPathDFS(childNode, destinationNode, isVisited)) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
     }
 
     private boolean hasPathBFS(Node sourceNode, Node destinationNode) {

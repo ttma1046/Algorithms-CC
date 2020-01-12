@@ -63,6 +63,7 @@ public class DeleteTreeNodes_1273 {
         return new int[] {sum, currentLeftNodes};
     }
 
+    // Assuming parent[i] < i && i > 0
     public int deleteTreeNodesII(int nodes, int[] parent, int[] value) {
         int[] res = new int[nodes];
         for (int i = nodes - 1; i > 0; --i) {
@@ -72,8 +73,7 @@ public class DeleteTreeNodes_1273 {
         return value[0] != 0 ? res[0] + 1 : 0;
     }
 
-
-    public int deleteTreeNodesIII(int nodes, int[] parent, int[] value) {
+    public int myDeleteTreeNodes(int nodes, int[] parent, int[] value) {
         ArrayList<ArrayList<Integer>> graph = new ArrayList<>(nodes);
         for (int i = nodes; i > 0; i--) { graph.add(new ArrayList<Integer>()); }
 
@@ -106,6 +106,6 @@ public class DeleteTreeNodes_1273 {
     }
 
     public static void main(String[] args) {
-        System.out.println(new DeleteTreeNodes_1273().deleteTreeNodes(7, new int[] { -1, 0, 0, 1, 2, 2, 2 }, new int[] {1, -2, 4, 0, -2, -1, -1}));
+        System.out.println(new DeleteTreeNodes_1273().myDeleteTreeNodes(7, new int[] { -1, 0, 0, 1, 2, 2, 2 }, new int[] {1, -2, 4, 0, -2, -1, -1}));
     }
 }

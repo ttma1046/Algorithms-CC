@@ -2,13 +2,13 @@ package dfs;
 
 import java.util.List;
 
-class Node {
-    int value;
-    List<Node> children;
-    boolean visited;
-}
+public class NumIslands {
+    class Node {
+        int value;
+        List<Node> children;
+        boolean visited;
+    }
 
-public class DFSDemo {
     private boolean[][] visited;
     private int numRow;
     private int numCol;
@@ -48,5 +48,4 @@ public class DFSDemo {
         dfs(grid, i, j + 1);
         dfs(grid, i, j - 1);
     }
-
 }
