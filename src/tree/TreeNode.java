@@ -44,8 +44,6 @@ public class TreeNode { // Binary Search Tree
                 return right.contains(value);
             }
         }
-
-        // return false;
     }
 
     boolean checkBST(TreeNode root) {

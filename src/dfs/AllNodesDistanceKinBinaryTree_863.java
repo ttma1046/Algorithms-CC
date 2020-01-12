@@ -1,4 +1,6 @@
-package bfs;
+package dfs;
+
+import bfs.TreeNode;
 
 import java.util.List;
 
@@ -10,10 +12,9 @@ public class AllNodesDistanceKinBinaryTree_863 {
 
 
         return dfs(root, target, K);
+    }
 
-
-
-
+    private List<Integer> dfs(TreeNode root, TreeNode target, int distance) {
         return null;
     }
 
