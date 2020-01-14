@@ -1,5 +1,6 @@
 package linkedlist;
 import java.util.ArrayList;
+
 public class RemoveKthNodeFromEnd {
     public static void removeKthNodeFromEnd(MyLinkedList head, int k) {
         MyLinkedList pervious = head;

@@ -69,8 +69,7 @@ public class SolutionPlusOneLinkedList {
 
     public static void main(String[] args) {
         ListNode head = new ListNode(1);
-        ListNode second = new ListNode(9);
-        head.next = second;
+        head.next = new ListNode(9);
         System.out.printf("Input: %d->%d \n",head.val, head.next.val);
         ListNode rst = SolutionPlusOneLinkedList.plusOne(head);
         System.out.printf("Output: %d->%d",rst.val, rst.next.val);

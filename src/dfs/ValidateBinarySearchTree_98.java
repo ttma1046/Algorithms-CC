@@ -1,4 +1,4 @@
-package bfs;
+package dfs;
 
 public class ValidateBinarySearchTree_98 {
     public boolean isValidBST(TreeNode root) {
@@ -6,10 +6,10 @@ public class ValidateBinarySearchTree_98 {
             return true;
         }
 
-        return myBFS(root, Long.MIN_VALUE, Long.MAX_VALUE);
+        return myDFS(root, Long.MIN_VALUE, Long.MAX_VALUE);
     }
 
-    private boolean myBFS(TreeNode current, long min, long max) {
+    private boolean myDFS(TreeNode current, long min, long max) {
         if (current == null) {
             return true;
         }
@@ -18,7 +18,7 @@ public class ValidateBinarySearchTree_98 {
             return false;
         }
 
-        return myBFS(current.left, min, current.val) && myBFS(current.right, current.val, max);
+        return myDFS(current.left, min, current.val) && myDFS(current.right, current.val, max);
     }
 
     public static void main(String[] args) {
