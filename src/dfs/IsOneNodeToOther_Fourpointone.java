@@ -1,14 +1,12 @@
 package dfs;
 
 public class IsOneNodeToOther_Fourpointone {
-    boolean search(Node root, Node start, Node end) {
-        if (start == end) return true;
-        return hasRouteBFS(start, end) && hasRouteDFS(start, end);
-        // return hasRouteDFS(start, end);
-    }
+    boolean search(Node start, Node end) {
+        if (start == null || end == null) return false;
 
-    private boolean hasRouteBFS(Node current, Node end) {
-        return false;
+        if (start == end) return true;
+        return hasRouteDFS(start, end);
+        // return hasRouteDFS(start, end);
     }
 
     private boolean hasRouteDFS(Node current, Node end) {

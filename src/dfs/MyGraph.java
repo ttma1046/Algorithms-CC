@@ -34,14 +34,6 @@ public class MyGraph {
         return hasPathDFS(s, d, visited);
     }
 
-    public boolean hasPathBFS(int source, int destination) {
-        Node s = getNode(source);
-        Node d = getNode(destination);
-
-        HashSet<Integer> visited = new HashSet<Integer>();
-        return hasPathBFS(s, d);
-    }
-
     private boolean hasPathDFS(Node sourceNode, Node destinationNode, HashSet<Integer> isVisited) {
         if (isVisited.contains(sourceNode.id)) {
             return false;
@@ -56,37 +48,6 @@ public class MyGraph {
             for(Node childNode: sourceNode.adjacent) {
                 if (hasPathDFS(childNode, destinationNode, isVisited)) {
                     return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    private boolean hasPathBFS(Node sourceNode, Node destinationNode) {
-        if (sourceNode == destinationNode) {
-            return true;
-        }
-
-        HashSet<Integer> visited = new HashSet<>();
-        Queue<Node> myQueue = new LinkedList<Node>();
-
-        myQueue.add(sourceNode);
-
-        while (!myQueue.isEmpty()) {
-            Node current = myQueue.poll();
-            if (current == destinationNode) {
-                return true;
-            }
-
-            if (visited.contains(current.id)) {
-                continue;
-            }
-            visited.add(current.id);
-
-            if (current.adjacent == null || current.adjacent.size() > 0) {
-                for (Node childNode: current.adjacent) {
-                    myQueue.add(childNode);
                 }
             }
         }

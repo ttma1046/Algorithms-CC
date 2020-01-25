@@ -43,9 +43,9 @@ public class MyGraph {
         Queue<Node> myQueue = new LinkedList<Node>();
 
         myQueue.add(sourceNode);
-
+        Node current;
         while (!myQueue.isEmpty()) {
-            Node current = myQueue.poll();
+            current = myQueue.poll();
             if (current == destinationNode) {
                 return true;
             }
