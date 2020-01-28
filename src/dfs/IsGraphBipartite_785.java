@@ -37,6 +37,8 @@ The graph is undirected: if any element j is in graph[i], then i will be in grap
 
 package dfs;
 
+import java.util.*;
+
 public class IsGraphBipartite_785 {
     public boolean isBipartite(int[][] graph) {
         if (graph == null) return false;
@@ -71,7 +73,7 @@ public class IsGraphBipartite_785 {
         return true;
     }
 
-    public boolean isBipartite(int[][] graph) {
+    public boolean isBipartiteII(int[][] graph) {
         int n = graph.length;
         int[] color = new int[n];
         Arrays.fill(color, -1);
@@ -98,20 +100,17 @@ public class IsGraphBipartite_785 {
 
         return true;
     }
-}
 
-
-class Solution {
-    public boolean isBipartite(int[][] graph) {
+    public boolean isBipartiteIII(int[][] graph) {
         int len = graph.length;
         int[] colors = new int[len];
-        
+
         for (int i = 0; i < len; i++) {
             if (colors[i] != 0) continue;
             Queue<Integer> queue = new LinkedList<>();
             queue.offer(i);
             colors[i] = 1;   // Blue: 1; Red: -1.
-            
+
             while (!queue.isEmpty()) {
                 int cur = queue.poll();
                 for (int next : graph[cur]) {
@@ -124,17 +123,15 @@ class Solution {
                 }
             }
         }
-        
+
         return true;
     }
-}
 
-class Solution {
-    public boolean isBipartite(int[][] graph) {
+    public boolean isBipartiteIV(int[][] graph) {
         //BFS
         // 0(not meet), 1(black), 2(white)
         int[] visited = new int[graph.length];
-        
+
         for (int i = 0; i < graph.length; i++) {
             if (graph[i].length != 0 && visited[i] == 0) {
                 visited[i] = 1;
@@ -144,43 +141,42 @@ class Solution {
                     int current = q.poll();
                     for (int c: graph[current]) {
 
-                            if (visited[c] == 0) {
-                                visited[c] = (visited[current] == 1) ? 2 : 1;
-                                q.offer(c);
-                            } else {
-                                if (visited[c] == visited[current]) return false;
-                            }
+                        if (visited[c] == 0) {
+                            visited[c] = (visited[current] == 1) ? 2 : 1;
+                            q.offer(c);
+                        } else {
+                            if (visited[c] == visited[current]) return false;
+                        }
                     }
-                }                        
-                
+                }
+
             }
         }
-        
+
+        return true;
+    }
+
+    public boolean isBipartiteV(int[][] g) {
+        int[] colors = new int[g.length];
+        for (int i = 0; i < g.length; i++)
+            if (colors[i] == 0) {
+                Queue<Integer> q = new LinkedList<>();
+                q.add(i);
+                colors[i] = 1;
+                while (!q.isEmpty()) {
+                    Integer node = q.poll();
+                    for (int adjacent : g[node])
+                        if (colors[adjacent] == colors[node])
+                            return false;
+                        else if (colors[adjacent] == 0) {
+                            q.add(adjacent);
+                            colors[adjacent] = -colors[node];
+                        }
+                }
+            }
         return true;
     }
 }
-
-public boolean isBipartite(int[][] g) {
-    int[] colors = new int[g.length];
-    for (int i = 0; i < g.length; i++)
-        if (colors[i] == 0) {
-            Queue<Integer> q = new LinkedList<>();
-            q.add(i);
-            colors[i] = 1;
-            while (!q.isEmpty()) {
-                Integer node = q.poll();
-                for (int adjacent : g[node])
-                    if (colors[adjacent] == colors[node])
-                        return false;
-                    else if (colors[adjacent] == 0) {
-                        q.add(adjacent);
-                        colors[adjacent] = -colors[node];
-                    }
-            }
-        }
-    return true;
-}
-
 
 
 
