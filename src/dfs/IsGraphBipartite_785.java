@@ -37,13 +37,43 @@ The graph is undirected: if any element j is in graph[i], then i will be in grap
 
 package dfs;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.*;
 
 public class IsGraphBipartite_785 {
     public boolean isBipartite(int[][] graph) {
+        if (graph == null) return false;
+
+        Set<Integer> resultA = new HashSet<Integer>();
+        Set<Integer> resultB = new HashSet<Integer>();
+
+        resultA.add(0);
+
+        Queue<int[]> myQueue = new LinkedList<int[]>();
+        myQueue.add(graph[0]);
+        int[] edge;
+
+        while(!myQueue.isEmpty()) {
+            edge = myQueue.poll();
+
+            for(int i: edge) {
+                if (resultA.contains(i)) return false;
+
+                if (resultB.contains(i)) {
+                    resultB.add(i);
+                }
+
+                myQueue.add(graph[i]);
+
+                Set<Integer> temp = resultA;
+                resultA = resultB;
+                resultB = temp;
+            }
+        }
+
+        return true;
+    }
+
+    public boolean isBipartiteII(int[][] graph) {
         int n = graph.length;
         int[] color = new int[n];
         Arrays.fill(color, -1);
@@ -71,7 +101,7 @@ public class IsGraphBipartite_785 {
         return true;
     }
 
-    public boolean isBipartiteII(int[][] graph) {
+    public boolean isBipartiteIII(int[][] graph) {
         int len = graph.length;
         int[] colors = new int[len];
 
@@ -97,7 +127,7 @@ public class IsGraphBipartite_785 {
         return true;
     }
 
-    public boolean isBipartiteIII(int[][] graph) {
+    public boolean isBipartiteIV(int[][] graph) {
         //BFS
         // 0(not meet), 1(black), 2(white)
         int[] visited = new int[graph.length];
@@ -126,7 +156,7 @@ public class IsGraphBipartite_785 {
         return true;
     }
 
-    public boolean isBipartiteIV(int[][] g) {
+    public boolean isBipartiteV(int[][] g) {
         int[] colors = new int[g.length];
         for (int i = 0; i < g.length; i++)
             if (colors[i] == 0) {
@@ -146,27 +176,7 @@ public class IsGraphBipartite_785 {
             }
         return true;
     }
-
-    public static void main(String[] args) {
-        int[] test = new int[] {1, 2, 3, 4, 5};
-
-        for (int i = 0; i < test.length; i++) {
-            if (mutation(test, i) && test[i] > 0) {
-                System.out.println(test[i]);
-            }
-        }
-    }
-
-    private static boolean mutation(int[] array, int index) {
-        array[index] = 0;
-        return true;
-    }
 }
-
-
-
-
-
 
 
 
