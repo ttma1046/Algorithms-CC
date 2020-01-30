@@ -41,7 +41,8 @@ import java.util.*;
 
 public class IsGraphBipartite_785 {
     public boolean isBipartite(int[][] graph) {
-        if (graph == null) return false;
+        if (graph == null)
+            return false;
 
         Set<Integer> resultA = new HashSet<Integer>();
         Set<Integer> resultB = new HashSet<Integer>();
@@ -52,11 +53,12 @@ public class IsGraphBipartite_785 {
         myQueue.add(graph[0]);
         int[] edge;
 
-        while(!myQueue.isEmpty()) {
+        while (!myQueue.isEmpty()) {
             edge = myQueue.poll();
 
-            for(int i: edge) {
-                if (resultA.contains(i)) return false;
+            for (int i : edge) {
+                if (resultA.contains(i))
+                    return false;
 
                 if (resultB.contains(i)) {
                     resultB.add(i);
@@ -80,13 +82,13 @@ public class IsGraphBipartite_785 {
 
         for (int start = 0; start < n; ++start) {
             if (color[start] == -1) {
-                Stack<Integer> stack = new Stack();
+                Stack<Integer> stack = new Stack<Integer>();
                 stack.push(start);
                 color[start] = 0;
 
                 while (!stack.empty()) {
                     Integer node = stack.pop();
-                    for (int nei: graph[node]) {
+                    for (int nei : graph[node]) {
                         if (color[nei] == -1) {
                             stack.push(nei);
                             color[nei] = color[node] ^ 1;
@@ -106,18 +108,20 @@ public class IsGraphBipartite_785 {
         int[] colors = new int[len];
 
         for (int i = 0; i < len; i++) {
-            if (colors[i] != 0) continue;
+            if (colors[i] != 0)
+                continue;
             Queue<Integer> queue = new LinkedList<>();
             queue.offer(i);
-            colors[i] = 1;   // Blue: 1; Red: -1.
+            colors[i] = 1; // Blue: 1; Red: -1.
 
             while (!queue.isEmpty()) {
                 int cur = queue.poll();
                 for (int next : graph[cur]) {
-                    if (colors[next] == 0) {          // If this node hasn't been colored;
-                        colors[next] = -colors[cur];  // Color it with a different color;
+                    if (colors[next] == 0) { // If this node hasn't been colored;
+                        colors[next] = -colors[cur]; // Color it with a different color;
                         queue.offer(next);
-                    } else if (colors[next] != -colors[cur]) {   // If it is colored and its color is different, return false;
+                    } else if (colors[next] != -colors[cur]) { // If it is colored and its color is different, return
+                                                               // false;
                         return false;
                     }
                 }
@@ -128,7 +132,7 @@ public class IsGraphBipartite_785 {
     }
 
     public boolean isBipartiteIV(int[][] graph) {
-        //BFS
+        // BFS
         // 0(not meet), 1(black), 2(white)
         int[] visited = new int[graph.length];
 
@@ -137,15 +141,16 @@ public class IsGraphBipartite_785 {
                 visited[i] = 1;
                 Queue<Integer> q = new LinkedList<>();
                 q.offer(i);
-                while(! q.isEmpty()) {
+                while (!q.isEmpty()) {
                     int current = q.poll();
-                    for (int c: graph[current]) {
+                    for (int c : graph[current]) {
 
                         if (visited[c] == 0) {
                             visited[c] = (visited[current] == 1) ? 2 : 1;
                             q.offer(c);
                         } else {
-                            if (visited[c] == visited[current]) return false;
+                            if (visited[c] == visited[current])
+                                return false;
                         }
                     }
                 }
@@ -177,36 +182,3 @@ public class IsGraphBipartite_785 {
         return true;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

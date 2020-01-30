@@ -1,17 +1,17 @@
+package dp;
+
 class MiniumSumPath {
-	public static void main(String [] args) {
-		System.out.println(new MiniumSumPath().getMiniumSumPath(new int[][] { 
-			{ 1, 1, 3 },
-			{ 2, 2, 3 },
-			{ 3, 4, 2 },
-		}));
+	public static void main(String[] args) {
+		System.out
+				.println(new MiniumSumPath().getMiniumSumPath(new int[][] { { 1, 1, 3 }, { 2, 2, 3 }, { 3, 4, 2 }, }));
 	}
-	public int getMiniumSumPath (int [][] grid) {
-		if (grid == null  || grid.length < 0 || grid[0].length < 0) {
+
+	public int getMiniumSumPath(int[][] grid) {
+		if (grid == null || grid.length < 0 || grid[0].length < 0) {
 			return 0;
 		}
 
-		int dp[][] = new int [grid.length][grid[0].length];
+		int dp[][] = new int[grid.length][grid[0].length];
 
 		for (int i = 0; i < grid.length; i++) {
 			for (int j = 0; j < grid[0].length; j++) {
@@ -31,5 +31,3 @@ class MiniumSumPath {
 		return dp[grid.length - 1][grid[0].length - 1];
 	}
 }
-
-

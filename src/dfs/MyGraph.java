@@ -3,7 +3,6 @@ package dfs;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Queue;
 
 public class MyGraph {
     private HashMap<Integer, Node> nodeLookup = new HashMap<Integer, Node>();
@@ -11,6 +10,7 @@ public class MyGraph {
     public static class Node {
         private int id;
         LinkedList<Node> adjacent = new LinkedList<Node>();
+
         private Node(int id) {
             this.id = id;
         }
@@ -45,7 +45,7 @@ public class MyGraph {
 
         isVisited.add(sourceNode.id);
         if (sourceNode.adjacent != null && sourceNode.adjacent.size() > 0) {
-            for(Node childNode: sourceNode.adjacent) {
+            for (Node childNode : sourceNode.adjacent) {
                 if (hasPathDFS(childNode, destinationNode, isVisited)) {
                     return true;
                 }
