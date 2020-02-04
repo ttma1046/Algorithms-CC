@@ -4,33 +4,60 @@ binary search tree. You may assume that each node has a link to its parent.
 
 */
 
-class FindNextNodeInOrder_4point6 {
-    public TreeNode FindNextNodeInOrder(TreeNode root) {
+class Successor_4point6 {
+    public TreeNode FindNextNodeInOrder(TreeNode node) {
+    	if (node == null) {
+    		return null;
+    	}
 
-        return null;
+    	if (node.right != null) {
+    		return lookForFarLeft(node.right);
+    	} else {
+    		TreeNode current = node;
+    		TreeeNode parent = current.parent;
+
+    		while(parent != null && parent.left != current) {
+    			current = parent;
+    			parent = parent.parent;
+    		}
+
+    		return parent;
+    	}
     }
 
-    TreeNode InOrder(TreeNode current) {
-        if (current == null) return;
+    private TreeNode LookForFarLeft(TreeNode root) {
+    	if (root == null) {
+    		return null;    		
+    	}
 
-        if (current.right != null) {
-            return current.right;
-        }
+    	TreeNode current = root;
 
-        if (current.left == null && current.right == null) return 'booya';
+    	While(current.left != null) {
+    		current = current.left;
+    	}
 
-        if (InOrder(current.left) == 'booya') return current;
+    	return current;
+    }
 
+    void findNext(TreeNode node) {
+    	if (node == null) { 
+    		return null;    		
+    	}
 
+    	if (node.right != null) {
+    		return farLeft(node.right);
+    	} else {
+    		TreeNode current = node;
+    		TreeNode parent = node.parent;
 
-        if (InOrder(current.right) == 'booya') return 'booya';
+    		while(parent != null && parent.left != current) {
+    			current = parent;
+    			parent = parent.parent;
+    		}
 
-        /*
-        InOrder(current.left);
+    		return parent;
+    	}
 
-        System.out.println(current.val);
-
-        InOrder(current.right);
-        */
     }
 }
+
