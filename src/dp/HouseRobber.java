@@ -1,7 +1,5 @@
 package dp;
 
-import java.io.Console;
-
 public class HouseRobber {
     public static int rob(int[] nums) {
         int length = nums.length;
@@ -26,7 +24,8 @@ public class HouseRobber {
     }
 
     public static int robII(int[] nums) {
-        if (nums.length == 0) return 0;
+        if (nums.length == 0)
+            return 0;
         int previousMax1 = 0;
         int previousMax2 = 0;
 
@@ -39,6 +38,6 @@ public class HouseRobber {
     }
 
     public static void main(String[] args) {
-        System.out.println(rob(new int[] {2, 7, 9, 3, 1}));
+        System.out.println(rob(new int[] { 2, 7, 9, 3, 1 }));
     }
 }

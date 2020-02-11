@@ -1,3 +1,4 @@
+package dfs;
 /*
 
 Given a binary search tree and a node in it, find the in-order successor of that node in the BST.
@@ -27,17 +28,15 @@ It's guaranteed that the values of the tree are unique.
 
 */
 
-public class InorderSuccessorinBST_285
-{
-    public TreeNode inorderSuccessor(TreeNode root, TreeNode p)
-    {
-        if (root == null || p == null)
-        {
+import java.util.ArrayDeque;
+
+public class InorderSuccessorinBST_285 {
+    public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
+        if (root == null || p == null) {
             return null;
         }
 
-        if (p.right != null)
-        {
+        if (p.right != null) {
             return lookingMostLeft(p.right);
         }
 
@@ -46,11 +45,9 @@ public class InorderSuccessorinBST_285
         int inorder = Integer.MIN_VALUE;
 
         // inorder traversal : left -> node -> right
-        while (!stack.isEmpty() || root != null)
-        {
+        while (!stack.isEmpty() || root != null) {
             // 1. go left till you can
-            while (root != null)
-            {
+            while (root != null) {
                 stack.push(root);
                 root = root.left;
             }
@@ -59,7 +56,8 @@ public class InorderSuccessorinBST_285
             root = stack.pop();
             // if the previous node was equal to p
             // then the current node is its successor
-            if (inorder == p.val) return root;
+            if (inorder == p.val)
+                return root;
             inorder = root.val;
 
             // 3. go one step right
@@ -70,76 +68,60 @@ public class InorderSuccessorinBST_285
         return null;
     }
 
-    private TreeNode lookingMostLeft(TreeNode current)
-    {
-        if (current == null)
-        {
+    private TreeNode lookingMostLeft(TreeNode current) {
+        if (current == null) {
             return null;
         }
 
-        while(current.left != null)
-        {
+        while (current.left != null) {
             current = current.left;
         }
 
         return current;
     }
 
-    private void InorderTraversal(TreeNode current, TreeNode p, TreeNode pervious)
-    {
-        if (current == null)
-        {
+    private TreeNode InorderTraversal(TreeNode current, TreeNode p, TreeNode pervious) {
+        if (current == null) {
             return null;
         }
 
-        if (current.left != null)
-        {
+        if (current.left != null) {
             pervious = current;
             current = current.left;
             return InorderTraversal(current, p, pervious);
         }
 
-        if (pervious.val == p.val)
-        {
-            return current
+        if (pervious.val == p.val) {
+            return current;
         }
 
-
-        if (current.right != null)
-        {
+        if (current.right != null) {
             pervious = current;
             current = current.right;
             return InorderTraversal(current, p, pervious);
         }
+        return null;
     }
 
-    public TreeNode successor(TreeNode root, TreeNode p)
-    {
+    public TreeNode successor(TreeNode root, TreeNode p) {
         if (root == null)
             return null;
 
-        if (root.val <= p.val)
-        {
+        if (root.val <= p.val) {
             return successor(root.right, p);
-        }
-        else
-        {
+        } else {
             TreeNode left = successor(root.left, p);
             return (left != null) ? left : root;
         }
     }
 
-    public TreeNode predecessor(TreeNode root, TreeNode p)
-    {
+    public TreeNode predecessor(TreeNode root, TreeNode p) {
         if (root == null)
             return null;
 
-        if (root.val >= p.val)
-        {
+        if (root.val >= p.val) {
             return predecessor(root.left, p);
-        }
-        else
-        {
+        } else {
             TreeNode right = predecessor(root.right, p);
             return (right != null) ? right : root;
         }

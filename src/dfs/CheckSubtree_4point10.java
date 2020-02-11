@@ -1,3 +1,5 @@
+package dfs;
+
 class CheckSubtree_4point10 {
 	public boolean stringSolution(TreeNode nodeOne, TreeNode nodeTwo) {
 		StringBuilder stringOne = new StringBuilder();
@@ -5,7 +7,6 @@ class CheckSubtree_4point10 {
 
 		getOrderString(nodeOne, stringOne);
 		getOrderString(nodeTwo, stringTwo);
-
 
 		return stringOne.toString().indexOf(stringTwo.toString()) > -1;
 	}
@@ -16,7 +17,7 @@ class CheckSubtree_4point10 {
 			return;
 		}
 
-		stringBuilder.append(current.val.toString());
+		stringBuilder.append(current.val);
 		getOrderString(current.left, stringBuilder);
 		getOrderString(current.right, stringBuilder);
 	}

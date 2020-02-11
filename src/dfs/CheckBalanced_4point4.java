@@ -1,4 +1,4 @@
-packagee dfs;
+package dfs;
 
 /*
 Implement a function to check if a binary tree is balanced. For the purposes of
@@ -8,12 +8,14 @@ node never differ by more than one.
 
 class CheckBalanced_4point4 {
     int getHeight(TreeNode root) {
-        if (root == null) return -1; // Base case
+        if (root == null)
+            return -1; // Base case
         return Math.max(getHeight(root.left), getHeight(root.right)) + 1;
     }
 
     boolean isBalanced(TreeNode root) {
-        if (root == null) return true; // Base case
+        if (root == null)
+            return true; // Base case
 
         int heightDiff = getHeight(root.left) - getHeight(root.right);
         if (Math.abs(heightDiff) > 1) {
@@ -24,15 +26,18 @@ class CheckBalanced_4point4 {
     }
 
     int checkHeight(TreeNode root) {
-        if (root == null) return -1;
+        if (root == null)
+            return -1;
 
         int leftHeight = checkHeight(root.left);
-        if (leftHight == Integer.MIN_VALUE) return Integer.MIN_VALUE: // Pass error up
+        if (leftHeight == Integer.MIN_VALUE)
+            return Integer.MIN_VALUE; // Pass error up
 
         int rightHeight = checkHeight(root.right);
-        if (rightHeight == Integer.MIN_VALUE) return Integer.MIN_VALUE; // Pass error up
+        if (rightHeight == Integer.MIN_VALUE)
+            return Integer.MIN_VALUE; // Pass error up
 
-        in heightDiff = leftHeight - rightHeight;
+        int heightDiff = leftHeight - rightHeight;
         if (Math.abs(heightDiff) > 1) {
             return Integer.MIN_VALUE; // Found error -> pass it back
         } else {
@@ -40,7 +45,7 @@ class CheckBalanced_4point4 {
         }
     }
 
-    boolean isBalanced(TreeNode root) {
+    boolean isBalancedII(TreeNode root) {
         return checkHeight(root) != Integer.MIN_VALUE;
     }
 

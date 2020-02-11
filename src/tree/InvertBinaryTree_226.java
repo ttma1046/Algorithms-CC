@@ -1,7 +1,6 @@
 package tree;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 // Invert a binary tree.
@@ -39,7 +38,9 @@ public class InvertBinaryTree_226 {
     }
 
     public TreeNode invertTreeII(TreeNode root) {
-        if (root == null) { return null; }
+        if (root == null) {
+            return null;
+        }
         TreeNode left = invertTree(root.left);
         TreeNode right = invertTree(root.right);
         root.left = right;
@@ -49,7 +50,9 @@ public class InvertBinaryTree_226 {
     }
 
     public TreeNode invertTreeIII(TreeNode root) {
-        if (root == null) { return null; }
+        if (root == null) {
+            return null;
+        }
         Queue<TreeNode> queue = new LinkedList<TreeNode>();
         queue.add(root);
         while (!queue.isEmpty()) {
@@ -58,8 +61,10 @@ public class InvertBinaryTree_226 {
             current.left = current.right;
             current.right = temp;
 
-            if (current.left != null) queue.offer(current.left);
-            if (current.right != null) queue.offer(current.right);
+            if (current.left != null)
+                queue.offer(current.left);
+            if (current.right != null)
+                queue.offer(current.right);
         }
 
         return root;
@@ -79,7 +84,7 @@ public class InvertBinaryTree_226 {
         root.right = seven;
 
         TreeNode result = new InvertBinaryTree_226().invertTree(root);
-        preOrderTraversalPrint(root);
+        preOrderTraversalPrint(result);
     }
 
     private static void preOrderTraversalPrint(TreeNode result) {

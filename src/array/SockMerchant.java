@@ -39,14 +39,14 @@ public class SockMerchant {
             }
         }
 
-        for (Integer frequency: hash.values()) {
-            result += frequency/2;
+        for (Integer frequency : hash.values()) {
+            result += frequency / 2;
         }
 
         return result;
     }
 
     public static void main(String[] args) {
-        System.out.println(sockMerchantIII(9, new int[] {10,20,20,10,10,30,50,10,20}));
+        System.out.println(sockMerchantIII(9, new int[] { 10, 20, 20, 10, 10, 30, 50, 10, 20 }));
     }
 }

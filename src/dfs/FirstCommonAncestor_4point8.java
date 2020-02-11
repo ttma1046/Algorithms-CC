@@ -1,9 +1,8 @@
-
+package dfs;
 /*
   Design an algorithm and write code to Find the first common ancestor oF two nodes in a binary tree.
   Avoid storing additonal nodes in a data structure. NOTE: This is not necessarily a binary search tree.
   */
-
 
 class FirstCommonAncestor_4point8 {
 	// node with links to parents
@@ -18,12 +17,12 @@ class FirstCommonAncestor_4point8 {
 
 		int plusDifference = Math.abs(difference);
 
-		while(plusDifference > 0 && deeper != null) {
-			deeper = deeper.parent
+		while (plusDifference > 0 && deeper != null) {
+			deeper = deeper.parent;
 			plusDifference--;
 		}
 
-		while(shallower != null && deeper != null && shallower != deeper) {
+		while (shallower != null && deeper != null && shallower != deeper) {
 			shallower = shallower.parent;
 			deeper = deeper.parent;
 		}
@@ -31,9 +30,9 @@ class FirstCommonAncestor_4point8 {
 		return shallower == null || deeper == null ? null : shallower;
 	}
 
-	findDepth(TreeNode current) {
+	int findDepth(TreeNode current) {
 		int depth = 0;
-		while(current != null) {
+		while (current != null) {
 			current = current.parent;
 			depth++;
 		}
@@ -43,7 +42,8 @@ class FirstCommonAncestor_4point8 {
 
 	// With Links to Parents (Better Worst-Cast Runtime)
 	// Trace p's path upwards and check i any o the nodes cover q.
-	// The first node that covers q (we already know that every node on this path will cover p) must be the irst common ancestor.
+	// The first node that covers q (we already know that every node on this path
+	// will cover p) must be the irst common ancestor.
 
 	TreeNode findCommonAncestorII(TreeNode root, TreeNode p, TreeNode q) {
 		if (root == null || p == null || q == null) {
@@ -54,7 +54,6 @@ class FirstCommonAncestor_4point8 {
 			return null;
 		}
 
-
 		if (coverSubTree(p, q)) {
 			return p;
 		}
@@ -64,21 +63,16 @@ class FirstCommonAncestor_4point8 {
 		}
 
 		/*
-		while(p != null) {
-			TreeNode sibling = getSibling(p);
-			if (cover(sibling, q)) {
-				return p.parent;
-			}
-			p = p.parent;
-		}
-
-		return null;
-		*/
+		 * while(p != null) { TreeNode sibling = getSibling(p); if (cover(sibling, q)) {
+		 * return p.parent; } p = p.parent; }
+		 * 
+		 * return null;
+		 */
 
 		TreeNode parent = p.parent;
 		TreeNode sibling = getSibling(p);
 
-		while(!coverSubTree(sibling, q)) {
+		while (!coverSubTree(sibling, q)) {
 			sibling = getSibling(parent);
 			parent = parent.parent;
 		}
@@ -94,12 +88,10 @@ class FirstCommonAncestor_4point8 {
 		return current == current.parent.left ? current.parent.right : current.parent.left;
 	}
 
-
 	boolean coverSubTree(TreeNode current, TreeNode dest) {
 		if (current == null) {
 			return false;
 		}
-
 
 		if (current.val == dest.val) {
 			return true;
@@ -156,12 +148,12 @@ class FirstCommonAncestor_4point8 {
 			return root;
 		}
 
-		TreeNode x = findCommonAncestorIV(root.left, p, q);
-		if (x != null && x != p && x != q) { 
+		TreeNode x = findCommonAncestorBAD(root.left, p, q);
+		if (x != null && x != p && x != q) {
 			return x;
 		}
 
-		TreeNode y = findCommonAncestorIV(root.right, p, q);
+		TreeNode y = findCommonAncestorBAD(root.right, p, q);
 		if (y != null && y != p && y != q) {
 			return y;
 		}
@@ -178,12 +170,13 @@ class FirstCommonAncestor_4point8 {
 	public static class Result {
 		public TreeNode node;
 		public boolean isAncestor;
+
 		public Result(TreeNode n, boolean isAnc) {
 			node = n;
 			isAncestor = isAnc;
 		}
 	}
-	
+
 	public static Result commonAncestorHelperIV(TreeNode root, TreeNode p, TreeNode q) {
 		if (root == null) {
 			return new Result(null, false);
@@ -191,48 +184,44 @@ class FirstCommonAncestor_4point8 {
 		if (root == p && root == q) {
 			return new Result(root, true);
 		}
-		
-		Result rx = commonAncestorHelper(root.left, p, q);
+
+		Result rx = commonAncestorHelperIV(root.left, p, q);
 		if (rx.isAncestor) { // Found common ancestor
 			return rx;
 		}
-		
-		Result ry = commonAncestorHelper(root.right, p, q);
+
+		Result ry = commonAncestorHelperIV(root.right, p, q);
 		if (ry.isAncestor) { // Found common ancestor
 			return ry;
 		}
-		
+
 		if (rx.node != null && ry.node != null) {
 			return new Result(root, true); // This is the common ancestor
 		} else if (root == p || root == q) {
-			/* If we�re currently at p or q, and we also found one of those
-			 * nodes in a subtree, then this is truly an ancestor and the
-			 * flag should be true. */
+			/*
+			 * If we�re currently at p or q, and we also found one of those nodes in a
+			 * subtree, then this is truly an ancestor and the flag should be true.
+			 */
 			boolean isAncestor = rx.node != null || ry.node != null;
 			return new Result(root, isAncestor);
 		} else {
 			return new Result(rx.node != null ? rx.node : ry.node, false);
 		}
-	}	
-	
+	}
+
 	public static TreeNode commonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-		Result r = commonAncestorHelper(root, p, q);
+		Result r = commonAncestorHelperIV(root, p, q);
 		if (r.isAncestor) {
 			return r.node;
 		}
 		return null;
-	}	
-	
-	public static void main(String[] args) {
-		int[] array = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-		TreeNode root = TreeNode.createMinimalBST(array);
-		TreeNode n3 = root.find(10);
-		TreeNode n7 = root.find(6);
-		TreeNode ancestor = commonAncestor(root, n3, n7);
-		if (ancestor != null) {
-			System.out.println(ancestor.data);
-		} else {
-			System.out.println("null");
-		}
 	}
+
+	/*
+	 * public static void main(String[] args) { int[] array = { 1, 2, 3, 4, 5, 6, 7,
+	 * 8, 9, 10 }; TreeNode root = TreeNode.createMinimalBST(array); TreeNode n3 =
+	 * root.find(10); TreeNode n7 = root.find(6); TreeNode ancestor =
+	 * commonAncestor(root, n3, n7); if (ancestor != null) {
+	 * System.out.println(ancestor.data); } else { System.out.println("null"); } }
+	 */
 }

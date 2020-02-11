@@ -6,14 +6,14 @@ class ValidateBST_4point5 {
         if (root == null) {
             return true;
         }
-        
 
         return Validate(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
 
     private boolean Validate(TreeNode current, int min, int max) {
 
-        if (current == null) return true;
+        if (current == null)
+            return true;
 
         if (current.val >= max || current.val < min) {
             return false;
@@ -24,43 +24,50 @@ class ValidateBST_4point5 {
 
     int index = 0;
 
-    void CopyBST(TreeNode root, int[] array) {
-        if (root == null) return;
+    void copyBST(TreeNode root, int[] array) {
+        if (root == null)
+            return;
         copyBST(root.left, array);
-        array[index] = root.data;
+        array[index] = root.val;
         index++;
         copyBST(root.right, array);
     }
 
-    boolean checkBST(TreeNode root) {
-        if (root == null) return true;
+    boolean checkBSTII(TreeNode root) {
+        if (root == null)
+            return true;
 
-        int[] array = new int[root.size];
+        int[] array = new int[0];
 
         copyBST(root, array);
         for (int i = 1; i < array.length; i++) {
-            if (array[i] <= array[i - 1]) return false;
+            if (array[i] <= array[i - 1])
+                return false;
         }
 
         return true;
     }
 
     Integer last_printed = null;
+
     boolean checkBST(TreeNode n) {
-        if (n == null) return true;
+        if (n == null)
+            return true;
 
         // Check / recurse left
-        if (!checkBST(n.left)) return false;
+        if (!checkBST(n.left))
+            return false;
 
         // Check current
-        if (last_printed != null && n.data < last_printed) {
+        if (last_printed != null && n.val < last_printed) {
             return false;
         }
 
-        last_printed = n.data;
+        last_printed = n.val;
 
         // Check / resurse right
-        if (!checkBST(n.right)) return false;
+        if (!checkBST(n.right))
+            return false;
 
         return true; // All good!
     }
