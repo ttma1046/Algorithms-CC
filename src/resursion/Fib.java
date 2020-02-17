@@ -6,27 +6,35 @@ public class Fib {
     static int fib(int n) {
         if (n <= 0) {
             return 0;
-        } else if (n == 1) {
-            return 0;
-        } else if (n == 2) {
-            return 1;
-        } else {
-            return fib(n - 1) + fib(n - 2);
         }
+        if (n == 1) {
+            return 1;
+        } 
+
+        return fib(n - 1) + fib(n - 2);
     } // O(2^N)
 
-    int fib(int n, int[] mem) {
+    int fib(int n, int[] memo) {
         if (n <= 0) {
             return 0;
-        } else if (n == 1) {
+        } 
+        if (n == 1) {
             return 1;
-        }  else if (mem[n - 1] > 0) { // if (exist(mem, n))
-            return mem[n - 1];
+        } 
+
+        if (memo[n] > 0) { // if (exist(memo, n))
+            return memo[n];
         }
 
-        int f = fib(n - 1, mem) + fib( n - 2, mem);
-        mem[n] = f;
+        int f = fib(n - 1, memo) + fib(n - 2, memo);
+        memo[n] = f;
         return f;
+
+        if (memo[i] == 0) {
+            memo[i] = fib(i - 1, memo) + fib(i - 2, memo);
+        }
+
+        return memo[i];
     } // O(N)
 
     public static void main(String[] args) {
@@ -58,6 +66,20 @@ class Program {
     public static void main(String[] args) {
         System.out.println(getNthFib(6));
     }
+}
+
+int fibonacci(int n) {
+    if (n == 0) return 0;
+    int a = 0;
+    int b = 1;
+
+    for (int i = 2; i < n; i++) {
+        int c = a + b;
+        a = b;
+        b = c;
+    }
+
+    return a + b;
 }
 /*
                                                        fib(7)
