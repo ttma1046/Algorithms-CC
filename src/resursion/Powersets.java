@@ -60,30 +60,29 @@ class Powersets {
     }
 
     ArrayList<ArrayList<Integer>> getSubsets(ArrayList<Integer> set, int index) {
-        ArrayList<ArrayList<Integer>> allsubsets;
+        ArrayList<ArrayList<Integer>> allSubsets;
 
         if (set.size() == index) {
             // Base case - add empty set;
-            allsubsets = new ArrayList<ArrayList<Integer>>();
+            allSubsets = new ArrayList<ArrayList<Integer>>();
 
-            allsubsets.add(new ArrayList<Integer>()); // Empty set;
+            allSubsets.add(new ArrayList<Integer>()); // Empty set;
         } else {
-            allsubsets = getSubsets(set, index + 1);
+            allSubsets = getSubsets(set, index + 1);
             int item = set.get(index);
 
-            ArrayList<ArrayList<Integer>> moresubsets = new ArrayList<ArrayList<Integer>>();
+            ArrayList<ArrayList<Integer>> moreSubsets = new ArrayList<ArrayList<Integer>>();
 
-            for (ArrayList<Integer> subset: allsubsets) {
-                ArrayList<Integer> newsubset = new ArrayList<Integer>();
+            for (ArrayList<Integer> subset: allSubsets) {
 
-                newsubset.addAll(subset); //
-                newsubset.add(item);
-                moresubsets.add(newsubset);
+                ArrayList<Integer> newSubset = new ArrayList<Integer>(subset); //
+                newSubset.add(item);
+                moreSubsets.add(newSubset);
             }
 
-            allsubsets.addAll(moresubsets);
+            allSubsets.addAll(moreSubsets);
         }
 
-        return allsubsets;
+        return allSubsets;
     }
 }
