@@ -9,7 +9,7 @@ public class Fib {
         }
         if (n == 1) {
             return 1;
-        } 
+        }
 
         return fib(n - 1) + fib(n - 2);
     } // O(2^N)
@@ -17,24 +17,20 @@ public class Fib {
     int fib(int n, int[] memo) {
         if (n <= 0) {
             return 0;
-        } 
+        }
         if (n == 1) {
             return 1;
-        } 
+        }
 
         if (memo[n] > 0) { // if (exist(memo, n))
             return memo[n];
         }
 
-        int f = fib(n - 1, memo) + fib(n - 2, memo);
-        memo[n] = f;
-        return f;
-
-        if (memo[i] == 0) {
-            memo[i] = fib(i - 1, memo) + fib(i - 2, memo);
+        if (memo[n] == 0) {
+            memo[n] = fib(n - 1, memo) + fib(n - 2, memo);
         }
 
-        return memo[i];
+        return memo[n];
     } // O(N)
 
     public static void main(String[] args) {
@@ -44,12 +40,12 @@ public class Fib {
 
 class Program {
     public static int getNthFib(int n) {
-        int mem [] = new int[n];
+        int mem[] = new int[n];
 
         return getNthFibWithMem(n - 1, mem);
     }
 
-    private static int getNthFibWithMem(int n, int [] mem) {
+    private static int getNthFibWithMem(int n, int[] mem) {
         if (n <= 0) {
             return 0;
         } else if (n == 1) {
@@ -66,36 +62,37 @@ class Program {
     public static void main(String[] args) {
         System.out.println(getNthFib(6));
     }
-}
 
-int fibonacci(int n) {
-    if (n == 0) return 0;
-    int a = 0;
-    int b = 1;
+    int fibonacci(int n) {
+        if (n == 0)
+            return 0;
+        int a = 0;
+        int b = 1;
 
-    for (int i = 2; i < n; i++) {
-        int c = a + b;
-        a = b;
-        b = c;
+        for (int i = 2; i < n; i++) {
+            int c = a + b;
+            a = b;
+            b = c;
+        }
+
+        return a + b;
     }
-
-    return a + b;
+    /*
+     * fib(7)
+     * 
+     * fib(6) fib(5)
+     * 
+     * fib(5) fib(4) fib(4) fib(3)
+     * 
+     * fib(4) fib(3) fib(3) fib(2) fib(3) fib(2) fib(2) fib(1)
+     * 
+     * fib(3) fib(2) fib(2) fib(1) fib(2) fib(1) fib(2) fib(1)
+     * 
+     */
 }
-/*
-                                                       fib(7)
-
-                                    fib(6)                               fib(5)
-
-                     fib(5)                      fib(4)             fib(4)           fib(3)
-
-                fib(4)       fib(3)         fib(3)    fib(2)      fib(3) fib(2)    fib(2)  fib(1)
-
-            fib(3) fib(2) fib(2) fib(1) fib(2) fib(1)          fib(2) fib(1)
-
-*/
 
 class Fact {
-    private static int mem [] = new int[100];
+    private static int mem[] = new int[100];
     private static HashMap<Integer, Integer> myHash = new HashMap<Integer, Integer>();
 
     private static int getNthFactWithMem(int n) {
@@ -110,7 +107,6 @@ class Fact {
 
         return mem[n];
     }
-
 
     private static int getNthFactWithHashMap(int n) {
         if (n <= 1) {
