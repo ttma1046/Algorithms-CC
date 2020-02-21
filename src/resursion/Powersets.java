@@ -1,14 +1,13 @@
 package resursion;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 class Powersets {
     public static void main(String[] args) {
-        System.out.println(new Powersets().subsetsWithDupIte(new int[]{1, 2, 3}));
+        System.out.println(new Powersets().subsetsWithDupIte(new int[] { 1, 2, 3 }));
 
-        System.out.println(new Powersets().subsetsWithDupRec(new int[]{1, 2, 3}));
+        System.out.println(new Powersets().subsetsWithDupRec(new int[] { 1, 2, 3 }));
     }
 
     public List<List<Integer>> subsetsWithDupIte(int[] nums) {
@@ -18,8 +17,7 @@ class Powersets {
         List<List<Integer>> result = new ArrayList();
         result.add(new ArrayList<Integer>());
 
-
-        for(int num: nums) {
+        for (int num : nums) {
             int length = result.size();
             for (int i = 0; i < length; i++) {
                 List<Integer> subset = new ArrayList<Integer>(result.get(i));
@@ -73,7 +71,7 @@ class Powersets {
 
             ArrayList<ArrayList<Integer>> moreSubsets = new ArrayList<ArrayList<Integer>>();
 
-            for (ArrayList<Integer> subset: allSubsets) {
+            for (ArrayList<Integer> subset : allSubsets) {
 
                 ArrayList<Integer> newSubset = new ArrayList<Integer>(subset); //
                 newSubset.add(item);
