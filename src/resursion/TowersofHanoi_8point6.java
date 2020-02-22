@@ -28,7 +28,7 @@ class TowersofHanoi_8point6 {
             towers[0].add(i);
         }
 
-        towers[0].moveDisks(n, towers[2], towers[1]);
+        towers[0].moveDisks(n, towers[1], towers[2]);
     }
 
     class Tower {
@@ -57,11 +57,11 @@ class TowersofHanoi_8point6 {
             t.add(top);
         }
 
-        public void moveDisks(int n, Tower destination, Tower buffer) {
+        public void moveDisks(int n, Tower buff, Tower destination) {
             if (n > 0) {
-                moveDisks(n - 1, buffer, destination);
+                moveDisks(n - 1, destination, buff);
                 moveTopTo(destination);
-                buffer.moveDisks(n - 1, destination, this);
+                buffer.moveDisks(n - 1, this, destination);
             }
         }
     }
