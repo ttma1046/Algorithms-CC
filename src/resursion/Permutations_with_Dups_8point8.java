@@ -1,7 +1,12 @@
-class PermutationswithDups_8point8 {
+package resursion;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+class Permutations_with_Dups_8point8 {
     ArrayList<String> printPerms(String s) {
         ArrayList<String> result = new ArrayList<String>();
-        HashMap<Character, Integer> map = buildFredTable(s);
+        HashMap<Character, Integer> map = buildFreqTable(s);
         printPerms(map, "", s.length(), result);
         return result;
     }

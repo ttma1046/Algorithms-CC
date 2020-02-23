@@ -1,11 +1,15 @@
-class PermutationswithoutDups_8point7 {
-    ArrayList<String> getPerms(String str) {
+package resursion;
+
+import java.util.ArrayList;
+
+class Permutations_without_Dups_8point7 {
+    ArrayList<String> getPermsI(String str) {
         if (str == null) return null;
 
         ArrayList<String> permutations = new ArrayList<String>();
 
         if (str.length() == 0) {
-            permuations.add("");
+            permutations.add("");
         
             return permutations;
         }
@@ -13,13 +17,13 @@ class PermutationswithoutDups_8point7 {
         char first = str.charAt(0); // get the first char
         String remainder = str.substring(1);
 
-        ArrayList<String> words = getPerms(remainder);
-        b "", "c", "b", 
+        ArrayList<String> words = getPermsI(remainder);
+        // b "", "c", "b",
 
         for (String word : words) {
             for (int j = 0;j <= word.length();j++) {
                 String s = insertCharAt(word, first, j);
-                permuataions.add(s);
+                permutations.add(s);
             }
         }
 
@@ -33,8 +37,7 @@ class PermutationswithoutDups_8point7 {
         return start + c + end;
     }
 
-
-    ArrayList<String> getPerms(String remainder) {
+    ArrayList<String> getPermsII(String remainder) {
         int len = remainder.length();
 
         ArrayList<String> result = new ArrayList<String>();
@@ -49,7 +52,7 @@ class PermutationswithoutDups_8point7 {
             /* Remove char i and find permuataions of remaining chars. */
             String before = remainder.substring(0, i);
             String after = remainder.substring(i + 1, len);
-            ArrayList<String> partials = getPerms(before + after);
+            ArrayList<String> partials = getPermsII(before + after);
 
             /* Prepend char i to each permutation. */
             for (String s: partials) {
@@ -59,7 +62,7 @@ class PermutationswithoutDups_8point7 {
         return result;
     }
 
-    ArrayList<String>  getPerms(String str) {
+    ArrayList<String> getPerms(String str) {
         ArrayList<String> result = new ArrayList<String>();
 
         getPerms("", str, result);
@@ -73,7 +76,7 @@ class PermutationswithoutDups_8point7 {
         for (int i = 0; i < len; i++) {
             String before = remainder.substring(0, i);
             String after = remainder.substring(i + 1, len);
-            char c = remainder.chatAt(i);
+            char c = remainder.charAt(i);
             getPerms(prefix + c, before + after, result);
         }
     } 
