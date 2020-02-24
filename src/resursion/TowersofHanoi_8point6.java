@@ -61,7 +61,7 @@ class TowersofHanoi_8point6 {
             if (n > 0) {
                 moveDisks(n - 1, destination, buff);
                 moveTopTo(destination);
-                buffer.moveDisks(n - 1, this, destination);
+                buff.moveDisks(n - 1, this, destination);
             }
         }
     }

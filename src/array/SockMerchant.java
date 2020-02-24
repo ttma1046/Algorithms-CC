@@ -9,7 +9,7 @@ public class SockMerchant {
             return 0;
         }
 
-        HashSet hash = new HashSet();
+        HashSet<Integer> hash = new HashSet<Integer>();
         int result = 0;
         for (int i = 0; i < n; i++) {
             if (hash.contains(ar[i])) {

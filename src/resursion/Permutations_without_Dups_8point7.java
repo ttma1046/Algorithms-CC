@@ -4,13 +4,14 @@ import java.util.ArrayList;
 
 class Permutations_without_Dups_8point7 {
     ArrayList<String> getPermsI(String str) {
-        if (str == null) return null;
+        if (str == null)
+            return null;
 
         ArrayList<String> permutations = new ArrayList<String>();
 
         if (str.length() == 0) {
             permutations.add("");
-        
+
             return permutations;
         }
 
@@ -21,7 +22,7 @@ class Permutations_without_Dups_8point7 {
         // b "", "c", "b",
 
         for (String word : words) {
-            for (int j = 0;j <= word.length();j++) {
+            for (int j = 0; j <= word.length(); j++) {
                 String s = insertCharAt(word, first, j);
                 permutations.add(s);
             }
@@ -38,28 +39,49 @@ class Permutations_without_Dups_8point7 {
     }
 
     ArrayList<String> getPermsII(String remainder) {
+        System.out.println("remainder:" + remainder);
         int len = remainder.length();
+        System.out.println("remainder length:" + len);
 
         ArrayList<String> result = new ArrayList<String>();
 
         /* Base case. */
         if (len == 0) {
             result.add("");
+            System.out.println("return empty string result");
             return result;
         }
 
         for (int i = 0; i < len; i++) {
+            System.out.println("i:" + i + " of remainder.length:" + len);
             /* Remove char i and find permuataions of remaining chars. */
             String before = remainder.substring(0, i);
+            System.out.println("before: remainder.substring(0, " + i + ") = " + before);
             String after = remainder.substring(i + 1, len);
+            System.out.println("after:  remainder.substring(" + (i + 1) + ", " + len + ") = " + after);
             ArrayList<String> partials = getPermsII(before + after);
 
             /* Prepend char i to each permutation. */
-            for (String s: partials) {
+            for (String s : partials) {
+                System.out.println("partials item:" + s);
+                System.out.println("result.add(remainder.charAt(" + i + ") + s) = " + remainder.charAt(i) + s);
                 result.add(remainder.charAt(i) + s);
             }
         }
+
+        for (String res : result) {
+            System.out.println("result item:" + res);
+        }
+
         return result;
+    }
+
+    public static void main(String[] args) {
+        ArrayList<String> result = new Permutations_without_Dups_8point7().getPermsII("abc");
+
+        for (String word : result) {
+            System.out.println(word);
+        }
     }
 
     ArrayList<String> getPerms(String str) {
@@ -70,7 +92,8 @@ class Permutations_without_Dups_8point7 {
     }
 
     void getPerms(String prefix, String remainder, ArrayList<String> result) {
-        if (remainder.length() == 0) result.add(prefix);
+        if (remainder.length() == 0)
+            result.add(prefix);
 
         int len = remainder.length();
         for (int i = 0; i < len; i++) {
@@ -79,5 +102,5 @@ class Permutations_without_Dups_8point7 {
             char c = remainder.charAt(i);
             getPerms(prefix + c, before + after, result);
         }
-    } 
+    }
 }
