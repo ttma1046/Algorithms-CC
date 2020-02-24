@@ -63,7 +63,8 @@ class Permutations_without_Dups_8point7 {
 
             /* Prepend char i to each permutation. */
             for (String s : partials) {
-                System.out.println("partials item:" + s);
+                System.out.println("partials item (s) = " + s);
+                System.out.println("remainder.charAt(" + i + ")" + " = " + remainder.charAt(i));
                 System.out.println("result.add(remainder.charAt(" + i + ") + s) = " + remainder.charAt(i) + s);
                 result.add(remainder.charAt(i) + s);
             }
