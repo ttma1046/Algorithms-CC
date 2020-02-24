@@ -57,9 +57,9 @@ class TowersofHanoi_8point6 {
             t.add(top);
         }
 
-        public void moveDisks(int n, Tower buff, Tower destination) {
+        public void moveDisks(int n, Tower buffer, Tower destination) {
             if (n > 0) {
-                moveDisks(n - 1, destination, buff);
+                moveDisks(n - 1, destination, buffer);
                 moveTopTo(destination);
                 buffer.moveDisks(n - 1, this, destination);
             }

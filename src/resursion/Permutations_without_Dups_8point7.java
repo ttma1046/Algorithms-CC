@@ -4,26 +4,37 @@ import java.util.ArrayList;
 
 class Permutations_without_Dups_8point7 {
     ArrayList<String> getPermsI(String str) {
-        if (str == null) return null;
+        if (str == null) {
+            System.out.println("null str");
+            return null;
+        }
 
         ArrayList<String> permutations = new ArrayList<String>();
 
         if (str.length() == 0) {
+            System.out.println("empty string");
             permutations.add("");
         
             return permutations;
         }
 
         char first = str.charAt(0); // get the first char
+        System.out.println("first:" + first);
         String remainder = str.substring(1);
-
+        System.out.println("remainder:" + remainder);
         ArrayList<String> words = getPermsI(remainder);
         // b "", "c", "b",
 
         for (String word : words) {
+            System.out.println("word:" + word);
+            System.out.println("word.length(): " + word.length());
             for (int j = 0;j <= word.length();j++) {
                 String s = insertCharAt(word, first, j);
+                System.out.println("s:" + s);
                 permutations.add(s);
+                for(String perm: permutations) {
+                    System.out.println("perm:" + perm);
+                }
             }
         }
 
@@ -31,11 +42,22 @@ class Permutations_without_Dups_8point7 {
     }
 
     /* Insert char c at index i in word. */
-    String insertCharAt(String word, char c, int i) {
+    String insertCharAt(String word, char first, int i) {
         String start = word.substring(0, i);
         String end = word.substring(i);
-        return start + c + end;
+        System.out.println("insertCharAt return:" + start + first + end);
+        return start + first + end;
     }
+
+    public static void main(String[] args) {
+        ArrayList<String> result = new Permutations_without_Dups_8point7().getPermsI("abcd");
+
+        for(String word: result)   {
+            System.out.println(word);
+        }
+    }
+
+
 
     ArrayList<String> getPermsII(String remainder) {
         int len = remainder.length();
