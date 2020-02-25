@@ -1,4 +1,4 @@
-package resursion;
+package recursion;
 
 public class Paths {
     public static int countPathsR(int steps) {

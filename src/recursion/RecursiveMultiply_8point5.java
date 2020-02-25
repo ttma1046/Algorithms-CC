@@ -1,4 +1,4 @@
-package resursion;
+package recursion;
 
 class RecursiveMultiply_8point5 {
     int minProduct(int a, int b) {
