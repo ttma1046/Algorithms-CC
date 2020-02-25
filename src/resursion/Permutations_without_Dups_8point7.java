@@ -57,8 +57,6 @@ class Permutations_without_Dups_8point7 {
         }
     }
 
-
-
     ArrayList<String> getPermsII(String remainder) {
         System.out.println("remainder:" + remainder);
         int len = remainder.length();
@@ -96,14 +94,6 @@ class Permutations_without_Dups_8point7 {
         }
 
         return result;
-    }
-
-    public static void main(String[] args) {
-        ArrayList<String> result = new Permutations_without_Dups_8point7().getPermsII("abc");
-
-        for (String word : result) {
-            System.out.println(word);
-        }
     }
 
     ArrayList<String> getPerms(String str) {

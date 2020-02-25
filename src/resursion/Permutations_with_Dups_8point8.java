@@ -39,5 +39,13 @@ class Permutations_with_Dups_8point8 {
                 map.put(c, count);
             }
         }
-    }   
+    }  
+
+    public static void main(String[] args) {
+        ArrayList<String> arrays = new Permutations_with_Dups_8point8().printPerms("abbbbbcccc");
+
+        for(String word: arrays) {
+            System.out.println(word);
+        }
+    } 
 }
