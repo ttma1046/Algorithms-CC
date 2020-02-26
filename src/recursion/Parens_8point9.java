@@ -137,7 +137,7 @@ there are more left parens in use than right parens), then we'll insert a right 
     }
 
     public static void main(String[] args) {
-/*        Set<String> result = new Parens_8point9().myGenerateParens(4);
+        Set<String> result = new Parens_8point9().myGenerateParens(4);
 
         for(String word: result) {
             System.out.println(word);
@@ -147,7 +147,7 @@ there are more left parens in use than right parens), then we'll insert a right 
 
         for(String word: result) {
             System.out.println(word);
-        }*/
+        }
 
         ArrayList<String> resulttwo = new Parens_8point9().myGenerateParensII(4);
 
