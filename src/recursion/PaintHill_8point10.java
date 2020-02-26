@@ -6,29 +6,25 @@ enum Color {
 }
 
 class PaintHill_8point10 {
-    boolean PaintFill(Color[][] screen, int r, int c, Color ncolor) {
-        if (screen[r][c] == ncolor)
+    boolean PaintFill(Color[][] screen, int row, int column, Color ncolor) {
+        if (screen[row][column] == ncolor)
             return false;
-        return paintFill(screen, r, c, screen[r][c], ncolor);
+        return PaintFill(screen, row, column, screen[row][column], ncolor);
     }
 
-    boolean paintFill(Color[][] screen, int r, int c, Color currentColor, Color ncolor) {
-
-        if (r < screen.length) {
-            return true;
+    boolean PaintFill(Color[][] screen, int row, int column, Color currentColor, Color ncolor) {
+        if (row < 0 || row >= screen.length || column < 0 || column >= screen[0].length) {
+            return false;
         }
 
-        if (c < screen[0].length) {
-            return true;
+        if (screen[row][column] == currentColor) {
+            screen[row][column] = ncolor;
+            PaintFill(screen, row - 1, column, currentColor, ncolor);
+            PaintFill(screen, row + 1, column, currentColor, ncolor);
+            PaintFill(screen, row, column + 1, currentColor, ncolor);
+            PaintFill(screen, row, column - 1, currentColor, ncolor);
         }
 
-        if (currentColor != ncolor) {
-            screen[r][c] = ncolor;
-        }
-
-        return paintFill(screen, r + 1, c, currentColor, ncolor) && paintFill(screen, r, c + 1, currentColor, ncolor)
-                && paintFill(screen, r - 1, c, currentColor, ncolor)
-                && paintFill(screen, r, c - 1, currentColor, ncolor);
+        return true;
     }
-
 }
