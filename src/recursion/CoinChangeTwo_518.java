@@ -48,15 +48,35 @@ public class CoinChangeTwo_518 {
         return dp[coins.length][amount];
     }
 
-    public int Change(int amount, int[] coins) {
+    public int[] Change(int amount, int[] coins) {
+        int[] dp = new int[amount + 1];
+        dp[0] = 1;
+
+        for (int x = 0; x < amount + 1; ++x) {
+            for (int coin : coins) {
+                if (x - coin >= 0) dp[x] += dp[x - coin];
+            }
+        }
+        return dp;
+    }
+
+    public int change(int amount, int[] coins) {
         int[] dp = new int[amount + 1];
         dp[0] = 1;
 
         for (int coin : coins) {
-            for (int x = coin; x < amount + 1; ++x) {
-                dp[x] += dp[x - coin];
-            }
+          for (int x = coin; x < amount + 1; ++x) {
+            dp[x] += dp[x - coin];
+          }
         }
         return dp[amount];
+    }
+
+    public static void main(String[] args) {
+        int [] result = new CoinChangeTwo_518().Change(11, new int [] { 2, 5, 10 });
+
+        for(int r: result) {
+            System.out.println(r);
+        }
     }
 }
