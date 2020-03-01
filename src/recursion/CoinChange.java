@@ -3,7 +3,6 @@ package recursion;
 import java.util.HashMap;
 
 public class CoinChange {
-
     public static long makeChange(int[] coins, int money, int index) {
         return makeChange(coins, money, 0, new HashMap<String, Long>());
     }
@@ -20,7 +19,7 @@ public class CoinChange {
 
         String key = money + "-" + index; // "29" + "1" || "2" + "91"
 
-        if(memo.containsKey(key)) {
+        if (memo.containsKey(key)) {
             return memo.get(key);
         }
 
@@ -36,6 +35,7 @@ public class CoinChange {
     }
 
     public static void main(String[] args) {
-        System.out.println(makeChange(new int[] { 16, 30, 9, 17, 40, 13, 42, 5, 25, 49, 7, 23, 1, 44, 4, 11, 33, 12, 27, 2, 38, 24, 28, 32, 14, 50 }, 245, 0));
+        System.out.println(makeChange(new int[] { 16, 30, 9, 17, 40, 13, 42, 5, 25, 49, 7, 23, 1, 44, 4, 11, 33, 12, 27,
+                2, 38, 24, 28, 32, 14, 50 }, 245, 0));
     }
 }
