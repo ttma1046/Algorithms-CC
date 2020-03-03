@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class StackofBoxes_8point13_Recur {
+    ArrayList<Box> sortBoxes(ArrayList<Box> boxes) {
+        Collections.sort(boxes, new BoxComparator());
+        return boxes;
+    }
+
     int createStack(ArrayList<Box> boxes) {
         Collections.sort(boxes, new BoxComparator());
         int[] stackMap = new int[boxes.size()];
@@ -34,16 +39,6 @@ public class StackofBoxes_8point13_Recur {
         return Math.max(heightWithBottom, heightWithoutBottom);
     }
 
-    public boolean canBeAbove(Box b) {
-        if (b == null) {
-            return true;
-        }
-        if (width < b.width && height < b.height && depth < b.depth) {
-            return true;
-        }
-        return false;       
-    }
-
     public static void main(String[] args) {
         Box[] boxList = { 
             new Box(6, 4, 4), 
@@ -53,12 +48,21 @@ public class StackofBoxes_8point13_Recur {
             new Box(4, 2, 2), 
             new Box(9, 7, 3)
         };
+
         ArrayList<Box> boxes = new ArrayList<Box>();
         for (Box b : boxList) {
             boxes.add(b);
         }
 
+        ArrayList<Box> result = new StackofBoxes_8point13_Recur().sortBoxes(boxes);
+
+        for(Box box: result) {
+            System.out.println(box.height);
+        }
+
+        /* 
         int height = new StackofBoxes_8point13_Recur().createStack(boxes);
         System.out.println(height);
+        */
     }
 }
