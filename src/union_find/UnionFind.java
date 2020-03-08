@@ -43,10 +43,10 @@ public class UnionFind {
         if (siteIndex < 0 || siteIndex >= id.length) {
             throw new IllegalArgumentException("index " + siteIndex + " is not between 0 and " + (id.length - 1));
         }
-        
-        while (siteIndex != id[siteIndex])
-            siteIndex = id[siteIndex];
 
+        while (siteIndex != id[siteIndex]) {
+            siteIndex = id[siteIndex];
+        }
         return siteIndex;
     }
 
