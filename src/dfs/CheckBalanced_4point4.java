@@ -50,7 +50,6 @@ class CheckBalanced_4point4 {
     }
 
     public static void main(String[] args) {
-
         final TreeNode eleven = new TreeNode(11);
         eleven.left = new TreeNode(7);
         eleven.right = new TreeNode(2);
@@ -70,7 +69,6 @@ class CheckBalanced_4point4 {
         root.right = eight;
 
         System.out.println(new CheckBalanced_4point4().isBalanced(root));
-
     }
 
 }
