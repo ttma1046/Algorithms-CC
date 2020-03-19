@@ -2,7 +2,7 @@ package dfs;
 
 public class ConnectedCells {
     public static int getRegionSize(int[][] matrix, int row, int column) {
-        if(row < 0 || column < 0 || row >= matrix.length || column >= matrix[row].length) {
+        if (row < 0 || column < 0 || row >= matrix.length || column >= matrix[row].length) {
             return 0;
         }
 
@@ -15,7 +15,7 @@ public class ConnectedCells {
         int size = 1;
         for (int r = row - 1; r <= row + 1; r++) {
             for (int c = column - 1; c <= column + 1; c++) {
-                if (r != row || c != column){
+                if (r != row || c != column) {
                     size += getRegionSize(matrix, r, c);
                 }
             }
