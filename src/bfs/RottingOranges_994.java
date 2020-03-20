@@ -15,8 +15,8 @@ class RottingOranges_994 {
             return -1;
         }
 
-        Queue<Integer> queue = new ArrayDeque();
-        Map<Integer, Integer> depth = new HashMap();
+        Queue<Integer> queue = new ArrayDeque<Integer>();
+        Map<Integer, Integer> depth = new HashMap<Integer, Integer>();
 
         int R = grid.length, C = grid[0].length;
 
@@ -104,5 +104,66 @@ class RottingOranges_994 {
             }
         }
         return count_fresh == 0 ? count - 1 : -1;
+    }
+
+    public int orangesRottingIII(int[][] grid) {
+        if (grid == null || grid.length <= 0 || (grid.length > 0 && grid[0].length <= 0)) {
+            return -1;
+        }
+
+        int[] directionRow = new int[] { -1, 0, 1, 0 };
+        int[] directionColumn = new int[] { 0, -1, 0, 1 };
+
+        int totalRows = grid.length;
+        int totalColumns = grid[0].length;
+        int freshOranges = 0;
+        Queue<Integer> rottenOrangesQueue = new LinkedList<Integer>();
+
+        for (int i = 0; i < totalRows; i++) {
+            for (int j = 0; j < totalColumns; j++) {
+                if (grid[i][j] == 2) {
+                    int orangeCode = i * totalColumns + j;
+                    rottenOrangesQueue.add(orangeCode);
+                } else if (grid[i][j] == 1) {
+                    freshOranges++;
+                }
+            }
+        }
+
+        if (freshOranges == 0) {
+            return 0;
+        }
+
+        int count = 0;
+
+        while (!rottenOrangesQueue.isEmpty()) {
+            count++;
+
+            int length = rottenOrangesQueue.size();
+            for (int i = 0; i < length; i++) {
+                int current = rottenOrangesQueue.poll();
+                int currentRow = current / totalColumns;
+                int currentColumn = current % totalColumns;
+
+                for (int k = 0; k < 4; k++) {
+                    int row = currentRow + directionRow[k];
+                    int column = currentColumn + directionColumn[k];
+
+                    if (row < 0 || row >= totalRows || column < 0 || column >= totalColumns || grid[row][column] == 0
+                            || grid[row][column] == 2) {
+                        continue;
+                    }
+
+                    if (grid[row][column] == 1) {
+                        grid[row][column] = 2;
+                        rottenOrangesQueue.add(row * totalColumns + column);
+                        freshOranges--;
+                    }
+
+                }
+            }
+        }
+
+        return freshOranges == 0 ? count - 1 : -1;
     }
 }
