@@ -26,13 +26,112 @@ class Permutations {
         }
     }
 
+    /*
+    array: {1,2,3}
+    1
+    newArray: {2,3}
+    newPermutation: {1}
+    permutations: {{}}
+
+        array: {2,3}
+        2
+        newArray:{3}
+        newPermutation: {1,2}
+        permutations: {{}}
+
+            array:{3}
+            3
+            newAarray;{},
+            newPermutation: {1,2,3}
+            permutations: {{}}
+
+            permutations: {{1,2,3}}
+
+        3
+        newArray:{2}
+        newPermutation: {1,3}
+        permutations: {{1,2,3}}
+
+            array: {2}
+            2
+            newArray:{}
+            newPermutation: {1,3,2}
+            permutations: {{1,2,3}}
+
+            permutations: {{1,2,3},{1,3,2}}
+
+    2
+    newArray: {1,3}
+    newPermutation: {2}
+    permutations: {{1,2,3},{1,3,2}}
+
+        array: {1,3}
+        1
+        newArray: {3}
+        newPermutation: {2,1}
+        permutations: {{1,2,3},{1,3,2}}
+
+            array: {3}
+            3
+            newArray: {}
+            newPermutation: {2,1,3}
+            permutations: {{1,2,3},{1,3,2}}
+
+            permutations: {{1,2,3},{1,3,2},{2,1,3}}
+
+        3
+        newArray: {1}
+        newPermutation: {2,3}
+        permutations: {{1,2,3},{1,3,2}}
+
+            array: {1}
+            1
+            newArray: {}
+            newPermutation: {2,3,1}
+            permutations: {{1,2,3},{1,3,2},{2,1,3}}
+
+            permutations: {{1,2,3},{1,3,2},{2,1,3},{2,3,1}}
+
+    3
+    newArray: {1,2}
+    newPermutation: {3}
+    permutations: {{1,2,3},{1,3,2},{2,1,3},{2,3,1}}
+
+        array: {1,2}
+        1
+        newArray: {2}
+        newPermutation: {3,1}
+        permutations: {{1,2,3},{1,3,2},{2,1,3},{2,3,1}}
+
+            array: {2}
+            2
+            newArray: {}
+            newPermutation: {3,1,2}
+            permutations: {{1,2,3},{1,3,2},{2,1,3},{2,3,1}}
+
+            permutations: {{1,2,3},{1,3,2},{2,1,3},{2,3,1},{3,1,2}}
+
+        2
+        newArray: {1}
+        newPermutation: {3,2}
+        permutations: {{1,2,3},{1,3,2},{2,1,3},{2,3,1},{3,1,2}}
+
+            array: {1}
+            1
+            newArray: {}
+            newPermutation: {3,2,1}
+            permutations: {{1,2,3},{1,3,2},{2,1,3},{2,3,1},{3,1,2}}
+
+            permutations: {{1,2,3},{1,3,2},{2,1,3},{2,3,1},{3,1,2},{3,2,1}}
+    */
+
     public static ArrayList<ArrayList<Integer>> getPermutationsTwo(ArrayList<Integer> array) {
         ArrayList<ArrayList<Integer>> permutations = new ArrayList<ArrayList<Integer>>();
-        getPermutations(0, array, permutations);
+        getPermutationsII(0, array, permutations);
         return permutations;
     }
 
-    public static void getPermutations(int i, ArrayList<Integer> array, ArrayList<ArrayList<Integer>> permutations) {
+    public static void getPermutationsII(int i, ArrayList<Integer> array, ArrayList<ArrayList<Integer>> permutations) {
         if (i == array.size() - 1) {
             permutations.add(new ArrayList<Integer>(array));
         } else {
@@ -56,24 +155,10 @@ class Permutations {
         for (int num: nums) {
             array.add(num);
         }
-        getPermutationsII(array, new ArrayList<Integer>(), permutations);
+        getPermutations(array, new ArrayList<Integer>(), permutations);
         return permutations;
     }
-
-    public static void getPermutationsII(ArrayList<Integer> array, List<Integer> currentPermutation, List<List<Integer>> permutations) {
-        if (array.size() == 0 && currentPermutation.size() > 0) {
-            permutations.add(currentPermutation);
-        } else {
-            for (int i = 0; i < array.size(); i++) {
-                ArrayList<Integer> newArray = new ArrayList<Integer>(array);
-                newArray.remove(i);
-                List<Integer> newPermutation = new ArrayList<Integer>(currentPermutation);
-                newPermutation.add(array.get(i));
-                getPermutationsII(newArray, newPermutation, permutations);
-            }
-        }
-    }
-
+    
     public static void main(String[] args) {
         List<List<Integer>> result = new Permutations().permute(new int [] {1, 2, 3});
 
@@ -83,8 +168,4 @@ class Permutations {
             }
         }
     }
-
-
-
-
 }
