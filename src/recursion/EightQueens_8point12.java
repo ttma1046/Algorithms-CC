@@ -3,10 +3,12 @@ package recursion;
 // https://leetcode.com/problems/coin-change-2/solution/
 // https://www.geeksforgeeks.org/coin-change-dp-7/
 
-class EightQueens_8point12 {
-    int GRID_SIZE = 8;
+import java.util.ArrayList;
 
-    void placeQueens(int row, Integer[] columns, ArrayList<Integer[]> results) {
+class EightQueens_8point12 {
+    static int GRID_SIZE = 8;
+
+    static void placeQueens(int row, Integer[] columns, ArrayList<Integer[]> results) {
         if (row == GRID_SIZE) { // Found valid placement
             results.add(columns.clone());
         } else {
@@ -24,7 +26,7 @@ class EightQueens_8point12 {
      * the same row because the calling placeQueen only attempts to place one queen at
      * a time. We know this row is empty. 
      */
-    boolean checkValid(Integer[] columns, int row1, int column1) {
+    static boolean checkValid(Integer[] columns, int row1, int column1) {
         for (int row2 = 0; row2 < row1; row2++) {
             int column2 = columns[row2];
             /* Check if (row2, column2) invalidats (row1, column1) as a
@@ -49,7 +51,7 @@ class EightQueens_8point12 {
         return true;
     }
 
-        public static void clear(Integer[] columns) {
+    public static void clear(Integer[] columns) {
         for (int i = 0; i < GRID_SIZE; i++) {
             columns[i] = -1;
         }

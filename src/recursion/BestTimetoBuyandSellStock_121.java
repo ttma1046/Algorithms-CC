@@ -18,7 +18,7 @@ class BestTimetoBuyandSellStock_121 {
         return maxProfit;
     }
 
-    public int maxProfit(int[] prices) {
+    public int maxProfitII(int[] prices) {
         /*
         int minPrice = Integer.MAX_VALUE;
 
@@ -47,6 +47,5 @@ class BestTimetoBuyandSellStock_121 {
     public static void main(String[] args) {
         System.out.println(new BestTimetoBuyandSellStock_121().maxProfit(new int[] {7, 1, 5, 3, 6, 4}));
         System.out.println(new BestTimetoBuyandSellStock_121().maxProfit(new int[] {7, 6, 4, 3, 1}));
-
     }
 }
