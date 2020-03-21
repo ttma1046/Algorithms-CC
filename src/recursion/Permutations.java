@@ -12,20 +12,6 @@ class Permutations {
         return permutations;
     }
 
-    public static void getPermutations(ArrayList<Integer> array, ArrayList<Integer> currentPermutation, ArrayList<ArrayList<Integer>> permutations) {
-        if (array.size() == 0 && currentPermutation.size() > 0) {
-            permutations.add(currentPermutation);
-        } else {
-            for (int i = 0; i < array.size(); i++) {
-                ArrayList<Integer> newArray = new ArrayList<Integer>(array);
-                newArray.remove(i);
-                ArrayList<Integer> newPermutation = new ArrayList<Integer>(currentPermutation);
-                newPermutation.add(array.get(i));
-                getPermutations(newArray, newPermutation, permutations);
-            }
-        }
-    }
-
     /*
     array: {1,2,3}
     1
@@ -125,7 +111,7 @@ class Permutations {
             permutations: {{1,2,3},{1,3,2},{2,1,3},{2,3,1},{3,1,2},{3,2,1}}
     */
 
-    public static ArrayList<ArrayList<Integer>> getPermutationsTwo(ArrayList<Integer> array) {
+    public static ArrayList<ArrayList<Integer>> getPermutationsII(ArrayList<Integer> array) {
         ArrayList<ArrayList<Integer>> permutations = new ArrayList<ArrayList<Integer>>();
         getPermutationsII(0, array, permutations);
         return permutations;
@@ -158,6 +144,21 @@ class Permutations {
         getPermutations(array, new ArrayList<Integer>(), permutations);
         return permutations;
     }
+
+    public static void getPermutations(ArrayList<Integer> array, ArrayList<Integer> currentPermutation, ArrayList<ArrayList<Integer>> permutations) {
+        if (array.size() == 0 && currentPermutation.size() > 0) {
+            permutations.add(currentPermutation);
+        } else {
+            for (int i = 0; i < array.size(); i++) {
+                ArrayList<Integer> newArray = new ArrayList<Integer>(array);
+                newArray.remove(i);
+                ArrayList<Integer> newPermutation = new ArrayList<Integer>(currentPermutation);
+                newPermutation.add(array.get(i));
+                getPermutations(newArray, newPermutation, permutations);
+            }
+        }
+    }
+
     
     public static void main(String[] args) {
         List<List<Integer>> result = new Permutations().permute(new int [] {1, 2, 3});
