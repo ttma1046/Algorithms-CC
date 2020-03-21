@@ -47,5 +47,5 @@ class Permutations_with_Dups_8point8 {
         for(String word: arrays) {
             System.out.println(word);
         }
-    } 
+    }
 }

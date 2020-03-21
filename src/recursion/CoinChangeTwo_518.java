@@ -60,7 +60,7 @@ public class CoinChangeTwo_518 {
         return dp;
     }
 
-    public int change(int amount, int[] coins) {
+    public int changeII(int amount, int[] coins) {
         int[] approaches = new int[amount + 1];
         approaches[0] = 1;
 

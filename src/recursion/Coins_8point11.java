@@ -13,11 +13,6 @@ class Coins_8point11 {
 
         return ways;
     }
-
-    int makeChange(int n) {
-        int[] denoms = { 25, 10, 5, 1 };
-        return makeChange(n, denoms, 0);
-    }
     
     /*
     This works, but it's not as optimal as it could be. 
