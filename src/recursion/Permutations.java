@@ -4,57 +4,84 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Permutations {
-    /*
-     * array: {1,2,3} 1 newArray: {2,3} newPermutation: {1} permutations: {{}}
-     * 
-     * array: {2,3} 2 newArray:{3} newPermutation: {1,2} permutations: {{}}
-     * 
-     * array:{3} 3 newAarray;{}, newPermutation: {1,2,3} permutations: {{}}
-     * 
-     * permutations: {{1,2,3}}
-     * 
-     * 3 newArray:{2} newPermutation: {1,3} permutations: {{1,2,3}}
-     * 
-     * array: {2} 2 newArray:{} newPermutation: {1,3,2} permutations: {{1,2,3}}
-     * 
-     * permutations: {{1,2,3},{1,3,2}}
-     * 
-     * 2 newArray: {1,3} newPermutation: {2} permutations: {{1,2,3},{1,3,2}}
-     * 
-     * array: {1,3} 1 newArray: {3} newPermutation: {2,1} permutations:
-     * {{1,2,3},{1,3,2}}
-     * 
-     * array: {3} 3 newArray: {} newPermutation: {2,1,3} permutations:
-     * {{1,2,3},{1,3,2}}
-     * 
-     * permutations: {{1,2,3},{1,3,2},{2,1,3}}
-     * 
-     * 3 newArray: {1} newPermutation: {2,3} permutations: {{1,2,3},{1,3,2}}
-     * 
-     * array: {1} 1 newArray: {} newPermutation: {2,3,1} permutations:
-     * {{1,2,3},{1,3,2},{2,1,3}}
-     * 
-     * permutations: {{1,2,3},{1,3,2},{2,1,3},{2,3,1}}
-     * 
-     * 3 newArray: {1,2} newPermutation: {3} permutations:
-     * {{1,2,3},{1,3,2},{2,1,3},{2,3,1}}
-     * 
-     * array: {1,2} 1 newArray: {2} newPermutation: {3,1} permutations:
-     * {{1,2,3},{1,3,2},{2,1,3},{2,3,1}}
-     * 
-     * array: {2} 2 newArray: {} newPermutation: {3,1,2} permutations:
-     * {{1,2,3},{1,3,2},{2,1,3},{2,3,1}}
-     * 
-     * permutations: {{1,2,3},{1,3,2},{2,1,3},{2,3,1},{3,1,2}}
-     * 
-     * 2 newArray: {1} newPermutation: {3,2} permutations:
-     * {{1,2,3},{1,3,2},{2,1,3},{2,3,1},{3,1,2}}
-     * 
-     * array: {1} 1 newArray: {} newPermutation: {3,2,1} permutations:
-     * {{1,2,3},{1,3,2},{2,1,3},{2,3,1},{3,1,2}}
-     * 
-     * permutations: {{1,2,3},{1,3,2},{2,1,3},{2,3,1},{3,1,2},{3,2,1}}
-     */
+  /*
+    array: {1,2,3}
+    1
+    newArray: {2,3}
+    newPermutation: {1}
+    permutations: {{}}
+        array: {2,3}
+        2
+        newArray:{3}
+        newPermutation: {1,2}
+        permutations: {{}}
+            array:{3}
+            3
+            newAarray;{},
+            newPermutation: {1,2,3}
+            permutations: {{}}
+            permutations: {{1,2,3}}
+        3
+        newArray:{2}
+        newPermutation: {1,3}
+        permutations: {{1,2,3}}
+            array: {2}
+            2
+            newArray:{}
+            newPermutation: {1,3,2}
+            permutations: {{1,2,3}}
+            permutations: {{1,2,3},{1,3,2}}
+    2
+    newArray: {1,3}
+    newPermutation: {2}
+    permutations: {{1,2,3},{1,3,2}}
+        array: {1,3}
+        1
+        newArray: {3}
+        newPermutation: {2,1}
+        permutations: {{1,2,3},{1,3,2}}
+            array: {3}
+            3
+            newArray: {}
+            newPermutation: {2,1,3}
+            permutations: {{1,2,3},{1,3,2}}
+            permutations: {{1,2,3},{1,3,2},{2,1,3}}
+        3
+        newArray: {1}
+        newPermutation: {2,3}
+        permutations: {{1,2,3},{1,3,2}}
+            array: {1}
+            1
+            newArray: {}
+            newPermutation: {2,3,1}
+            permutations: {{1,2,3},{1,3,2},{2,1,3}}
+            permutations: {{1,2,3},{1,3,2},{2,1,3},{2,3,1}}
+    3
+    newArray: {1,2}
+    newPermutation: {3}
+    permutations: {{1,2,3},{1,3,2},{2,1,3},{2,3,1}}
+        array: {1,2}
+        1
+        newArray: {2}
+        newPermutation: {3,1}
+        permutations: {{1,2,3},{1,3,2},{2,1,3},{2,3,1}}
+            array: {2}
+            2
+            newArray: {}
+            newPermutation: {3,1,2}
+            permutations: {{1,2,3},{1,3,2},{2,1,3},{2,3,1}}
+            permutations: {{1,2,3},{1,3,2},{2,1,3},{2,3,1},{3,1,2}}
+        2
+        newArray: {1}
+        newPermutation: {3,2}
+        permutations: {{1,2,3},{1,3,2},{2,1,3},{2,3,1},{3,1,2}}
+            array: {1}
+            1
+            newArray: {}
+            newPermutation: {3,2,1}
+            permutations: {{1,2,3},{1,3,2},{2,1,3},{2,3,1},{3,1,2}}
+            permutations: {{1,2,3},{1,3,2},{2,1,3},{2,3,1},{3,1,2},{3,2,1}}
+    */
 
     public static ArrayList<ArrayList<Integer>> getPermutationsII(ArrayList<Integer> array) {
         ArrayList<ArrayList<Integer>> permutations = new ArrayList<ArrayList<Integer>>();
