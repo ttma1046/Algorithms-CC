@@ -19,10 +19,10 @@ public class SortingExample {
     private static void show(Comparable[] a)
     { // Print the array, on a single line.
         for (int i = 0; i < a.length; i++) {
-            StdOut.print(a[i] + " ");
+            System.out.print(a[i] + " ");
         }
 
-        StdOut.println();
+        System.out.println();
     }
 
     public static boolean isSorted(Comparable[] a)
@@ -38,7 +38,7 @@ public class SortingExample {
 
     public static void main(String[] args)
     { // Read strings from standard input, sort them, and print.
-        String[] a = StdIn.readAllStrings();
+        String[] a = new String[] { "test", "test" }; //StdIn.readAllStrings();
         sort(a);
         assert isSorted(a);
         show(a);

@@ -16,15 +16,17 @@ class PaintHouse_256 {
             costsArray.add(arr);
         }
 
-        return minCost(costsArray, costs, length);
+        return minCostRec(costsArray, costs, length);
     }
 
     public int minCostRec(ArrayList<int[]> costsArray, int[][] costs, int length) {
         if (length == 1) {
-            return minCost(costs[0]);
+            return minCost(costs);
         }
 
-        return minCostRec(costsArray.cut(length - 1), costs, length - 1) + minCost(costs[length - 1]);
+        return 0;
+
+        // return minCostRec(costsArray.cut(length - 1), costs, length - 1);// + minCost(costs[length - 1]);
     }
 
     private int minCost(int[] cost, int previousIndex) {

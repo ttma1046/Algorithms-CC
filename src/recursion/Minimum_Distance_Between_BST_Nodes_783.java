@@ -39,7 +39,8 @@ class Minimum_Distance_Between_BST_Nodes_783 {
     }
 
     Integer res = Integer.MAX_VALUE, pre = null;
-    public int minDiffInBST(TreeNode root) {
+
+    public int minDiffInBSTII(TreeNode root) {
         if (root.left != null) minDiffInBST(root.left);
 
         if (pre != null) res = Math.min(res, root.val - pre);
