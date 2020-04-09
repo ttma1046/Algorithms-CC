@@ -7,7 +7,7 @@ public class ShortestCompletingWord_748 {
         }
 
         int[] plateCounts = new int[26];
-        for (Character c: licensePlate.toCharArray()) {
+        for (Character c : licensePlate.toCharArray()) {
             int index = Character.toLowerCase(c) - 'a';
             if (index >= 0 && index < 26) {
                 plateCounts[index]++;
@@ -16,11 +16,11 @@ public class ShortestCompletingWord_748 {
 
         int shorestLength = Integer.MAX_VALUE;
         String result = null;
-        for (String word: words) {
-            int [] wordCount = new int[26];
-            for (Character c: word.toCharArray()) {
+        for (String word : words) {
+            int[] wordCount = new int[26];
+            for (Character c : word.toCharArray()) {
                 int index = Character.toLowerCase(c) - 'a';
-                if (index >=0 && index < 26) {
+                if (index >= 0 && index < 26) {
                     wordCount[index]++;
                 }
             }
@@ -42,8 +42,11 @@ public class ShortestCompletingWord_748 {
     }
 
     public static void main(String[] args) {
-        System.out.println(new ShortestCompletingWord_748().shortestCompletingWord("1s3 PSt", new String [] {"step", "steps", "stripe", "stepple"}));
-        System.out.println(new ShortestCompletingWord_748().shortestCompletingWord("1s3 456", new String [] {"looks", "pest", "stew", "show"}));
-        System.out.println(new ShortestCompletingWord_748().shortestCompletingWord("PP", new String [] {"pair", "supper", "stew", "show"}));
+        System.out.println(new ShortestCompletingWord_748().shortestCompletingWord("1s3 PSt",
+                new String[] { "step", "steps", "stripe", "stepple" }));
+        System.out.println(new ShortestCompletingWord_748().shortestCompletingWord("1s3 456",
+                new String[] { "looks", "pest", "stew", "show" }));
+        System.out.println(new ShortestCompletingWord_748().shortestCompletingWord("PP",
+                new String[] { "pair", "supper", "stew", "show" }));
     }
 }
