@@ -34,7 +34,7 @@ package bfs;
  * unique integer value from 1 to 100.
  */
 
-class Solution {
+class CousinsInBinaryTree_993 {
     public boolean isCousins(TreeNode root, int x, int y) {
         if (root == null) {
             return false;
@@ -57,11 +57,13 @@ class Solution {
         }
 
         if (node.right != null) {
-            Rec(node.right, x, y, level + 1)
+            Rec(node.right, x, y, level + 1);
         }
 
         if (node.left != null) {
-            Rec(node.left, x, y, level + 1)
+            Rec(node.left, x, y, level + 1);
         }
+
+        return 0;
     }
 }

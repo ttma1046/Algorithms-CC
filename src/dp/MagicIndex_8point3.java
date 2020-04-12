@@ -1,6 +1,6 @@
 package dp;
 
-class Magic_Index {
+class MagicIndex_8point3 {
 	int FindMagicIndex(int[] array) {
 		if (array == null) {
 			return -1;

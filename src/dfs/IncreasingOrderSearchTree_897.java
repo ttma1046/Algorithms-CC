@@ -46,7 +46,7 @@ Each node will have a unique integer value from 0 to 1000.
  * Definition for a binary tree node. public class TreeNode { int val; TreeNode
  * left; TreeNode right; TreeNode(int x) { val = x; } }
  */
-class IncreastingOrderSearchTree_897 {
+class IncreasingOrderSearchTree_897 {
     public TreeNode increasingBST(TreeNode root) {
         if (root != null) {
             TreeNode newRoot = null;

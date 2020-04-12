@@ -2,7 +2,7 @@ package recursion;
 
 
 /* this is a joke question */
-class BestTimetoBuyandSellStackII_day5 {
+class BestTimetoBuyandSellStockII_day5 {
     public int maxProfit(int[] prices) {
         if (prices.length == 0) {
             return 0;
@@ -32,7 +32,7 @@ class BestTimetoBuyandSellStackII_day5 {
         return profit;
     }
 
-        public int maxProfit(int[] prices) {
+        public int maxProfitII(int[] prices) {
         if (prices.length == 0) {
             return 0;
         }
@@ -65,6 +65,6 @@ class BestTimetoBuyandSellStackII_day5 {
     	// System.out.println(new BestTimetoBuyandSellStackII_day5().maxProfit(new int[] {7,1,5,3,6,4}));
     	// System.out.println(new BestTimetoBuyandSellStackII_day5().maxProfit(new int[] {1,2,3,4,5}));
     	// System.out.println(new BestTimetoBuyandSellStackII_day5().maxProfit(new int[] {7,6,4,3,1}));
-    	System.out.println(new BestTimetoBuyandSellStackII_day5().maxProfit(new int[] {2,1,2,0,1}));
+    	System.out.println(new BestTimetoBuyandSellStockII_day5().maxProfit(new int[] {2,1,2,0,1}));
     }
 }

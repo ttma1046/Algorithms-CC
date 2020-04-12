@@ -1,4 +1,5 @@
-public class Solution {
+package recursion;
+public class SudokuSolver_37 {
     public void solveSudoku(char[][] board) {
         if(board == null || board.length == 0)
             return;
@@ -38,7 +39,7 @@ public class Solution {
     }
 }
 
-class Solution {
+class SudokuSolver_37II {
     // box size
     int n = 3;
     // row size

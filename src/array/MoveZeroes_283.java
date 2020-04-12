@@ -1,4 +1,6 @@
-class Solution {
+package array;
+
+class MoveZeroes_283 {
     public void moveZeroes(int[] nums, int toMove) {
         if (nums == null || nums.length == 0) return;
 
