@@ -21,7 +21,7 @@ class DiameterOfBinaryTree_day11 {
 
         int rightLength = travsel(node.right);
 
-        max = Math.max(max, leftLength + rightLength + 1);
+        max = Math.max(max, leftLength + rightLength);
 
         return Math.max(leftLength, rightLength) + 1;
     }
@@ -34,7 +34,7 @@ class DiameterOfBinaryTree_day11 {
         /*
          * If tree is not empty then height = 1 + max of left height and right heights
          */
-        return (1 + Math.max(height(node.left), height(node.right)));
+        return 1 + Math.max(height(node.left), height(node.right));
     }
 }
 
@@ -43,7 +43,7 @@ class Solution {
         if (root == null || (root.left == null && root.right == null)) {
             return 0;
         }
-        int [] max = new int[1];
+        int[] max = new int[1];
         travsel(root, max);
         return max[0];
     }
@@ -61,12 +61,37 @@ class Solution {
 
         return Math.max(leftLength, rightLength) + 1;
     }
+
+}
+
+class solutionII {
+    public int diameterOfBinaryTree(TreeNode root) {
+        if (root == null || (root.left == null && root.right == null)) {
+            return 0;
+        }
+
+        return travsel(root)[0];
+    }
+
+    private int[] travsel(TreeNode node) {
+        if (node == null) {
+            return new int[] { 0, 0 };
+        }
+
+        int[] leftHeight = travsel(node.left);
+
+        int[] rightHeight = travsel(node.right);
+
+        return new int[] { Math.max(Math.max(leftHeight[0], rightHeight[0]), leftHeight[1] + rightHeight[1]),
+                Math.max(leftHeight[1], rightHeight[1]) + 1 };
+    }
 }
 
 class TreeNode {
     int val;
     TreeNode left;
     TreeNode right;
+
     TreeNode(int x) {
         val = x;
     }
