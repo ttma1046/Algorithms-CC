@@ -11,6 +11,7 @@ public class MyGraph {
     public static class Node {
         private int id;
         LinkedList<Node> adjacent = new LinkedList<Node>();
+
         private Node(int id) {
             this.id = id;
         }
@@ -55,8 +56,8 @@ public class MyGraph {
             }
             visited.add(current.id);
 
-            if (current.adjacent == null || current.adjacent.size() > 0) {
-                for (Node childNode: current.adjacent) {
+            if (current.adjacent != null && current.adjacent.size() > 0) {
+                for (Node childNode : current.adjacent) {
                     myQueue.add(childNode);
                 }
             }
