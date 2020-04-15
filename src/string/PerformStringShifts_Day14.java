@@ -1,4 +1,4 @@
-package string; 
+package string;
 
 class PerformStringShifts_Day14 {
     public String stringShift(String s, int[][] shift) {
@@ -7,7 +7,7 @@ class PerformStringShifts_Day14 {
         }
 
         int tilt = 0;
-        for (int[] array: shift) {
+        for (int[] array : shift) {
             if (array[0] == 0) {
                 tilt -= array[1];
             } else {
@@ -19,8 +19,7 @@ class PerformStringShifts_Day14 {
         if (tilt < 0) {
             tilt += n;
         }
-        return s.substring(n - tilt) + s.substring(0, n - tilt);
-
+        // return s.substring(n - tilt) + s.substring(0, n - tilt);
 
         return rotate(s, tilt);
     }
@@ -36,6 +35,7 @@ class PerformStringShifts_Day14 {
     }
 
     public static void main(String[] args) {
-        System.out.println(new PerformStringShifts_Day14().stringShift("abcdefg", new int[][] {{1,1}, {1,1}, {0, 2}, {1, 3}}));
+        System.out.println(new PerformStringShifts_Day14().stringShift("abcdefg",
+                new int[][] { { 1, 1 }, { 1, 1 }, { 0, 2 }, { 1, 3 } }));
     }
 }
