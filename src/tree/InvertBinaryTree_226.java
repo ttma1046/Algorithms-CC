@@ -37,16 +37,16 @@ public class InvertBinaryTree_226 {
         }
     }
 
-    public TreeNode invertTreeII(TreeNode root) {
-        if (root == null) {
+    public TreeNode invertTreeII(TreeNode node) {
+        if (node == null) {
             return null;
         }
-        TreeNode left = invertTree(root.left);
-        TreeNode right = invertTree(root.right);
-        root.left = right;
-        root.right = left;
+        TreeNode left = invertTreeII(node.left);
+        TreeNode right = invertTreeII(node.right);
+        node.left = right;
+        node.right = left;
 
-        return root;
+        return node;
     }
 
     public TreeNode invertTreeIII(TreeNode root) {

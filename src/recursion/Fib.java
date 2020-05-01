@@ -33,19 +33,13 @@ public class Fib {
         return memo[n];
     } // O(N)
 
-    public static void main(String[] args) {
-        System.out.println(fib(6));
-    }
-}
-
-class Program {
-    public static int getNthFib(int n) {
-        int mem[] = new int[n];
+    public int getNthFib(int n) {
+        int mem[] = new int[n];                                                               
 
         return getNthFibWithMem(n - 1, mem);
     }
 
-    private static int getNthFibWithMem(int n, int[] mem) {
+    private  int getNthFibWithMem(int n, int[] mem) {
         if (n <= 0) {
             return 0;
         } else if (n == 1) {
@@ -59,36 +53,47 @@ class Program {
         return f;
     }
 
-    public static void main(String[] args) {
-        System.out.println(getNthFib(6));
-    }
-
     int fibonacci(int n) {
         if (n == 0)
             return 0;
         int a = 0;
         int b = 1;
-
+        int temp = 0;
         for (int i = 2; i < n; i++) {
-            int c = a + b;
+            /* temp = a + b;
             a = b;
-            b = c;
+            b = temp; */
+            
+            b = b - a;            
+            a = b + a;
+            b = 2 * a - b;
         }
 
         return a + b;
     }
     /*
-     * fib(7)
-     * 
-     * fib(6) fib(5)
-     * 
-     * fib(5) fib(4) fib(4) fib(3)
-     * 
-     * fib(4) fib(3) fib(3) fib(2) fib(3) fib(2) fib(2) fib(1)
-     * 
-     * fib(3) fib(2) fib(2) fib(1) fib(2) fib(1) fib(2) fib(1)
-     * 
-     */
+        * fib(7)
+        * 
+        * fib(6) fib(5)
+        * 
+        * fib(5) fib(4) fib(4) fib(3)
+        * 
+        * fib(4) fib(3) fib(3) fib(2) fib(3) fib(2) fib(2) fib(1)
+        * 
+        * fib(3) fib(2) fib(2) fib(1) fib(2) fib(1) fib(2) fib(1)
+        * 
+        */
+
+        
+    public static void main(String[] args) {
+        System.out.println(new Fib().fibonacci(0));
+        System.out.println(new Fib().fibonacci(1));
+        System.out.println(new Fib().fibonacci(2));
+        System.out.println(new Fib().fibonacci(3));
+        System.out.println(new Fib().fibonacci(4));
+        System.out.println(new Fib().fibonacci(5));
+        System.out.println(new Fib().fibonacci(6));
+    }
 }
 
 class Fact {
