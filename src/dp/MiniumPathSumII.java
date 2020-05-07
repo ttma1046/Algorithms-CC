@@ -1,6 +1,6 @@
 package dp;
 
-class MiniumSumPath {
+class MiniumPathSumII {
 	public static void main(String[] args) {
 		System.out
 				.println(new MiniumSumPath().getMiniumSumPath(new int[][] { { 1, 1, 3 }, { 2, 2, 3 }, { 3, 4, 2 }, }));

@@ -41,6 +41,7 @@ public class MinimumPathSum {
 
         class Solution {
         public:
+        
             int minPathSum(vector<vector<int>> &grid) {
                 if(!grid.size())return 0;
                 const int rows=grid.size(),cols=grid[0].size();
