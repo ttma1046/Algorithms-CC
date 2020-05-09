@@ -2,6 +2,7 @@ package recursion;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.List;
 import java.util.ArrayList;
 
 class Parens_8point9 {
@@ -20,12 +21,12 @@ class Parens_8point9 {
     If we're going to apply this approach, we'll need to check for duplicate values before adding a string to our
     list.
     */
-    Set<String> myGenerateParens(int remaining) {
+    Set<String> generateParensIII(int remaining) {
         Set<String> result = new HashSet<String>();
         if (remaining == 1) {
             result.add("()");
         } else {
-            Set<String> prev = myGenerateParens(remaining - 1);
+            Set<String> prev = generateParensIII(remaining - 1);
 
             for(String comb: prev) {
                 for (int i = 0; i < comb.length(); i++) {
@@ -89,55 +90,87 @@ there are more left parens in use than right parens), then we'll insert a right 
 
     */
 
-    ArrayList<String> myGenerateParensII(int count) {
-        ArrayList<String> result = new ArrayList<String>();
+    void addParen(List<String> result, String currentString, int left, int right, int max) {
+        if (currentString.length() == max * 2) { /* Out of left and right parentheses */
+            result.add(currentString);
+            return;
+        } else {
+            if (left < max) {
+                addParen(result, currentString + "(", left + 1, right, max);
+            }
 
-        int leftRem = count;
-        int rightRem = count;
-
-        return buildString(result, "(", leftRem - 1, rightRem);
+            if (left > right) {
+                addParen(result, currentString + ")", left, right + 1, max);
+            }
+        }
     }
 
-    ArrayList<String> buildString(ArrayList<String> result, String head, int leftRem, int rightRem) {
-        if (leftRem > 0) {
-            buildString(result, head + "(", leftRem - 1, rightRem);
-        }
 
-        if (rightRem > leftRem) {
-            buildString(result, head + ")", leftRem, rightRem - 1);
-        }
 
-        if (leftRem == 0 && rightRem == 0) {
-            result.add(head);
-        }
+    List<String> generateParenthesis(int count) {
+        List<String> result = new ArrayList<String>();
 
+        addParen(result, "", 0, 0, count);
         return result;
     }
 
-    void addParen(ArrayList<String> list, int leftRem, int rightRem, char[] str, int index) {
-        if (leftRem < 0 || rightRem < leftRem) return; // invalid state;
+/*
+Complexity Analysis
 
-        if (leftRem == 0 && rightRem == 0) { /* Out of left and right parentheses */
-            list.add(String.copyValueOf(str));
-        } else {
-            str[index] = '('; // Add left and recurse.
-            addParen(list, leftRem - 1, rightRem, str, index + 1);
+Our complexity analysis rests on understanding how many elements there are in generateParenthesis(n). This analysis is outside the scope of this article, but it turns out this is the n-th Catalan number \dfrac{1}{n+1}\binom{2n}{n} 
+Catalan number 
+  1    2n
+----- (  )
+ n+1   n
+, which is bounded asymptotically by
+  Math.pow(4, n)
+-------------------
+ n * Math.sqrt(n)
 
-            str[index] = ')'; // Add right and recurse.
-            addParen(list, leftRem, rightRem - 1, str, index + 1);
+* Time Complexity: 
+
+    Math.pow(4, n)
+O(-------------------)
+     Math.sqrt(n)
+
+Each valid sequence has at most n steps during the backtracking procedure.
+
+* Space Complexity: 
+
+    Math.pow(4, n)
+O(-------------------)
+     Math.sqrt(n)   
+
+, as described above, and using O(n) space to store the sequence.
+*/
+    public List<String> generateParenthesis(int n) {
+         List<String> res = new ArrayList<>();
+         helper(res, new StringBuilder(), 0, 0, n);
+         return res;
+    }
+
+    private void helper(List<String> res, StringBuilder sb, int open, int close, int n) {
+        if(open == n && close == n) {
+            res.add(sb.toString());
+            return;
+        }
+
+        if(open < n) {
+            sb.append("(");
+            helper(res, sb, open + 1, close, n);
+            sb.setLength(sb.length() - 1);
+        }
+
+        if(close < open) {
+            sb.append(")");
+            helper(res, sb, open, close + 1, n);
+            sb.setLength(sb.length() - 1);
         }
     }
 
-    ArrayList<String> generateParensII(int count) {
-        char[] str = new char[count * 2];
-        ArrayList<String> list = new ArrayList<String>();
-
-        addParen(list, count, count, str, 0);
-        return list;
-    }
-
     public static void main(String[] args) {
-        Set<String> result = new Parens_8point9().myGenerateParens(4);
+        /*
+        Set<String> result = new Parens_8point9().generateParensIII(4);
 
         for(String word: result) {
             System.out.println(word);
@@ -148,14 +181,9 @@ there are more left parens in use than right parens), then we'll insert a right 
         for(String word: result) {
             System.out.println(word);
         }
+        */
 
-        ArrayList<String> resulttwo = new Parens_8point9().myGenerateParensII(4);
-
-        for(String word: resulttwo) {
-            System.out.println(word);
-        }
-
-        resulttwo = new Parens_8point9().myGenerateParensII(4);
+        List<String> resulttwo = new Parens_8point9().generateParenthesis(3);
 
         for(String word: resulttwo) {
             System.out.println(word);
