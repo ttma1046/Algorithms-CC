@@ -4,6 +4,51 @@ import java.util.Stack;
 
 
 public class ConstructBinarySearchTreefromPreOrderTraversal_1008 {
+	private int index;
+
+	public TreeNode bstFromPreorder(int[] preorder) {
+		if (preorder == null || preorder.length <= 0) {
+			return null;
+		}
+
+		return helper(Integer.MIN_VALUE, Integer.MAX_VALUE, preorder);
+	}
+
+	private TreeNode helper(int minLimit, int maxLimit, int[] array) {
+		if (array.length == index) {
+			return null;
+		}
+
+		int value = array[index];
+		if (value <= minLimit || value >= maxLimit) {
+			return null;
+		}
+
+		index++;
+
+		TreeNode node = new TreeNode(value);
+		node.left = helper(minLimit, value, preorder);
+		node.right = helper(value, maxLimit, preorder);
+
+		return node;
+	}
+
+	public static void main(String[] args) {
+        TreeNode result = new ConstructBinarySearchTreefromPreOrderTraversal_1008().bstFromPreorder(new int[] { 8, 5, 1, 7, 10, 12 });
+
+        printPreOrder(result);
+    }
+
+    private static void printPreOrder(TreeNode node) {
+        if (node == null) {
+            return;
+        }
+        System.out.println(node.val);
+        printPreOrder(node.left);
+        printPreOrder(node.right);
+    }
+
+
     /*
     public TreeNode bstFromPreorder(int[] preorder) {
         if (preorder == null || preorder.length == 0) {
