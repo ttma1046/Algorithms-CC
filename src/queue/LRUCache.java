@@ -130,4 +130,8 @@ public class LRUCache {
             this.moveToHead(node);
         }
     }
+
+    public static void main(String[] args) {
+        
+    }
 }
