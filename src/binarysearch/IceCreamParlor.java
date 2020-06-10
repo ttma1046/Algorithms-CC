@@ -123,6 +123,5 @@ public class IceCreamParlor {
     }
 
     public static void main(String[] args) {
-
     }
 }
