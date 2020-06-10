@@ -3,7 +3,6 @@ package binarysearch;
 import java.util.Arrays;
 
 public class BinarySearch {
-
     public static boolean binarySearchIterative(int[] array, int x) {
         int left = 0;
         int right = array.length - 1;
@@ -12,13 +11,17 @@ public class BinarySearch {
 
             if (array[mid] == x) {
                 return true;
-            } else if (x < array[mid]) {
+            } else if (array[mid] > x) {
                 right = mid - 1;
             } else {
                 left = mid + 1;
             }
         }
         return false;
+    }
+
+    public static boolean binarySearchRecursive(int[] array, int x) {
+        return binarySearchRecursive(array, x, 0, array.length - 1);
     }
 
     public static boolean binarySearchRecursive(int[] array, int x, int left, int right) {
@@ -37,19 +40,6 @@ public class BinarySearch {
         }
     }
 
-    public static boolean binarySearchRecursive(int[] array, int x) {
-        return binarySearchRecursive(array, x, 0, array.length - 1);
-    }
-
-    /**
-     * Recursive
-     *
-     * @param nums
-     * @param low
-     * @param high
-     * @param target
-     * @return
-     */
     public static int binarySearch(int[] nums, int low, int high, int target) {
         if (high <= low) {
             return -1;
@@ -66,13 +56,6 @@ public class BinarySearch {
         }
     }
 
-    /**
-     * Iterative
-     *
-     * @param nums
-     * @param target
-     * @return
-     */
     public static int binarySearchII(int[] nums, int target) {
         int left = 0;
         int right = nums.length - 1;
@@ -90,13 +73,6 @@ public class BinarySearch {
         return -1;
     }
 
-    /**
-     * Iterative III
-     *
-     * @param nums
-     * @param target
-     * @return
-     */
     public static int binarySearchIII(int[] nums, int target) {
         int left = 0;
         int right = nums.length;
@@ -114,12 +90,6 @@ public class BinarySearch {
         return -1;
     }
 
-    /**
-     * Iterative IV
-     * @param nums
-     * @param target
-     * @return
-     */
     public static int binarySearchIV(int[] nums, int target) {
         int left = 0;
         int right = nums.length - 1;
