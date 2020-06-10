@@ -120,4 +120,28 @@ public class BinarySearch {
 
         Arrays.binarySearch(nums, 4);
     }
+
+    public boolean binarySearchRecursive(int[] array, int target) {
+        if (array == null || array.length <= 0 || target == null) {
+            return false;
+        }
+
+        return binarySearchRecursive(array, target, 0, array.length - 1)
+    }
+
+    private boolean binarySearchRecursive(int[] array, int target, int start, int end) {
+        if (start > end) {
+            return false;
+        }
+
+        int mid = start + (end - start) / 2;
+
+        if (array[mid] == target) {
+            return true;
+        } else if (target < mid) {
+            return binarySearchRecursive(array, target, start, mid - 1);
+        } else {
+            return binarySearchRecursive(array, target, mid + 1, end);
+        }
+    }
 }
