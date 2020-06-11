@@ -24,7 +24,7 @@ public class BinarySearch {
         return binarySearchRecursive(array, x, 0, array.length - 1);
     }
 
-    public static boolean binarySearchRecursive(int[] array, int x, int left, int right) {
+    private static boolean binarySearchRecursive(int[] array, int x, int left, int right) {
         if (left > right) {
             return false;
         }

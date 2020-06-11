@@ -1,10 +1,9 @@
 package binarysearch;
 
 public class ClassicBinarySearch {
-    public int FindPosition(int[] nums, int target)
+    private int FindPosition(int[] nums, int target)
     {
-        if (nums == null || nums.length == 0)
-        {
+        if (nums == null || nums.length == 0) {
             return -1;
         }
 
@@ -24,11 +23,11 @@ public class ClassicBinarySearch {
 
             if (nums[mid] < target)
             {
-                start = mid;
-                // start = mid + 1;
+                // start = mid;
+                start = mid + 1;
             } else {
-                end = mid;
-                // end = mid - 1;
+                // end = mid;
+                end = mid - 1;
             }
         }
 
@@ -43,5 +42,18 @@ public class ClassicBinarySearch {
         }
 
         return -1;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new ClassicBinarySearch().FindPosition(new int[] {1}, 1));
+        System.out.println(new ClassicBinarySearch().FindPosition(new int[] {1,2}, 1));
+        System.out.println(new ClassicBinarySearch().FindPosition(new int[] {1,2}, 2));
+        System.out.println(new ClassicBinarySearch().FindPosition(new int[] {1}, 3));
+        System.out.println(new ClassicBinarySearch().FindPosition(new int[] {1,2,4,5}, 3));
+        System.out.println(new ClassicBinarySearch().FindPosition(new int[] { 0, 2, 4, 6, 8, 10, 12, 14, 16 }, 9));
+        System.out.println(new ClassicBinarySearch().FindPosition(new int[] { 0, 2, 4, 6, 8, 10, 12, 14, 16, 18 }, 9)); 
+        System.out.println(new ClassicBinarySearch().FindPosition(new int[] { 0, 2, 4, 6, 8, 10, 12, 14, 16 }, 0));
+        System.out.println(new ClassicBinarySearch().FindPosition(new int[] { 0, 2, 4, 6, 8, 10, 12, 14, 16 }, 16));
+        System.out.println(new ClassicBinarySearch().FindPosition(new int[] { 0, 2, 4, 6, 8, 10, 12, 14, 16 }, 8));
     }
 }
