@@ -14,7 +14,6 @@ help Sunny and Johnny choose two distinct flavors such that they spend their ent
 ID numbers are the 1- based index number associated with a cost.
 
 For each trip to the parlor, print the ID numbers for the two types of ice cream that Sunny and Johnny purchase as two space-separated
-
  integers on a new line. You must print the smaller ID first and the larger ID second.
 
 For example, there are n = 5 flavors having cost = [2, 1, 3, 5, 6]. Together they have money = 5 to spend.
@@ -23,7 +22,7 @@ They would purchase flavor ID's 1 and 3 for a cost of 2 + 3 = 5. Use 1 based ind
 
 Note:
 
-Two ice creams having unique IDs i and j may have the same cost (i.e., cost[i] === const [j] ).
+Two ice creams having unique IDs i and j may have the same cost (i.e., cost[i] === cost[j]).
 There will always be a unique solution.
 
 Function Description
@@ -43,9 +42,9 @@ The first line contains an integer, t , the number of trips to the ice cream par
 
 Each of the next t sets of 3 lines is as follows:
 
-* The first line contains .
-* The second line contains an integer, , the size of the array .
-* The third line contains  space-separated integers denoting the .
+* The first line contains money.
+* The second line contains an integer, n, the size of the array cost.
+* The third line contains n space-separated integers denoting the cost[i].
 
 Constraints
 * 1 <= t <= 50
@@ -112,7 +111,7 @@ public class IceCreamParlor {
 
         for (int i = 0; i < sortedMenu.length; i++) {
             int complement = money - sortedMenu[i];
-            int location = Arrays.binarySearch(sortedMenu, i+ 1, sortedMenu.length, complement);
+            int location = Arrays.binarySearch(sortedMenu, i + 1, sortedMenu.length, complement);
             if (location >= 0 && location < sortedMenu.length && sortedMenu[location] == complement) {
                 int[] indices = getIndicesFromValues(menu, sortedMenu[i], complement);
                 return indices;
