@@ -15,31 +15,87 @@ public class ClassicBinarySearch {
             // start = 2^31 - 1, end = 2^31 - 2
             // int = [-2^31, 2^31 - 1]
             int mid = start + (end - start) / 2;
-            if (nums[mid] == target)
-            {
+            if (nums[mid] == target) {
                 return mid;
             }
 
-            if (nums[mid] < target)
-            {
-                // start = mid;
+            if (nums[mid] < target) {
                 start = mid + 1;
             } else {
-                // end = mid;
                 end = mid - 1;
             }
         }
 
-        if (nums[start] == target)
-        {
+        /*
+        while (start + 1 < end) {
+            int mid = start + (end - start) / 2;
+            if (nums[mid] < target) { 
+                start = mid - 1;
+            } else { 
+                end = mid; 
+            }
+        }
+        */
+
+        if (nums[start] == target) {
             return start;
         }
 
-        if (nums[end] == target)
-        {
+        if (nums[end] == target) {
             return end;
         }
 
+        return -1;
+    }
+
+    public int FindLastPosition(int[] nums, int target) {
+        if (nums == null || nums.length == 0) { 
+            return -1; 
+        }
+        int start = 0, end = nums.length - 1;
+        while (start + 1 < end) {
+            int mid = start + (end - start) / 2;
+            if (nums[mid] == target) { 
+                start = mid; 
+            } else if (nums[mid] < target) { 
+                start = mid + 1; 
+            } else {
+                end = mid - 1;
+            }
+        }
+
+        if (nums[end] == target) { 
+            return end; 
+        }
+
+        if (nums[start] == target) {
+            return start;
+        }
+        return -1;
+    }
+
+    public int FindFirstPosition(int[] nums, int target) {
+        if (nums == null || nums.length == 0) { 
+            return -1;
+        }
+
+        int start = 0, end = nums.length - 1;
+        while (start + 1 < end) {
+            int mid = start + (end - start) / 2;
+            if (nums[mid] == target) {
+                end = mid;
+            } else if (nums[mid] > target) {
+                end = mid - 1;
+            } else {
+                start = mid + 1;
+            }
+        }
+        if (nums[start] == target) { 
+            return start;
+        }
+        if (nums[end] == target) {
+            return end;
+        }
         return -1;
     }
 
@@ -57,6 +113,15 @@ public class ClassicBinarySearch {
         System.out.println(new ClassicBinarySearch().FindPosition(new int[] { 0, 2, 4, 6, 8, 10, 12, 14, 16 }, 8));
         */
         System.out.println(new ClassicBinarySearch().FindPosition(new int[] {2,3,4}, 2));
-        
+        System.out.println(new ClassicBinarySearch().FindPosition(new int[] {2,3,4,5}, 2));
+        System.out.println(new ClassicBinarySearch().FindPosition(new int[] {2,3,4,5,6}, 2));
+        System.out.println(new ClassicBinarySearch().FindPosition(new int[] {4,5,6}, 6));
+        System.out.println(new ClassicBinarySearch().FindPosition(new int[] {3,4,5,6}, 6));
+        System.out.println(new ClassicBinarySearch().FindPosition(new int[] {2,3,4,5,6}, 6));
+        System.out.println(new ClassicBinarySearch().FindPosition(new int[] {2,3,4,5,6}, 4));
+        System.out.println(new ClassicBinarySearch().FindPosition(new int[] {2,3,4,5,6}, 3));
+        System.out.println(new ClassicBinarySearch().FindPosition(new int[] {2,3,4,5,6}, 5));
+        System.out.println(new ClassicBinarySearch().FindPosition(new int[] {3,4,5,6}, 4));
+        System.out.println(new ClassicBinarySearch().FindPosition(new int[] {3,4,5,6}, 5));
     }
 }
