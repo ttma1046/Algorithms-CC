@@ -57,7 +57,7 @@ public class ClassicBinarySearch {
             int mid = start + (end - start) / 2;
             if (nums[mid] == target) { 
                 start = mid; 
-            } else if (nums[mid] < target) { 
+            } else if (target > nums[mid]) { 
                 start = mid + 1; 
             } else {
                 end = mid - 1;
@@ -84,7 +84,7 @@ public class ClassicBinarySearch {
             int mid = start + (end - start) / 2;
             if (nums[mid] == target) {
                 end = mid;
-            } else if (nums[mid] > target) {
+            } else if (target < nums[mid]) {
                 end = mid - 1;
             } else {
                 start = mid + 1;
@@ -93,6 +93,7 @@ public class ClassicBinarySearch {
         if (nums[start] == target) { 
             return start;
         }
+        
         if (nums[end] == target) {
             return end;
         }
