@@ -54,10 +54,6 @@ class Search_in_Rotated_Sorted_Array_33 {
     }
 
 
-    private int binarysearch(int[] array, int target, int start, int end) {
-
-    }
-
     public static void main(String[] args) {
         System.out.println(new Search_in_Rotated_Sorted_Array_33().search(new int[] {4, 5, 6, 7, 0, 1, 2}, 0));
         System.out.println(new Search_in_Rotated_Sorted_Array_33().search(new int[] {4, 5, 6, 7, 0, 1, 2}, 3));

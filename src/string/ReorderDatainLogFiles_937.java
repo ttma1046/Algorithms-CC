@@ -7,19 +7,22 @@ For each log, the first word in each log is an alphanumeric identifier.  Then, e
 
 Each word after the identifier will consist only of lowercase letters, or;
 Each word after the identifier will consist only of digits.
-We will call these two varieties of logs letter-logs and digit-logs.  It is guaranteed that each log has at least one word after its identifier.
+We will call these two varieties of logs letter-logs and digit-logs.
 
-Reorder the logs so that all of the letter-logs come before any digit-log.  The letter-logs are ordered lexicographically ignoring identifier, with the identifier used in case of ties.  The digit-logs should be put in their original order.
+It is guaranteed that each log has at least one word after its identifier.
+
+Reorder the logs so that all of the letter-logs come before any digit-log.
+
+The letter-logs are ordered lexicographically ignoring identifier, with the identifier used in case of ties.  
+The digit-logs should be put in their original order.
 
 Return the final order of the logs.
-
 
 Example 1:
 
 Input: logs = ["dig1 8 1 5 1","let1 art can","dig2 3 6","let2 own kit dig","let3 art zero"]
 Output: ["let1 art can","let3 art zero","let2 own kit dig","dig1 8 1 5 1","dig2 3 6"]
  
-
 Constraints:
 
 0 <= logs.length <= 100
@@ -28,6 +31,38 @@ logs[i] is guaranteed to have an identifier, and a word after the identifier.
 */
 class ReorderDatainLogFiles_937 {
     public String[] reorderLogFiles(String[] logs) {
-        return null;
+        if (logs == null || logs.length <= 0) {
+            return null;
+        }
+        int length = logs.length;
+        int j = 0;
+        int k = 0;
+        String[] stringResults = new String[length];
+        String[] numberResults = new String[length];
+        for(int i = 0; i < length; i++) {
+            if (logs[i].charAt(logs[i].indexOf(' ') + 1) - 'a' >= 0 && logs[i].charAt(logs[i].indexOf(' ') + 1) - 'a' <= 26) {
+                stringResults[j++] = logs[i];
+            } else {
+                numberResults[k++] = logs[i];
+            }
+        }
+
+        for(String numberResult: numberResults) {
+            if (numberResult != null) {
+                stringResults[j++] = numberResult;    
+            }            
+        }
+
+        return stringResults;
+    }
+
+    public static void main(String[] args) {
+    	String[] result = new ReorderDatainLogFiles_937().reorderLogFiles(new String[] {
+    		"dig1 8 1 5 1","let1 art can","dig2 3 6","let2 own kit dig","let3 art zero"
+    	});
+
+    	for(String item: result) {
+    		System.out.println(item);
+    	}
     }
 }
