@@ -17,6 +17,7 @@ It is guaranteed that each log has at least one word after its identifier.
 Reorder the logs so that all of the letter-logs come before any digit-log.
 
 The letter-logs are ordered lexicographically ignoring identifier, with the identifier used in case of ties.
+
 The digit-logs should be put in their original order.
 
 Return the final order of the logs.
@@ -34,7 +35,32 @@ logs[i] is guaranteed to have an identifier, and a word after the identifier.
 */
 class ReorderDatainLogFiles_937 {
     public String[] reorderLogFiles(String[] logs) {
-        Comparator<String> comparer = new Comparator<String>() {
+        Comparator<String> comparerOne = new Comparator<String>() {
+            @Override
+            public int compare(String s1, String s2) {
+                int indexOne = s1.indexOf(" ");
+                int indexTwo = s2.indexOf(" ");
+
+                char firstLetterOne = s1.charAt(indexOne + 1);
+                char firstLetterTwo = s2.charAt(indexTwo + 1);
+
+                if (firstLetterOne <= '9') {
+                    if (firstLetterTwo <= '9') {
+                        return 0;
+                    } else {
+                        return 1;
+                    }
+                }
+
+                if (firstLetterTwo <= '9') return -1;
+
+                int myCompare = s1.substring(indexOne + 1).compareTo(s2.substring(indexTwo + 1));
+                if (myCompare != 0) return myCompare;
+                return  s1.substring(0, indexOne).compareTo(s2.substring(0, indexTwo));
+            }
+        };
+
+        Comparator<String> comparerTwo = new Comparator<String>() {
             @Override
             public int compare(String s1, String s2) {
                 String[] split1 = s1.split(" ", 2);
@@ -53,30 +79,8 @@ class ReorderDatainLogFiles_937 {
             }
         };
 
-        Arrays.sort(logs, comparer);
+        Arrays.sort(logs, comparerTwo);
         return logs;
-    }
-
-    Comparator<String> comparer = new Comparator<String>() {
-        @Override
-        public int compare(String s1, String s2) {
-            int s1SpaceIndex = s1.indexOf(" ");
-            int s2SpaceIndex = s2.indexOf(" ");
-            char c1 = s1.charAt(s1SpaceIndex + 1);
-            char c2 = s2.charAt(s2SpaceIndex + 1);
-
-            if (c1 <= '9') {
-                if (c2 <= '9') {
-                    return 0;
-                }
-                return 1;
-            }
-            if (c2 <= '9') return -1;
-
-            int preCompute = s1.substring(s1SpaceIndex + 1).compareTo(s2.substring(s2SpaceIndex + 1));
-            if (preCompute == 0) return s1.substring(0, s1SpaceIndex).compareTo(s2.substring(0, s2SpaceIndex));
-            return preCompute;
-        }
     }
 
     public static void main(String[] args) {
