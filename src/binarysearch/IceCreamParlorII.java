@@ -68,24 +68,29 @@ public class IceCreamParlorII {
     }
 
     public static void main(String[] args) {
-        /*
-         * int[] result = new IceCreamParlorII().whatFlavors(new int[] { 5, 2, 3, 1, 4
-         * }, 4);
-         * 
-         * for (int value : result) { System.out.println(value); }
-         * 
-         * result = new IceCreamParlorII().whatFlavors(new int[] { 2, 2, 1, 4, 5 }, 4);
-         * 
-         * for (int value : result) { System.out.println(value); }
-         * 
-         * result = new IceCreamParlorII().whatFlavors(new int[] { 1, 4, 5, 3, 2 }, 4);
-         * 
-         * for (int value : result) { System.out.println(value); }
-         * 
-         * result = new IceCreamParlorII().whatFlavors(new int[] { 2, 2, 4, 3 }, 4);
-         * 
-         * for (int value : result) { System.out.println(value); }
-         */
+        int[] result = new IceCreamParlorII().whatFlavors(new int[] { 5, 2, 3, 1, 4 }, 4);
+
+        for (int value : result) {
+            System.out.println(value);
+        }
+
+        result = new IceCreamParlorII().whatFlavors(new int[] { 2, 2, 1, 4, 5 }, 4);
+
+        for (int value : result) {
+            System.out.println(value);
+        }
+
+        result = new IceCreamParlorII().whatFlavors(new int[] { 1, 4, 5, 3, 2 }, 4);
+
+        for (int value : result) {
+            System.out.println(value);
+        }
+
+        result = new IceCreamParlorII().whatFlavors(new int[] { 2, 2, 4, 3 }, 4);
+
+        for (int value : result) {
+            System.out.println(value);
+        }
 
         System.out.println(new IceCreamParlorII().binarySearch(new int[] { 2, 3, 4, 5, 6 }, 0, 6));
     }

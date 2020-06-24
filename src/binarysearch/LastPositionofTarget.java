@@ -20,7 +20,7 @@ public class LastPositionofTarget {
         // start <= end
         // start + 1 < end
         while (start + 1 < end) {
-        // while (start < end) [1,2] target = 1;
+            // while (start < end) [1,2] target = 1;
             // start = 2^31 - 1, end = 2^31 - 2
             // int = [-2^31, 2^31 - 1]
             int mid = start + (end - start) / 2;
@@ -50,10 +50,5 @@ public class LastPositionofTarget {
         System.out.println(new LastPositionofTarget().FindLastPosition(new int[] { 1, 2, 2, 4, 5, 5 }, 2));
         System.out.println(new LastPositionofTarget().FindLastPosition(new int[] { 1, 2, 2, 4, 5, 5 }, 5));
         System.out.println(new LastPositionofTarget().FindLastPosition(new int[] { 1, 2, 2, 4, 5, 5 }, 6));
-
-    }
-
-    public static void main(String[] args) {
-        System.out.println(new LastPositionofTarget().FindLastPosition(new int[] { 1, 2, 2, 4, 5, 5 }, 2));
     }
 }
