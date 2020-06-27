@@ -73,7 +73,7 @@ public class BinarySearch {
         return -1;
     }
 
-    public static int binarySearchIII(int[] nums, int target) {
+    public int binarySearchIII(int[] nums, int target) {
         int left = 0;
         int right = nums.length;
 
@@ -87,7 +87,7 @@ public class BinarySearch {
                 return mid;
             }
         }
-        return -1;
+        return left;
     }
 
     public int binarySearchIIII(int[] nums, int target) {
@@ -95,12 +95,12 @@ public class BinarySearch {
         int right = nums.length - 1;
 
         while (left < right) {
-            int mid = left + (int)Math.floor((right - left + 1) / 2);
+            int mid = left + (int) Math.floor((right - left + 1) / 2);
 
             if (target < nums[mid]) {
                 right = mid - 1;
             } else {
-                left = mid; 
+                left = mid;
             }
         }
         return nums[left] == target ? left : -1;
@@ -132,24 +132,23 @@ public class BinarySearch {
     }
 
     public static void main(String[] args) {
+        System.out.println(new BinarySearch().binarySearchIII(new int[] { 2, 3, 4 }, 2));
+        System.out.println(new BinarySearch().binarySearchIII(new int[] { 2, 3, 4, 5 }, 2));
+        System.out.println(new BinarySearch().binarySearchIII(new int[] { 2, 3, 4, 5, 6 }, 2));
+        System.out.println(new BinarySearch().binarySearchIII(new int[] { 4, 5, 6 }, 6));
+        System.out.println(new BinarySearch().binarySearchIV(new int[] { 2, 3, 4, 5 }, 2));
+        System.out.println(new BinarySearch().binarySearchIII(new int[] { 3, 4, 5, 6 }, 6));
+        System.out.println(new BinarySearch().binarySearchIII(new int[] { 2, 3, 4, 5, 6 }, 6));
+        System.out.println(new BinarySearch().binarySearchIII(new int[] { 2, 3, 4, 5, 6 }, 4));
+        System.out.println(new BinarySearch().binarySearchIII(new int[] { 2, 3, 4, 5, 6 }, 3));
+        System.out.println(new BinarySearch().binarySearchIII(new int[] { 2, 3, 4, 5, 6 }, 5));
+        System.out.println(new BinarySearch().binarySearchIII(new int[] { 3, 4, 5, 6 }, 4));
+        System.out.println(new BinarySearch().binarySearchIII(new int[] { 3, 4, 5, 6 }, 5));
         /*
-        int[] nums = new int[] {2,3,8,1,3,5};
-        Arrays.sort(nums);
-
-        Arrays.binarySearch(nums, 4);
-        */
-
-        System.out.println(new BinarySearch().binarySearchIII(new int[] {2,3,4}, 2));
-        System.out.println(new BinarySearch().binarySearchIII(new int[] {2,3,4,5}, 2));
-        System.out.println(new BinarySearch().binarySearchIII(new int[] {2,3,4,5,6}, 2));
-        System.out.println(new BinarySearch().binarySearchIII(new int[] {4,5,6}, 6));
-        System.out.println(new BinarySearch().binarySearchIII(new int[] {3,4,5,6}, 6));
-        System.out.println(new BinarySearch().binarySearchIII(new int[] {2,3,4,5,6}, 6));
-        System.out.println(new BinarySearch().binarySearchIII(new int[] {2,3,4,5,6}, 4));
-        System.out.println(new BinarySearch().binarySearchIII(new int[] {2,3,4,5,6}, 3));
-        System.out.println(new BinarySearch().binarySearchIII(new int[] {2,3,4,5,6}, 5));
-        System.out.println(new BinarySearch().binarySearchIII(new int[] {3,4,5,6}, 4));
-        System.out.println(new BinarySearch().binarySearchIII(new int[] {3,4,5,6}, 5));
+         * int[] nums = new int[] { 2, 3, 8, 1, 3, 5 }; Arrays.sort(nums);
+         * 
+         * Arrays.binarySearch(nums, 4);
+         */
     }
 
     public boolean binarySearchRecursiveII(int[] array, int target) {
