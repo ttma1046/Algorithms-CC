@@ -298,7 +298,7 @@ class Permutations {
     }
 
     public static void main(String[] args) {
-        List<List<Integer>> result = new Permutations().permute(new int[] { 1, 2, 3 });
+        List<List<Integer>> result = new Permutations().permuteIV(new int[] { 1, 2, 3 });
 
         for (List<Integer> item : result) {
             for (Integer num : item) {
