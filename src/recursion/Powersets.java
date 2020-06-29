@@ -4,12 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Powersets {
-    public static void main(String[] args) {
-        System.out.println(new Powersets().subsetsWithDupIte(new int[] { 1, 2, 3 }));
-
-        System.out.println(new Powersets().subsetsWithDupRec(new int[] { 1, 2, 3 }));
-    }
-
     public List<List<Integer>> subsetsWithDupIte(int[] nums) {
         if (nums == null || nums.length <= 0) {
             return null;
@@ -112,4 +106,9 @@ class Powersets {
         return subset;
     }
 
+    public static void main(String[] args) {
+        System.out.println(new Powersets().subsetsWithDupIte(new int[] { 1, 2, 3 }));
+
+        System.out.println(new Powersets().subsetsWithDupRec(new int[] { 1, 2, 3 }));
+    }
 }
