@@ -21,31 +21,17 @@ public class MinHeap {
     private int rightChild(int index) { return items[getRightChildIndex(index)]; }
     private int parent(int index) { return items[getParentIndex(index)]; }
 
-    private void swap(int index1, int index2) {
-        int temp = items[index1];
-        items[index1] = items[index2];
-        items[index2] = temp;
-    }
-
-    private void ensureExtraCapacity() {
-        if (size == capacity) {
-            items = Arrays.copyOf(items, capacity * 2);
-            capacity *= 2;
-        }
-    }
-
-    public int peek() throws Exception {
-        if (size == 0) {
+    public int peek() {
+/*        if (size == 0) {
             throw new Exception();
-
-        }
+        }*/
         return items[0];
     }
 
-    public int poll() throws Exception {
-        if (size == 0) {
+    public int poll() {
+/*        if (size == 0) {
             throw new Exception();
-        }
+        }*/
 
         int item = items[0];
 
@@ -63,6 +49,19 @@ public class MinHeap {
         items[size] = item;
         size++;
         heapifyUp();
+    }
+
+    private void swap(int index1, int index2) {
+        int temp = items[index1];
+        items[index1] = items[index2];
+        items[index2] = temp;
+    }
+
+    private void ensureExtraCapacity() {
+        if (size == capacity) {
+            items = Arrays.copyOf(items, capacity * 2);
+            capacity *= 2;
+        }
     }
 
     private void heapifyUp() {
