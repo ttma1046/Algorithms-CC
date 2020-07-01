@@ -64,7 +64,6 @@ mat[i] is sorted in a non-decreasing way.
 */
 class Leftmost_Column_with_at_Least_a_One_1428 {
 	public int leftMostColumnWithOne(BinaryMatrix binaryMatrix) {
-
 		int rows = binaryMatrix.dimensions().get(0);
 		int cols = binaryMatrix.dimensions().get(1);
 
@@ -85,7 +84,7 @@ class Leftmost_Column_with_at_Least_a_One_1428 {
 		return (currentCol == cols - 1) ? -1 : currentCol + 1;
 	}
 
-	public int leftMostColumnWithOne(BinaryMatrix binaryMatrix) {
+	public int leftMostColumnWithOneII(BinaryMatrix binaryMatrix) {
 		int rows = binaryMatrix.dimensions().get(0);
 		int cols = binaryMatrix.dimensions().get(1);
 		int index = cols;
@@ -113,15 +112,5 @@ class Leftmost_Column_with_at_Least_a_One_1428 {
 		// If smallest_index is still set to cols, then there were no 1's in
 		// the grid.
 		return smallestIndex == cols ? -1 : smallestIndex;
-	}
-
-	public static void main(String[] args) {
-		System.out.println(new Leftmost_Column_with_at_Least_a_One().leftMostColumnWithOne(new BinaryMatrix(new int[][] {
-			{ 0, 0 }, { 1, 1 }
-		}))
-		                  );
-		System.out.println(new Leftmost_Column_with_at_Least_a_One().leftMostColumnWithOne(new BinaryMatrix(new int[][] {{ 0, 0 }, { 0, 1 }})));
-		System.out.println(new Leftmost_Column_with_at_Least_a_One().leftMostColumnWithOne(new BinaryMatrix(new int[][] {{ 0, 0 }, { 0, 0 }})));
-		System.out.println(new Leftmost_Column_with_at_Least_a_One().leftMostColumnWithOne(new BinaryMatrix(new int[][] {{ 0, 0, 0, 1 }, { 0, 0, 1, 1 }, { 0, 1, 1, 1 }})));
 	}
 }
