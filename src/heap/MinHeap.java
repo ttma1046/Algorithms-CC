@@ -21,17 +21,21 @@ public class MinHeap {
     private int rightChild(int index) { return items[getRightChildIndex(index)]; }
     private int parent(int index) { return items[getParentIndex(index)]; }
 
-    public int peek() {
-/*        if (size == 0) {
+    public int peek() throw Exception {
+        /*      
+        if (size == 0) {
             throw new Exception();
-        }*/
+        }
+        */
         return items[0];
     }
 
-    public int poll() {
-/*        if (size == 0) {
+    public int poll() throw Exception {
+        /*        
+        if (size == 0) {
             throw new Exception();
-        }*/
+        }
+        */
 
         int item = items[0];
 
