@@ -1,14 +1,14 @@
 /*
 There are N gas stations along a circular route, where the amount of gas at station i is gas[i].
 
-You have a car with an unlimited gas tank and it costs cost[i] of gas 
+You have a car with an unlimited gas tank and it costs cost[i] of gas
 
-to travel from station i to its next station (i+1). 
+to travel from station i to its next station (i+1).
 
 You begin the journey with an empty tank at one of the gas stations.
 
-Return the starting gas station's index 
-if you can travel around the circuit once in the clockwise direction, 
+Return the starting gas station's index
+if you can travel around the circuit once in the clockwise direction,
 otherwise return -1.
 
 Note:
@@ -19,7 +19,7 @@ Each element in the input arrays is a non-negative integer.
 
 Example 1:
 
-Input: 
+Input:
 gas  = [1,2,3,4,5]
 cost = [3,4,5,1,2]
 
@@ -36,7 +36,7 @@ Therefore, return 3 as the starting index.
 
 Example 2:
 
-Input: 
+Input:
 gas  = [2,3,4]
 cost = [3,4,3]
 
@@ -82,9 +82,67 @@ class Gas_Station_134 {
         return -1;
     }
 
+    public int canCompleteCircuitAnswer(int[] gas, int[] cost) {
+        int n = gas.length;
+
+        int total_tank = 0;
+        int curr_tank = 0;
+        int starting_station = 0;
+        for (int i = 0; i < n; ++i) {
+            total_tank += gas[i] - cost[i];
+            curr_tank += gas[i] - cost[i];
+            // If one couldn't get here,
+            if (curr_tank < 0) {
+                // Pick up the next station as the starting one.
+                starting_station = i + 1;
+                // Start with an empty tank.
+                curr_tank = 0;
+            }
+        }
+        return total_tank >= 0 ? starting_station : -1;
+    }
+
+    public int canCompleteCircuitII(int[] gas, int[] cost) {
+        int start = gas.length - 1;
+        int end = 0;
+
+        int sum = gas[start] - cost[start];
+        while (start > end) {
+            if (sum >= 0) {
+                sum += gas[end] - cost[end];
+                ++end;
+            } else {
+                --start;
+                sum += gas[start] - cost[start];
+            }
+        }
+        return sum >= 0 ? start : -1;
+    }
+
+    /*
+        If car starts at A and can not reach B.
+        Any station between A and B can not reach B. (B is the first station that A can not reach.)
+        If the total number of gas is bigger than the total number of cost. There must be a solution.
+        (Should I prove them?)
+    */
+
+    public int canCompleteCircuitIII(int[] gas, int[] cost) {
+        int start = 0,
+            total = 0,
+            tank = 0;
+        //if car fails at 'start', record the next station
+        for (int i = 0; i < gas.length; i++) {
+            if ((tank = tank + gas[i] - cost[i]) < 0) {
+                start = i + 1;
+                total += tank;
+                tank = 0;
+            }
+        }
+        return (total + tank < 0) ? -1 : start;
+    }
+
     public static void main(String[] args) {
         System.out.println(new Gas_Station_134().canCompleteCircuit(new int[] { 1, 2, 3, 4, 5 }, new int[] { 3, 4, 5, 1, 2 }));
         System.out.println(new Gas_Station_134().canCompleteCircuit(new int[] { 2, 3, 4 }, new int[] { 3, 4, 3 }));
-
     }
 }

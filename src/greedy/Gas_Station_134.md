@@ -14,7 +14,7 @@ Let's notice two things.
 
 __It's impossible to perform the road trip if sum(gas) < sum(cost). In this situation the answer is -1.__
 
-One could compute total amount of gas in the tank total_tank = sum(gas) - sum(cost) during the round trip, and then return -1 if total_tank < 0.
+One could compute total amount of gas in the tank `total_tank = sum(gas) - sum(cost)` during the round trip, and then return -1 if total_tank < 0.
 
 __It's impossible to start at a station i if gas[i] - cost[i] < 0, because then there is not enough gas in the tank to travel to i + 1 station.__
 
