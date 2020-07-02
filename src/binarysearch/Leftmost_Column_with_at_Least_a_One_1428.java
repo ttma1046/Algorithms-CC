@@ -4,8 +4,10 @@ package binarysearch;
  * // You should not implement it, or speculate about its implementation
  */
 interface BinaryMatrix {
-	public int get(int row, int col) {}
-	public List<Integer> dimensions {}
+	public int get(int row, int col);
+	public List<Integer> dimensions();	
+
+	void constructor(int[][] input);
 };
 
 /*
@@ -56,41 +58,20 @@ mat[i] is sorted in a non-decreasing way.
 
 /*
 1. (Binary Search) For each row do a binary search to find the leftmost one on that row and update the answer.
-2. (Optimal Approach) Imagine there is a pointer p(x, y) starting from top right corner. 
-	p can only move left or down. 
-	If the value at p is 0, move down. 
-	If the value at p is 1, move left. 
+2. (Optimal Approach) Imagine there is a pointer p(x, y) starting from top right corner.
+	p can only move left or down.
+	If the value at p is 0, move down.
+	If the value at p is 1, move left.
 	Try to figure out the correctness and time complexity of this algorithm.
 */
 class Leftmost_Column_with_at_Least_a_One_1428 {
-	public int leftMostColumnWithOne(BinaryMatrix binaryMatrix) {
-		int rows = binaryMatrix.dimensions().get(0);
-		int cols = binaryMatrix.dimensions().get(1);
-
-		// Set pointers to the top-right corner.
-		int currentRow = 0;
-		int currentCol = cols - 1;
-
-		// Repeat the search until it goes off the grid.
-		while (currentRow < rows && currentCol >= 0) {
-			if (binaryMatrix.get(currentRow, currentCol) == 0) {
-				currentRow++;
-			} else {
-				currentCol--;
-			}
-		}
-
-		// If we never left the last column, this is because it was all 0's.
-		return (currentCol == cols - 1) ? -1 : currentCol + 1;
-	}
-
 	public int leftMostColumnWithOneII(BinaryMatrix binaryMatrix) {
 		int rows = binaryMatrix.dimensions().get(0);
 		int cols = binaryMatrix.dimensions().get(1);
 		int index = cols;
 		for (int i = 0; i < rows; i++) {
 			// Binary Search for the first 1 in the row.
-    
+
 			int low = 0;
 			int high = cols - 1;
 
@@ -112,5 +93,25 @@ class Leftmost_Column_with_at_Least_a_One_1428 {
 		// If smallest_index is still set to cols, then there were no 1's in
 		// the grid.
 		return smallestIndex == cols ? -1 : smallestIndex;
+	}
+
+	public int leftMostColumnWithOneIII(BinaryMatrix binaryMatrix) {
+		if (binaryMatrix == null) return -1;
+
+		int rows = binaryMatrix.dimensions().get(0);
+		int columns = binaryMatrix.dimensions().get(1);
+
+		int currentRow = 0;
+		int currentCol = columns - 1;
+
+		while (currentRow < rows && currentCol >= 0) {
+			if (binaryMatrix.get(currentRow, currentCol) == 0) {
+				currentRow++;
+			} else {
+				currentCol--;
+			}
+		}
+
+		return currentCol == columns - 1 ? -1 : currentCol + 1;
 	}
 }
