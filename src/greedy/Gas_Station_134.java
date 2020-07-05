@@ -62,6 +62,10 @@ class Gas_Station_134 {
 
         int length = gas.length;
 
+        if (length == 1) {
+            return gas[0] >= cost[0] ? 0 : -1;
+        }
+
         for (int i = 0; i < length; i++) {
             if (gas[i] > cost[i]) {
                 int j = i;
