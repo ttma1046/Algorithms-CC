@@ -92,6 +92,10 @@ class Gas_Station_134 {
         int total_tank = 0;
         int curr_tank = 0;
         int starting_station = 0;
+
+        // gas  = [1,2,3,4,5]
+        // cost = [3,4,5,1,2]
+
         for (int i = 0; i < n; ++i) {
             total_tank += gas[i] - cost[i];
             curr_tank += gas[i] - cost[i];
