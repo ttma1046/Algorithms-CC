@@ -140,7 +140,8 @@ class Gas_Station_134 {
             tank = 0;
         //if car fails at 'start', record the next station
         for (int i = 0; i < gas.length; i++) {
-            if ((tank = tank + gas[i] - cost[i]) < 0) {
+            tank += gas[i] - cost[i];
+            if (tank < 0) {
                 start = i + 1;
                 total += tank;
                 tank = 0;
@@ -150,7 +151,7 @@ class Gas_Station_134 {
     }
 
     public static void main(String[] args) {
-        System.out.println(new Gas_Station_134().canCompleteCircuit(new int[] { 1, 2, 3, 4, 5 }, new int[] { 3, 4, 5, 1, 2 }));
-        System.out.println(new Gas_Station_134().canCompleteCircuit(new int[] { 2, 3, 4 }, new int[] { 3, 4, 3 }));
+        System.out.println(new Gas_Station_134().canCompleteCircuitIII(new int[] { 1, 2, 3, 4, 5 }, new int[] { 3, 4, 5, 1, 2 }));
+        System.out.println(new Gas_Station_134().canCompleteCircuitIII(new int[] { 2, 3, 4 }, new int[] { 3, 4, 3 }));
     }
 }
