@@ -28,56 +28,76 @@ Constraints:
 package greedy;
 
 class Jump_Game_55 {
-	public boolean canJumpFromPosition(int position, int[] nums) {
-		if (position == nums.length - 1) {
-			return true;
+	public boolean canJump(int[] nums) {
+		int n = nums.length;
+		int i = 0;
+		for (int reach = 0; i < n && i <= reach; ++i) {
+			reach = Math.max(i + nums[i], reach);
 		}
+		return i == n;
+	}
 
-		int furthestJump = Math.min(position + nums[position], nums.length - 1);
-		for (int nextPosition = position + 1; nextPosition <= furthestJump; nextPosition++) {
-		// for (int nextPosition = furthestJump; nextPosition > position; nextPosition--) {
-			if (canJumpFromPosition(nextPosition, nums)) {
-				return true;
-			}
-		}
-
-		return false;
+	public static void main(String[] args) {
+		System.out.println(new Jump_Game_55().canJumpIII(new int[] {3, 2, 1, 0, 4}));
+		System.out.println(new Jump_Game_55().canJumpIII(new int[] {2, 3, 1, 1, 4}));
 	}
 
 	public boolean canJumpBackTracking(int[] nums) {
 		return canJumpFromPosition(0, nums);
 	}
 
-	Index[] memo;
-
-	public boolean canJumpFromPosition(int position, int[] nums) {
-		if (memo[position] != Index.UNKNOWN) {
-			return memo[position] == Index.GOOD ? true : false;
+	private boolean canJumpFromPosition(int position, int[] nums) {
+		if (position == nums.length - 1) {
+			return true;
 		}
 
 		int furthestJump = Math.min(position + nums[position], nums.length - 1);
-		for (int nextPosition = position + 1; nextPosition <= furthestJump; nextPosition++) {
-			if (canJumpFromPosition(nextPosition, nums)) {
-				memo[position] = Index.GOOD;
+
+		for (int i = furthestJump; i > position; i--) {
+			if (canJumpFromPosition(i, nums)) {
 				return true;
 			}
 		}
 
-		memo[position] = Index.BAD;
 		return false;
 	}
 
-	public boolean canJumpDpMemoTopBottom(int[] nums) {
-		memo = new Index[nums.length];
-		for (int i = 0; i < memo.length; i++) {
-			memo[i] = Index.UNKNOWN;
-		}
-		memo[memo.length - 1] = Index.GOOD;
-		return canJumpFromPosition(0, nums);
+	enum Index {
+		Good,
+		Bad,
+		Unknown
 	}
 
-	enum Index {
-		GOOD, BAD, UNKNOWN
+	Index[] memo;
+
+	public boolean canJump(int[] nums) {
+		memo = new Index[nums.length];
+
+		for (int i = 0; i < memo.length; i++) {
+			memo[i] = Index.Unknown;
+		}
+
+		memo[nums.length - 1] = Index.Good;
+
+		return canJumpFromPositionwithMemo(0, nums);
+	}
+
+	private boolean canJumpFromPositionwithMemo(int position, int[] nums) {
+		if (memo[position] != Index.Unknown) {
+			return memo[position] == Index.Good ? true : false;
+		}
+
+		int furthestJump = Math.min(position + nums[position], nums.length - 1);
+
+		for (int i = position + 1; i <= furthestJump; i++) {
+			if (canJumpFromPositionwithMemo(i, nums)) {
+				memo[position] = Index.Good;
+				return true;
+			}
+		}
+
+		memo[position] = Index.Bad;
+		return false;
 	}
 
 	public boolean canJumpDpBottomTop(int[] nums) {
@@ -100,21 +120,41 @@ class Jump_Game_55 {
 		return memo[0] == Index.GOOD;
 	}
 
-	public boolean canJumpGreedy(int[] nums) {
+	public boolean canJump(int[] nums) {
+		Index[] memo = new Index[nums.length];
+
+		for (int i = 0; i < memo.length; i++) {
+			memo[i] = Index.Unknown;
+		}
+
+		memo[nums.length - 1] = Index.Good;
+
+		return canJumpFromBottomToTop(nums);
+	}
+
+	private boolean canJumpFromBottomToTop(int[] nums) {
+		for (int i = nums.length - 2; i >= 0; i--) {
+			int furthestJump = Math.min(i + nums[i], nums.length - 1);
+
+			for (int j = i + 1; j <= furthestJump; j++) {
+				if (memo[j] == Index.Good) {
+					memo[i] = Index.Good;
+					break;
+				}
+			}
+		}
+
+		return memo[0] == Index.Good;
+	}
+
+	public camJumpGreedy(int[] nums) {
 		int lastPos = nums.length - 1;
 		for (int i = nums.length - 1; i >= 0; i--) {
-			System.out.println("lastPos:" + lastPos);
 			if (i + nums[i] >= lastPos) {
 				lastPos = i;
 			}
-			System.out.println("i:" + i);
-
 		}
-		return lastPos == 0;
-	}
 
-	public static void main(String[] args) {
-		System.out.println(new Jump_Game_55().canJumpIII(new int[] {3, 2, 1, 0, 4}));
-		System.out.println(new Jump_Game_55().canJumpIII(new int[] {2, 3, 1, 1, 4}));
+		return lastPos == 0;
 	}
 }
