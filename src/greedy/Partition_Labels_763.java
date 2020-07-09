@@ -1,5 +1,14 @@
 /*
-A string S of lowercase English letters is given. We want to partition this string into as many parts as possible so that each letter appears in at most one part, and return a list of integers representing the size of these parts.
+
+A string S of lowercase English letters is given. 
+
+We want to partition this string into 
+
+as many parts as possible 
+
+so that each letter appears in at most one part, 
+
+and return a list of integers representing the size of these parts.
 
 Example 1:
 
@@ -18,6 +27,7 @@ S will consist of lowercase English letters ('a' to 'z') only.
 
 
 Approach 1: Greedy
+
 Intuition
 
 Let's try to repeatedly choose the smallest left-justified partition. Consider the first label, say it's 'a'. The first partition must include it, and also the last occurrence of 'a'. However, between those two occurrences of 'a', there could be other labels that make the minimum size of this partition bigger. For example, in "abccaddbeffe", the minimum first partition is "abccaddb". This gives us the idea for the algorithm: For each letter encountered, process the last occurrence of that letter, extending the current partition [anchor, j] appropriately.
@@ -113,6 +123,3 @@ class Partition_Labels_763 {
         return result;
     }
 }
-
-
-
