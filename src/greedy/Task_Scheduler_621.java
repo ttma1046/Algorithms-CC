@@ -49,32 +49,6 @@ class Task_Schedulerr_621 {
         System.out.println(new Task_Schedulerr_621().leastInterval(new char[] {'A', 'A', 'A', 'A', 'A', 'A', 'B', 'C', 'D', 'E', 'F', 'G'}, 2));
     }
 
-    private int leastInterval(char[] task, int number) {
-        if (task.length == 0 || task == null || number < 0) {
-            return 0;
-        }
-
-        // frequencies of the tasks
-        int[] frequencies = new int[26];
-        for (int t : tasks) {
-            frequencies[t - 'A']++;
-        }
-
-        Arrays.sort(frequencies);
-
-        // max frequency
-        int biggest_frequency = frequencies[25];
-        int idle_time = (biggest_frequency - 1) * number;
-
-        for (int i = frequencies.length - 2; i >= 0 && idle_time > 0; --i) {
-            idle_time -= Math.min(biggest_frequency - 1, frequencies[i]);
-        }
-
-        idle_time = Math.max(0, idle_time);
-
-        return idle_time + tasks.length;
-    }
-
     public int leastInterval(char[] tasks, int n) {
         int[] counter = new int[26];
         int max = 0;
@@ -96,6 +70,31 @@ class Task_Schedulerr_621 {
         int idles = Math.max(0, emptySlots - availableTasks);
 
         return tasks.length + idles;
+    }
+
+    public int leastInterval(char[] tasks, int n) {
+        if (tasks.length <= 0 || tasks == null || n < 0) {
+            return 0;
+        }
+
+        int[] frequencies = new int[26];
+
+        for (char c: tasks) {
+            frequencies[c - 'A']++;
+        }
+
+        Arrays.sort(frequencies);
+
+        int biggest_frequency = frequencies[25];
+        int idle_time = (biggest_frequency - 1) * n;
+
+        for (int i = 24; i >= 0 && idle_time > 0; --i) {
+            idle_time -= Math.min(frequencies[i], biggest_frequency - 1);
+        }
+
+        idle_time = Math.max(0, idle_time);
+
+        return tasks.length + idle_time;
     }
 }
 
