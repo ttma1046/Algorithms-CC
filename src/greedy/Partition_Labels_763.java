@@ -1,10 +1,10 @@
 /*
 
-A string S of lowercase English letters is given. 
+A string S of lowercase English letters is given.
 
-We want to partition this string into as many parts as possible 
+We want to partition this string into as many parts as possible
 
-so that each letter appears in at most one part, 
+so that each letter appears in at most one part,
 
 and return a list of integers representing the size of these parts.
 
@@ -42,83 +42,41 @@ Space Complexity: O(1) to keep data structure last of not more than 26 character
 */
 
 package greedy;
+import java.util.List;
+import java.util.ArrayList;
 
 class Partition_Labels_763 {
-    public List<Integer> partitionLabels(String S) {
-        int[] last = new int[26];
-        for (int i = 0; i < S.length(); ++i)
-            last[S.charAt(i) - 'a'] = i;
-
-        int j = 0,
-            anchor = 0;
-        List<Integer> ans = new ArrayList();
-        for (int i = 0; i < S.length(); ++i) {
-            j = Math.max(j, last[S.charAt(i) - 'a']);
-            if (i == j) {
-                ans.add(i - anchor + 1);
-                anchor = i + 1;
-            }
-        }
-        return ans;
-    }
-
-    /*
-    traverse the string record the last index of each char.
-
-    using pointer to record end of the current sub string.
-    */
-    public List<Integer> partitionLabels(String S) {
-        if (S == null || S.length() == 0) {
+    public List<Integer> partitionLabels(String s) {
+        if (s.length() <= 0 || s == null || s == "") {
             return null;
         }
-        List<Integer> list = new ArrayList<>();
-        int[] map = new int[26];  // record the last index of the each char
 
-        for (int i = 0; i < S.length(); i++) {
-            map[S.charAt(i) - 'a'] = i;
-        }
-        // record the end index of the current sub string
-        int last = 0;
-        int start = 0;
-        for (int i = 0; i < S.length(); i++) {
-            last = Math.max(last, map[S.charAt(i) - 'a']);
-            if (last == i) {
-                list.add(last - start + 1);
-                start = last + 1;
-            }
-        }
-        return list;
-    }
+        int[] lastPoss = new int[26];
 
-    /*
-    Figure out the rightmost index first and use it to denote the start of the next section.
-
-    Reset the left pointer at the start of each new section.
-
-    Store the difference of right and left pointers + 1 as in the result for each section.
-    */
-
-    public List<Integer> partitionLabels(String S) {
-        HashMap<Character, Integer> map = new HashMap();
-
-        for (int i = 0; i < S.length(); i ++) {
-            map.put(S.charAt(i), i);
+        for (int i = 0; i < s.length(); ++i) {
+            lastPoss[s.charAt(i) - 'a'] = i;
         }
 
-        List<Integer> result = new LinkedList();
-        int right = 0;
-        int size = 0;
+        List<Integer> result = new ArrayList<Integer>();
+        int lastPos = 0, j = 0;
+        for (int i = 0; i < s.length(); i++) {
+            j = Math.max(j, lastPoss[s.charAt(i) - 'a']);
 
-        for (int left = 0; left < S.length(); left ++) {
-            size++;
-            right = Math.max(right, map.get(S.charAt(left)));
-
-            if (left == right) {
-                result.add(size);
-                size = 0;
+            // j = lastPoss[s.charAt(i) - 'a'];
+            if (i == j) {
+                result.add(j - lastPos + 1);
+                lastPos = j + 1;
             }
         }
 
         return result;
+    }
+
+    public static void main(String[] args) {
+        List<Integer> result = new Partition_Labels_763().partitionLabels("ababcbacadefegdehijhklij");
+
+        for (int s: result) {
+            System.out.println(s);
+        }
     }
 }
