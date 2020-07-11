@@ -2,9 +2,7 @@
 
 A string S of lowercase English letters is given. 
 
-We want to partition this string into 
-
-as many parts as possible 
+We want to partition this string into as many parts as possible 
 
 so that each letter appears in at most one part, 
 
@@ -38,9 +36,9 @@ We need an array last[char] -> index of S where char occurs last. Then, let anch
 
 Complexity Analysis
 
-Time Complexity: O(N)O(N), where NN is the length of SS.
+Time Complexity: O(N), where N is the length of S.
 
-Space Complexity: O(1)O(1) to keep data structure last of not more than 26 characters.
+Space Complexity: O(1) to keep data structure last of not more than 26 characters.
 */
 
 package greedy;
@@ -51,7 +49,8 @@ class Partition_Labels_763 {
         for (int i = 0; i < S.length(); ++i)
             last[S.charAt(i) - 'a'] = i;
 
-        int j = 0, anchor = 0;
+        int j = 0,
+            anchor = 0;
         List<Integer> ans = new ArrayList();
         for (int i = 0; i < S.length(); ++i) {
             j = Math.max(j, last[S.charAt(i) - 'a']);
