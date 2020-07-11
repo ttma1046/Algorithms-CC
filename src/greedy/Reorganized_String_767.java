@@ -174,16 +174,26 @@ class Reorganized_String_767 {
     Space Complexity: O(A). If A is fixed, this complexity is O(1).
     */
     public String reorganizeStringII(String S) {
-        int N = S.length();
+        int length = S.length();
+
         int[] count = new int[26];
-        for (char c : S.toCharArray()) count[c - 'a']++;
+
+        for (char c : S.toCharArray()) {
+            count[c - 'a']++;
+        }
+
         PriorityQueue<MultiChar> pq = new PriorityQueue<MultiChar>((a, b) ->
                 a.count == b.count ? a.letter - b.letter : b.count - a.count);
 
-        for (int i = 0; i < 26; ++i) if (count[i] > 0) {
-                if (count[i] > (N + 1) / 2) return "";
+        for (int i = 0; i < 26; ++i) {
+            if (count[i] > 0) {
+                if (count[i] > (length + 1) / 2) { 
+                    return ""; 
+                }
+
                 pq.add(new MultiChar(count[i], (char) ('a' + i)));
             }
+        }
 
         StringBuilder ans = new StringBuilder();
         while (pq.size() >= 2) {
@@ -199,11 +209,18 @@ class Reorganized_String_767 {
             }*/
             ans.append(mc1.letter);
             ans.append(mc2.letter);
-            if (--mc1.count > 0) pq.add(mc1);
-            if (--mc2.count > 0) pq.add(mc2);
+            if (--mc1.count > 0) { 
+                pq.add(mc1);
+            }
+            if (--mc2.count > 0) {
+                pq.add(mc2);
+            }
         }
 
-        if (pq.size() > 0) ans.append(pq.poll().letter);
+        if (pq.size() > 0) { 
+            ans.append(pq.poll().letter);
+        }
+        
         return ans.toString();
     }
 
