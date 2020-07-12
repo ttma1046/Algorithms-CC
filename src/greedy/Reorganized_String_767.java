@@ -64,7 +64,6 @@ class Reorganized_String_767 {
      *
      * Space Complexity: O(N). In Java, our implementation is O(N + A).
      */
-
     public String reorganizeStringMy(String s) {
         if (s.length() <= 0 || s == null) {
             return "";
@@ -72,15 +71,12 @@ class Reorganized_String_767 {
 
         int length = s.length();
         int[] counts = new int[26];
-
         for (char c : s.toCharArray()) {
             counts[c - 'a'] += 100;
         }
-
         for (int i = 0; i < 26; i++) {
             counts[i] += i;
         }
-
         Arrays.sort(counts);
 
         char[] result = new char[length];
@@ -88,13 +84,16 @@ class Reorganized_String_767 {
         for (int count : counts) {
             if (count > 25) {
                 int frequency = count / 100;
+                if (frequency > (length + 1) / 2) {
+                    return "";
+                }
 
-                if (frequency > (length + 1) / 2) { return ""; }
-
-                char cr =  (char) ('a' + (count % 100));
-
+                char cr =  (char)('a' + (count % 100));
                 for (int i = 0; i < frequency; i++) {
-                    if (index >= length) index = 0;
+                    if (index >= length) {
+                        index = 0;
+                    }
+
                     result[index] = cr;
 
                     index += 2;
@@ -103,41 +102,6 @@ class Reorganized_String_767 {
         }
 
         return String.valueOf(result);
-    }
-
-    public String reorganizeStringI(String S) {
-        int length = S.length();
-        int[] counts = new int[26];
-        for (char c : S.toCharArray())
-            counts[c - 'a'] += 100;
-        for (int i = 0; i < 26; ++i)
-            counts[i] += i;
-        // Encoded counts[i] = 100*(actual count) + (i)
-        Arrays.sort(counts);
-
-        char[] ans = new char[length];
-        int index = 1;
-        for (int count : counts) {
-
-            if (count > 26) {
-                int frequency = count / 100;
-                char cha = (char) ('a' + (count % 100));
-
-                if (frequency > (length + 1) / 2) {
-                    return "";
-                }
-
-                for (int i = 0; i < frequency; ++i) {
-                    if (index >= length)
-                        index = 0;
-
-                    ans[index] = cha;
-                    index += 2;
-                }
-            }
-        }
-
-        return String.valueOf(ans);
     }
 
     /*
@@ -243,55 +207,66 @@ class Reorganized_String_767 {
      *
      * Space Complexity: O(A). If A is fixed, this complexity is O(1).
      */
-    public String reorganizeStringII(String S) {
-        int length = S.length();
 
-        int[] count = new int[26];
-
-        for (char c : S.toCharArray()) {
-            count[c - 'a']++;
+    public String reorganizeStringPQ(String s) {
+        if (s.length() <= 0 || s == null) {
+            return "";
         }
 
-        PriorityQueue<MultiChar> pq = new PriorityQueue<MultiChar>(
-            (a, b) -> a.count == b.count ? a.letter - b.letter : b.count - a.count);
+        int length = s.length();
+        int[] counts = new int[26];
+
+        for (char c: s.toCharArray()) {
+            counts[c - 'a']++;
+        }
+
+        PriorityQueue<MultiChar> pq = new PriorityQueue<MultiChar>((a, b) -> a.count == b.count ? a.letter - b.letter : b.count - a.count);
 
         for (int i = 0; i < 26; ++i) {
-            if (count[i] > 0) {
-                if (count[i] > (length + 1) / 2) {
+            if (counts[i] > 0) {
+                if (counts[i] > (length + 1) / 2) {
                     return "";
                 }
 
-                pq.add(new MultiChar(count[i], (char) ('a' + i)));
+                pq.add(new MultiChar(counts[i], (char)('a' + i)));
             }
         }
 
-        StringBuilder ans = new StringBuilder();
-        while (pq.size() >= 2) {
+        StringBuilder result = new StringBuilder();
+        while (pq.size() > 1) {
             MultiChar mc1 = pq.poll();
             MultiChar mc2 = pq.poll();
+
             /*
-             * This code turns out to be superfluous, but explains what is happening
-             */
+            * This code turns out to be superfluous, but explains what is happening
+            */
             /*
-             * if (ans.length() == 0 || mc1.letter != ans.charAt(ans.length() - 1)) {
-             * ans.append(mc1.letter); ans.append(mc2.letter); } else {
-             * ans.append(mc2.letter); ans.append(mc1.letter); }
+             if (ans.length() == 0 || mc1.letter != ans.charAt(ans.length() - 1)) {
+               ans.append(mc1.letter);
+               ans.append(mc2.letter);
+             } else {
+               ans.append(mc2.letter);
+               ans.append(mc1.letter);
+             }
              */
-            ans.append(mc1.letter);
-            ans.append(mc2.letter);
+
+            result.append(mc1.letter);
+            result.append(mc2.letter);
+
             if (--mc1.count > 0) {
                 pq.add(mc1);
             }
+
             if (--mc2.count > 0) {
                 pq.add(mc2);
             }
         }
 
         if (pq.size() > 0) {
-            ans.append(pq.poll().letter);
+            result.append(pq.poll().letter);
         }
 
-        return ans.toString();
+        return result.toString();
     }
 
     public String reorganizeString(String S) {
@@ -336,7 +311,7 @@ class Reorganized_String_767 {
      * Space O(N + 26): result + hash[]
      */
     public static void main(String[] args) {
-        System.out.println(new Reorganized_String_767().reorganizeStringMy("ccaaabb"));
+        System.out.println(new Reorganized_String_767().reorganizeStringPQ("ccaaabb"));
     }
 }
 
