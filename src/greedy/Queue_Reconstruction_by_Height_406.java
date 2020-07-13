@@ -1,6 +1,11 @@
 class Queue_reconstruction_by_Height_406 {
     public int[][] reconstructQueue(int[][] people) {
-        
+        if (people.length <= 0 || people != null || people[0].length <= 0) {
+        	return null;
+        }
+
+
+
     }
 }
 
@@ -12,7 +17,8 @@ Each person is described by a pair of integers (h, k), where h is the height of 
 Write an algorithm to reconstruct the queue.
 
 Note:
-The number of people is less than 1,100.
+The number of people is less than 1,100.P@ssw0rd13_
+
 
  
 Example
