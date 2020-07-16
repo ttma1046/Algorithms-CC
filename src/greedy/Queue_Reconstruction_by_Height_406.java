@@ -1,16 +1,10 @@
-class Queue_reconstruction_by_Height_406 {
-    public int[][] reconstructQueue(int[][] people) {
-        if (people.length <= 0 || people != null || people[0].length <= 0) {
-        	return null;
-        }
-
-
-
-    }
-}
-
+package greedy;
+import java.util.Comparator;
+import java.util.List;
+import java.util.LinkedList;
+import java.util.Arrays;
 /*
-Suppose you have a random list of people standing in a queue. 
+Suppose you have a random list of people standing in a queue.
 
 Each person is described by a pair of integers (h, k), where h is the height of the person and k is the number of people in front of this person who have a height greater than or equal to h.
 
@@ -20,7 +14,7 @@ Note:
 The number of people is less than 1,100.P@ssw0rd13_
 
 
- 
+
 Example
 
 Input:
@@ -35,7 +29,7 @@ What can you say about the position of the shortest person?
 If the position of the shortest person is i, how many people would be in front of the shortest person?
 
 
-Once you fix the position of the shortest person, 
+Once you fix the position of the shortest person,
 
 what can you say about the position of the second shortest person?
 
@@ -75,7 +69,7 @@ Return output array.
 Implementation
 */
 
-class Solution {
+class Queue_Reconstruction_by_Height_406 {
   public int[][] reconstructQueue(int[][] people) {
     Arrays.sort(people, new Comparator<int[]>() {
       @Override
@@ -86,23 +80,41 @@ class Solution {
     });
 
     List<int[]> output = new LinkedList<>();
-    for(int[] p : people){
+    for (int[] p : people) {
       output.add(p[1], p);
+
+      for (int [] item : output) {
+        for (int sub : item) {
+          System.out.println(sub);
+        }
+      }
+      System.out.println("end");
     }
 
     int n = people.length;
     return output.toArray(new int[n][2]);
   }
+
+  public static void main(String[] args) {
+    int[][] result = new Queue_Reconstruction_by_Height_406().reconstructQueue(new int[][] {{7, 0}, {4, 4}, {7, 1}, {5, 0}, {6, 1}, {5, 2}});
+
+    for (int [] item : result) {
+      for (int sub : item) {
+        System.out.println(sub);
+      }
+    }
+  }
 }
+
 
 /*
 Complexity Analysis
 
-Time complexity : O(N^2). To sort people takes O(NlogN) time. 
+Time complexity : O(N^2). To sort people takes O(NlogN) time.
 
-Then one proceeds to n insert operations, and each takes up to O(k) time, where k is a current number of elements in the list. 
+Then one proceeds to n insert operations, and each takes up to O(k) time, where k is a current number of elements in the list.
                             N-1
 In total, one needs up to O( ∑ ) time, i.e. up to O(N^2) time.
-                            k=0  
+                            k=0
 Space complexity : O(N) to keep the output.
 */
