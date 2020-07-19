@@ -1,6 +1,7 @@
 package greedy;
 import java.util.Comparator;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Arrays;
 /*
@@ -82,21 +83,37 @@ class Queue_Reconstruction_by_Height_406 {
     List<int[]> output = new LinkedList<>();
     for (int[] p : people) {
       output.add(p[1], p);
-
-      for (int [] item : output) {
-        for (int sub : item) {
-          System.out.println(sub);
-        }
-      }
-      System.out.println("end");
     }
 
     int n = people.length;
     return output.toArray(new int[n][2]);
   }
 
+
+  public int[][] reconstructQueueII(int[][] people) {
+    if (people == null || people.length <= 0 || people[0].length <= 0) {
+      return null;
+    }
+
+
+    Arrays.sort(people, new Comparator<int[]>() {
+      @Override
+      public int compare(int[] a, int[] b) {
+        return a[0] == b[0] ? a[1] - b[1] : b[0] - a[0];
+      }
+    });
+
+    List<int[]> output = new ArrayList<int[]>();
+
+    for (int[] p: people) {
+      output.add(p[1], p);
+    }
+
+    return output.toArray(new int[people.length][2]);
+  }
+
   public static void main(String[] args) {
-    int[][] result = new Queue_Reconstruction_by_Height_406().reconstructQueue(new int[][] {{7, 0}, {4, 4}, {7, 1}, {5, 0}, {6, 1}, {5, 2}});
+    int[][] result = new Queue_Reconstruction_by_Height_406().reconstructQueueII(new int[][] {{7, 0}, {4, 4}, {7, 1}, {5, 0}, {6, 1}, {5, 2}});
 
     for (int [] item : result) {
       for (int sub : item) {
@@ -104,6 +121,7 @@ class Queue_Reconstruction_by_Height_406 {
       }
     }
   }
+
 }
 
 
