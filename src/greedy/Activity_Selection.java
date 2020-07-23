@@ -25,7 +25,7 @@ import java.io.*;
 	Constraints:
 	1 ≤ T ≤ 70
 	1 ≤ N ≤ 100
-	1 ≤ S[ i ], F[ i ] ≤ 100000
+	1 ≤ S[i], F[i] ≤ 100000
 
 	Example:
 	Input:
