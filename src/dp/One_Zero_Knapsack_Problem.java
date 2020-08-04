@@ -1,5 +1,5 @@
 package greedy;
-class Knapsack_Problem {
+class One_Zero_Knapsack_Problem {
 	private int Knapsack(int maxWeight, int [] weightArray, int [] valueArray, int length) {
 		// Base Case
 		if (length == 0 || maxWeight == 0)
@@ -9,16 +9,18 @@ class Knapsack_Problem {
 		// more than Knapsack capacity W,
 		// then this item cannot be included
 		// in the optimal solution
-		if (weightArray[length - 1] > maxWeight)
+		if (weightArray[length - 1] > maxWeight) {
 			return Knapsack(maxWeight, weightArray, valueArray, length - 1);
+		}
 
 		// Return the maximum of two cases:
 		// (1) nth item included
 		// (2) not included
-		else
+		else {
 			return max(
 			           valueArray[length - 1] + Knapsack(maxWeight - weightArray[length - 1], weightArray, valueArray, length - 1),
 			           Knapsack(maxWeight, weightArray, valueArray, length - 1));
+		}
 	}
 
 	int max(int a, int b) {
@@ -32,7 +34,6 @@ class Knapsack_Problem {
 		int n = val.length;
 		System.out.println(new Knapsack_Problem().Knapsack(W, wt, val, n));
 	}
-
 
 	static int knapSack(int maxWeight, int [] weightArray, int [] valueArray, int length) {
 		int i, w;
