@@ -1,4 +1,4 @@
-package greedy;
+package dp;
 class One_Zero_Knapsack_Problem {
 	private int Knapsack(int maxWeight, int [] weightArray, int [] valueArray, int length) {
 		// Base Case
