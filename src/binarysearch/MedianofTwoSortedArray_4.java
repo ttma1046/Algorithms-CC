@@ -48,61 +48,66 @@ public class MedianofTwoSortedArray_4 {
         }
     }
 
+    public static void main(String[] args) {
+        System.out.println(new MediumofTwoSortedArray_4().findMedianSortedArrays(new int[] {1, 3}, new int[] {2}));
+        System.out.println(new MedianofTwoSortedArray_4().findMedianSortedArrays(new int[] {2}, new int[] {1, 3}));
+        System.out.println(new MedianofTwoSortedArray_4().findMedianSortedArrays(new int[] {1, 2}, new int[] {3, 4}));
+        System.out.println(new MedianofTwoSortedArray_4().findMedianSortedArrays(new int[] {3, 4}, new int[] {1, 2}));
+    }
+
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
         int smallLength = nums1.length;
         int largeLength = nums2.length;
-        int smallArray = nums1;
-        int largeArray = nums2;
 
-        if (smallLength > largeLength) {
-            int[] temp = smallArray; smallArray = largeArray; largeArray = temp;
-            int tmp = smallLength; smallLength = largeLength; largeLength = tmp;
+        if (largeLength < smallLength) {
+            int[] temp = nums1;
+            nums1 = nums2;
+            nums2 = temp;
+
+            largeLength = smallLength - largeLength;
+            smallLength = smallLength - largeLength;
+            largeLength = smallLength + largeLength;
         }
 
-        int smallIndexMin = 0, smallIndexMax = smallLength, halfLen = (smallLength + largeLength + 1) / 2;
-        while (smallIndexMin <= smallIndexMax) {
-            
-            int smallIndex = smallIndexMin + (smallIndexMax - smallIndexMin) / 2;
+        int left = 0, right = smallLength, halfLen = (smallLength + largeLength + 1)/2;
 
+        while (left <= right) {
+            int smallIndex = left + (right - left) / 2;
             int largeIndex = halfLen - smallIndex;
 
-            if (smallIndex < smallIndexMax && largeArray[largeIndex - 1] > smallArray[smallIndex]) {
-                smallIndexMin = smallIndex + 1; // smallIndex is too small
-            } else if (smallIndex > smallIndexMin && smallArray[smallIndex - 1] > largeArray[largeIndex]) {
-                smallIndexMax = smallIndex - 1; // smallIndex is too big
-            } else { // smallIndex is perfect
+            if (smallIndex < right && nums2[largeIndex - 1] > nums1[smallIndex]) {
+                left = smallIndex + 1;
+            } else if (smallIndex > left && nums1[smallIndex - 1] > nums2[largeIndex]) {
+                right = smallIndex - 1;
+            } else {
                 int maxLeft = 0;
-                
-                if (smallIndex == 0) { 
-                    maxLeft = largeArray[largeIndex - 1]; 
-                } else if (largeIndex == 0) { 
-                    maxLeft = smallArray[smallIndex - 1]; 
-                } else { 
-                    maxLeft = Math.max(smallArray[smallIndex - 1], largeArray[largeIndex - 1]); 
+
+                if (smallIndex == 0) {
+                    maxLeft = nums2[largeIndex - 1];
+                } else if (largeIndex == 0) {
+                    maxLeft = nums1[smallIndex - 1];
+                } else {
+                    maxLeft = Math.max(nums1[smallIndex - 1], nums2[largeIndex - 1]);
                 }
 
-                if ((smallLength + largeLength) % 2 == 1) { 
-                    return maxLeft; 
+                if ((smallLength + largeLength) % 2 == 1) {
+                    return maxLeft;
                 }
 
                 int minRight = 0;
-                if (smallIndex == smallLength) { 
-                    minRight = largeArray[largeIndex]; 
-                } else if (largeIndex == largeLength) { 
-                    minRight = smallArray[smallIndex]; 
-                } else { 
-                    minRight = Math.min(largeArray[largeIndex], smallArray[smallIndex]); 
+
+                if (smallIndex == smallLength) {
+                    minRight = nums2[largeIndex];
+                } else if (largeIndex == largeLength) {
+                    minRight = nums1[smallIndex];
+                } else {
+                    minRight = Math.min(nums1[smallIndex], nums2[largeIndex]);
                 }
 
                 return (maxLeft + minRight) / 2.0;
             }
         }
+
         return 0.0;
-    }
-
-
-    public static void main(String[] args) {
-        System.out.println(new MediumofTwoSortedArray_4().findMedianSortedArrays(new int[] {1, 3}, new int[] {2}));
-        System.out.println(new MediumofTwoSortedArray_4().findMedianSortedArrays(new int[] {1, 2}, new int[] {3, 4}));
     }
 }
