@@ -44,16 +44,16 @@ public class FindRunningMedian {
 
         PriorityQueue<Integer> highers = new PriorityQueue<Integer>(); // min heap
 
-         double[] medians = new double[array.length];
+        double[] medians = new double[array.length];
 
-         for (int i = 0; i < array.length;i++) {
-             int number = array[i];
-             addNumber(number, lowers, highers);
-             rebalance(lowers, highers);
-             medians[i] = getMedian(lowers, highers);
-         }
+        for (int i = 0; i < array.length; i++) {
+            int number = array[i];
+            addNumber(number, lowers, highers);
+            rebalance(lowers, highers);
+            medians[i] = getMedian(lowers, highers);
+        }
 
-         return medians;
+        return medians;
     }
 
     public static void main(String[] args) {

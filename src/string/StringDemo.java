@@ -7,6 +7,11 @@ public class StringDemo {
         sb.append("b");
         sb.append("c");
         sb.append("d");
+
+        String test = "abc";
+
+        System.out.println(test.substring(0, 0));
+        System.out.println(test.substring(0, 1));
     }
 
     String joinWords(String[] words) {
