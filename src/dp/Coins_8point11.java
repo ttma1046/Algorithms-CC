@@ -1,4 +1,4 @@
-package recursion;
+package dp;
 
 class Coins_8point11 {
     int makeChange(int amount, int[] denoms, int index) {
