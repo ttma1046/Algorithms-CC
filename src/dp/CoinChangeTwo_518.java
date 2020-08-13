@@ -124,7 +124,7 @@ public class CoinChangeTwo_518 {
         dp[0] = 1;
 
         for (int coin : coins) {
-            for (int x = coin; x < money + 1; ++x) {
+            for (int x = coin; x <= money; ++x) {
                 dp[x] += dp[x - coin];
             }
         }
