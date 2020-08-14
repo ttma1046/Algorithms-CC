@@ -22,10 +22,9 @@ Note:
 You may assume that you have an infinite number of each kind of coin.
 */
 public class CoinChange_322 {
-    public int coinChange(int[] coins, int amount) {
-        int max = amount + 1;
+    public int coinChangeBest(int[] coins, int amount) {
         int[] dp = new int[amount + 1];
-        Arrays.fill(dp, max);
+        Arrays.fill(dp, amount + 1);
 
         dp[0] = 0;
 

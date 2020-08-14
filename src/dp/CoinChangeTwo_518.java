@@ -1,5 +1,5 @@
 package dp;
-
+import java.util.HashMap;
 /*
     You are given coins of different denominations and a total amount of money.
     Write a function to compute the number of combinations that make up that amount.
@@ -35,7 +35,34 @@ package dp;
     the answer is guaranteed to fit into signed 32-bit integer
 */
 public class CoinChangeTwo_518 {
-    public int change(int amount, int[] coins) {
+    public long changeBest(int[] coins, int amount) {
+        long[] dp = new long[amount + 1];
+        dp[0] = 1;
+
+        for(int coin: coins) {
+            for (int i = coin; i < amount + 1; ++i) {
+                dp[i] += dp[i - coin];
+            }
+        }
+
+        return dp[amount];
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new CoinChangeTwo_518().changeBest(new int[] { 1, 2, 5 }, 5));
+
+        System.out.println(new CoinChangeTwo_518().changeBest(new int[] { 16, 30, 9, 17, 40, 13, 42, 5, 25, 49, 7, 23, 1, 44, 4, 11, 33, 12, 27,
+                           2, 38, 24, 28, 32, 14, 50
+                                                                           }, 245));
+
+        long result = new CoinChangeTwo_518().changeBest(new int [] { 2, 5, 10 }, 11);
+        System.out.println(result);
+
+        result = new CoinChangeTwo_518().changeBest(new int [] { 10 }, 10);
+        System.out.println(result);
+    }
+
+    public int change(int[] coins, int amount) {
         int[][] dp = new int[coins.length + 1][amount + 1];
         dp[0][0] = 1;
 
@@ -48,7 +75,7 @@ public class CoinChangeTwo_518 {
         return dp[coins.length][amount];
     }
 
-    public int[] Change(int amount, int[] coins) {
+    public int[] Change(int[] coins, int amount) {
         int[] dp = new int[amount + 1];
         dp[0] = 1;
 
@@ -60,9 +87,8 @@ public class CoinChangeTwo_518 {
         return dp;
     }
 
-
     // O(nd) time | O(n) space
-    public static int numberOfWaysToMakeChange(int n, int[] denoms) {
+    public static int numberOfWaysToMakeChange(int[] denoms, int n) {
         int [] ways = new int[n + 1];
         ways[0] = 1;
         for(int denom: denoms) {
@@ -77,23 +103,11 @@ public class CoinChangeTwo_518 {
         return ways[n];
     }
 
-    public int changeII(int amount, int[] coins) {
-        int[] approaches = new int[amount + 1];
-        approaches[0] = 1;
-
-        for (int coin : coins) {
-            for (int x = coin; x < amount + 1; ++x) {
-                approaches[x] += approaches[x - coin];
-            }
-        }
-        return approaches[amount];
+    public static long makeChangeLong(int[] coins, int money) {
+        return makeChangeLong(coins, money, 0, new HashMap<String, Long>());
     }
 
-    public static long makeChange(int[] coins, int money) {
-        return makeChange(coins, money, 0, new HashMap<String, Long>());
-    }
-
-    public long makeChange(int[] coins, int money, int index, HashMap<String, Long> memo) {
+    public static long makeChangeLong(int[] coins, int money, int index, HashMap<String, Long> memo) {
         if (money == 0) {
             return 1;
         }
@@ -112,23 +126,11 @@ public class CoinChangeTwo_518 {
         long ways = 0;
         while (amountWithCoin <= money) {
             int remaining = money - amountWithCoin;
-            ways += makeChange(coins, remaining, index + 1, memo);
+            ways += makeChangeLong(coins, remaining, index + 1, memo);
             amountWithCoin += coins[index];
         }
         memo.put(key, ways);
         return ways;
-    }
-
-    public long makeChangeIII(int[] coins, int money) {
-        long[] dp = new long[money + 1];
-        dp[0] = 1;
-
-        for (int coin : coins) {
-            for (int x = coin; x <= money; ++x) {
-                dp[x] += dp[x - coin];
-            }
-        }
-        return dp[money];
     }
 
     public long makeChangeII(int[] coins, int money) {
@@ -153,21 +155,6 @@ public class CoinChangeTwo_518 {
         }
         return ways;
     }
-
-    public static void main(String[] args) {
-        System.out.println(new CoinChangeTwo_518().makeChangeIII(new int[] { 1, 2, 5 }, 5));
-
-        System.out.println(new CoinChangeTwo_518().makeChangeIII(new int[] { 16, 30, 9, 17, 40, 13, 42, 5, 25, 49, 7, 23, 1, 44, 4, 11, 33, 12, 27,
-                           2, 38, 24, 28, 32, 14, 50
-                                                                           }, 245));
-
-        int [] result = new CoinChangeTwo_518().Change(11, new int [] { 2, 5, 10 });
-
-        for (int r : result) {
-            System.out.println(r);
-        }
-    }
-
 
     /*
     This works, but it's not as optimal as it could be.
