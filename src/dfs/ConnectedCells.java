@@ -37,8 +37,4 @@ public class ConnectedCells {
         }
         return maxRegion;
     }
-
-    public static void main(String[] args) {
-
-    }
 }
