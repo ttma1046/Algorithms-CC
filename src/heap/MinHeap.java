@@ -22,16 +22,16 @@ public class MinHeap {
     private int parent(int index) { return items[getParentIndex(index)]; }
 
     public int peek() {// throws Exception {  
- /*       if (size == 0) {
-            throw new Exception();
-        }*/
+        if (size == 0) {
+            throw new IllegalStateException();
+        }
         return items[0];
     }
 
     public int poll() {//throws Exception {      
-/*        if (size == 0) {
-            throw new Exception();
-        }*/
+        if (size == 0) {
+            throw new IllegalStateException();
+        }
 
         int item = items[0];
 
@@ -51,7 +51,7 @@ public class MinHeap {
         heapifyUp();
     }
 
-    private void swap(int index1, int index2) {
+    private void swapByIndex(int index1, int index2) {
         int temp = items[index1];
         items[index1] = items[index2];
         items[index2] = temp;
@@ -67,7 +67,7 @@ public class MinHeap {
     private void heapifyUp() {
         int index = size - 1;
         while (hasParent(index) && parent(index) > items[index]) {
-            swap(getParentIndex(index), index);
+            swapByIndex(getParentIndex(index), index);
             index = getParentIndex(index);
         }
     }
@@ -85,7 +85,8 @@ public class MinHeap {
             if (items[index] < items[smallerChildIndex])  {
                 break;
             }
-            swap(index, smallerChildIndex);
+            
+            swapByIndex(index, smallerChildIndex);
             index = smallerChildIndex;
         }
     }
