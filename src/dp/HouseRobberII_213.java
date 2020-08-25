@@ -30,9 +30,10 @@ Explanation: Rob house 1 (money = 1) and then rob house 3 (money = 3).
 */
 public class HouseRobberII {
     public static int rob(int[] nums) {
-        if (nums == null || nums.length == 0) {
+        if (nums == null || nums.lenght == 0) {
             return 0;
         }
+
         int length = nums.length;
 
         if (length == 1) {
@@ -40,27 +41,63 @@ public class HouseRobberII {
         }
 
         if (length == 2) {
+            return nums[1] > nums[0] ? nums[1] : nums[0];
+        }
+
+        int[] dpOne = new int[length - 1];
+
+        dpOne[0] = nums[0];
+        dpOne[1] = nums[1] > nums[0] ? nums[1] : nums[0];
+
+        for (int i = 2; i < length - 1; i++) {
+            dpOne[i] = dpOne[i - 1] > dpOne[i - 2] + nums[i] ? dpOne[i - 1] : dpOne[i - 2] + nums[i];
+        }
+
+        int[] dpTwo = new int[length - 1];
+
+        dpTwo[0] = nums[1];
+        dpTwo[1] = nums[2] > nums[1] ? nums[2] : nums[1];
+
+        for (int i = 2; i < length - 1; i++) {
+            dpTwo[i] = dpTwo[i - 1] > dpTwo[i - 2] + nums[i + 1] ? dpTwo[i - 1] : dpTwo[i - 2] + nums[i + 1];
+        }
+
+        return Math.max(dpOne[length - 2], dpTwo[length - 2 ]);
+    }
+
+    public static int rob(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        int length = nums.length;
+
+        if (length <= 1) {
+            return nums[0];
+        }
+
+        if (length == 2) {
             return nums[0] > nums[1] ? nums[0] : nums[1];
         }
 
-        int[] memo = new int[length - 1];
+        int[] dp = new int[length - 1];
 
-        memo[0] = nums[0];
-        memo[1] = nums[0] > nums[1] ? nums[0] : nums[1];
-
-        for (int i = 2; i < length - 1; i++) {
-            memo[i] = Math.max(memo[i - 1], memo[i - 2] + nums[i]);
-        }
-
-        int[] memo2 = new int[length - 1];
-        memo2[0] = nums[1];
-        memo2[1] = nums[1] > nums[2] ? nums[1] : nums[2];
+        dp[0] = nums[0];
+        dp[1] = nums[0] > nums[1] ? nums[0] : nums[1];
 
         for (int i = 2; i < length - 1; i++) {
-            memo2[i] = Math.max(memo2[i - 1], memo2[i - 2] + nums[i + 1]);
+            dp[i] = Math.max(dp[i - 1], dp[i - 2] + nums[i]);
         }
 
-        return Math.max(memo[length - 2], memo2[length - 2]);
+        int[] dp2 = new int[length - 1];
+
+        dp2[0] = nums[1];
+        dp2[1] = nums[1] > nums[2] ? nums[1] : nums[2];
+
+        for (int i = 2; i < length - 1; i++) {
+            dp2[i] = Math.max(dp2[i - 1], dp2[i - 2] + nums[i + 1]);
+        }
+
+        return Math.max(dp[length - 2], dp2[length - 2]);
     }
 
     public static int robII(int[] nums) {

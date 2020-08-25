@@ -2,40 +2,29 @@ package dp;
 
 public class HouseRobberIII {
     public class TreeNode {
-      public int val;
-      public TreeNode left;
-      public TreeNode right;
-      public TreeNode(int x) { val = x; }
+        public int val;
+        public TreeNode left;
+        public TreeNode right;
+        public TreeNode(int x) { val = x; }
     }
 
-    public int Rob(TreeNode root) {
-        int [] memo = new int[1999];
-        if (root == null) {
-            return 0;
-        }
 
-        TreeNode current = root;
+    public int rob(TreeNode root) {
+        int[] res = robSub(root);
+        return Math.max(res[0], res[1]);
+    }
 
-        if (current.left == null && current.right == null) {
-            return current.val;
-        }
+    private int[] robSub(TreeNode root) {
+        if (root == null) return new int[2];
 
-        memo[0] = current.val;
+        int[] left = robSub(root.left);
+        int[] right = robSub(root.right);
+        int[] res = new int[2];
 
-        current = current.left != null ? root.left : root.right;
+        res[0] = Math.max(left[0], left[1]) + Math.max(right[0], right[1]);
+        res[1] = root.val + left[0] + right[0];
 
-        memo[1] = Math.max(memo[0], current.val);
-
-        memo[2] = 2222;
-
-        int x = 3;
-
-        while (current != null) {
-            memo[x] = Math.max(memo[(x - 1) / 2], current.val + memo[((x-1)/2 - 1) / 2]);
-
-            x++;
-        }
-
-        return memo[x];
+        return res;
     }
 }
+

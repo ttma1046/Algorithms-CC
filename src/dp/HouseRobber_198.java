@@ -39,11 +39,12 @@ public class HouseRobber_198 {
         }
 
         int length = nums.length;
-        int[] dp = new int[length];
 
         if (length <= 1) {
             return nums[0];
         }
+
+        int[] dp = new int[length];
 
         dp[0] = nums[0];
         dp[1] = Math.max(nums[0], nums[1]);
@@ -63,7 +64,7 @@ public class HouseRobber_198 {
         int a = 0;
         int b = 0;
         // a b
-        for (int i: nums) {
+        for (int i : nums) {
             int temp = b;
             b = Math.max(b, a + i]);
             a = temp;
@@ -75,7 +76,6 @@ public class HouseRobber_198 {
     public static void main(String[] args) {
         System.out.println(new HouseRobber_198().rob(new int[] {1, 2, 3, 1}));
         System.out.println(new HouseRobber_198().rob(new int[] {2, 7, 9, 3, 1}));
-
 
         System.out.println(new HouseRobber_198().rob(new int[] {1}));
         System.out.println(new HouseRobber_198().rob(new int[] {1, 14}));
