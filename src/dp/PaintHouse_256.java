@@ -18,6 +18,43 @@ Explanation: Paint house 0 into blue, paint house 1 into green, paint house 2 in
              Minimum cost: 2 + 5 + 3 = 10.
 */
 class PaintHouse_256 {
+	public int minCostMy(int[][] costs) {
+		if (costs == null || costs.length == 0 || costs[0].length == 0) {
+			return 0;
+		}
+		int len = costs.length, red = costs[0][0], blue = costs[0][1], yellow = costs[0][2];
+
+		for (int i = 1; i < len; ++i) {
+			int old_red = red, old_blue = blue;
+			red = costs[i][0] + Math.min(blue, yellow);
+			blue = costs[i][1] + Math.min(old_red, yellow);
+			yellow = costs[i][2] + Math.min(old_red, old_blue);
+		}
+
+		return Math.min(red, Math.min(blue, yellow));
+	}
+
+
+	public int minCostMy(int[][] costs) {
+		if (costs == null || costs.length == 0 || costs[0].length == 0) {
+			return 0;
+		}
+
+		int[] previousRow = costs[costs.length - 1];
+
+		for (int i = costs.length - 2; i >= 0; i--) {
+			int[] currentRow = costs[i].clone();
+
+			currentRow[0] += Math.min(previousRow[1], previousRow[2]);
+			currentRow[1] += Math.min(previousRow[0], previousRow[2]);
+			currentRow[2] += Math.min(previousRow[0], previousRow[1]);
+
+			previousRow = currentRow;
+		}
+
+		return Math.min(Math.min(previousRow[0], previousRow[1]), previousRow[2]);
+	}
+
 	private int[][] costs;
 	private int[][] memo;
 
@@ -37,7 +74,6 @@ class PaintHouse_256 {
 			return memo[index][color];
 		}
 
-
 		int totalCost = costs[index][color];
 		if (index == costs.length - 1) {
 
@@ -54,26 +90,7 @@ class PaintHouse_256 {
 		return memo[index][color];
 	}
 
-	public static void main(String[] args) {
-		System.out.println(new PaintHouse_256().minCost(new int[][] {{17, 2, 17}, {16, 16, 5}, {14, 3, 19}}));
-	}
-
-
-	public int minCostII(int[][] costs) {
-		if (costs.length == 0) return 0;
-		int len = costs.length, red = costs[0][0], blue = costs[0][1], yellow = costs[0][2];
-
-		for (int i = 1; i < len; ++i) {
-			int old_red = red, old_blue = blue;
-			red = costs[i][0] + Math.min(blue, yellow);
-			blue = costs[i][1] + Math.min(old_red, yellow);
-			yellow = costs[i][2] + Math.min(old_red, old_blue);
-		}
-
-		return Math.min(red, Math.min(blue, yellow));
-	}
-
-	public int minCostII(int[][] costs) {
+	public int minCostIV(int[][] costs) {
 
 		if (costs.length == 0) return 0;
 
@@ -92,5 +109,9 @@ class PaintHouse_256 {
 		}
 
 		return Math.min(Math.min(previousRow[0], previousRow[1]), previousRow[2]);
+	}
+
+	public static void main(String[] args) {
+		System.out.println(new PaintHouse_256().minCost(new int[][] {{17, 2, 17}, {16, 16, 5}, {14, 3, 19}}));
 	}
 }
