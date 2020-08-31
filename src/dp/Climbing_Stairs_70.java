@@ -22,90 +22,87 @@ class Climbing_Stairs_70 {
         2. 1 step + 2 steps
         3. 2 steps + 1 step
 
+        Input: 4
+        Output: 5
+        Explanation: There are three ways to climb to the top.
+        1. 1 step + 1 step + 1 step + 1 step
+        2. 1 step + 2 steps + 1 step
+        3. 2 steps + 1 step + 1 step
+        4. 2 steps + 2steps
+        5. 1 step + 1 step + 2 steps
 
         Constraints:
 
         1 <= n <= 45
     */
-    public int climbStairs(int n) {
-        if (n == 0) {
-            return 0;
-        }
+    public static void main(String[] args) {
+        System.out.println(new Climbing_Stairs_70().climbStairs(0));
 
-        int[] dp = new int[n + 1];
+        System.out.println(new Climbing_Stairs_70().climbStairs(1));
 
-        dp[0] = 1;
-        dp[1] = 1;
+        System.out.println(new Climbing_Stairs_70().climbStairs(2));
 
-        for (int i = 2; i < n + 1; i++) {
-            dp[i] = dp[i - 1] + dp[i - 2];
-        }
+        System.out.println(new Climbing_Stairs_70().climbStairs(3));
 
-        return dp[n];
+        System.out.println(new Climbing_Stairs_70().climbStairs(4));
+
+        System.out.println(new Climbing_Stairs_70().climbStairs(5));
     }
 
     public int climbStairs(int n) {
-        if (n == 0) {
-            return 0;
-        }
+        if (n < 2) {
+            return n;
+        }   
 
-        int first = 1;
-        int second = 1;
+        int[] memo = new int[n + 1];
 
-        for (int i = 2; i < n + 1; i++) {
-            second = second - first;
-            first = first + second;
-            second = 2 * first - second;
-        }
-
-        return second;
+        return climbStairsRec(n, memo);
     }
 
-    public int climbStairsI(int n) {
-        return climb_StairsI(0, n);
-    }
-
-    public int climb_StairsI(int i, int n) {
-        if (i > n) {
-            return 0;
-        }
-        if (i == n) {
-            return 1;
-        }
-        return climb_StairsI(i + 1, n) + climb_StairsI(i + 2, n);
-    }
-
-    public int climbStairsII(int n) {
-        int[] memo = new int[n];
-        return climb_StairsII(0, n, memo);
-    }
-
-    public int climb_StairsII(int i, int n, int[] memo) {
-        if (i > n) {
-            return 0;
-        }
-        if (i == n) {
+    private int climbStairsRec(int n, int[] memo) {
+        if (n == 1 || n == 0) {
             return 1;
         }
 
-        if (memo[i] > 0) {
-            return memo[i];
+        if (memo[n] > 0) {
+            return memo[n];
         }
-        memo[i] = climb_StairsI(i + 1, n) + climb_StairsI(i + 2, n);
-        return memo[i];
+
+        memo[n] = climbStairsRec(n - 1, memo) + climbStairsRec(n - 2, memo);
+
+        return memo[n];
     }
 
-
-    public int climbStairs(int n) {
+    private int climbStairsDP(int n) {
         if (n == 1) {
             return 1;
         }
-        int first = 1;
+
+        int[] dp = new int[n];
+
+        dp[0] = 1;
+        dp[1] = 2;
+
+        for (int i = 2; i < n; i++) {
+            dp[i] = dp[i - 2] + dp[i - 1];
+        }
+
+        return dp[n - 1];
+    }
+
+
+    private int climbStairsIter(int n) {
+        if (n == 1) {
+            return 1;
+        }
+
+        int first =  1;
         int second = 2;
-        for (int i = 3; i <= n; i++) {
+
+        for (int i = 3; i < n; i++) {
             int temp = first;
             first = second;
-            second = temp + first;
+            second = first + temp;
         }
 
         return second;
