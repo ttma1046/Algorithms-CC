@@ -22,19 +22,47 @@ Note:
 You may assume that you have an infinite number of each kind of coin.
 */
 public class CoinChange_322 {
-    public int coinChangeBest(int[] coins, int amount) {
+    public int coinChangeDP(int[] coins, int amount) {
         int[] dp = new int[amount + 1];
+
         Arrays.fill(dp, amount + 1);
 
         dp[0] = 0;
 
         for (int coin : coins) {
-            for (int i = coin; i <= amount; i++) {
-                dp[i] = Math.min(dp[i], dp[i - coin] + 1);
+            for (int j = cost; j <= amount; j++) {
+                dp[j] = Math.min(dp[j], dp[j - coin] + 1);
             }
         }
 
-        return dp[amount] > amount ? -1 : dp[amount];
+        return dp[amount] <= amount ? dp[amount] : -1;
+    }
+
+    public int coinChangeII(int[] coins, int amount) {
+        if (amount < 1) {
+            return 0;
+        }
+        return coinChangeII(coins, amount, new int[amount]);
+    }
+
+    private int coinChangeII(int[] coins, int remaining, int[] memo) {
+        if (remaining < 0) return -1;
+        if (remaining == 0) return 0;
+        if (memo[remaining - 1] != 0) return memo[remaining - 1];
+
+        int min = Integer.MAX_VALUE;
+        for (int coin : coins) {
+            int res = coinChangeII(coins, remaining - coin, memo);
+            if (res >= 0 && res < min) min = 1 + res;
+        }
+
+        memo[remaining - 1] = (min == Integer.MAX_VALUE) ? -1 : min;
+        return memo[remaining - 1];
+    }
+
+    public static void main(String[] args) {
+        new CoinChange_322().coinChangeDP(new int[] { 1, 2, 5 }, 11);
+        new CoinChange_322().coinChangeDP(new int[] { 2 }, 3);
     }
 
     public int coinChange(int[] coins, int amount) {
@@ -42,8 +70,6 @@ public class CoinChange_322 {
     }
 
     private int coinChange(int idxCoin, int[] coins, int amount) {
-        String space = "";
-
         if (amount == 0) {
             return 0;
         }
@@ -65,67 +91,5 @@ public class CoinChange_322 {
         }
 
         return -1;
-    }
-
-    public int coinChangeII(int[] coins, int amount) {
-        if (amount < 1)
-            return 0;
-        return coinChangeII(coins, amount, new int[amount]);
-    }
-
-    private int coinChangeII(int[] coins, int rem, int[] count) {
-        if (rem < 0)
-            return -1;
-        if (rem == 0)
-            return 0;
-        if (count[rem - 1] != 0)
-            return count[rem - 1];
-        int min = Integer.MAX_VALUE;
-        for (int coin : coins) {
-            int res = coinChangeII(coins, rem - coin, count);
-            if (res >= 0 && res < min)
-                min = 1 + res;
-        }
-        count[rem - 1] = (min == Integer.MAX_VALUE) ? -1 : min;
-        return count[rem - 1];
-    }
-
-    public int coinChangeIII(int[] coins, int amount) {
-        int max = amount + 1;
-        int[] dp = new int[amount + 1];
-        Arrays.fill(dp, max);
-
-        dp[0] = 0;
-        for (int i = 1; i <= amount; i++) {
-            for (int j = 0; j < coins.length; j++) {
-                if (coins[j] <= i) {
-                    dp[i] = Math.min(dp[i], dp[i - coins[j]] + 1);
-                }
-            }
-        }
-        return dp[amount] > amount ? -1 : dp[amount];
-    }
-
-    public int coinChangeIV(int[] coins, int amount) {
-        if (amount < 1)
-            return 0;
-        int[] dp = new int[amount + 1];
-        int sum = 0;
-
-        while (++sum <= amount) {
-            int min = -1;
-            for (int coin : coins) {
-                if (sum >= coin && dp[sum - coin] != -1) {
-                    int temp = dp[sum - coin] + 1;
-                    min = min < 0 ? temp : (temp < min ? temp : min);
-                }
-            }
-            dp[sum] = min;
-        }
-        return dp[amount];
-    }
-
-    public static void main(String[] args) {
-        new CoinChange_322().coinChange(new int[] { 1, 2, 5 }, 15);
     }
 }
