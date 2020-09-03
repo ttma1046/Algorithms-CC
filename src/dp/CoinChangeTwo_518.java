@@ -37,51 +37,18 @@ import java.util.Arrays;
     the answer is guaranteed to fit into signed 32-bit integer
 */
 public class CoinChangeTwo_518 {
-    public int changeDP(int amount, int[] coins) {
-        int[] dp = new int[amount + 1];
-
-        dp[0] = 1;
-
-        for (int coin : coins) {
-            for (int i = coin; i <= amount; i++) {
-                dp[i] += dp[i - coin];
-            }
-        }
-
-        return dp[amount];
-    }
-
-    public static void main(String[] args) {
-        System.out.println(new CoinChangeTwo_518().change(new int[] { 1, 2, 5 }, 5));
-
-        /*
-        System.out.println(new CoinChangeTwo_518().change(new int[] { 16, 30, 9, 17, 40, 13, 42, 5, 25, 49, 7, 23, 1, 44, 4, 11, 33, 12, 27,
-                           2, 38, 24, 28, 32, 14, 50
-                                                                        }, 245));
-
-        long result = new CoinChangeTwo_518().change(new int [] { 2, 5, 10 }, 11);
-        System.out.println(result);
-
-        result = new CoinChangeTwo_518().change(new int [] { 10 }, 10);
-        System.out.println(result);
-        */
-    }
-
-    public int change(int[] coins, int amount) {
-        if (amount == 0 || coins == null || coins.length == 0) {
-            return 0;
-        }
-
+    public int changeRec(int amount, int[] coins) {
         Arrays.sort(coins);
 
-        int[][] map = new int[amount + 1][coins.length];
-        for (int i = 0; i < amount + 1; ++i) {
-            for (int j = 0; j < coins.length; ++j) {
-                map[i][j] = -1;
+        int[][] memo = new int[amount + 1][coins.length];
+
+        for (int i = 0; i < memo.length; ++i) {
+            for (int j = 0; j < memo[0].length; ++j) {
+                memo[i][j] = -1;
             }
         }
 
-        return changeRec(amount, coins, 0, map);
+        return changeRec(amount, coins, 0, memo);
     }
 
     private int changeRec(int remaining, int[] coins, int index, int[][] memo) {
@@ -100,8 +67,32 @@ public class CoinChangeTwo_518 {
             }
         }
 
-        memo[remaining][index] = ways;        
+        memo[remaining][index] = ways;
         return memo[remaining][index];
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new CoinChangeTwo_518().changeRec(5, new int[] { 1, 2, 5 }));
+
+        long result = new CoinChangeTwo_518().changeRec(11, new int [] { 2, 5, 10 });
+        System.out.println(result);
+
+        result = new CoinChangeTwo_518().changeRec(10, new int [] { 10 });
+        System.out.println(result);
+    }
+
+    public int changeDP(int amount, int[] coins) {
+        int[] dp = new int[amount + 1];
+
+        dp[0] = 1;
+
+        for (int coin : coins) {
+            for (int i = coin; i <= amount; i++) {
+                dp[i] += dp[i - coin];
+            }
+        }
+
+        return dp[amount];
     }
 
     public int changeIII(int amount, int[] coins) {
@@ -131,7 +122,7 @@ public class CoinChangeTwo_518 {
         return memo[remaining][index];
     }
 
-    public int changeII(int[] coins, int amount) {
+    public int changeII(int amount, int[] coins) {
         // order coins in order to prune recursion
         Arrays.sort(coins);
 
