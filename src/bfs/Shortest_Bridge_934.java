@@ -9,21 +9,31 @@ Now, we may change 0s to 1s so as to connect the two islands together to form 1 
 
 Return the smallest number of 0s that must be flipped.  (It is guaranteed that the answer is at least 1.)
 
- 
-
 Example 1:
-
-Input: A = [[0,1],[1,0]]
+Input: A = [
+            [0,1],
+            [1,0]
+           ]
 Output: 1
+
 Example 2:
-
-Input: A = [[0,1,0],[0,0,0],[0,0,1]]
+Input: A = [
+             [0,1,0],
+             [0,0,0],
+             [0,0,1]
+           ]
 Output: 2
-Example 3:
 
-Input: A = [[1,1,1,1,1],[1,0,0,0,1],[1,0,1,0,1],[1,0,0,0,1],[1,1,1,1,1]]
+Example 3:
+Input: A = [
+            [1,1,1,1,1],
+            [1,0,0,0,1],
+            [1,0,1,0,1],
+            [1,0,0,0,1],
+            [1,1,1,1,1]
+           ]
 Output: 1
- 
+
 
 Constraints:
 
@@ -31,27 +41,114 @@ Constraints:
 A[i][j] == 0 or A[i][j] == 1
 Accepted
 */
+class Shortest_Bridge_934 {
+    public int shortestBridgeMy(int[][] A) {
+        if (A == null || A.length == 0) {
+            return 0;
+        }
 
-class shortest_Bridge_934 {
-    public int shortestBridge(int[][] A) {
-        int m = A.length, n = A[0].length;
-        boolean[][] visited = new boolean[m][n];
-        int[][] dirs = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
-        Queue<int[]> q = new LinkedList<>();
+        int rows = A.length, columns = A[0].length;
+        boolean[][] visited = new boolean[rows][columns];
+        int[][] directions = new int[][] {{1, 0}, { -1, 0}, {0, 1}, {0, -1}};
+        Queue<int[]> myQueue = new LinkedList<int[]>();
         boolean found = false;
-        // 1. dfs to find an island, mark it in `visited`
-        for (int i = 0; i < m; i++) {
-            if (found) {
-                break;
-            }
-            for (int j = 0; j < n; j++) {
+
+        int steps = 0;
+        for (int i = 0; i < rows; i++) {
+            if (found) break;
+
+            for (int j = 0; j < columns; j++) {
                 if (A[i][j] == 1) {
-                    dfs(A, visited, q, i, j, dirs);
+                    dfs(A, i, j, visited, myQueue, directions);
                     found = true;
                     break;
                 }
             }
         }
+
+        int step = 0;
+
+        while (!myQueue.isEmpty()) {
+            int size = myQueue.size();
+
+            while (size-- > 0) {
+                int[] cur = myQueue.poll();
+                for (int[] dir : directions) {
+                    int a = cur[0] + dir[0];
+                    int b = cur[1] + dir[1];
+                    if (a >= 0 && b >= 0 && a < rows && b < columns && !visited[a][b]) {
+                        if (A[a][b] == 1) {
+                            return step;
+                        }
+
+                        myQueue.offer(new int[] {a, b});
+                        visited[a][b] = true;
+                    }
+                }
+            }
+            step++;
+        }
+
+        return -1;
+    }
+
+    private void dfs(int[][] A, int i, int j, boolean[][] visited, Queue<int[]> queue, int[][] directions) {
+        if (i < 0 || j < 0 || i >= A.length || j >= A[0].length || visited[i][j] || A[i][j] == 0) {
+            return;
+        }
+
+        visited[i][j] = true;
+        queue.offer(new int[] {i, j});
+        for (int[] dir : directions) {
+            dfs(A, i + dir[0], j + dir[1], visited, queue, directions);
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new Shortest_Bridge_934().shortestBridgeMy(new int[][] {
+            {0, 1},
+            {1, 0}
+        }));
+
+        System.out.println(new Shortest_Bridge_934().shortestBridgeMy(new int[][] {
+            {0, 1, 0},
+            {0, 0, 0},
+            {0, 0, 1}
+        }));
+
+        System.out.println(new Shortest_Bridge_934().shortestBridgeMy(new int[][] {
+            {1, 1, 1, 1, 1},
+            {1, 0, 0, 0, 1},
+            {1, 0, 1, 0, 1},
+            {1, 0, 0, 0, 1},
+            {1, 1, 1, 1, 1}
+        }));
+    }
+
+    public int shortestBridge(int[][] A) {
+        int rows = A.length, columns = A[0].length;
+
+        boolean[][] visited = new boolean[rows][columns];
+
+        int[][] dirs = new int[][] {{1, 0}, { -1, 0}, {0, 1}, {0, -1}};
+
+        Queue<int[]> q = new LinkedList<int[]>();
+        boolean found = false;
+
+        // 1. dfs to find an island, mark it in `visited`
+        for (int i = 0; i < rows; i++) {
+            if (found) {
+                break;
+            }
+            for (int j = 0; j < columns; j++) {
+                if (A[i][j] == 1) {
+                    dfsII(A, visited, q, i, j, dirs);
+                    found = true;
+                    break;
+                }
+            }
+        }
+
         // 2. bfs to expand this island
         int step = 0;
         while (!q.isEmpty()) {
@@ -61,11 +158,11 @@ class shortest_Bridge_934 {
                 for (int[] dir : dirs) {
                     int i = cur[0] + dir[0];
                     int j = cur[1] + dir[1];
-                    if (i >= 0 && j >= 0 && i < m && j < n && !visited[i][j]) {
+                    if (i >= 0 && j >= 0 && i < rows && j < columns && !visited[i][j]) {
                         if (A[i][j] == 1) {
                             return step;
                         }
-                        q.offer(new int[]{i, j});
+                        q.offer(new int[] {i, j});
                         visited[i][j] = true;
                     }
                 }
@@ -74,14 +171,15 @@ class shortest_Bridge_934 {
         }
         return -1;
     }
-    private void dfs(int[][] A, boolean[][] visited, Queue<int[]> q, int i, int j, int[][] dirs) {
+
+    private void dfsII(int[][] A, boolean[][] visited, Queue<int[]> q, int i, int j, int[][] dirs) {
         if (i < 0 || j < 0 || i >= A.length || j >= A[0].length || visited[i][j] || A[i][j] == 0) {
             return;
         }
         visited[i][j] = true;
-        q.offer(new int[]{i, j});
+        q.offer(new int[] {i, j});
         for (int[] dir : dirs) {
-            dfs(A, visited, q, i + dir[0], j + dir[1], dirs);
+            dfsII(A, visited, q, i + dir[0], j + dir[1], dirs);
         }
     }
 }
