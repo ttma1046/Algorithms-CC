@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.HashMap;
 
-
 /*
 Given a string s and a non-empty string p, find all the start indices of p's anagrams in s.
 
@@ -39,6 +38,34 @@ The substring with start index = 2 is "ab", which is an anagram of "ab".
 */
 class Find_All_Anagrams_in_a_String_438 {
 	public List<Integer> findAnagrams(String s, String p) {
+		int sLength = s.length(), pLength = p.length();
+		if (sLength < pLength) return new ArrayList<Integer>();
+
+		int[] sHash = new int [26];
+		int[] pHash = new int [26];
+
+		for (Character ch: p.toCharArray()) {
+			pHash[ch - 'a']++;
+		}
+
+		ArrayList<Integer> result = new ArrayList<Integer>();
+		for (int i = 0; i < sLength; i++) {
+			char c = s.charAt(i);
+			sHash[c - 'a']++;
+
+			if (i - pLength >= 0) {
+				sHash[s.charAt(i - pLength) - 'a']--;
+			}
+
+			if (Arrays.equals(sHash, pHash)) {
+				result.add(i - pLength + 1);
+			}
+		}
+
+		return result;
+	}
+
+	public List<Integer> findAnagrams(String s, String p) {
 		int lengthS = s.length(), lengthP = p.length();
 
 		if (lengthS < lengthP) return new ArrayList<Integer>();
@@ -66,37 +93,6 @@ class Find_All_Anagrams_in_a_String_438 {
 			}
 
 			if (pHash.equals(sHash)) {
-				result.add(i - lengthP + 1);
-			}
-		}
-
-		return result;
-	}
-
-	public List<Integer> findAnagramsII(String s, String p) {
-		int lengthS = s.length(), lengthP = p.length();
-
-		if (lengthS < lengthP) return new ArrayList<Integer>();
-
-		int[] sHash = new int[26];
-		int[] pHash = new int[26];
-
-		for (Character ch : p.toCharArray()) {
-			pHash[ch - 'a']++;
-		}
-
-		ArrayList<Integer> result = new ArrayList<Integer>();
-
-		for (int i = 0; i < s.length(); i++) {
-			char ch = s.charAt(i);
-			sHash[ch - 'a']++;
-			
-			if (i >= lengthP) {
-				char temp = s.charAt(i - lengthP);
-				sHash[temp - 'a']--;
-			}
-
-			if (Arrays.equals(sHash, pHash)) {
 				result.add(i - lengthP + 1);
 			}
 		}
