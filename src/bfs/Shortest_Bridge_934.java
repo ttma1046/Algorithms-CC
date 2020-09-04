@@ -49,58 +49,59 @@ class Shortest_Bridge_934 {
 
         int rows = A.length, columns = A[0].length;
         boolean[][] visited = new boolean[rows][columns];
-        int[][] directions = new int[][] {{1, 0}, { -1, 0}, {0, 1}, {0, -1}};
+        int[][] directions = new int[][] {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
         Queue<int[]> myQueue = new LinkedList<int[]>();
-        boolean found = false;
 
-        int steps = 0;
-        for (int i = 0; i < rows; i++) {
-            if (found) break;
+        boolean foundTheFirstIsland = false;
+
+        for(int i = 0; i < rows; i++) {
+            if (foundTheFirstIsland) {
+                break;
+            }
 
             for (int j = 0; j < columns; j++) {
                 if (A[i][j] == 1) {
-                    dfs(A, i, j, visited, myQueue, directions);
-                    found = true;
+                    dfs(i, j, visited, A, myQueue, directions);
+                    foundTheFirstIsland = true;
                     break;
                 }
-            }
+            }   
         }
 
-        int step = 0;
-
-        while (!myQueue.isEmpty()) {
-            int size = myQueue.size();
-
-            while (size-- > 0) {
+        int result = 0;
+        while(!myQueue.isEmpty()) {
+            int queueSize = myQueue.size();
+            while(queueSize-- > 0) {
                 int[] cur = myQueue.poll();
-                for (int[] dir : directions) {
-                    int a = cur[0] + dir[0];
-                    int b = cur[1] + dir[1];
-                    if (a >= 0 && b >= 0 && a < rows && b < columns && !visited[a][b]) {
-                        if (A[a][b] == 1) {
-                            return step;
+                
+                for(int[] dir: directions) {
+                    int i = cur[0] + dir[0];
+                    int j = cur[1] + dir[1];
+
+                    if (i >= 0 && j >= 0 && i < rows && j < columns && !visited[i][j]) {
+                        if (A[i][j] == 1) {
+                            return result;
                         }
 
-                        myQueue.offer(new int[] {a, b});
-                        visited[a][b] = true;
+                        myQueue.offer(new int[] {i, j});
+                        visited[i][j] = true;
                     }
-                }
+                }        
             }
-            step++;
+            result++;
         }
 
         return -1;
     }
 
-    private void dfs(int[][] A, int i, int j, boolean[][] visited, Queue<int[]> queue, int[][] directions) {
+    private void dfs(int i, int j, boolean[][] visited, int[][] A, Queue<int[]> myQueue, int[][] directions) {
         if (i < 0 || j < 0 || i >= A.length || j >= A[0].length || visited[i][j] || A[i][j] == 0) {
             return;
         }
-
         visited[i][j] = true;
-        queue.offer(new int[] {i, j});
-        for (int[] dir : directions) {
-            dfs(A, i + dir[0], j + dir[1], visited, queue, directions);
+        myQueue.offer(new int[]{i, j});
+        for(int[] dir: directions) {
+            dfs(i + dir[0], j + dir[1], visited, A, myQueue, directions);
         }
     }
 
