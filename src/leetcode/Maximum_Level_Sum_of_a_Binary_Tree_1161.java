@@ -1,5 +1,6 @@
 package leetcode;
-
+import java.util.Queue;
+import java.util.LinkedList;
 /*
 Given the root of a binary tree, the level of its root is 1, the level of its children is 2, and so on.
 
@@ -9,12 +10,12 @@ Example 1:
 
 Input: [1,7,0,7,-8,null,null]
 Output: 2
-Explanation: 
+Explanation:
 Level 1 sum = 1.
 Level 2 sum = 7 + 0 = 7.
 Level 3 sum = 7 + -8 = -1.
 So we return the level with the maximum sum which is level 2.
- 
+
 Note:
 
 The number of nodes in the given tree is between 1 and 10^4.
@@ -26,25 +27,57 @@ Method 1: BFS
 Use BFS to find the sum of each level, then locate the level with largest sum.
 */
 
-public class TreeNode {
+class TreeNode {
     int val;
     TreeNode left;
     TreeNode right;
     public TreeNode(int x) { val = x; }
 }
 
-public Maximum_Level_Sum_of_a_Binary_Tree_1161 {
+public class Maximum_Level_Sum_of_a_Binary_Tree_1161 {
     public int maxLevelSum(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+
+        int maxLevel = 1;
+        int maxSum = Integer.MIN_VALUE;
+
+        Queue<TreeNode> myQueue = new LinkedList<TreeNode>();
+        myQueue.offer(root);
+
+        for (int level = maxLevel; !myQueue.isEmpty(); level++) {
+            int sum = 0;
+            int size = myQueue.size();
+            while(size-- > 0) {
+                TreeNode node = myQueue.poll();
+                sum += node.val;
+                if (node.left != null) {
+                    myQueue.offer(node.left);
+                }
+
+                if (node.right != null) {
+                    myQueue.offer(node.right);
+                }
+            }
+
+            if (sum > maxSum) {
+                maxSum = sum;
+                maxLevel = level;
+            }
+        }
+        return maxLevel;
+    }
+    
+    
+    public int maxLevelSumWhat(TreeNode root) {
         int max = Integer.MIN_VALUE, maxLevel = 1;
         Queue<TreeNode> q = new LinkedList<>();
         q.offer(root);
         for (int level = 1; !q.isEmpty(); ++level) {
             int sum = 0;
 
-            int sz = q.size();
-
-            // for (int sz = q.size(); sz > 0; --sz) {
-            while (size-- >= 0) {
+            for (int sz = q.size(); sz > 0; --sz) {
                 TreeNode n = q.poll();
                 sum += n.val;
                 if (n.left != null) {
@@ -62,6 +95,24 @@ public Maximum_Level_Sum_of_a_Binary_Tree_1161 {
         }
 
         return maxLevel;
+    }
+    
+    public static void main(String[] args) {
+        TreeNode four = new TreeNode(4);
+        four.left = new TreeNode(7);
+        TreeNode two = new TreeNode(2);
+        two.left = four;
+        two.right = new TreeNode(5);
+
+        TreeNode six = new TreeNode(6);
+        six.right = new TreeNode(8);
+        TreeNode three = new TreeNode(3);
+        three.right = six;
+
+        TreeNode one = new TreeNode(1);
+        one.right = three;
+        one.left = two;
+        System.out.println(new Maximum_Level_Sum_of_a_Binary_Tree_1161().maxLevelSum(one));
     }
 }
 /*
