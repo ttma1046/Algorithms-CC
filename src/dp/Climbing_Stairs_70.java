@@ -100,9 +100,8 @@ class Climbing_Stairs_70 {
         int second = 2;
 
         for (int i = 3; i < n; i++) {
-            int temp = first;
-            first = second;
-            second = first + temp;
+            second = first + second;
+            first = second - first;
         }
 
         return second;

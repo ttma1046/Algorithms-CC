@@ -10,9 +10,8 @@ class Fibonacci_Number_509 {
         int second = 1;
 
         for (int i = 2; i < N + 1; i++) {
-            second = second - first;
-            first = first + second;
-            second = 2 * first - second;
+            second = second + first;
+            first = second - first;
         }
 
         return second;
