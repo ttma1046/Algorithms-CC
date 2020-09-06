@@ -35,7 +35,7 @@ class TreeNode {
 }
 
 public class Maximum_Level_Sum_of_a_Binary_Tree_1161 {
-    public int maxLevelSum(TreeNode root) {
+    public int maxLevelSumMy(TreeNode root) {
         if (root == null) {
             return 0;
         }
@@ -70,7 +70,7 @@ public class Maximum_Level_Sum_of_a_Binary_Tree_1161 {
     }
     
     
-    public int maxLevelSumWhat(TreeNode root) {
+    public int maxLevelSum(TreeNode root) {
         int max = Integer.MIN_VALUE, maxLevel = 1;
         Queue<TreeNode> q = new LinkedList<>();
         q.offer(root);
