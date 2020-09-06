@@ -37,7 +37,51 @@ import java.util.Arrays;
     the answer is guaranteed to fit into signed 32-bit integer
 */
 public class CoinChangeTwo_518 {
-    public int changeIII(int amount, int[] coins) {
+    public int changeRec(int amount, int[] coins) {
+        Arrays.sort(coins);
+
+        int[][] memo = new int[amount + 1][coins.length];
+
+        for (int i = 0; i < memo.length; ++i) {
+            for (int j = 0; j < memo[0].length; ++j) {
+                memo[i][j] = -1;
+            }
+        }
+
+        return changeRec(amount, coins, 0, memo);
+    }
+
+    private int changeRec(int remaining, int[] coins, int index, int[][] memo) {
+        if (remaining == 0) return 1;
+        if (index == coins.length) return 0;
+        if (memo[remaining][index] != -1) return memo[remaining][index];
+
+        int ways = 0;
+        for (int i = index; i < coins.length; i++) {
+            if (coins[i] > remaining) break;
+
+            int times = 1;
+            while (times * coins[i] <= remaining) {
+                ways += changeRec(remaining - times * coins[i], coins, i + 1, memo);
+                times++;
+            }
+        }
+
+        memo[remaining][index] = ways;
+        return memo[remaining][index];
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new CoinChangeTwo_518().changeRec(5, new int[] { 1, 2, 5 }));
+
+        long result = new CoinChangeTwo_518().changeRec(11, new int [] { 2, 5, 10 });
+        System.out.println(result);
+
+        result = new CoinChangeTwo_518().changeRec(10, new int [] { 10 });
+        System.out.println(result);
+    }
+
+    public int changeDP(int amount, int[] coins) {
         int[] dp = new int[amount + 1];
 
         dp[0] = 1;
@@ -51,24 +95,7 @@ public class CoinChangeTwo_518 {
         return dp[amount];
     }
 
-
-    public static void main(String[] args) {
-        System.out.println(new CoinChangeTwo_518().change(new int[] { 1, 2, 5 }, 5));
-
-        /*
-        System.out.println(new CoinChangeTwo_518().change(new int[] { 16, 30, 9, 17, 40, 13, 42, 5, 25, 49, 7, 23, 1, 44, 4, 11, 33, 12, 27,
-                           2, 38, 24, 28, 32, 14, 50
-                                                                        }, 245));
-
-        long result = new CoinChangeTwo_518().change(new int [] { 2, 5, 10 }, 11);
-        System.out.println(result);
-
-        result = new CoinChangeTwo_518().change(new int [] { 10 }, 10);
-        System.out.println(result);
-        */
-    }
-
-    public int changeII(int amount, int[] coins) {
+    public int changeIII(int amount, int[] coins) {
         return makeChange(coins, amount, 0, new int[amount + 1][coins.length]);
     }
 
@@ -95,7 +122,7 @@ public class CoinChangeTwo_518 {
         return memo[remaining][index];
     }
 
-    public int change(int[] coins, int amount) {
+    public int changeII(int amount, int[] coins) {
         // order coins in order to prune recursion
         Arrays.sort(coins);
 
@@ -114,38 +141,48 @@ public class CoinChangeTwo_518 {
 
     public int Count(int[] coins, int remaining, int index, int[][] map, int level) {
         if (remaining == 0) {
+            /*
             for (int a = level; a >= 0; a--) {
                 System.out.print("   ");
             }
             System.out.println("Got it");
+            */
             return 1;
         }
         if (index >= coins.length) return 0;
+
         if (map[remaining][index] != -1) {
+            /*
             for (int p = level; p >= 0; p--) {
                 System.out.print("   ");
             }
             System.out.println("Return Cache:" + remaining + ":" + coins[index] + ":" + map[remaining][index]);
+            */
             return map[remaining][index];
         }
 
         int cnt = 0;
         for (int i = index; i < coins.length; i++) {
+            /*
             for (int b = level; b >= 0; b--) {
                 System.out.print("   ");
             }
             System.out.println("Pick Coin " + coins[i]);
+            */
             if (coins[i] > remaining) {
+                /*
                 for (int c = level; c >= 0; c--) {
                     System.out.print("   ");
                 }
                 System.out.println("End Coin " + coins[i]);
+                */
                 break;
             }
 
             // using this coin as many times as possible before going to next coin
             int times = 1;
             while (times * coins[i] <= remaining) {
+                /*
                 for (int d = level; d >= 0; d--) {
                     System.out.print("   ");
                 }
@@ -153,23 +190,27 @@ public class CoinChangeTwo_518 {
                 for (int e = level; e >= 0; e--) {
                     System.out.print("   ");
                 }
-
                 System.out.println("Remaining :" + (remaining - times * coins[i]));
+                */
                 cnt += Count(coins, remaining - times * coins[i], i + 1, map, level + 1);
                 times++;
+                /*
                 if (times * coins[i] > remaining) {
                     for (int f = level; f >= 0; f--) {
                         System.out.print("   ");
                     }
                     System.out.println("End while");
                 }
+                */
             }
         }
+
+        /*
         for (int q = level; q >= 0; q--) {
             System.out.print("   ");
         }
         System.out.println("Save Cache:" + remaining + ":" + coins[index] + ":" + cnt);
-
+        */
 
         // memorize
         map[remaining][index] = cnt;

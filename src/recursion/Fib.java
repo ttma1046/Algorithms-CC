@@ -60,13 +60,8 @@ public class Fib {
         int b = 1;
         // int temp = 0;
         for (int i = 2; i < n; i++) {
-            /* temp = a + b;
-            a = b;
-            b = temp; */
-            
-            b = b - a;            
-            a = b + a;
-            b = 2 * a - b;
+            b = a + b;
+            a = b - a;
         }
 
         return a + b;

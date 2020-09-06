@@ -16,6 +16,7 @@ Here is the brief description of my algorithm:
 
 Compute the prefix sum by counting the number of chars in substring(0,1), substring(0, 2), ..., substring(0,n);
 Use the difference of the prefix sums to get the the number of chars in substring(queries[i][0], queries[i][1]), count those do NOT in symmetric pairs, divided by 2, and compare it with queries[i][2].
+
 Method 1: prefix sum - count each char
 
 Java
@@ -36,14 +37,7 @@ Java
         }
         return ans;
     }
-Python 3
 
-    def canMakePaliQueries(self, s: str, queries: List[List[int]]) -> List[bool]:
-        cnt = [[0] * 26]
-        for i, c in enumerate(s):
-            cnt.append(cnt[i][:])
-            cnt[i + 1][ord(c) - ord('a')] += 1
-        return [sum((cnt[hi + 1][i] - cnt[lo][i]) % 2 for i in range(26)) // 2 <= k for lo, hi, k in queries]
 Method 2: prefix boolean - use true/false to mark odd/even of the count of each char, credit to @mfboulos
 
 Java
@@ -64,14 +58,7 @@ Java
         }
         return ans;
     }
-Python 3
 
-    def canMakePaliQueries(self, s: str, queries: List[List[int]]) -> List[bool]:
-        odds = [[False] * 26]
-        for i, c in enumerate(s):
-            odds.append(odds[i][:])
-            odds[i + 1][ord(c) - ord('a')] ^= True
-        return [sum(odds[hi + 1][i] ^ odds[lo][i] for i in range(26)) // 2 <= k for lo, hi, k in queries]  
 Method 3: prefix xor - use integer bit 0/1 to mark the even/odd of the count of each char
 
 The 32 bits in a Java int are enough to cover the odd/even of the counts of 26 English letters. Use only the 26 least significant bits in an int.
@@ -87,13 +74,7 @@ Java
             ans.add(Integer.bitCount(odds[q[1] + 1] ^ odds[q[0]]) / 2 <= q[2]); // odds[q[1] + 1] ^ odds[q[0]] indicates the count of (char)(i + 'a') in substring(q[0], q[1] + 1) is even/odd.
         return ans;
     }
-Python 3
 
-    def canMakePaliQueries(self, s: str, queries: List[List[int]]) -> List[bool]:
-        odds = [False]
-        for i, c in enumerate(s):
-            odds.append(odds[i] ^ 1 << (ord(c) - ord('a')))
-        return [bin(odds[hi + 1] ^ odds[lo]).count('1') // 2 <= k for lo, hi, k in queries]   
 Analysis:
 
 Time & space: O(S + Q), where S = s.length(), Q = queries.length.

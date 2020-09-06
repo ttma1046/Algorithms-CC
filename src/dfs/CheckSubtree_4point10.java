@@ -13,7 +13,7 @@ class CheckSubtree_4point10 {
 
 	private void getOrderString(TreeNode current, StringBuilder stringBuilder) {
 		if (current == null) {
-			stringBuilder.append("X");
+			StringBuilder.append("X");
 			return;
 		}
 

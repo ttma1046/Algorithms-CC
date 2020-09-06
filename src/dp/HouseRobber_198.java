@@ -102,20 +102,4 @@ public class HouseRobber_198 {
 
         return memo[length];
     }
-
-    public int robII(int[] nums) {
-        if (nums.length == 0) {
-            return 0;
-        }
-
-        int previousMax1 = 0;
-        int previousMax2 = 0;
-
-        for (int i = 0; i < nums.length; i++) {
-            int tmp = previousMax1;
-            previousMax1 = Math.max(previousMax2 + nums[i], tmp);
-            previousMax2 = tmp;
-        }
-        return previousMax1;
-    }
 }
