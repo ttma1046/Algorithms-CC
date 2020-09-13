@@ -13,16 +13,16 @@ public class BinarySearchTree {
         return checkBST(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
 
-    boolean checkBST(Node root, int min, int max) {
-        if (root == null) {
+    boolean checkBST(Node node, int min, int max) {
+        if (node == null) {
             return true;
         }
 
-        if (root.data < min || root.data > max) {
+        if (node.data < min || node.data > max) {
             return false;
         }
 
-        return checkBST(root.left, min, root.data - 1) && checkBST(root.right, root.data + 1, max);
+        return checkBST(node.left, min, node.data - 1) && checkBST(node.right, node.data + 1, max);
     }
 
 }
