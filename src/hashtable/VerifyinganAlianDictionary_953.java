@@ -9,7 +9,6 @@ public class VerifyinganAlianDictionary_953 {
         }
 
 
-
         for (int i = 0; i < order.length(); i++) {
             orderList[order.charAt(i) - 'a'] = i;
         }
@@ -25,9 +24,11 @@ public class VerifyinganAlianDictionary_953 {
 
     boolean bigger(String s1, String s2) {
         int n = s1.length(), m = s2.length();
-        for (int i = 0; i < n && i < m; ++i)
-            if (s1.charAt(i) != s2.charAt(i))
+        for (int i = 0; i < n && i < m; ++i) {
+            if (s1.charAt(i) != s2.charAt(i)) {
                 return orderList[s1.charAt(i) - 'a'] > orderList[s2.charAt(i) - 'a'];
+            }
+        }
         return n > m;
     }
 
