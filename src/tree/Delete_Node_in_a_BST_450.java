@@ -104,28 +104,6 @@ class Delete_Node_in_a_BST_450 {
     return node.val;
   }
 
-  public TreeNode deleteNode(TreeNode root, int key) {
-    if (root == null) return null;
-
-    if (root.val == key) {
-      if (root.left == null && root.right == null) {
-        root = null;
-      } else if (root.right != null) {
-        root.val = Successor(root);
-        root.right = deleteNode(root.right, root.val);
-      } else {
-        root.val = Predecessor(root);
-        root.left = deleteNode(root.left, root.val);
-      }
-    } else if (key > root.val) {
-      root.right = deleteNode(root.right, key);
-    } else {
-      root.left = deleteNode(root.left, key);
-    }
-
-    return root;
-  }
-
   public TreeNode deleteNodeI(TreeNode root, int key) {
     if (root == null) return null;
 
@@ -148,6 +126,46 @@ class Delete_Node_in_a_BST_450 {
         root.left = deleteNode(root.left, root.val);
       }
     }
+    return root;
+  }
+
+  private int getSuccessorValue(TreeNode node) {
+    TreeNode temp = node.right;
+
+    while (temp.left != null) {
+      temp = temp.left;
+    }
+
+    return temp.val;
+  }
+
+  private int getPredecessorValue(TreeNode node) {
+    TreeNode temp = node.left;
+
+    while (temp.right != null) {
+      temp = temp.right;
+    }
+
+    return temp.val;
+  }
+
+  public TreeNode deleteNode(TreeNode root, int key) {
+    if (key > root.val) {
+      root.right = deleteNode(root.right, key);
+    } else if (key < root.val) {
+      root.left = deleteNode(root.left, key);
+    } else {
+      if (root.right == null || root.left == null) {
+        root = null;
+      } else if (root.right != null) {
+        root.val = getSuccessorValue(root);
+        root.right = deleteNode(root.right, root.val);
+      } else {
+        root.val = getPredecessorValue(root);
+        root.left = deleteNode(root.left, root.val);
+      }
+    }
+
     return root;
   }
 
