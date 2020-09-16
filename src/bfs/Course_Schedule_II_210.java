@@ -1,5 +1,8 @@
 package bfs;
-
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Queue;
+import java.util.LinkedList;
 /*
 There are a total of n courses you have to take labelled from 0 to n - 1.
 
@@ -38,35 +41,84 @@ prerequisites[i].length == 2
 ai != bi
 All the pairs [ai, bi] are distinct.
 */
-class solution {
-	
-    public int[] findOrder(int numCourses, int[][] prerequisites) {
-        int[] degree = new int[numCourses], res = new int[numCourses];
-        List<Integer>[] graph = new ArrayList[numCourses];
-        for (int i = 0; i < numCourses; i++) graph[i] = new ArrayList<>();
-        for (int i = 0; i < prerequisites.length; i++) {
-            degree[prerequisites[i][0]]++;
-            graph[prerequisites[i][1]].add(prerequisites[i][0]);
-        }
-        int index = 0;
-        Queue<Integer> q = new LinkedList<>();
-        for (int i = 0; i < numCourses; i++) {
-            if (degree[i] == 0) {
-                q.offer(i);
-                res[index++] = i;
-            }
-        }
-        while (!q.isEmpty()) {
-            int cur = q.poll();
-            for (int nei : graph[cur]) {
-                if (--degree[nei] == 0) {
-                    q.offer(nei);
-                    res[index++] = nei;
-                }
-            }
-        }
-        return index == numCourses ? res : new int[0];
-    }
+class Course_Schedule_II_210 {
+	public static void main(String[] args) {
+		int[] result = new Course_Schedule_II_210().findOrder(4, new int[][] {{1, 0}, {2, 0}, {3, 1}, {3, 2}});
+
+		for(int i: result) {
+			System.out.println(i);
+		}
+	}
+
+	public int[] findOrder(int numCourses, int[][] prerequisites) {
+		ArrayList<Integer>[] map  = new ArrayList[numCourses];
+		int[] result = new int[numCourses];
+		int[] indegree = new int[numCourses];
+		int count = 0;
+
+		for (int i = 0; i < numCourses; i++) {
+			map[i] = new ArrayList<Integer>();
+		}
+
+		for (int[] prerequisite : prerequisites) {
+			map[prerequisite[1]].add(prerequisite[0]);
+			indegree[prerequisite[0]]++;
+		}
+
+		Queue<Integer> myQueue = new LinkedList<Integer>();
+		for (int i = 0; i < indegree.length; i++) {
+			if (indegree[i] == 0) {
+				myQueue.offer(i);
+			}
+		}
+
+		while (!myQueue.isEmpty()) {
+			int index = myQueue.poll();
+
+			result[count++] = index;
+
+			ArrayList<Integer> k = map[index];
+
+			for (int j : k) {
+				if (--indegree[j] == 0) {
+					myQueue.offer(j);
+
+				}
+			}
+		}
+
+		if (count == numCourses) return result;
+		return new int[0];
+	}
+
+	/*
+	public int[] findOrder(int numCourses, int[][] prerequisites) {
+	    int[] degree = new int[numCourses], res = new int[numCourses];
+	    List<Integer>[] graph = new ArrayList[numCourses];
+	    for (int i = 0; i < numCourses; i++) graph[i] = new ArrayList<>();
+	    for (int i = 0; i < prerequisites.length; i++) {
+	        degree[prerequisites[i][0]]++;
+	        graph[prerequisites[i][1]].add(prerequisites[i][0]);
+	    }
+	    int index = 0;
+	    Queue<Integer> q = new LinkedList<>();
+	    for (int i = 0; i < numCourses; i++) {
+	        if (degree[i] == 0) {
+	            q.offer(i);
+	            res[index++] = i;
+	        }
+	    }
+	    while (!q.isEmpty()) {
+	        int cur = q.poll();
+	        for (int nei : graph[cur]) {
+	            if (--degree[nei] == 0) {
+	                q.offer(nei);
+	                res[index++] = nei;
+	            }
+	        }
+	    }
+	    return index == numCourses ? res : new int[0];
+	}
 
 	public int[] findOrder(int numCourses, int[][] prerequisites) {
 		Map<Integer, List<Integer>> adjList = new HashMap<Integer, List<Integer>>();
@@ -204,5 +256,6 @@ class solution {
 		order.push(from);
 		return true;
 	}
+	*/
 }
 

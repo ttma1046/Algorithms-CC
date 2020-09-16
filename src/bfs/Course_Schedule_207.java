@@ -1,5 +1,8 @@
 package bfs;
-
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Queue;
+import java.util.LinkedList;
 /*
 207. Course Schedule
 
@@ -9,14 +12,13 @@ Some courses may have prerequisites, for example to take course 0 you have to fi
 
 Given the total number of courses and a list of prerequisite pairs, is it possible for you to finish all courses?
 
-
-
 Example 1:
 
 Input: numCourses = 2, prerequisites = [[1,0]]
 Output: true
 Explanation: There are a total of 2 courses to take.
              To take course 1 you should have finished course 0. So it is possible.
+
 Example 2:
 
 Input: numCourses = 2, prerequisites = [[1,0],[0,1]]
@@ -32,9 +34,66 @@ The input prerequisites is a graph represented by a list of edges, not adjacency
 You may assume that there are no duplicate edges in the input prerequisites.
 1 <= numCourses <= 10^5
 */
-class Solution {
+
+// [[1,0],[2,0],[3,1],[3,2]]
+
+
+/*
+0, [1, 2]
+1, [3]
+2, [3]
+
+
+[0, 0] [1, 1] [2, 1] [3, 2]
+*/
+
+
+class Course_Schedule_207 {
+	public static void main(String[] args) {
+		System.out.println(new Course_Schedule_207().canFinish(4, new int[][] {{1, 0}, {2, 0}, {3, 1}, {3, 2}}));
+	}
+
 
 	public boolean canFinish(int numCourses, int[][] prerequisites) {
+		ArrayList<Integer>[] map  = new ArrayList[numCourses];
+		int[] indegree = new int[numCourses];
+		int count = 0;
+
+		for (int i = 0; i < numCourses; i++) {
+			map[i] = new ArrayList<Integer>();
+		}
+		
+		for (int[] prerequisite : prerequisites) {
+			map[prerequisite[1]].add(prerequisite[0]);
+			indegree[prerequisite[0]]++;
+		}
+
+		Queue<Integer> myQueue = new LinkedList<Integer>();
+		for (int i = 0; i < indegree.length; i++) {
+			if (indegree[i] == 0) {
+				myQueue.offer(i);
+			}
+		}
+
+		while (!myQueue.isEmpty()) {
+			int index = myQueue.poll();
+			count++;
+
+			ArrayList<Integer> k = map[index];
+
+			for (int j : k) {
+				if (--indegree[j] == 0) {
+					myQueue.offer(j);
+				}
+			}
+		}
+
+		System.out.println(count);
+		return count == numCourses;
+	}
+
+	/*
+	public boolean canFinishII(int numCourses, int[][] prerequisites) {
 		int[][] matrix = new int[numCourses][numCourses]; // i -> j
 		int[] indegree = new int[numCourses];
 
@@ -65,7 +124,7 @@ class Solution {
 	}
 
 
-	public boolean canFinish(int numCourses, int[][] prerequisites) {
+	public boolean canFinishIII(int numCourses, int[][] prerequisites) {
 		ArrayList[] graph = new ArrayList[numCourses];
 		for (int i = 0; i < numCourses; i++)
 			graph[i] = new ArrayList();
@@ -96,7 +155,7 @@ class Solution {
 		return true;
 	}
 
-	public boolean canFinish(int numCourses, int[][] prerequisites) {
+	public boolean canFinishIV(int numCourses, int[][] prerequisites) {
 		ArrayList[] graph = new ArrayList[numCourses];
 		int[] degree = new int[numCourses];
 		Queue queue = new LinkedList();
@@ -134,7 +193,7 @@ class Solution {
 	}
 
 
-	public boolean canFinish(int n, int[][] prerequisites) {
+	public boolean canFinishV(int n, int[][] prerequisites) {
 		ArrayList<Integer>[] G = new ArrayList[n];
 		int[] degree = new int[n];
 		ArrayList<Integer> bfs = new ArrayList();
@@ -150,35 +209,7 @@ class Solution {
 		return bfs.size() == n;
 	}
 
-	public boolean canFinish(int numCourses, int[][] prerequisites) {
-
-		// course -> list of next courses
-		HashMap<Integer, List<Integer>> courseDict = new HashMap<>();
-
-		// build the graph first
-		for (int[] relation : prerequisites) {
-			// relation[0] depends on relation[1]
-			if (courseDict.containsKey(relation[1])) {
-				courseDict.get(relation[1]).add(relation[0]);
-			} else {
-				List<Integer> nextCourses = new LinkedList<>();
-				nextCourses.add(relation[0]);
-				courseDict.put(relation[1], nextCourses);
-			}
-		}
-
-		boolean[] path = new boolean[numCourses];
-
-		for (int currCourse = 0; currCourse < numCourses; ++currCourse) {
-			if (this.isCyclic(currCourse, courseDict, path)) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	public boolean canFinish(int numCourses, int[][] prerequisites) {
+	public boolean canFinishVII(int numCourses, int[][] prerequisites) {
 		List[] graphs = new ArrayList[numCourses];
 		if (numCourses == 0 || prerequisites == null || prerequisites.length == 0)return true;
 		boolean[]  visited = new boolean[numCourses];
@@ -193,7 +224,7 @@ class Solution {
 
 		for (int i = 0; i < graphs.length; i++) {
 			// if(recStk[i])continue;
-			if (!dfs(i, visited, recStk, graphs)) {
+			if (!dfsI(i, visited, recStk, graphs)) {
 				return false;
 			}
 		}
@@ -201,16 +232,17 @@ class Solution {
 		return true;
 	}
 
-	private static boolean dfs(int s, boolean[] visited, boolean[] recStk, List[] graph) {
+	private static boolean dfsI(int s, boolean[] visited, boolean[] recStk, List[] graph) {
 		if (visited[s]) return false;
 		if (recStk[s]) return true;
 		visited[s] = true;
 		recStk[s] = true;
 
 		for (int i = 0; i < graph[s].size(); i++) {
-			if (!dfs((int)graph[s].get(i),  visited, recStk, graph))return false;
+			if (!dfsI((int)graph[s].get(i),  visited, recStk, graph))return false;
 		}
 		visited[s] = false;
 		return true;
 	}
+	*/
 }
