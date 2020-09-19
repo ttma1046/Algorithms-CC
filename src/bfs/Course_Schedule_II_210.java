@@ -50,10 +50,27 @@ class Course_Schedule_II_210 {
 		}
 	}
 
+	/*
+	map outdegree
+
+	0:1,2
+	1:3
+	2:3
+
+	array indegree
+	
+	0:0
+	1:1
+	2:1
+	3:2
+	*/
+
+
 	public int[] findOrder(int numCourses, int[][] prerequisites) {
 		ArrayList<Integer>[] map  = new ArrayList[numCourses];
-		int[] result = new int[numCourses];
 		int[] indegree = new int[numCourses];
+		
+		int[] result = new int[numCourses];
 		int count = 0;
 
 		for (int i = 0; i < numCourses; i++) {
@@ -92,7 +109,7 @@ class Course_Schedule_II_210 {
 	}
 
 	/*
-	public int[] findOrder(int numCourses, int[][] prerequisites) {
+	public int[] findOrderBFS(int numCourses, int[][] prerequisites) {
 	    int[] degree = new int[numCourses], res = new int[numCourses];
 	    List<Integer>[] graph = new ArrayList[numCourses];
 	    for (int i = 0; i < numCourses; i++) graph[i] = new ArrayList<>();
@@ -120,7 +137,7 @@ class Course_Schedule_II_210 {
 	    return index == numCourses ? res : new int[0];
 	}
 
-	public int[] findOrder(int numCourses, int[][] prerequisites) {
+	public int[] findOrderBFSII(int numCourses, int[][] prerequisites) {
 		Map<Integer, List<Integer>> adjList = new HashMap<Integer, List<Integer>>();
 		int[] indegree = new int[numCourses];
 
@@ -173,8 +190,8 @@ class Course_Schedule_II_210 {
 
 		return new int[0];
 	}
-
-	public int[] findOrder(int numCourses, int[][] prerequisites) {
+	*/
+	public int[] findOrderDFS(int numCourses, int[][] prerequisites) {
 		List<Integer>[] graph = new List[numCourses];
 		for (int i = 0; i < numCourses; i++) {
 			graph[i] = new ArrayList<>();
@@ -213,7 +230,7 @@ class Course_Schedule_II_210 {
 		return false;
 	}
 
-	public int[] findOrder(int numCourses, int[][] prerequisites) {
+	public int[] findOrderDFSII(int numCourses, int[][] prerequisites) {
 		int[] incLinkCounts = new int[numCourses];
 		List<List<Integer>> adjs = new ArrayList<>(numCourses);
 		initialiseGraph(incLinkCounts, adjs, prerequisites);
@@ -256,6 +273,5 @@ class Course_Schedule_II_210 {
 		order.push(from);
 		return true;
 	}
-	*/
 }
 
