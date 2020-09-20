@@ -325,41 +325,41 @@ Update: check out the new approach 2 that collects indexes of all mismatched par
 1. Approach 1: Stack and Placeholder
     We mark removed parentheses with '*', and erase all of them in the end.
     
-    ```Java
-    public String minRemoveToMakeValid(String s) {
-      StringBuilder sb = new StringBuilder(s);
-      Stack<Integer> st = new Stack<>();
-      for (int i = 0; i < sb.length(); ++i) {
-        if (sb.charAt(i) == '(') st.add(i);
-        if (sb.charAt(i) == ')') {
-          if (!st.empty()) st.pop();
-          else sb.setCharAt(i, '*');
-        }
-      }
-      while (!st.empty())
-        sb.setCharAt(st.pop(), '*');
-      return sb.toString().replaceAll("\\*", "");
+```Java
+public String minRemoveToMakeValid(String s) {
+  StringBuilder sb = new StringBuilder(s);
+  Stack<Integer> st = new Stack<>();
+  for (int i = 0; i < sb.length(); ++i) {
+    if (sb.charAt(i) == '(') st.add(i);
+    if (sb.charAt(i) == ')') {
+      if (!st.empty()) st.pop();
+      else sb.setCharAt(i, '*');
     }
-    ```
+  }
+  while (!st.empty())
+    sb.setCharAt(st.pop(), '*');
+  return sb.toString().replaceAll("\\*", "");
+}
+```
 
-    ```C++
-    string minRemoveToMakeValid(string s) {
-      stack<int> st;
-      for (auto i = 0; i < s.size(); ++i) {
-        if (s[i] == '(') st.push(i);
-        if (s[i] == ')') {
-          if (!st.empty()) st.pop();
-          else s[i] = '*';
-        }
-      }
-      while (!st.empty()) {
-        s[st.top()] = '*';
-        st.pop();
-      }
-      s.erase(remove(s.begin(), s.end(), '*'), s.end());
-      return s;
+```C++
+string minRemoveToMakeValid(string s) {
+  stack<int> st;
+  for (auto i = 0; i < s.size(); ++i) {
+    if (s[i] == '(') st.push(i);
+    if (s[i] == ')') {
+      if (!st.empty()) st.pop();
+      else s[i] = '*';
     }
-    ```
+  }
+  while (!st.empty()) {
+    s[st.top()] = '*';
+    st.pop();
+  }
+  s.erase(remove(s.begin(), s.end(), '*'), s.end());
+  return s;
+}
+```
 
 2. Approach 2: Stack with Tracking
 Instead of using placeholders, we can track indexes of all mismatched parentheses, and erase them in the end going right-to-left. This idea was inspired by dibdidib.

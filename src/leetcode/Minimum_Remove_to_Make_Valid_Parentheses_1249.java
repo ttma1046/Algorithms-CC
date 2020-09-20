@@ -127,18 +127,13 @@ class Minimum_Remove_to_Make_Valid_Parentheses_1249 {
       sb.append(c);
     }
 
-    int openToKeep = open - balance;
-
     String tempStr = sb.toString();
     sb = new StringBuilder();
     for (int i = tempStr.length() - 1; i >= 0 ; i--) {
       char temp = tempStr.charAt(i);
 
       if (temp == '(' && balance-- > 0) {
-        if (openToKeep == 0) {
-          continue;
-        }
-        openToKeep--;
+         continue;
       }
       sb.append(temp);
     }
