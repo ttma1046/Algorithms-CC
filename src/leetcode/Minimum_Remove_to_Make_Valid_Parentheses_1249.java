@@ -122,9 +122,7 @@ class Minimum_Remove_to_Make_Valid_Parentheses_1249 {
 
   We are using a stack, set, and string builder, each of which could have up to n characters in them, and so require up to O(n)O(n) space.
 
-  When checking your own implementation, watch out for any O(n)O(n) library calls inside loops, as these would make your solution O(n^2)O(n
-  2
-  ).
+  When checking your own implementation, watch out for any O(n)O(n) library calls inside loops, as these would make your solution O(n^2)O(n2).
   */
 
   public String minRemoveToMakeValidMy(String s) {
