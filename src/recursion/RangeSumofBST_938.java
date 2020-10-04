@@ -19,27 +19,72 @@ package recursion;
 */
 
 class RangeSumofBST_938 {
+    int ans;
     public int rangeSumBST(TreeNode root, int L, int R) {
-        if (root == null) return 0;
-        return cal(root, L, R);
+        ans = 0;
+        dfs(root, L, R);
+        return ans;
     }
 
-    private int cal(TreeNode node, int L, int R) {
+    public void dfs(TreeNode node, int L, int R) {
+        if (node != null) {
+            if (L <= node.val && node.val <= R)
+                ans += node.val;
+            if (L < node.val)
+                dfs(node.left, L, R);
+            if (node.val < R)
+                dfs(node.right, L, R);
+        }
+    }
+
+    public int rangeSumBST(TreeNode root, int L, int R) {
+        if (root == null) return 0;
+        return dfs(root, L, R);
+    }
+
+    private int dfs(TreeNode node, int L, int R) {
         int result = 0;
 
         if (node == null) return result;
 
-        if (node.val > L) {
-            result += cal(node.left, L, R);
-        }
-
-        if(node.val >= L && node.val <= R) {
+        if (node.val >= L && node.val <= R) {
             result += node.val;
         };
 
-        if (node.val < R) {
-            result += cal(node.right, L, R);
+        if (node.val > L) {
+            result += dfs(node.left, L, R);
         }
+
+        if (node.val < R) {
+            result += dfs(node.right, L, R);
+        }
+        return result;
+    }
+
+    public static int rangeSumBST(TreeNode root, int L, int R) {
+        int result = 0;
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        stack.push(root);
+
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+
+            if (node == null) continue;
+
+            if (node != null) {
+                if (node.val >= L && node.val <= R) {
+                    result += node.val;
+                } 
+                if (node.val > L) {
+                    stack.push(node.right);
+                }
+
+                if (node.val < R) {
+                    stack.push(node.left);
+                }
+            }
+        }
+
         return result;
     }
 
