@@ -6,7 +6,7 @@ return the sum of values of all nodes with value between L and R (inclusive).
 The binary search tree is guaranteed to have unique values.
 */
 
-package recursion;
+package dfs;
 
 
 /*
