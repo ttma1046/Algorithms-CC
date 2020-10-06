@@ -71,16 +71,19 @@ After removing invalid ")", the number of "(" we remove is the minimum needed to
 
 Let's put all this together into a 2-parse algorithm.
 
-Identify all indexes that should be removed.
-Build a new string with removed indexes.
-As explained above, we should use a stack. If we put the indexes of the "(" on the stack, then we'll know that all the indexes on the stack at the end are the indexes of the unmatched "(". We should also use a set to keep track of the unmatched ")" we come across. Then, we can remove the character at each of those indexes and then return the edited string.
+1. Identify all indexes that should be removed.
+2. Build a new string with removed indexes.
 
-We need to be really careful with that "removal" step though, as it can be done in O(n), but there are many ways of accidentally making it O(n^2). Making these mistakes (and not fixing them) in an interview won't look good. Here's some operations that are `O(n)` that people sometimes assume are O(1).
+As explained above, we should use a stack. If we put the indexes of the `(` on the stack, then we'll know that all the indexes on the stack at the end are the indexes of the unmatched `(`. We should also use a set to keep track of the unmatched `)` we come across. Then, we can remove the character at each of those indexes and then return the edited string.
+
+We need to be really careful with that `removal` step though, as it can be done in `O(n)`, but there are many ways of accidentally making it `O(n^2)`. 
+Making these mistakes (and not fixing them) in an interview won't look good. 
+Here's some operations that are `O(n)` that people sometimes assume are `O(1)`.
 
 Adding or removing (or even changing) just one character anywhere in a string is `O(n)`, because strings are immutable. The entire string is rebuilt for every change.
 Adding or removing not from the end of a list, vector, or array is `O(n)` because the other items are moved up to make a gap or down to fill in the gap.
 Checking if an item is in a list, because this requires a linear search. Even if you use binary search, it'll still be `O(logn)`, which is not ideal for this problem.
-A safe strategy is to iterate over the string and insert each character we want to keep into a list (Python) or StringBuilder (Java). Then once we have all the characters, it is a single O(n)O(n) step to convert them into a string.
+A safe strategy is to iterate over the string and insert each character we want to keep into a list (Python) or StringBuilder (Java). Then once we have all the characters, it is a single `O(n)` step to convert them into a string.
 
 Recall that checking if an item is in a set is `O(1)`. If all the indexes we need to remove are in a set, then we can iterate through each index in the string, check if the current index is in the set, and if it is not, then add the character at that index to the string builder.
 
@@ -115,56 +118,57 @@ class Solution {
 
 ##Complexity Analysis##
 
-Time complexity : `O(n)`, where n is the length of the input string.
+###Time complexity###
+`O(n)`, where n is the length of the input string.
 
 There are 3 loops we need to analyze. We also need to check carefully for any library functions that are not constant time.
 
-The first loop iterates over the string, and for each character, either does nothing, pushes to a stack or adds to a set. Pushing to a stack and adding to a set are both O(1)O(1). Because we are processing each character with an O(1)O(1) operation, this overall loop is O(n)O(n).
+The first loop iterates over the string, and for each character, either does nothing, pushes to a stack or adds to a set. Pushing to a stack and adding to a set are both `O(1)`. Because we are processing each character with an `O(1)` operation, this overall loop is `O(n)`.
 
-The second loop (hidden in library function calls for the Python code) pops each item from the stack and adds it to the set. Again, popping items from a stack is O(1)O(1), and there are at most nn characters on the stack, and so it too is O(n)O(n).
+The second loop (hidden in library function calls for the Python code) pops each item from the stack and adds it to the set. Again, popping items from a stack is `O(1)`, and there are at most `n` characters on the stack, and so it too is `O(n)`.
 
-The third loop iterates over the string again, and puts characters into a StringBuilder/ list. Checking if an item is in a set and appending to the end of a String Builder or list is O(1)O(1). Again, this is O(n)O(n) overall.
+The third loop iterates over the string again, and puts characters into a StringBuilder/ list. Checking if an item is in a set and appending to the end of a String Builder or list is `O(1)`. Again, this is `O(n)` overall.
 
-The StringBuilder.toString() method is O(n)O(n), and so is the "".join(...). So again, this operation is O(n)O(n).
+The `StringBuilder.toString()` method is `O(n)`, and so is the `"".join(...)`. So again, this operation is `O(n)`.
 
-So this gives us O(4n)O(4n), and we drop the 44 because it is a constant.
+So this gives us `O(4n)`, and we drop the `4` because it is a constant.
 
-Space complexity : O(n)O(n), where nn is the length of the input string.
+###Space complexity###
+`O(n)`, where nn is the length of the input string.
 
-We are using a stack, set, and string builder, each of which could have up to n characters in them, and so require up to O(n)O(n) space.
+We are using a stack, set, and string builder, each of which could have up to n characters in them, and so require up to `O(n)` space.
 
-When checking your own implementation, watch out for any O(n)O(n) library calls inside loops, as these would make your solution O(n^2)O(n 
-2
- ).
+When checking your own implementation, watch out for any `O(n)` library calls inside loops, as these would make your solution `O(n^2)`.
+
 
 
 #Approach 2: Two Parse String Builder#
 
 ##Intuition##
 
-A key observation you might have made from the previous algorithm is that for all invalid ")", we know immediately that they are invalid (they are the ones we were putting in the set). It is the "(" that we don't know about until the end (as they are what was left on the stack at the end). We could be building up a string builder in that first loop that has all of the invalid ")" removed. This would be half the problem solved in the first loop, in O(n)O(n) time.
+A key observation you might have made from the previous algorithm is that for all invalid ")", we know immediately that they are invalid (they are the ones we were putting in the set). It is the "(" that we don't know about until the end (as they are what was left on the stack at the end). We could be building up a string builder in that first loop that has all of the invalid ")" removed. This would be half the problem solved in the first loop, in `O(n)` time.
 
-Going back to our example above, we start by identifying all the problematic ")".
+Going back to our example above, we start by identifying all the problematic `)`.
 
-L(e)))et((co)d(e with the unbalanced ) crossed out. 
+`L(e)))et((co)d(e` with the unbalanced `)` crossed out. 
 
 While we were running this parse, we could have been adding all characters to keep to a String Builder. This is what we'd have left if we had.
 
-The string L(e)et((co)d(e.
+The string `L(e)et((co)d(e`.
 
-Now, another important observation is that we can use the same algorithm to remove the invalid "(". We just need to look at the string in reverse. We do this by swapping the "(" and ")" for each other, and reversing the order of all characters in the string.
+Now, another important observation is that we can use the same algorithm to remove the invalid `(`. We just need to look at the string in reverse. We do this by swapping the `(` and `)` for each other, and reversing the order of all characters in the string.
 
-The string L(e)et((co)d(e reversed to be e)d(oc))te(e)L and new balance calculations done
+The string `L(e)et((co)d(e` reversed to be `e)d(oc))te(e)L` and new balance calculations done
 
-So then we can remove those characters, and undo the reverse operation by reversing all characters and swapping "(" and ")" again, and we have the answer!
+So then we can remove those characters, and undo the reverse operation by reversing all characters and swapping `(` and `)` again, and we have the answer!
 
-The string e)d(oc))te(e)L with invalid ) removed to give ed(oc)te(e)L
+The string `e)d(oc))te(e)L` with invalid `)` removed to give `ed(oc)te(e)L`
 
-The string ed(oc)te(e)L reversed back to L(e)et(co)de and balances used to verify it.
+The string `ed(oc)te(e)L` reversed back to `L(e)et(co)de` and balances used to verify it.
 
 ##Algorithm##
 
-In code, it's best to pull out the common functionality of both parses, otherwise you will have almost the same code repeated twice. A good way to do this is to have a function that takes a string, a symbol to treat as the "open" parenthesis, and a symbol to treat as the "close" parenthesis. The function then returns a string that has all invalid instances of the "closing" symbol removed. Then for the second parse, pass in the reversed string (that was returned from the first parse) and with the "open" and "close" symbols swapped.
+In code, it's best to pull out the common functionality of both parses, otherwise you will have almost the same code repeated twice. A good way to do this is to have a function that takes a string, a symbol to treat as the `open` parenthesis, and a symbol to treat as the `close` parenthesis. The function then returns a string that has all invalid instances of the `closing` symbol removed. Then for the second parse, pass in the reversed string (that was returned from the first parse) and with the `open` and `close` symbols swapped.
 
 ```java
 class Solution {
@@ -195,43 +199,58 @@ class Solution {
 
 ##Complexity Analysis##
 
-Time complexity : O(n)O(n), where nn is the length of the input string.
+###Time complexity### 
 
-We need to analyze the removeInvalidClosing function and then the outside code.
+`O(n)`, where `n` is the length of the input string.
 
-removeInvalidClosing processes each character once and optionally modifies balance and adds the character to a string builder. Adding to the end of a string builder is O(1)O(1). As there are at most nn characters to process, the overall cost is O(n)O(n).
+We need to analyze the `removeInvalidClosing` function and then the outside code.
 
-The other code makes 2 calls to removeInvalidClosing, 2 string reverals, and 1 conversion from string builder to string. These operations are O(n)O(n), and the 3 is treated as a constant so is dropped. Again, this gives us an overall cost of O(n)O(n).
+`removeInvalidClosing` processes each character once and optionally modifies balance and adds the character to a string builder. Adding to the end of a string builder is `O(1)`. As there are at most nn characters to process, the overall cost is `O(n)`.
 
-Because all parts of the code are O(n)O(n), the overall time complexity is O(n)O(n).
+The other code makes 2 calls to `removeInvalidClosing`, 2 string reverals, and 1 conversion from string builder to string. These operations are `O(n)`, and the 3 is treated as a constant so is dropped. Again, this gives us an overall cost of `O(n)`.
 
-Space complexity : O(n)O(n), where nn is the length of the input string.
+Because all parts of the code are `O(n)`, the overall time complexity is `O(n)`.
 
-The string building still requires O(n)O(n) space. However, the constants are smaller than the previous approach, as we no longer have the set or stack.
+Space complexity : `O(n)`, where nn is the length of the input string.
 
-It is impossible to do better, because the input is an immutable string, and the output must be an immutable string. Therefore, manipulating the string cannot be done in-place, and requires O(n)O(n) space to modify.
+The string building still requires `O(n)` space. However, the constants are smaller than the previous approach, as we no longer have the set or stack.
 
-When checking your own implementation, watch out for any O(n)O(n) library functions inside loops, as these would make your solution O(n^2)O(n 
-2
- ).
+It is impossible to do better, because the input is an immutable string, and the output must be an immutable string. Therefore, manipulating the string cannot be done in-place, and requires `O(n)` space to modify.
+
+When checking your own implementation, watch out for any `O(n)` library functions inside loops, as these would make your solution `O(n^2)`.
+
 
 #Approach 3: Shortened Two Parse String Builder#
 
 ##Intuition##
 
-This approach is a simplification of the previous one, and only needs to keep track of the balance. It does not need a stack. Instead of doing the full procedure twice, we can do the first parse and then look at the balance to see how many "(" we need to remove. It turns out that if we remove the rightmost '(', we are guaranteed to have a balanced string. So for the second parse, we only need to remove balance "(", starting from the right.
+This approach is a simplification of the previous one, and only needs to keep track of the balance. 
+
+It does not need a stack. 
+
+Instead of doing the full procedure twice, we can do the first parse and then look at the balance to see how many `(` we need to remove. 
+
+It turns out that if we remove the rightmost `(`, we are guaranteed to have a balanced string. 
+
+So for the second parse, we only need to remove balance `(`, starting from the right.
 
 It might be difficult initially to see why this works, so here's a justification.
 
-Consider a string s that contains no invalid ")" (it has had all the invalid ")" removed by the first parse of the algorithm). It's important to understand that we therefore know there is a way of removing balance "(" that will make it valid. For example, one of our examples from above.
+Consider a string `s` that contains no invalid `)` 
+(it has had all the invalid `)` removed by the first parse of the algorithm). 
 
-The string L(e)et((co)d(e.
+It's important to understand that we therefore know there is a way of removing balance `(` that will make it valid. For example, one of our examples from above.
 
-For a given "(" to be valid, there needs to be more ")" than "(" after it in s (if not, there won't be a ")" leftover for it). If this is true for all "(" in s, then s would be valid.
+The string `L(e)et((co)d(e`.
 
-When we remove a "(", all other "(" to the left see their ratio of ")" to "(" go up (in other words, they have less others to compete for the ")" with).
+For a given `(` to be valid, there needs to be more `)` than `(` after it in `s`
+ (if not, there won't be a `)` leftover for it). 
 
-So by removing balance "(" from the right, every other "(" now has balance less "(" after it, which is the biggest improvement in the ratios we could have possibly got. If any "(" was still not valid after this, then that would mean s had invalid ")" at the start (which it didn't, because it had all of those removed already).
+If this is true for all `(` in `s`, then `s` would be valid.
+
+When we remove a `(`, all other `(` to the left see their ratio of `)` to `(` go up (in other words, they have less others to compete for the `)` with).
+
+So by removing balance `(` from the right, every other `(` now has balance less `(` after it, which is the biggest improvement in the ratios we could have possibly got. If any `(` was still not valid after this, then that would mean s had invalid `)` at the start (which it didn't, because it had all of those removed already).
 
 Therefore, this has to be a valid solution.
 
@@ -305,43 +324,42 @@ Update: check out the new approach 2 that collects indexes of all mismatched par
 
 1. Approach 1: Stack and Placeholder
     We mark removed parentheses with '*', and erase all of them in the end.
-
-    ```Java
-
-    public String minRemoveToMakeValid(String s) {
-      StringBuilder sb = new StringBuilder(s);
-      Stack<Integer> st = new Stack<>();
-      for (int i = 0; i < sb.length(); ++i) {
-        if (sb.charAt(i) == '(') st.add(i);
-        if (sb.charAt(i) == ')') {
-          if (!st.empty()) st.pop();
-          else sb.setCharAt(i, '*');
-        }
-      }
-      while (!st.empty())
-        sb.setCharAt(st.pop(), '*');
-      return sb.toString().replaceAll("\\*", "");
+    
+```Java
+public String minRemoveToMakeValid(String s) {
+  StringBuilder sb = new StringBuilder(s);
+  Stack<Integer> st = new Stack<>();
+  for (int i = 0; i < sb.length(); ++i) {
+    if (sb.charAt(i) == '(') st.add(i);
+    if (sb.charAt(i) == ')') {
+      if (!st.empty()) st.pop();
+      else sb.setCharAt(i, '*');
     }
-    ```
+  }
+  while (!st.empty())
+    sb.setCharAt(st.pop(), '*');
+  return sb.toString().replaceAll("\\*", "");
+}
+```
 
-    ```C++
-    string minRemoveToMakeValid(string s) {
-      stack<int> st;
-      for (auto i = 0; i < s.size(); ++i) {
-        if (s[i] == '(') st.push(i);
-        if (s[i] == ')') {
-          if (!st.empty()) st.pop();
-          else s[i] = '*';
-        }
-      }
-      while (!st.empty()) {
-        s[st.top()] = '*';
-        st.pop();
-      }
-      s.erase(remove(s.begin(), s.end(), '*'), s.end());
-      return s;
+```C++
+string minRemoveToMakeValid(string s) {
+  stack<int> st;
+  for (auto i = 0; i < s.size(); ++i) {
+    if (s[i] == '(') st.push(i);
+    if (s[i] == ')') {
+      if (!st.empty()) st.pop();
+      else s[i] = '*';
     }
-    ```
+  }
+  while (!st.empty()) {
+    s[st.top()] = '*';
+    st.pop();
+  }
+  s.erase(remove(s.begin(), s.end(), '*'), s.end());
+  return s;
+}
+```
 
 2. Approach 2: Stack with Tracking
 Instead of using placeholders, we can track indexes of all mismatched parentheses, and erase them in the end going right-to-left. This idea was inspired by dibdidib.
