@@ -65,7 +65,7 @@ class FirstCommonAncestor_4point8 {
 		/*
 		 * while(p != null) { TreeNode sibling = getSibling(p); if (cover(sibling, q)) {
 		 * return p.parent; } p = p.parent; }
-		 * 
+		 *
 		 * return null;
 		 */
 
@@ -103,7 +103,7 @@ class FirstCommonAncestor_4point8 {
 	// Without LInks to Parents
 	TreeNode findCommonAncestorIII(TreeNode root, TreeNode p, TreeNode q) {
 		/* error check - one node is not in the tree. */
-		if (!coverSubTree(root, p) || !coverSubTree(root, q)) {
+		if (!covers(root, p) || !covers(root, q)) {
 			return null;
 		}
 
@@ -139,7 +139,7 @@ class FirstCommonAncestor_4point8 {
 		return covers(root.left, p) || covers(root.right, p);
 	}
 
-	TreeNode findCommonAncestorBAD(TreeNode root, TreeNode p, TreeNode q) {
+	TreeNode findCommonAncestorBug(TreeNode root, TreeNode p, TreeNode q) {
 		if (root == null) {
 			return null;
 		}
@@ -148,12 +148,12 @@ class FirstCommonAncestor_4point8 {
 			return root;
 		}
 
-		TreeNode x = findCommonAncestorBAD(root.left, p, q);
+		TreeNode x = findCommonAncestorBug(root.left, p, q);
 		if (x != null && x != p && x != q) {
 			return x;
 		}
 
-		TreeNode y = findCommonAncestorBAD(root.right, p, q);
+		TreeNode y = findCommonAncestorBug(root.right, p, q);
 		if (y != null && y != p && y != q) {
 			return y;
 		}
@@ -224,4 +224,11 @@ class FirstCommonAncestor_4point8 {
 	 * commonAncestor(root, n3, n7); if (ancestor != null) {
 	 * System.out.println(ancestor.data); } else { System.out.println("null"); } }
 	 */
+
+	public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+		if (root == null || root == p || root == q) return root;
+		TreeNode left = lowestCommonAncestor(root.left, p, q);
+		TreeNode right = lowestCommonAncestor(root.right, p, q);
+		return left == null ? right : right == null ? left : root;
+	}
 }
