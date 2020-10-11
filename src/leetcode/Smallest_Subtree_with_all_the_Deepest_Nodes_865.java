@@ -27,7 +27,7 @@ Example 3:
 Input: root = [0,1,3,null,2]
 Output: [2]
 Explanation: The deepest node in the tree is 2, the valid subtrees are the subtrees of nodes 2, 1 and 0 but the subtree of node 2 is the smallest.
- 
+
 
 Constraints:
 
@@ -35,16 +35,16 @@ The number of nodes in the tree will be in the range [1, 500].
 The values of the nodes in the tree are unique.
 */
 class Smallest_Subtree_with_all_the_Deepest_Nodes {
-    public TreeNode subtreeWithAllDeepest(TreeNode root) {   
+    public TreeNode subtreeWithAllDeepest(TreeNode root) {
         Map<TreeNode, Integer> depth = new HashMap<TreeNode, Integer>();
-        
+
         depth.put(null, -1);
-        
+
         dfs(root, null, depth);
 
         int max_depth = -1;
 
-        for (Integer d: depth.values()) {
+        for (Integer d : depth.values()) {
             max_depth = Math.max(max_depth, d);
         }
 
@@ -68,21 +68,50 @@ class Smallest_Subtree_with_all_the_Deepest_Nodes {
                  right = answer(current.right, max_depth, depth);
 
         return left == null ? right : right == null ? left : current;
+    }
 
-        /*
-        if (left != null && right != null) {
-            return current;
-        }   
+    public TreeNode subtreeWithAllDeepest(TreeNode root) {
+        return dfs(root).node;
+    }
 
-        if (left != null) {
-            return left;
+    class Result {
+        TreeNode node;
+        int distance;
+
+        Result(TreeNode n, int d) {
+            node = node;
+            distance = d;
         }
+    }
 
-        if (rigth != null) {
-            return right;
-        }
+    public TreeNode subtreeWithAllDeepest(TreeNode root) {
+        if (root == null) return root;
 
-        return null;
-        */
+        return dfs(root).node;
+    }
+
+
+    private Result dfs(TreeNode node) {
+        if (node == null) return new Result(null, 0);
+
+        Result left = dfs(node.left),
+                right = dfs(node.right);
+
+        if (left.distance > right.distance) return new Result(left, left.distance + 1);
+        if (right.distance > left.distance) return new Result(right, right.distance + 1);
+
+        return new Result(node, left.distance + 1); 
+    }
+
+    public TreeNode subtreeWithAllDeepest(TreeNode root) {
+        return deep(root).getValue();
+    }
+
+    public Pair<Integer, TreeNode> deep(TreeNode root) {
+        if (root == null) return new Pair(0, null);
+        Pair<Integer, TreeNode> l = deep(root.left), r = deep(root.right);
+
+        int d1 = l.getKey(), d2 = r.getKey();
+        return new Pair(Math.max(d1, d2) + 1, d1 == d2 ? root : d1 > d2 ? l.getValue() : r.getValue());
     }
 }
