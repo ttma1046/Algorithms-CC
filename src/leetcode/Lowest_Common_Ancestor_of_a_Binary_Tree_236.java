@@ -70,7 +70,7 @@ class Lowest_Common_Ancestor_of_a_Binary_Tree_236 {
 
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         Map<TreeNode, TreeNode> parent = new HashMap<>();
-        Deque<TreeNode> stack = new ArrayDeque<>();
+        Stack<TreeNode> stack = new Stack<>();
         parent.put(root, null);
         stack.push(root);
 
