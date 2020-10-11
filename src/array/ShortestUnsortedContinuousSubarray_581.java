@@ -99,7 +99,7 @@ public class ShortestUnsortedContinuousSubarray_581 {
     }
 
     public int findUnsortedSubarrayStack(int[] nums) {
-        Stack< Integer > stack = new Stack < Integer > ();
+        Stack<Integer> stack = new Stack <Integer> ();
         int l = nums.length, r = 0;
         for (int i = 0; i < nums.length; i++) {
             while (!stack.isEmpty() && nums[stack.peek()] > nums[i])
@@ -145,10 +145,10 @@ public class ShortestUnsortedContinuousSubarray_581 {
 
     public int findUnsortedSubarrayII(int[] A) {
         int n = A.length,
-                beg = -1,
-                end = -2,
-                min = A[n - 1],
-                max = A[0];
+            beg = -1,
+            end = -2,
+            min = A[n - 1],
+            max = A[0];
 
         for (int i = 1; i < n; i++) {
             max = Math.max(max, A[i]);

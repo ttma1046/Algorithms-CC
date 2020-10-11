@@ -1,5 +1,8 @@
 package leetcode;
 
+import java.util.Stack;
+import java.util.ArrayList;
+
 /*
 Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
 
@@ -33,11 +36,91 @@ p and q are different and both values will exist in the binary tree.
  *     TreeNode(int x) { val = x; }
  * }
  */
-class Lower_Common_Ancestor_of_a_Binary_Tree_236 {
-	public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-		if (root == null || root == p || root == q) return root;
-		TreeNode left = lowestCommonAncestor(root.left, p, q);
-		TreeNode right = lowestCommonAncestor(root.right, p, q);
-		return left == null ? right : right == null ? left : root;
-	}
+
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int x) { val = x; }
+}
+
+class Frame {
+    TreeNode node;
+    Frame parent;
+    ArrayList<TreeNode> subs;
+
+    Frame() {
+        this.subs = new ArrayList<TreeNode>();
+    }
+
+    Frame(TreeNode node, Frame parent) {
+        this.node = node;
+        this.parent = parent;
+        this.subs = new ArrayList<TreeNode>();
+    }
+}
+
+class Lowest_Common_Ancestor_of_a_Binary_Tree_236 {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null || root == p || root == q) return root;
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
+        return left == null ? right : right == null ? left : root;
+    }
+
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        Map<TreeNode, TreeNode> parent = new HashMap<>();
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        parent.put(root, null);
+        stack.push(root);
+
+        while (!parent.containsKey(p) || !parent.containsKey(q)) {
+            TreeNode node = stack.pop();
+            if (node.left != null) {
+                parent.put(node.left, node);
+                stack.push(node.left);
+            }
+            if (node.right != null) {
+                parent.put(node.right, node);
+                stack.push(node.right);
+            }
+        }
+        Set<TreeNode> ancestors = new HashSet<>();
+        while (p != null) {
+            ancestors.add(p);
+            p = parent.get(p);
+        }
+        while (!ancestors.contains(q))
+            q = parent.get(q);
+        return q;
+    }
+
+    public TreeNode lowestCommonAncestorIterative(TreeNode root, TreeNode p, TreeNode q) {
+        Frame answer = new Frame();
+        Stack<Frame> stack = new Stack<Frame>();
+        stack.push(new Frame(root, answer));
+        while (!stack.isEmpty()) {
+            Frame top = stack.peek(), parent = top.parent;
+            TreeNode node = top.node;
+            if (node == null || node == p || node == q) {
+                parent.subs.add(node);
+                stack.pop();
+            } else if (top == null || top.subs == null || top.subs.isEmpty()) {
+                stack.push(new Frame(node.right, top));
+                stack.push(new Frame(node.left, top));
+            } else {
+                TreeNode left = top.subs.get(0), right = top.subs.get(1);
+                parent.subs.add(left == null ? right : right == null ? left : node);
+                stack.pop();
+            }
+        }
+        return answer.subs.get(0);
+    }
+
+    public static void main(String[] args) {
+        TreeNode root = new TreeNode(6);
+        TreeNode p = new TreeNode(4);
+        TreeNode q = new TreeNode(3);
+        new Lowest_Common_Ancestor_of_a_Binary_Tree_236().lowestCommonAncestorIterative(root, p, q);
+    }
 }
