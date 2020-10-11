@@ -17,7 +17,6 @@ Example 2:
 Input: root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 4
 Output: 5
 Explanation: The LCA of nodes 5 and 4 is 5, since a node can be a descendant of itself according to the LCA definition.
- 
 
 Note:
 
@@ -35,14 +34,10 @@ p and q are different and both values will exist in the binary tree.
  * }
  */
 class Lower_Common_Ancestor_of_a_Binary_Tree_236 {
-    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        if (root == null || root == p || root == q) {
-        	return root;
-        }
-
-		TreeNode right = lowestCommonAncestor(root.left, p, q) 
-        TreeNode left = lowestCommonAncestor(root.right, p, q);
-
-        return left == null ? right : right == null ? left : root;
-    }
+	public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+		if (root == null || root == p || root == q) return root;
+		TreeNode left = lowestCommonAncestor(root.left, p, q);
+		TreeNode right = lowestCommonAncestor(root.right, p, q);
+		return left == null ? right : right == null ? left : root;
+	}
 }
