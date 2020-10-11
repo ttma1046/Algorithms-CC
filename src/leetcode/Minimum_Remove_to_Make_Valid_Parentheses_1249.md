@@ -323,7 +323,7 @@ In the end, the stack will contain indexes of '(' without the pair, if any. We n
 Update: check out the new approach 2 that collects indexes of all mismatched parentheses, and removes them right-to-left.
 
 1. Approach 1: Stack and Placeholder
-    We mark removed parentheses with '*', and erase all of them in the end.
+    We mark removed parentheses with '\*', and erase all of them in the end.
     
 ```Java
 public String minRemoveToMakeValid(String s) {
