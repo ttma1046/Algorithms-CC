@@ -34,7 +34,19 @@ Constraints:
 The number of nodes in the tree will be in the range [1, 500].
 The values of the nodes in the tree are unique.
 */
+
+class Result {
+    TreeNode node;
+    int distance;
+
+    Result(TreeNode n, int d) {
+        node = node;
+        distance = d;
+    }
+}
+
 class Smallest_Subtree_with_all_the_Deepest_Nodes {
+    /* Solution 1 */
     public TreeNode subtreeWithAllDeepest(TreeNode root) {
         Map<TreeNode, Integer> depth = new HashMap<TreeNode, Integer>();
 
@@ -69,40 +81,27 @@ class Smallest_Subtree_with_all_the_Deepest_Nodes {
 
         return left == null ? right : right == null ? left : current;
     }
-
-    public TreeNode subtreeWithAllDeepest(TreeNode root) {
-        return dfs(root).node;
-    }
-
-    class Result {
-        TreeNode node;
-        int distance;
-
-        Result(TreeNode n, int d) {
-            node = node;
-            distance = d;
-        }
-    }
-
+    
+    /* Solution 2 */
     public TreeNode subtreeWithAllDeepest(TreeNode root) {
         if (root == null) return root;
 
         return dfs(root).node;
     }
 
-
     private Result dfs(TreeNode node) {
         if (node == null) return new Result(null, 0);
 
         Result left = dfs(node.left),
-                right = dfs(node.right);
+               right = dfs(node.right);
 
         if (left.distance > right.distance) return new Result(left, left.distance + 1);
         if (right.distance > left.distance) return new Result(right, right.distance + 1);
 
-        return new Result(node, left.distance + 1); 
+        return new Result(node, left.distance + 1);
     }
 
+    /*
     public TreeNode subtreeWithAllDeepest(TreeNode root) {
         return deep(root).getValue();
     }
@@ -114,4 +113,5 @@ class Smallest_Subtree_with_all_the_Deepest_Nodes {
         int d1 = l.getKey(), d2 = r.getKey();
         return new Pair(Math.max(d1, d2) + 1, d1 == d2 ? root : d1 > d2 ? l.getValue() : r.getValue());
     }
+    */
 }
