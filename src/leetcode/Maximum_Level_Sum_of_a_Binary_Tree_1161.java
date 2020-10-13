@@ -27,13 +27,6 @@ Method 1: BFS
 Use BFS to find the sum of each level, then locate the level with largest sum.
 */
 
-class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-    public TreeNode(int x) { val = x; }
-}
-
 public class Maximum_Level_Sum_of_a_Binary_Tree_1161 {
     public int maxLevelSumMy(TreeNode root) {
         if (root == null) {

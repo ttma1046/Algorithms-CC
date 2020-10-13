@@ -1,6 +1,7 @@
 package leetcode;
 import java.util.Map;
 import java.util.HashMap;
+
 /*
 Given the root of a binary tree, the depth of each node is the shortest distance to the root.
 
@@ -35,19 +36,19 @@ The number of nodes in the tree will be in the range [1, 500].
 The values of the nodes in the tree are unique.
 */
 
-class Result {
-    TreeNode node;
-    int distance;
-
-    Result(TreeNode n, int d) {
-        node = node;
-        distance = d;
-    }
-}
-
 class Smallest_Subtree_with_all_the_Deepest_Nodes {
+    class Result {
+        TreeNode node;
+        int distance;
+
+        Result(TreeNode n, int d) {
+            node = node;
+            distance = d;
+        }
+    }
+
     /* Solution 1 */
-    public TreeNode subtreeWithAllDeepest(TreeNode root) {
+    public TreeNode subtreeWithAllDeepestI(TreeNode root) {
         Map<TreeNode, Integer> depth = new HashMap<TreeNode, Integer>();
 
         depth.put(null, -1);
@@ -81,9 +82,9 @@ class Smallest_Subtree_with_all_the_Deepest_Nodes {
 
         return left == null ? right : right == null ? left : current;
     }
-    
+
     /* Solution 2 */
-    public TreeNode subtreeWithAllDeepest(TreeNode root) {
+    public TreeNode subtreeWithAllDeepestII(TreeNode root) {
         if (root == null) return root;
 
         return dfs(root).node;
@@ -95,8 +96,8 @@ class Smallest_Subtree_with_all_the_Deepest_Nodes {
         Result left = dfs(node.left),
                right = dfs(node.right);
 
-        if (left.distance > right.distance) return new Result(left, left.distance + 1);
-        if (right.distance > left.distance) return new Result(right, right.distance + 1);
+        if (left.distance > right.distance) return new Result(node.left, left.distance + 1);
+        if (right.distance > left.distance) return new Result(node.right, right.distance + 1);
 
         return new Result(node, left.distance + 1);
     }
