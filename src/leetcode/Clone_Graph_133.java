@@ -152,6 +152,49 @@ class Clone_Graph_133 {
 		return visited.get(node);
 	}
 
+	private HashMap<Node, Node> visited = new HashMap<>();
+
+	public Node cloneGraphDFSMy(Node node) {
+		if (node == null) return null;
+
+		if (visited.containsKey(node)) {
+			return visited.get(node);
+		}
+
+		Node cloneNode = new Node(node.val, new ArrayList<>());
+
+		visited.put(node, cloneNode);
+
+		for(Node node: node.neighbors) {
+			cloneNode.neighbors.add(cloneGraphDFSMy(node));
+		}
+
+		return cloneNode;
+	}
+
+	public Node cloneGraphBFSMy(Node node) {
+		if (node == null) return node;
+
+		HashMap<Node, Node> clone = new HashMap<Node, Node>();
+		Queue<Node> queue = new LinkedList<Node>();
+
+		queue.offer(node);
+		clone.put(node, new Node(node.val, new ArrayList<Node>()));
+
+		while(!queue.isEmpty()) {
+			Node current = queue.poll();
+			for (Node neighbor: current.neighbors) {
+				if (!clone.containsKey(neighbor)) {
+					clone.put(neighbor, new Node(neighbor.val, new ArrayList<Node>()));
+
+					queue.offer(neighbor);
+				}
+
+				clone.get(current).neighbors.add(clone.get(neighbor));
+			}
+		}
+		return clone.get(node);
+	}
 	/*
 	 * Complexity Analysis
 	 * 

@@ -1,4 +1,4 @@
-package bfs;
+package dfs;
 
 /*
  * In a binary tree, the root node is at depth 0, and children of each depth k
