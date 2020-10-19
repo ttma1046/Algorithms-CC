@@ -1,6 +1,7 @@
 package leetcode;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.LinkedList;
 /*
 Given a set of non-overlapping intervals, insert a new interval into the intervals (merge if necessary).
 
@@ -59,15 +60,46 @@ class Insert_Interval_57 {
 
 		result.add(newInterval); // add the union of intervals we got
 		// add all the rest
-		while (i < intervals.size()) { 
+		while (i < intervals.length) { 
 			result.add(intervals[i++]); 
 		}
 		
 		return result.toArray(new int[result.size()][2]);
 	}
 
+	public int[][] insertMy(int[][] intervals, int[] newInterval) {
+		List<int[]> result = new ArrayList<int[]>();
+		boolean flag = false;
 
-	public int[][] insertInterval(int[][] intervals, int[] newInterval) {
+		int newStart = newInterval[0];
+		int newEnd = newInterval[1];
+
+		int i = 0, length = intervals.length;
+
+		while(i < length && intervals[i][1] < newStart) {
+			result.add(intervals[i++]);
+		}
+
+		int[] overlapping = new int[]{ newStart, newEnd };
+		while(i < length && intervals[i][0] <= overlapping[1]) {
+			if (!flag || (overlapping[1] < intervals[i][1])) {
+				overlapping = new int[] { Math.min(intervals[i][0], overlapping[0]), Math.max(intervals[i][1], overlapping[1]) };
+			}
+			i++;
+			flag = true;
+		}
+
+		// result.add(overlapping);
+		result.add(newInterval);
+
+		while(i < length) {
+			result.add(intervals[i++]);
+		}
+
+		return result.toArray(new int[result.size()][2]);
+	}
+
+	public int[][] insertIntervalI(int[][] intervals, int[] newInterval) {
 		if (intervals == null || intervals.length == 0) {
 			intervals[0] = newInterval;
 		}
@@ -76,10 +108,10 @@ class Insert_Interval_57 {
 		int newEnd = newInterval[1];
 		int i = 0, length = intervals.length;
 
-		List<int[]> result = new ArrayList<int[]>();
+		LinkedList<int[]> result = new LinkedList<int[]>();
 
-		while (interval[i][0] < newStart) {
-			result.add(interval[i++])
+		while (intervals[i][0] < newStart) {
+			result.add(intervals[i++]);
 		}
 
 		int[] interval = new int[2];
@@ -93,15 +125,15 @@ class Insert_Interval_57 {
 		}
 
 		while (i < length) {
-			interval = intervals[idx++];
+			interval = intervals[i++];
 			int start = interval[0], end = interval[1];
 
-			if (start > output.getLast()[1]) {
-				output.add(interval);
+			if (start > result.getLast()[1]) {
+				result.add(interval);
 			} else {
-				interval = output.removeLast();              //           [   ]          [ ]  [   ]
+				interval = result.removeLast();              //           [   ]          [ ]  [   ]
 				interval[1] = Math.max(interval[1], end);    // [newinterval]  [newinterval]  [newinterval]
-				output.add(interval);
+				result.add(interval);
 			}
 		}
 
@@ -112,7 +144,31 @@ class Insert_Interval_57 {
 		int[][] intervals = new int[0][2];
 		int[] newInterval = new int[] {5, 7};
 
-		int[][] result = new Insert_Interval_57().insertInterval(intervals, newInterval);
+		int[][] result = new Insert_Interval_57().insertMy(intervals, newInterval);
+
+
+
+		for (int[] item : result) {
+			for (int a : item) {
+				System.out.println(a);
+			}
+		}
+
+		intervals = new int[][]{{1,2},{3,5},{6,7},{8,10},{12,16}};
+		newInterval = new int[] {4, 8};
+
+		result = new Insert_Interval_57().insert(intervals, newInterval);
+
+		for (int[] item : result) {
+			for (int a : item) {
+				System.out.println(a);
+			}
+		}
+
+		intervals = new int[][]{{1,3},{6,9}};
+		newInterval = new int[] {2,5};
+
+		result = new Insert_Interval_57().insert(intervals, newInterval);
 
 		for (int[] item : result) {
 			for (int a : item) {
