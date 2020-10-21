@@ -61,30 +61,45 @@ class Spiral_Matrix_54 {
 	}
 
 	public List < Integer > spiralOrder(int[][] matrix) {
-		List ans = new ArrayList();
-		if (matrix.length == 0)
-			return ans;
-		int r1 = 0, r2 = matrix.length - 1;
-		int c1 = 0, c2 = matrix[0].length - 1;
-		while (r1 <= r2 && c1 <= c2) {
-			for (int c = c1; c <= c2; c++) ans.add(matrix[r1][c]);
-			for (int r = r1 + 1; r <= r2; r++) ans.add(matrix[r][c2]);
-			if (r1 < r2 && c1 < c2) {
-				for (int c = c2 - 1; c > c1; c--) ans.add(matrix[r2][c]);
-				for (int r = r2; r > r1; r--) ans.add(matrix[r][c1]);
-			}
-			r1++;
-			r2--;
-			c1++;
-			c2--;
+		List answer = new ArrayList();
+		if (matrix.length == 0) {
+			return answer;
 		}
-		return ans;
+		
+		int rowStart = 0, rowEnd = matrix.length - 1;
+		int columnStart = 0, columnEnd = matrix[0].length - 1;
+		while (rowStart <= rowEnd && columnStart <= columnEnd) {
+			for (int c = columnStart; c <= columnEnd; c++) { 
+				answer.add(matrix[rowStart][c]); 
+			}
+			for (int r = rowStart + 1; r <= rowEnd; r++) { 
+				answer.add(matrix[r][columnEnd]); 
+			}
+
+			if (rowStart < rowEnd && columnStart < columnEnd) {
+				for (int c = columnEnd - 1; c > columnStart; c--) {
+					answer.add(matrix[rowEnd][c]);
+				}
+
+				for (int r = rowEnd; r > rowStart; r--) { 
+					answer.add(matrix[r][columnStart]);
+				}
+			}
+			rowStart++;
+			rowEnd--;
+			columnStart++;
+			columnEnd--;
+		}
+		return answer;
 	}
 
 	/*
-	This is a very simple and easy to understand solution. I traverse right and increment rowBegin, then traverse down and decrement colEnd, then I traverse left and decrement rowEnd, and finally I traverse up and increment colBegin.
+	This is a very simple and easy to understand solution. 
+	I traverse right and increment rowBegin, then traverse down and decrement colEnd, then I traverse left and decrement rowEnd, and finally I traverse up and increment colBegin.
 
-	The only tricky part is that when I traverse left or up I have to check whether the row or col still exists to prevent duplicates. If anyone can do the same thing without that check, please let me know!
+	The only tricky part is that when I traverse left or up I have to check whether the row or col still exists to prevent duplicates. 
+	
+	If anyone can do the same thing without that check, please let me know!
 
 	Any comments greatly appreciated.
 
@@ -103,13 +118,13 @@ class Spiral_Matrix_54 {
 
 		while (rowBegin <= rowEnd && colBegin <= colEnd) {
 			// Traverse Right
-			for (int j = colBegin; j <= colEnd; j ++) {
+			for (int j = colBegin; j <= colEnd; j++) {
 				res.add(matrix[rowBegin][j]);
 			}
 			rowBegin++;
 
 			// Traverse Down
-			for (int j = rowBegin; j <= rowEnd; j ++) {
+			for (int j = rowBegin; j <= rowEnd; j++) {
 				res.add(matrix[j][colEnd]);
 			}
 			colEnd--;
