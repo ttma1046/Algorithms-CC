@@ -16,14 +16,12 @@ Input:
 Output:
 "1a"
 
-
 Example 2:
 Input:
 -1
 
 Output:
 "ffffffff"
-
 */
 class Convert_a_Number_to_Hexadecimal_405 {
     public String toHex(int num) {
