@@ -37,7 +37,8 @@ class TripleStep_8point1 {
 	}
 
 	int countWaysIII(int n) {
-		int a = 1, b = 2, c = 4, d = 0;
+		int a = 1, b = 2, c = 4;
+		
 		if (n < 0) {
 			return 0;
 		}
@@ -45,16 +46,28 @@ class TripleStep_8point1 {
 			return n;
 		}
 
-		if (n == 3)
+		if (n == 3) {
 			return c;
-
-		for (int i = 4; i < n; i++) {
-			d = a + b + c;
-			a = b;
-			b = c;
-			c = d;
 		}
 
-		return d;
+		for (int i = 4; i <= n; i++) {
+			b = a + b;
+			
+			c = b + c;
+			
+			a = b - a;
+
+			b = c - b;
+		}
+
+		return c;
+	}
+
+	public static void main(String[] args) {
+		System.out.println(new TripleStep_8point1().countWaysIII(4));
 	}
 }
+
+
+1 2 3 4 
+1 2 4 7

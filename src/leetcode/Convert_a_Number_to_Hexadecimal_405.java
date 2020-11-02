@@ -16,14 +16,12 @@ Input:
 Output:
 "1a"
 
-
 Example 2:
 Input:
 -1
 
 Output:
 "ffffffff"
-
 */
 class Convert_a_Number_to_Hexadecimal_405 {
     public String toHex(int num) {
@@ -38,6 +36,11 @@ class Convert_a_Number_to_Hexadecimal_405 {
         while (temp > 0) {
             sb.append(map[temp % 16]);
             temp /= 16;
+        }
+
+        while(num != 0){
+            sb.append(map[(num & 15)]); 
+            num = (num >>> 4);
         }
 
         return sb.reverse().toString();

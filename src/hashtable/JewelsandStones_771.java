@@ -14,8 +14,7 @@ public class JewelsandStones_771 {
         for (Character c: S.toCharArray()) {
             count.put(c, count.getOrDefault(c, 0) + 1);
         }
-
-         */
+        */
 
         int result = 0;
         for (char j: S.toCharArray()) {

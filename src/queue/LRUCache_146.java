@@ -36,7 +36,7 @@ class DoubleLinkedNode {
 }
 
 public class LRUCache {
-    private Hashtable<Integer, DoubleLinkedNode> cache = new Hashtable<Integer, DoubleLinkedNode>();
+    private Map<Integer, DoubleLinkedNode> cache = new HashMap<Integer, DoubleLinkedNode>();
     private int count;
     private int capacity;
     private DoubleLinkedNode head, tail; .
