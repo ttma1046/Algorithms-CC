@@ -1,3 +1,4 @@
+/*
 Explanation
 Initial the result res to include the case of empty string "".
 res include all possible combinations we find during we iterate the input.
@@ -14,42 +15,7 @@ If they have intersection of characters, we skip it.
 If not, we append this new combination to result.
 
 return the maximum length from all combinations.
-
-
-Python:
-
-    def maxLength(self, A):
-        dp = [set()]
-        for a in A:
-            if len(set(a)) < len(a): continue
-            a = set(a)
-            for c in dp[:]:
-                if a & c: continue
-                dp.append(a | c)
-        return max(len(a) for a in dp)
-C++
-based on @savvadia
-
-    int maxLength(vector<string>& A) {
-        vector<bitset<26>> dp = {bitset<26>()};
-        int res = 0;
-        for (auto& s : A) {
-            bitset<26> a;
-            for (char c : s)
-                a.set(c - 'a');
-            int n = a.count();
-            if (n < s.size()) continue;
-
-            for (int i = dp.size() - 1; i >= 0; --i) {
-                bitset c = dp[i];
-                if ((c & a).any()) continue;
-                dp.push_back(c | a);
-                res = max(res, (int)c.count() + n);
-            }
-        }
-        return res;
-    }
-Java
+*/
 
     public int maxLength(List<String> A) {
         List<Integer> dp = new ArrayList<>();

@@ -43,9 +43,69 @@ class Convert_a_Number_to_Hexadecimal_405 {
 
 		// System.out.println(new Convert_a_Number_to_Hexadecimal_405().toHex(28));
 
-		// System.out.println(new Convert_a_Number_to_Hexadecimal_405().toHex(-1));
+		System.out.println(new Convert_a_Number_to_Hexadecimal_405().toHexII(-1));
 
 		System.out.println(26 & 15);
-	}
 
+		System.out.println(-1 & 15);
+
+		System.out.println(26 >> 2);
+		System.out.println(26 >> 4);
+		System.out.println(26 >>> 2);
+		System.out.println(26 >>> 4);
+
+		System.out.println(-26 >>> 4);
+
+		byte text = -26;
+
+		System.out.println(text >>> 4);
+/*
+		System.out.println(10 & 12);
+		System.out.println(12 & 10);
+
+
+		System.out.println(26 & 7);
+		System.out.println(26 & 9);
+		System.out.println(Math.pow(2, 15));
+*/
+/*
+		0000 0000 0000 0001
+
+
+		1111 1111 1111 1110
+
+		1111 1111 1111 1111
+
+*/
+
+
+		/*
+		System.out.println(26 & 1);
+        //0
+		// 26/2 = 13
+        System.out.println(13 & 1);
+
+        //1
+        // 13/2 = 6
+
+        System.out.println(6 & 1);
+
+        //0
+        // 6/2 = 3
+
+        System.out.println(3 & 1);
+
+        //1
+        // 3/2 = 1
+        System.out.println(1 & 1);
+
+        //1
+
+        11010
+
+        16 + 8 + 2
+        26
+
+		*/
+	}
 }
