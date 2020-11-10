@@ -41,15 +41,15 @@ Given two positive integers x and y, an integer is powerful if it is equal to x^
 
 public class PowerfulIntegers_970 {
     public List<Integer> powerfulIntegers(int x, int y, int bound) {
-        Set<Integer> s = new HashSet<>();
+        Set<Integer> set = new HashSet<>();
         for (int a = 1; a < bound; a *= x) {
             for (int b = 1; a + b <= bound; b *= y) {
-                s.add(a + b);
+                set.add(a + b);
                 if (y == 1) break;
             }
             if (x == 1) break;
         }
-        return new ArrayList<>(s);
+        return new ArrayList<>();
     }
 
     public static void main(String[] args) {
