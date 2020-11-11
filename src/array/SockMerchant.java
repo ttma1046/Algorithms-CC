@@ -9,14 +9,14 @@ public class SockMerchant {
             return 0;
         }
 
-        HashSet<Integer> hash = new HashSet<Integer>();
+        HashSet<Integer> set = new HashSet<Integer>();
         int result = 0;
         for (int i = 0; i < n; i++) {
-            if (hash.contains(ar[i])) {
+            if (set.contains(ar[i])) {
                 result++;
-                hash.remove(ar[i]);
+                set.remove(ar[i]);
             } else {
-                hash.add(ar[i]);
+                set.add(ar[i]);
             }
         }
 
@@ -28,18 +28,18 @@ public class SockMerchant {
             return 0;
         }
 
-        HashMap<Integer, Integer> hash = new HashMap<Integer, Integer>();
+        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
         int result = 0;
         for (int i = 0; i < n; i++) {
-            Integer frequency = hash.get(ar[i]);
+            Integer frequency = map.get(ar[i]);
             if (frequency == null) {
-                hash.put(ar[i], 1);
+                map.put(ar[i], 1);
             } else {
-                hash.put(ar[i], frequency + 1);
+                map.put(ar[i], frequency + 1);
             }
         }
 
-        for (Integer frequency : hash.values()) {
+        for (Integer frequency : map.values()) {
             result += frequency / 2;
         }
 
