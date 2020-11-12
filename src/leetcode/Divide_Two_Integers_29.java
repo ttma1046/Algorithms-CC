@@ -1,3 +1,4 @@
+package leetcode;
 /*
 Given two integers dividend and divisor, divide two integers without using multiplication, division, and mod operator.
 
@@ -41,15 +42,13 @@ Complexity Analysis
 
 Let nn be the absolute value of dividenddividend.
 
-Time Complexity : O(\log \, n)O(logn).
+Time Complexity : O(logn).
 
-As we loop over the bits of our dividend, performing an O(1)O(1) operation each time, the time complexity is just the number of bits of the dividend: O(\log \, n)O(logn).
+As we loop over the bits of our dividend, performing an O(1) operation each time, the time complexity is just the number of bits of the dividend: O(logn).
 
-Space Complexity : O(1)O(1).
+Space Complexity : O(1).
 
-We only use a fixed number of int variables, so the space complexity is O(1)O(1).
-
-
+We only use a fixed number of int variables, so the space complexity is O(1).
 */
 
 public class Divide_Two_Integers_29 {
@@ -112,5 +111,118 @@ public class Divide_Two_Integers_29 {
 			quotient = -quotient;
 		}
 		return quotient;
+	}
+
+	public int exponentialSearch(int a, int b) {
+		int quotient = 0;
+		int dividend = a;
+		int divisor = b;
+
+		/* Once the divisor is bigger than the current dividend,
+		 * we can't fit any more copies of the divisor into it. */
+		while (dividend >= divisor) {
+			/* Now that we're in the loop, we know it'll fit at least once as
+			* divivend >= divisor */
+			int powerOfTwo = 1;
+			int value = divisor;
+			/* Check if double the current value is too big. If not, continue doubling.
+			 * If it is too big, stop doubling and continue with the next step */
+			while (value + value <= dividend) {
+				value += value; // 6
+				powerOfTwo += powerOfTwo; // 2
+			}
+
+			/*
+				1 -> 2 -> 4 -> 8 -> 16 -> 32 -> 64 -> 128 -> 256 -> 512
+			*/
+
+			// We have been able to subtract divisor another powerOfTwo times.
+			quotient += powerOfTwo; // 2
+			// Remove value so far so that we can continue the process with remainder.
+			dividend -= value;  // 0
+		}
+
+		return quotient;
+	}
+
+	public int exponentialSearchII(int a, int b) {
+		int quotient = 0;
+		int dividend = a;
+		int divisor = b;
+
+		/* Once the divisor is bigger than the current dividend,
+		 * we can't fit any more copies of the divisor into it. */
+		while (dividend >= divisor) {
+			/* Now that we're in the loop, we know it'll fit at least once as
+			* divivend >= divisor */
+			int powerOfTwo = 1;
+			int value = divisor;
+			/* Check if double the current value is too big. If not, continue doubling.
+			 * If it is too big, stop doubling and continue with the next step */
+			while (value + value < dividend) {
+				value += value; // 6
+				powerOfTwo += powerOfTwo; // 2
+			}
+
+			/*
+				1 -> 2 -> 4 -> 8 -> 16 -> 32 -> 64 -> 128 -> 256 -> 512
+			*/
+
+			// We have been able to subtract divisor another powerOfTwo times.
+			quotient += powerOfTwo; // 2
+			// Remove value so far so that we can continue the process with remainder.
+			dividend -= value;  // 0
+		}
+
+		return quotient;
+	}
+
+	public int divideByHighestDouble(int a, int b) {
+		/* In the first loop, we simply find the largest double of divisor. This is
+		* very similar to the start of what we did in Approach 2. */
+		int dividend = a;
+		int divisor = b;
+
+		int highestDouble = divisor;
+		int highestPowerOfTwo = 1;
+		while (highestDouble + highestDouble <= dividend) {
+			highestPowerOfTwo += highestPowerOfTwo;
+			highestDouble += highestDouble;
+		}
+
+		/* In the second loop, we work out which powers of two fit in, by
+		 * halving highestDouble and highestPowerOfTwo repeatedly. */
+		int quotient = 0;
+		while (divisor <= dividend) {
+			if (dividend >= highestDouble) {
+				quotient += highestPowerOfTwo;
+				dividend -= highestDouble;
+			}
+			highestPowerOfTwo >>= 1;
+			highestDouble >>= 1;
+		}
+
+		return quotient;
+	}
+
+
+	public static void main(String[] args) {
+		// System.out.println(new Divide_Two_Integers_29().exponentialSearch(93706, 157));
+		System.out.println(new Divide_Two_Integers_29().divideByHighestDouble(93706, 157));
+
+
+		int test = 4;
+		System.out.println(test >> 1);
+		System.out.println(test);
+		System.out.println(test >>= 1);
+		/*
+		System.out.println(new Divide_Two_Integers_29().exponentialSearch(6, 3));
+		System.out.println(new Divide_Two_Integers_29().exponentialSearch(5, 3));
+		System.out.println(new Divide_Two_Integers_29().exponentialSearch(7, 3));
+
+		System.out.println(new Divide_Two_Integers_29().exponentialSearchII(6, 3));
+		System.out.println(new Divide_Two_Integers_29().exponentialSearchII(5, 3));
+		System.out.println(new Divide_Two_Integers_29().exponentialSearchII(7, 3));
+		*/
 	}
 }
