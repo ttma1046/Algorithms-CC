@@ -1,7 +1,6 @@
 # Algorithms-CC
 Algorithms CC
 
-
 https://leetcode.com/problems/next-permutation/
 https://leetcode.com/problems/insert-delete-getrandom-o1/
 https://leetcode.com/problems/exclusive-time-of-functions/
