@@ -1,6 +1,6 @@
-package FourFiveNine_RepeatedSubstringPattern;
+package string;
 
-public class Solution {
+public class RepeatedSubstringPattern_459 {
     public boolean repeatedSubstringPattern1(String s) {
         if (s == null || s.length() < 2) {
             return false;
