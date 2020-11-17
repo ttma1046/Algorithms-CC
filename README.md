@@ -1,12 +1,6 @@
 # Algorithms-CC
 Algorithms CC
 
-https://leetcode.com/problems/insert-delete-getrandom-o1/
-https://leetcode.com/problems/exclusive-time-of-functions/
-https://leetcode.com/problems/top-k-frequent-words/
-https://leetcode.com/problems/custom-sort-string/
-https://leetcode.com/problems/max-consecutive-ones-iii/
-
 https://leetcode.com/problems/divide-two-integers/solution/
 https://leetcode.com/problems/find-the-town-judge/solution/
 https://leetcode.com/problems/sort-characters-by-frequency/solution/

@@ -1,5 +1,4 @@
-import leetcode;
-
+package leetcode;
 /*
 Implement the RandomizedSet class:
 
@@ -35,7 +34,6 @@ Constraints:
 At most 105 calls will be made to insert, remove, and getRandom.
 There will be at least one element in the data structure when getRandom is called.
 */
-
 
 class RandomizedSet {
 
