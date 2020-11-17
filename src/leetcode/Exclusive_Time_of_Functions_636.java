@@ -64,9 +64,212 @@ No two start events will happen at the same timestamp.
 No two end events will happen at the same timestamp.
 Each function has an "end" log for each "start" log.
 */
+import java.util.Stack;
+import java.util.List;
+import java.util.ArrayList;
 
 class Exclusive_Time_of_Functions_636 {
-    public int[] exclusiveTime(int n, List<String> logs) {
+	public int[] exclusiveTime(int n, List<String> logs) {
+		int[] res = new int[n];
+		int endTimeStamp = 0;
+		Stack<Pair> myStack = new Stack<Pair>();
 
-    }
+		for (String log : logs) {
+			String[] logArray = log.split(":");
+
+			if (logArray[1].equals("start")) {
+				if (!myStack.isEmpty()) {
+					Pair perviousStart = myStack.pop();
+					int taskId = perviousStart.taskId;
+					int perviousStartTimeStamp = perviousStart.timeStamp;
+
+					res[taskId] += Integer.parseInt(logArray[2]) - perviousStartTimeStamp;
+				}
+
+				myStack.push(new Pair(Integer.parseInt(logArray[0]), Integer.parseInt(logArray[2])));
+			} else if (logArray[1].equals("end")) {
+				if (myStack.isEmpty()) {
+					int taskId = Integer.parseInt(logArray[0]);
+					res[taskId] += Integer.parseInt(logArray[2]) - endTimeStamp;
+				} else {
+					Pair startTime = myStack.pop();
+					int taskId = startTime.taskId;
+					int startTimeStamp = startTime.timeStamp;
+
+					endTimeStamp = Integer.parseInt(logArray[2]);
+
+					res[taskId] += endTimeStamp - startTimeStamp + 1;
+				}
+			}
+			// |0|1|2|3|4|5|6|7|
+		}
+
+		return res;
+	}
+
+
+	public int[] exclusiveTime(int n, List<String> logs) {
+		int[] res = new int[n];
+		Stack<Integer> stack = new Stack<>();//store id, not timestamp
+		int prev = 0; //store timestamp
+
+		for (String log : logs) {
+
+			String[] strs = log.split(":");
+
+			int id = Integer.parseInt(strs[0]);
+
+			int curr = Integer.parseInt(strs[2]);
+
+			if (strs[1].equals("start")) {
+				if (!stack.isEmpty()) {
+					res[stack.peek()] += curr - prev;
+				}
+				stack.push(id);
+				prev = curr;
+			} else {
+				res[stack.pop()] += curr - prev + 1;
+				prev = curr + 1;
+			}
+		}
+		return res;
+	}
+
+
+	public int[] exclusiveTime(int n, List<String> logs) {
+		int[] result = new int[n];
+		Stack<Integer> stack = new Stack<>();
+		int prev = 0, currentId = 0;
+
+		for (String log : logs) {
+			int firstColon = log.indexOf(':');
+			int id = toInt(log, 0, firstColon);
+
+			int lastColon = log.lastIndexOf(':');
+			int curr = toInt(log, lastColon + 1, log.length());
+
+			if (log.charAt(firstColon + 1) == 's') {
+				if (!stack.isEmpty()) result[stack.peek()] += curr - prev;
+				stack.push(id);
+				prev = curr;
+			} else {
+				result[stack.pop()] += curr - prev + 1;
+				prev = curr + 1;
+			}
+		}
+
+		return result;
+	}
+
+	private int toInt(String s, int start, int end) {
+		int result = 0;
+
+		while (start < end) {
+			result = result * 10 + s.charAt(start) - '0';
+			start++;
+		}
+
+		return result;
+	}
+
+	public static void main(String[] args) {
+		List<String> strs = new ArrayList<String>();
+		strs.add("0:start:0");
+		strs.add("0:end:0");
+
+		int[] res = new Exclusive_Time_of_Functions_636().exclusiveTime(1, strs);
+
+		for (int item : res) {
+			System.out.println(item);
+		}
+
+		/*
+				strs = new ArrayList<String>();
+				strs.add("0:start:2");
+				strs.add("0:end:5");
+				strs.add("1:start:7");
+				strs.add("1:end:7");
+
+				res = new Exclusive_Time_of_Functions_636().exclusiveTime(2, strs);
+
+				for (int item : res) {
+					System.out.println(item);
+				}
+		*/
+		strs = new ArrayList<String>();
+
+		strs.add("0:start:0");
+		strs.add("1:start:2");
+		strs.add("1:end:5");
+		strs.add("0:end:6");
+
+		res = new Exclusive_Time_of_Functions_636().exclusiveTime(2, strs);
+
+		for (int item : res) {
+			System.out.println(item);
+		}
+
+		// [3,4]
+
+		strs = new ArrayList<String>();
+
+		strs.add("0:start:0");
+		strs.add("0:start:2");
+		strs.add("0:end:5");
+		strs.add("0:start:6");
+		strs.add("0:end:6");
+		strs.add("0:end:7");
+
+		res = new Exclusive_Time_of_Functions_636().exclusiveTime(1, strs);
+
+		for (int item : res) {
+			System.out.println(item);
+		}
+
+		// [8]
+
+		strs = new ArrayList<String>();
+
+		strs.add("0:start:0");
+		strs.add("0:start:2");
+		strs.add("0:end:5");
+		strs.add("1:start:6");
+		strs.add("1:end:6");
+		strs.add("0:end:7");
+
+		res = new Exclusive_Time_of_Functions_636().exclusiveTime(2, strs);
+
+		for (int item : res) {
+			System.out.println(item);
+		}
+
+		// [7,1]
+
+		strs = new ArrayList<String>();
+
+		strs.add("0:start:0");
+		strs.add("0:start:2");
+		strs.add("0:end:5");
+		strs.add("1:start:7");
+		strs.add("1:end:7");
+		strs.add("0:end:8");
+
+		res = new Exclusive_Time_of_Functions_636().exclusiveTime(2, strs);
+
+		for (int item : res) {
+			System.out.println(item);
+		}
+
+		// [8, 1]
+	}
+}
+
+class Pair {
+	int taskId;
+	int timeStamp;
+
+	Pair(int x, int y) {
+		this.taskId = x;
+		this.timeStamp = y;
+	}
 }
