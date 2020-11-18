@@ -1,10 +1,6 @@
 # Algorithms-CC
 Algorithms CC
 
-Insert
-Custom
-Max
-
 https://leetcode.com/problems/divide-two-integers/solution/
 https://leetcode.com/problems/find-the-town-judge/solution/
 https://leetcode.com/problems/sort-characters-by-frequency/solution/
