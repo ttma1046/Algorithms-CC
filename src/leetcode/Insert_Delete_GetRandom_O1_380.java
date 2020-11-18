@@ -1,4 +1,11 @@
 package leetcode;
+
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Random;
+
 /*
 Implement the RandomizedSet class:
 
@@ -7,7 +14,7 @@ bool remove(int val) Removes an item val from the set if present. Returns true i
 int getRandom() Returns a random element from the current set of elements (it's guaranteed that at least one element exists when this method is called). Each element must have the same probability of being returned.
 Follow up: Could you implement the functions of the class with each function works in average O(1) time?
 
- 
+
 
 Example 1:
 
@@ -26,7 +33,7 @@ randomizedSet.getRandom(); // getRandom() should return either 1 or 2 randomly.
 randomizedSet.remove(1); // Removes 1 from the set, returns true. Set now contains [2].
 randomizedSet.insert(2); // 2 was already in the set, so return false.
 randomizedSet.getRandom(); // Since 2 is the only number in the set, getRandom() will always return 2.
- 
+
 
 Constraints:
 
@@ -34,30 +41,120 @@ Constraints:
 At most 105 calls will be made to insert, remove, and getRandom.
 There will be at least one element in the data structure when getRandom is called.
 */
-
-class RandomizedSet {
+class Insert_Delete_GetRandom_O1_380 {
+    // Map<Integer, Integer> myMap = HashMap<Integer, Integer>();
+    // List<Integer> myList = ArrayList<Integer>();
+    Map<Integer, Integer> myMap;
+    List<Integer> myList;
+    Random rand = new Random();
 
     /** Initialize your data structure here. */
-    public RandomizedSet() {
-        
+    public Insert_Delete_GetRandom_O1_380() {
+        myMap = new HashMap<>();
+        myList = new ArrayList<>();
     }
-    
+
     /** Inserts a value to the set. Returns true if the set did not already contain the specified element. */
     public boolean insert(int val) {
-        
+        if (myMap.containsKey(val)) return false;
+
+        myMap.put(val, myList.size());
+        myList.add(val);
+        return true;
     }
-    
+
     /** Removes a value from the set. Returns true if the set contained the specified element. */
     public boolean remove(int val) {
-        
+        if (myMap.containsKey(val)) {
+            int lastElement = myList.get(myList.size() - 1);
+            int index = myMap.get(val);
+
+            myList.set(index, lastElement);
+            myMap.put(lastElement, index);
+            myList.remove(myList.size() - 1);
+            myMap.remove(val);
+
+            return true;
+        }
+
+        return false;
     }
-    
+
     /** Get a random element from the set. */
     public int getRandom() {
-        
+        return myList.get(rand.nextInt(myList.size()));
+    }
+
+    public static void main(String[] args) {
+        Insert_Delete_GetRandom_O1_380 randomizedSet = new Insert_Delete_GetRandom_O1_380();
+
+        System.out.println(randomizedSet.insert(1)); // Inserts 1 to the set. Returns true as 1 was inserted successfully.
+
+        System.out.println(randomizedSet.remove(2)); // Returns false as 2 does not exist in the set.
+
+        System.out.println(randomizedSet.insert(2)); // Inserts 2 to the set, returns true. Set now contains [1,2].
+
+        System.out.println(randomizedSet.getRandom()); // getRandom() should return either 1 or 2 randomly.
+
+        System.out.println(randomizedSet.remove(1)); // Removes 1 from the set, returns true. Set now contains [2].
+
+        System.out.println(randomizedSet.insert(2)); // 2 was already in the set, so return false.
+
+        System.out.println(randomizedSet.getRandom()); // Since 2 is the only number in the set, getRandom() will always return 2.
+
     }
 }
 
+class RandomizedSet {
+    private HashMap<Integer, Integer> map;
+    private int[] value;
+    private int size;
+    private Random rand;
+
+    /** Initialize your data structure here. */
+    public RandomizedSet() {
+        map = new HashMap<>(10000);
+        value = new int[10000];
+        size = 0;
+        rand = new Random();
+    }
+
+    /**
+     * Inserts a value to the set. Returns true if the set did not already contain
+     * the specified element.
+     */
+    public boolean insert(int val) {
+        if (!map.containsKey(val)) {
+            map.put(val, size);
+            value[size] = val;
+            size++;
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Removes a value from the set. Returns true if the set contained the specified
+     * element.
+     */
+    public boolean remove(int val) {
+        Integer idx = map.remove(val);
+        if (idx != null) {
+            size--;
+            if (idx < size) {
+                value[idx] = value[size];
+                map.put(value[idx], idx);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /** Get a random element from the set. */
+    public int getRandom() {
+        return value[rand.nextInt(size)];
+    }
+}
 /**
  * Your RandomizedSet object will be instantiated and called as such:
  * RandomizedSet obj = new RandomizedSet();
