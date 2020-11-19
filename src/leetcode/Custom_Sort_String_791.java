@@ -8,14 +8,14 @@ S was sorted in some custom order previously. We want to permute the characters 
 Return any permutation of T (as a string) that satisfies this property.
 
 Example :
-Input: 
+Input:
 S = "cba"
 T = "abcd"
 Output: "cbad"
-Explanation: 
-"a", "b", "c" appear in S, so the order of "a", "b", "c" should be "c", "b", and "a". 
+Explanation:
+"a", "b", "c" appear in S, so the order of "a", "b", "c" should be "c", "b", and "a".
 Since "d" does not appear in S, it can be at any position in T. "dcba", "cdba", "cbda" are also valid outputs.
- 
+
 
 Note:
 
@@ -25,7 +25,27 @@ S and T consist of lowercase letters only.
 */
 
 class Custom_Sort_String_791 {
-    public String customSortString(String S, String T) {
-        
-    }
+	public String customSortString(String S, String T) {
+		int[] order = new int[26];
+		int i = 0;
+		for (i = 0; i < S.length(); i++) {
+			order[S.charAt(i) - 'a'] = i;
+		}
+
+		int[] temp = new int[S.length()];
+		StringBuilder result = new StringBuilder();
+		for(i = 0; i < T.length(); i++) {
+			if (order[T.charAt(i) - 'a'] == 0) {
+				result.append(T.charAt(i));
+			}
+		}
+		result.append(S);
+
+		return result.toString();
+	}
+
+
+	public static void main(String[] args) {
+		new 
+	}
 }
