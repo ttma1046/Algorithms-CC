@@ -29,23 +29,82 @@ class Custom_Sort_String_791 {
 		int[] order = new int[26];
 		int i = 0;
 		for (i = 0; i < S.length(); i++) {
-			order[S.charAt(i) - 'a'] = i;
+			order[S.charAt(i) - 'a'] = i + 1;
 		}
 
-		int[] temp = new int[S.length()];
-		StringBuilder result = new StringBuilder();
-		for(i = 0; i < T.length(); i++) {
+		int[] temp = new int[T.length()];
+
+		int j = temp.length - 1;
+
+		for (i = 0; i < T.length(); i++) {
 			if (order[T.charAt(i) - 'a'] == 0) {
-				result.append(T.charAt(i));
+				System.out.println("not in the order");
+				// result.append(T.charAt(i));
+				temp[j] = T.charAt(i) - 'a';
+				j--;
+			} else {
+				if (temp[order[T.charAt(i) - 'a'] - 1] > 0) {
+					while (temp[order[T.charAt(i) - 'a'] - 1] > 0) {
+						order[T.charAt(i) - 'a']++;
+					}
+
+					temp[order[T.charAt(i) - 'a'] - 1] = T.charAt(i) - 'a';
+				} else {
+
+					temp[order[T.charAt(i) - 'a'] - 1] = T.charAt(i) - 'a';
+				}
 			}
 		}
-		result.append(S);
+
+		for (int p : order) {
+			System.out.println(p);
+		}
+
+		for (int q : temp) {
+			System.out.println(q);
+		}
+
+		StringBuilder result = new StringBuilder();
+
+		for (i = 0; i < temp.length; i++) {
+			result.append((char)(temp[i] + 'a'));
+		}
 
 		return result.toString();
 	}
 
+	public String customSortString(String S, String T) {
+		int[] count = new int[26];
+		for (char c : T.toCharArray()) { ++count[c - 'a']; }  // count each char in T.
+		StringBuilder sb = new StringBuilder();
+		for (char c : S.toCharArray()) {
+			while (count[c - 'a']-- > 0) { sb.append(c); }    // sort chars both in T and S by the order of S.
+		}
+		for (char c = 'a'; c <= 'z'; ++c) {
+			while (count[c - 'a']-- > 0) { sb.append(c); }    // group chars in T but not in S.
+		}
+		return sb.toString();
+
+
+		int[] count = new int[26];
+        
+        for (char c: T.toCharArray()) count[c - 'a']++;
+        //append the characters in S first according to their frequncies in T
+        StringBuilder sb = new StringBuilder();
+        for (char c: S.toCharArray()){
+            for (int i = 0; i < count[c - 'a']; i++) sb.append(c);
+            count[c - 'a'] = 0;
+        }
+        //append the rest 26 characters
+        for (char c = 'a'; c <= 'z'; c++){
+            for (int i = 0; i < count[c - 'a']; i++) sb.append(c);
+        }
+        return sb.toString();
+	}
+
 
 	public static void main(String[] args) {
-		new 
+		// System.out.println(new Custom_Sort_String_791().customSortString("cba", "abcd"));
+		System.out.println(new Custom_Sort_String_791().customSortString("kqep", "pekeq"));
 	}
 }
