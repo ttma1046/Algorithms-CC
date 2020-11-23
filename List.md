@@ -4,9 +4,8 @@ Created: Sep 5, 2020 4:05 PM
 Updated: Nov 15, 2020 12:53 AM
 
 - [Integer to Roman](https://leetcode.com/problems/integer-to-roman/)
-- [Next Permutation](https://leetcode.com/problems/next-permutation/)
+- [Next Permutation 29](https://leetcode.com/problems/next-permutation/)
 - [Roman to Integer](https://leetcode.com/problems/roman-to-integer/)
-- [Valid Parentheses](https://leetcode.com/problems/valid-parentheses)
 - [Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array)
 - [Sudoku Solver](https://leetcode.com/problems/sudoku-solver)
 - [Pow(x, n)](https://leetcode.com/problems/powx-n)
@@ -66,18 +65,20 @@ Updated: Nov 15, 2020 12:53 AM
 - [Max Consecutive Ones III](https://leetcode.com/problems/max-consecutive-ones-iii)
 - [Minimum Remove to Make Valid Parentheses](https://leetcode.com/problems/minimum-remove-to-make-valid-parentheses)
 - A string / array problem involving distinct characters and window
-- You are given a m * n grid. You are asked to generate k mines on this grid randomly. Each cell should have equal probability of k / m * n of being chosen. Your algorithm should run in O(m) time.
+- You are given a `m*n` grid. You are asked to generate `k` mines on this grid randomly. Each cell should have equal probability of `k / m*n` of being chosen. Your algorithm should run in `O(m)` time. [https://leetcode.com/discuss/interview-question/124759/](https://leetcode.com/discuss/interview-question/124759/)
 - [https://www.geeksforgeeks.org/find-index-maximum-occurring-element-equal-probability/](https://www.geeksforgeeks.org/find-index-maximum-occurring-element-equal-probability/)
 - Similar strings ("face", "eacf") returns true if only 2 positions in the strings are swapped. Here 'f' and 'e' are swapped in the example.
 - Number Of connected components in a Graph
 - Given two binary search trees how do we merge everything so it prints inorder. The answer I gave was to run inorder on both trees and use "merge" from merge-sort.
 - How to remove duplicates from a list
-- You are given a m*n grid. You are asked to generate k mines on this grid randomly. Each cell should have equal probability of k / m*n of being chosen.
 - You have an API to check if is it possible to move left, right, up, down and one more method to check if current position is the last one. Find the shortest way to the last position. You don't have any data structure - only API.
 - Is there a way to reach (0,0) from a mXn matrix to (m-1,n-1) position and give the path.
 - Calculate tax if Salary and Tax Brackets are given as list in the form[ [10000, 0.3],[20000, 0.2], [30000, 0.1], [null, .1]]null being rest of the salary
 - n-ary Tree with each node having a boolean flag. Traverse all the nodes with only boolean flag = True. Return the total distance traveled from root to all those nodes.
-- You're given a list of tasks, with number denoted different type of tasks, and there'll be interval between tasks with tasks of same id. Return total time for executing this task list.
+
+- [https://leetcode.com/discuss/interview-question/432086/Facebook-or-Phone-Screen-or-Task-Scheduler/394783](https://leetcode.com/discuss/interview-question/432086/Facebook-or-Phone-Screen-or-Task-Scheduler/394783)
+
+    You're given a list of tasks, with number denoted different type of tasks, and there'll be interval between tasks with tasks of same id. Return total time for executing this task list.
 
     **Example:**
 
@@ -93,7 +94,9 @@ It's executed as 1 . . 1 2 . 1, so the total time is 7.
 
      Related problems: [https://leetcode.com/problems/task-scheduler/](https://leetcode.com/problems/task-scheduler/)
 
-- You are given a shcedule of tasks to work on.
+- [https://leetcode.com/discuss/interview-question/338948/Facebook-or-Onsite-or-Schedule-of-Tasks](https://leetcode.com/discuss/interview-question/338948/Facebook-or-Onsite-or-Schedule-of-Tasks)
+
+    You are given a shcedule of tasks to work on. 
 
     Each tasks has a start and an end time `[start, end]` where `end > start`. 
 
@@ -110,13 +113,13 @@ It's executed as 1 . . 1 2 . 1, so the total time is 7.
 
 **Output union:** [[1, 12], [14, 17]]
 
-**Explanation:** We just need to merge overlapping   intervals [https://leetcode.com/problems/merge-intervals](https://leetcode.com/problems/merge-intervals)
+**Explanation:** We just need to merge overlapping intervals [https://leetcode.com/problems/merge-intervals](https://leetcode.com/problems/merge-intervals)
 
 **Output intersection:** [[2, 6], [9, 10]]
 
 **Explanation:**
 
-![Untitled.png](./List/Untitled.png)
+![Facebook%20Interview%20Questions%20bd1b3458eca44161b9d4b90f411a0eb2/Untitled.png](Facebook%20Interview%20Questions%20bd1b3458eca44161b9d4b90f411a0eb2/Untitled.png)
 
 **4. Design:**
 
