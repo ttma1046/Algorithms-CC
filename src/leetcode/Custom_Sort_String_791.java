@@ -26,85 +26,60 @@ S and T consist of lowercase letters only.
 
 class Custom_Sort_String_791 {
 	public String customSortString(String S, String T) {
-		int[] order = new int[26];
-		int i = 0;
-		for (i = 0; i < S.length(); i++) {
-			order[S.charAt(i) - 'a'] = i + 1;
+		// count[char] = the number of occurrences of 'char' in T.
+		// This is offset so that count[0] = occurrences of 'a', etc.
+		// 'count' represents the current state of characters
+		// (with multiplicity) we need to write to our answer.
+		int[] count = new int[26];
+		for (char c : T.toCharArray()) count[c - 'a']++;
+
+		// ans will be our final answer.  We use StringBuilder to join
+		// the answer so that we more efficiently calculate a
+		// concatenation of strings.
+		StringBuilder ans = new StringBuilder();
+
+		// Write all characters that occur in S, in the order of S.
+		for (char c : S.toCharArray()) {
+			for (int i = 0; i < count[c - 'a']; ++i) ans.append(c);
+			// Setting count[char] to zero to denote that we do
+			// not need to write 'char' into our answer anymore.
+			count[c - 'a'] = 0;
 		}
 
-		int[] temp = new int[T.length()];
+		// Write all remaining characters that don't occur in S.
+		// That information is specified by 'count'.
+		for (char c = 'a'; c <= 'z'; ++c)
+			for (int i = 0; i < count[c - 'a']; ++i)
+				ans.append(c);
 
-		int j = temp.length - 1;
-
-		for (i = 0; i < T.length(); i++) {
-			if (order[T.charAt(i) - 'a'] == 0) {
-				System.out.println("not in the order");
-				// result.append(T.charAt(i));
-				temp[j] = T.charAt(i) - 'a';
-				j--;
-			} else {
-				if (temp[order[T.charAt(i) - 'a'] - 1] > 0) {
-					while (temp[order[T.charAt(i) - 'a'] - 1] > 0) {
-						order[T.charAt(i) - 'a']++;
-					}
-
-					temp[order[T.charAt(i) - 'a'] - 1] = T.charAt(i) - 'a';
-				} else {
-
-					temp[order[T.charAt(i) - 'a'] - 1] = T.charAt(i) - 'a';
-				}
-			}
-		}
-
-		for (int p : order) {
-			System.out.println(p);
-		}
-
-		for (int q : temp) {
-			System.out.println(q);
-		}
-
-		StringBuilder result = new StringBuilder();
-
-		for (i = 0; i < temp.length; i++) {
-			result.append((char)(temp[i] + 'a'));
-		}
-
-		return result.toString();
+		return ans.toString();
 	}
 
 	public String customSortString(String S, String T) {
-		int[] count = new int[26];
-		for (char c : T.toCharArray()) { ++count[c - 'a']; }  // count each char in T.
+		int[] bucket = new int[26];
+
+		for (char c : T.toCharArray()) ++bucket[c - 'a'];
+
 		StringBuilder sb = new StringBuilder();
+
 		for (char c : S.toCharArray()) {
-			while (count[c - 'a']-- > 0) { sb.append(c); }    // sort chars both in T and S by the order of S.
+			for (int i = 0; i < bucket[c - 'a']; i++) {
+				sb.append(c);
+			}
+
+			bucket[c - 'a'] = 0;
 		}
-		for (char c = 'a'; c <= 'z'; ++c) {
-			while (count[c - 'a']-- > 0) { sb.append(c); }    // group chars in T but not in S.
+
+		for (int i = 0; i < 26; i++) {
+			for (int j = 0; j < bucket[i]; i++)
+				sb.append((char)(i + 'a'));
+
+			return sb.toString();
 		}
-		return sb.toString();
 
 
-		int[] count = new int[26];
-        
-        for (char c: T.toCharArray()) count[c - 'a']++;
-        //append the characters in S first according to their frequncies in T
-        StringBuilder sb = new StringBuilder();
-        for (char c: S.toCharArray()){
-            for (int i = 0; i < count[c - 'a']; i++) sb.append(c);
-            count[c - 'a'] = 0;
-        }
-        //append the rest 26 characters
-        for (char c = 'a'; c <= 'z'; c++){
-            for (int i = 0; i < count[c - 'a']; i++) sb.append(c);
-        }
-        return sb.toString();
+		public static void main(String[] args) {
+			System.out.println(new Custom_Sort_String_791().customSortString("cba", "abcd"));
+			System.out.println(new Custom_Sort_String_791().customSortString("kqep", "pekeq"));
+		}
 	}
-
-
-	public static void main(String[] args) {
-		// System.out.println(new Custom_Sort_String_791().customSortString("cba", "abcd"));
-		System.out.println(new Custom_Sort_String_791().customSortString("kqep", "pekeq"));
-	}
-}
