@@ -64,10 +64,21 @@ Updated: Nov 15, 2020 12:53 AM
 - [Interval List Intersections](https://leetcode.com/problems/interval-list-intersections)
 - [Max Consecutive Ones III](https://leetcode.com/problems/max-consecutive-ones-iii)
 - [Minimum Remove to Make Valid Parentheses](https://leetcode.com/problems/minimum-remove-to-make-valid-parentheses)
+
 - A string / array problem involving distinct characters and window
+
 - You are given a `m*n` grid. You are asked to generate `k` mines on this grid randomly. Each cell should have equal probability of `k / m*n` of being chosen. Your algorithm should run in `O(m)` time. [https://leetcode.com/discuss/interview-question/124759/](https://leetcode.com/discuss/interview-question/124759/)
+
 - [https://www.geeksforgeeks.org/find-index-maximum-occurring-element-equal-probability/](https://www.geeksforgeeks.org/find-index-maximum-occurring-element-equal-probability/)
+
 - Similar strings ("face", "eacf") returns true if only 2 positions in the strings are swapped. Here 'f' and 'e' are swapped in the example.
+
+[https://www.geeksforgeeks.org/meta-strings-check-two-strings-can-become-swap-one-string/](https://www.geeksforgeeks.org/meta-strings-check-two-strings-can-become-swap-one-string/)
+[https://www.geeksforgeeks.org/check-if-two-strings-can-be-made-equal-by-swapping-one-character-among-each-other/](https://www.geeksforgeeks.org/check-if-two-strings-can-be-made-equal-by-swapping-one-character-among-each-other/)
+[https://leetcode.com/problems/determine-if-two-strings-are-close/](https://leetcode.com/problems/determine-if-two-strings-are-close/)
+[https://leetcode.com/problems/minimum-swaps-to-make-strings-equal/](https://leetcode.com/problems/minimum-swaps-to-make-strings-equal/)
+[https://www.tutorialspoint.com/meta-strings-check-if-two-strings-can-become-same-after-a-swap-in-one-string-in-cplusplus](https://www.tutorialspoint.com/meta-strings-check-if-two-strings-can-become-same-after-a-swap-in-one-string-in-cplusplus)
+
 - Number Of connected components in a Graph
 - Given two binary search trees how do we merge everything so it prints inorder. The answer I gave was to run inorder on both trees and use "merge" from merge-sort.
 - How to remove duplicates from a list

@@ -36,6 +36,7 @@ public class Set_K_Mins_in_mn_grid {
     }
 }
 
+/*
 const test = (A, k)=>{
     let selected =[];
     let totalLength = A.length*A[0].length
@@ -55,5 +56,5 @@ const test = (A, k)=>{
         }
     }
     return selected;
-
 }
+*/
