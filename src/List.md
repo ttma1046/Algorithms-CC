@@ -80,10 +80,16 @@ Updated: Nov 15, 2020 12:53 AM
 [https://www.tutorialspoint.com/meta-strings-check-if-two-strings-can-become-same-after-a-swap-in-one-string-in-cplusplus](https://www.tutorialspoint.com/meta-strings-check-if-two-strings-can-become-same-after-a-swap-in-one-string-in-cplusplus)
 
 - Number Of connected components in a Graph
+[https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/)
+
 - Given two binary search trees how do we merge everything so it prints inorder. The answer I gave was to run inorder on both trees and use "merge" from merge-sort.
+
 - How to remove duplicates from a list
+
 - You have an API to check if is it possible to move left, right, up, down and one more method to check if current position is the last one. Find the shortest way to the last position. You don't have any data structure - only API.
+
 - Is there a way to reach (0,0) from a mXn matrix to (m-1,n-1) position and give the path.
+
 - Calculate tax if Salary and Tax Brackets are given as list in the form[ [10000, 0.3],[20000, 0.2], [30000, 0.1], [null, .1]]null being rest of the salary
 - n-ary Tree with each node having a boolean flag. Traverse all the nodes with only boolean flag = True. Return the total distance traveled from root to all those nodes.
 

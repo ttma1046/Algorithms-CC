@@ -28,6 +28,36 @@ class Number_of_Connected_Components_in_an_Undirected_Graph_323 {
         return id;
     }
 
+    public int countComponents(int n, int[][] edges) {
+        int[] roots = new int[n];
+        int result = n;
+
+        for (int i = 0; i < n; i++) roots[i] = i;
+
+        for (int[] edge : edges) {
+            int root1 = findRoot(roots, edge[0]);
+            int root2 = findRoot(roots, edge[1]);
+
+            if (root1 != root2) {
+                roots[root2] = root1;
+                result--;
+            }
+        }
+
+        return result;
+    }
+
+    public int findRoot(int[] roots, int id) {
+        int traverseId = id;
+
+        while (roots[traverseId] != traverseId) {
+            traverseId = roots[traverseId];
+        }
+
+        roots[id] = traverseId;
+        return roots[id];
+    }
+
     public static void main(String[] args) {
         System.out.println(new Number_of_Connected_Components_in_an_Undirected_Graph_323().countComponentsII(5, new int[][] {{0, 1}, {1, 2}, {3, 4}}));
 
@@ -61,4 +91,3 @@ Output:  1
 Note:
 You can assume that no duplicate edges will appear in edges. Since all edges are undirected, [0, 1] is the same as [1, 0] and thus will not appear together in edges.
 */
-
