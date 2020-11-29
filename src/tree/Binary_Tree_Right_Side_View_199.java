@@ -38,29 +38,50 @@ public class TreeNode {
 */
 
 public class Binary_Tree_Right_Side_View_199 {
-	public List<Integer> rightSideView(TreeNode root) {
+	public List<Integer> rightSideViewII(TreeNode root) {
 		Queue<TreeNode> queue = new LinkedList<TreeNode>();
 
 		List<Integer> res = new ArrayList<Integer>();
 
-        if (root != null) {
-            queue.offer(root);
+		if (root != null) {
+			queue.offer(root);
 
-            while (!queue.isEmpty()) {
-                int length = queue.size();
+			while (!queue.isEmpty()) {
+				int length = queue.size();
 
-                while (length > 0) {
-                    TreeNode current = queue.poll();
+				while (length > 0) {
+					TreeNode current = queue.poll();
 
-                    if (current.left != null) queue.offer(current.left);
-                    if (current.right != null) queue.offer(current.right);
-                    if (length == 1) res.add(current.val);
-                    length--;
-                }
-            }
-        }
+					if (current.left != null) queue.offer(current.left);
+					if (current.right != null) queue.offer(current.right);
+					if (length == 1) res.add(current.val);
+					length--;
+				}
+			}
+		}
 
 		return res;
+	}
+
+
+	List<Integer> rightside = new ArrayList<Integer>();
+
+	public void helper(TreeNode node, int level) {
+		if (level == rightside.size())
+			rightside.add(node.val);
+
+		if (node.right != null)
+			helper(node.right, level + 1);
+		
+		if (node.left != null)
+			helper(node.left, level + 1);
+	}
+
+	public List<Integer> rightSideView(TreeNode root) {
+		if (root == null) return rightside;
+
+		helper(root, 0);
+		return rightside;
 	}
 
 	public static void main(String[] args) {
@@ -78,7 +99,7 @@ public class Binary_Tree_Right_Side_View_199 {
 
 		List<Integer> result = new Binary_Tree_Right_Side_View_199().rightSideView(root);
 
-		for(int i: result) {
+		for (int i : result) {
 			System.out.println(i);
 		}
 	}
