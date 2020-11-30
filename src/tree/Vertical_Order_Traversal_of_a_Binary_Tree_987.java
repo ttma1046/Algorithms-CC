@@ -74,19 +74,43 @@ Each node's value will be between 0 and 1000.
  */
 class Vertical_Order_Traversal_of_a_Binary_Tree_987 {
 	public List<List<Integer>> verticalTraversal(TreeNode root) {
-		List<List<Integer>> res = new ArrayList<List<Integer>>();
-		if (root != null) rec(root, res);
+		List<NodeCoordinate> nodePositionList = new ArrayList<>();
+		dfs(root, 0, 0, nodePositionList);
 
-		return res;
+		List<List<Integer>> result = new ArrayList<>();
+		Collections.sort(nodePositionList);
+
+		int currentX = nodePositionList.get(0).x;
+		List<Integer> integerList = new ArrayList<>();
+		integerList.add(nodePositionList.get(0).val);
+
+		for (int i = 1; i < nodePositionList.size(); i++) {
+
+			if (nodePositionList.get(i).x == currentX) {
+				integerList.add(nodePositionList.get(i).val);
+			} else {
+				result.add(integerList);
+				integerList = new ArrayList<>();
+				integerList.add(nodePositionList.get(i).val);
+				currentX = nodePositionList.get(i).x;
+			}
+		}
+
+		if (integerList.size() > 0) {
+			result.add(integerList);
+		}
+
+		return result;
 	}
 
-	private void rec(TreeNode node, List<List<Integer>> res) {
-		if (node.left != null) rec(node.left, res);
-		List<Integer> list = new ArrayList<Integer>();
-		list.add(node.val);
-		res.add(list);
-	
-		if (node.right != null) rec(node.right, res);
+
+	void dfs(TreeNode root, int x, int y, List<NodeCoordinate> list) {
+		if (root == null)
+			return;
+
+		list.add(new NodeCoordinate(x, y, root.val));
+		dfs(root.left, x - 1, y - 1, list);
+		dfs(root.right, x + 1, y - 1, list);
 	}
 
 	public static void main(String[] args) {
@@ -110,6 +134,29 @@ class Vertical_Order_Traversal_of_a_Binary_Tree_987 {
 			for (Integer item : items) {
 				System.out.println(item);
 			}
+		}
+	}
+}
+
+public class NodeCoordinate implements Comparable<NodeCoordinate> {
+	int x;
+	int y;
+	int val;
+
+	public NodeCoordinate(int x, int y, int val) {
+		this.x = x;
+		this.y = y;
+		this.val = val;
+	}
+
+	@Override
+	public int compareTo(NodeCoordinate n) {
+		if (this.x != n.x) {
+			return this.x - n.x;
+		} else if (this.y != n.y) {
+			return n.y - this.y;
+		} else {
+			return this.val - n.val;
 		}
 	}
 }
