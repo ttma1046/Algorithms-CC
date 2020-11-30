@@ -70,20 +70,20 @@ In this problem, we are asked to return the **_vertical_** order of a binary tre
     
     Let us assume that the root node has a column index of `0`, then its left child node would have a column index of `-1`, and its right child node would have a column index of `+1`, and so on.
     
-    - **row-wise order**
-    
-    
+- **row-wise order**
+
     Secondly, we look at the binary tree _vertically_. Each node would be assigned to a specific `row`, based on its _level_ (_i.e._ the vertical distance to the root node).
-    
+
     Let us assume that the root node has a row index of `0`, then both its child nodes would have the row index of `1`.
     Note that the convention we adopt here is slightly different from the one in the problem description where the row index of a parent node is larger than the one of its child nodes.
     This, though, would not jeopardize our solution. On the contrary, it would help us to simplify the solution, as one will see later.
-    
-    - **value-wise order**
-    
+
+- **value-wise order**
+
+
     Finally, given the definitions of the above two sub-orders, there could be a case where two different nodes have the same `<column, row>` index. As a result, to resolve the draw situation, as stated in the problem description, the node that has a smaller `value` should come first.
-    
-    >Given the above definitions, we can now formulate the problem as a task to **sort** the nodes based on the 3-dimensional coordinates (_i.e._ `<column, row, value>`) that we defined above.
+
+>Given the above definitions, we can now formulate the problem as a task to **sort** the nodes based on the 3-dimensional coordinates (_i.e._ `<column, row, value>`) that we defined above.
 
 The priority of each coordinate is determined by its order.
 For example, the coordinate `column` comes first, therefore it has the highest priority.
@@ -126,7 +126,7 @@ Based on the above intuition, we could implement the solution in 3 simple steps:
     As a result, a sorting operation in ascending order would work for each coordinate consistently.
     
     
-    - **Step 2)**: Once we generate the desired list, we then _sort_ the list.
+- **Step 2)**: Once we generate the desired list, we then _sort_ the list.
 
 - **Step 3)**: From the _sorted_ list, we then extract the results, and group them by the `column` index.
 
@@ -308,7 +308,7 @@ Let `N` be the number of nodes in the input tree.
     
     - To summarize, the overall time complexity of the algorithm would be `\mathcal{O}(N \log N)`, which is dominated by the sorting operation in the second step.
     
-    - Space Complexity: `O(N)`. Again this applies to both the BFS and DFS approaches.
+- Space Complexity: `O(N)`. Again this applies to both the BFS and DFS approaches.
 
     - In the first step of the algorithm, we build a list that contains the coordinates of all the nodes. Hence, we need `O(N)` space for this list.
     
@@ -333,7 +333,7 @@ The elements in the heap data structure are ordered automatically, and this does
 However, to maintain the elements in order, each insertion operation in heap would take `\mathcal{O}(\log N)` time complexity.
 In other words, one can consider the heap data structure as another form of sorting, which amortizes the cost of sorting operating over each insertion.
 
-One could apply the head data structure to replace the sorting operation here, which could make the code more concise. But this is not the main point here.
+One could apply the **heap** data structure to replace the sorting operation here, which could make the code more concise. But this is not the main point here.
 
 >That being said, one thing that we can do is to reduce the scope of sorting, by **partitioning** the list of coordinates into subgroups based on the `column` index.
 
@@ -369,7 +369,7 @@ We could implement the above intuition based on the previous approaches. Again, 
     - Meanwhile, we also note down the minimal and maximal column index during the traversal. The minimal and maximal column index defines the range of column index. With this range, we could iterate through columns in order without the need for sorting, as one will see later.
     
     
-    - **Step 2)**: Once we populate the above hashmap, we then _sort_ the value in each entry of the hashmap, _i.e._ we sort each group of coordinates led by the `column` index.
+- **Step 2)**: Once we populate the above hashmap, we then _sort_ the value in each entry of the hashmap, _i.e._ we sort each group of coordinates led by the `column` index.
 
 - **Step 3)**: From the _sorted_ hashmap, we extract the results that are grouped by the `column` index.
 
@@ -520,4 +520,4 @@ Let `N` be the number of nodes in the tree.
     Let us look at one particular example. In the case where the tree is complete imbalanced (_e.g._ a node has only left node), the tree would be partitioned into exactly `N` groups. Each group contains a single element. It would take no time to sort each group. As a result, the overall time complexity of this approach becomes `N \cdot \mathcal{O}(1) = O(N)`.
     While for the previous approach, its overall time complexity remains `\mathcal{O}(N \log N)`. 
     
-    - Space Complexity: `O(N)`. Again this applies to both the BFS and DFS approaches. The analysis is the same as the previous approach.
+- Space Complexity: `O(N)`. Again this applies to both the BFS and DFS approaches. The analysis is the same as the previous approach.
