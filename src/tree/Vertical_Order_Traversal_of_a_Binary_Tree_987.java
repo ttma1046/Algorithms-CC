@@ -3,13 +3,17 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Comparator;
 
 /*
 Given a binary tree, return the vertical order traversal of its nodes values.
 
 For each node at position `(X, Y)`,
 
-its left and right children respectively will be at positions `(X-1, Y-1)` and `(X+1, Y-1)`.
+its left and right children respectively will be at positions `(X - 1, Y + 1)` and `(X + 1, Y + 1)`.
 
 Running a vertical line from `X = -infinity` to `X = +infinity`,
 
@@ -73,15 +77,134 @@ Each node's value will be between 0 and 1000.
  * }
  */
 class Vertical_Order_Traversal_of_a_Binary_Tree_987 {
+	Map<Integer, ArrayList<Pair<Integer, Integer>>> map = new HashMap<Integer, ArrayList<Pair<Integer, Integer>>>();
+
+	int maxColumn = 0, minColumn = 0;
+
+	public List<List<Integer>> verticalTraversalBFS(TreeNode root) {
+		List<List<Integer>> result = new ArrayList<List<Integer>>();
+
+		if (root == null) {
+			return result;
+		}
+
+		BFS(root);
+
+		for (int i = minColumn; i <= maxColumn; ++i) {
+			Collections.sort(map.get(i), new Comparator<Pair<Integer, Integer>>() {
+				@Override
+				public int compare(Pair<Integer, Integer> p1, Pair<Integer, Integer> p2) {
+					if (p1.getKey().equals(p2.getKey())) {
+						return p1.getValue() - p2.getValue();
+					} else {
+						return p1.getKey() - p2.getKey();
+					}
+				}
+			});
+
+			List<Integer> sortedColumn = new ArrayList<Integer>();
+
+			for (Pair<Integer, Integer> p : map.get(i)) {
+				sortedColumn.add(p.getValue());
+			}
+
+			result.add(sortedColumn);
+		}
+
+		return result;
+	}
+
+	private void BFS(TreeNode node) {
+		Queue<Pair<TreeNode, Pair<Integer, Integer>>> queue  = new LinkedList<Pair<TreeNode, Pair<Integer, Integer>>>();
+
+		int row = 0, column = 0;
+
+		queue.offer(new Pair<TreeNode, Pair<Integer, Integer>>(node, new Pair<Integer, Integer>(row, column)));
+
+		while (!queue.isEmpty()) {
+			Pair<TreeNode, Pair<Integer, Integer>> p = queue.poll();
+			TreeNode curr =	p.getKey();
+			row = p.getValue().getKey();
+			column = p.getValue().getValue();
+
+			if (curr != null) {
+				if (!map.containsKey(column)) {
+					map.put(column, new ArrayList<Pair<Integer, Integer>>());
+				}
+
+				map.get(column).add(new Pair<Integer, Integer>(row, curr.val));
+
+				maxColumn = Math.max(maxColumn, column);
+				minColumn = Math.min(minColumn, column);
+
+				queue.offer(new Pair<TreeNode, Pair<Integer, Integer>>(node.left, new Pair<Integer, Integer>(row + 1, column - 1)));
+				queue.offer(new Pair<TreeNode, Pair<Integer, Integer>>(node.right, new Pair<Integer, Integer>(row + 1, column + 1)));
+			}
+		}
+	}
+
+	private void DFS(TreeNode node, int row, int column) {
+		if (!map.containsKey(column)) {
+			map.put(column, new ArrayList<Pair<Integer, Integer>>());
+		}
+
+		map.get(column).add(new Pair<Integer, Integer>(row, node.val));
+
+		maxColumn = Math.max(column, maxColumn);
+		minColumn = Math.min(column, minColumn);
+
+
+		if (node.left != null) {
+			DFS(node.left, row + 1, column - 1);
+		}
+
+		if (node.right != null) {
+			DFS(node.right, row + 1, column + 1);
+		}
+	}
+
+	public List<List<Integer>> verticalTraversalDFS(TreeNode root) {
+		List<List<Integer>> result = new ArrayList<List<Integer>>();
+
+		if (root == null) {
+			return result;
+		}
+
+		DFS(root, 0, 0);
+
+		for (int i = minColumn; i <= maxColumn; ++i) {
+			Collections.sort(map.get(i), new Comparator<Pair<Integer, Integer>>() {
+				@Override
+				public int compare(Pair<Integer, Integer> p1, Pair<Integer, Integer> p2) {
+					if (p1.getKey().equals(p2.getKey())) {
+						return p1.getValue() - p2.getValue();
+					} else {
+						return p1.getKey() - p2.getKey();
+					}
+				}
+			});
+
+			List<Integer> sortedColumn = new ArrayList<Integer>();
+
+			for (Pair<Integer, Integer> p : map.get(i)) {
+				sortedColumn.add(p.getValue());
+			}
+
+			result.add(sortedColumn);
+		}
+
+		return result;
+	}
+
 	public List<List<Integer>> verticalTraversal(TreeNode root) {
-		List<NodeCoordinate> nodePositionList = new ArrayList<>();
+		List<NodeCoordinate> nodePositionList = new ArrayList<NodeCoordinate>();
 		dfs(root, 0, 0, nodePositionList);
 
-		List<List<Integer>> result = new ArrayList<>();
+		List<List<Integer>> result = new ArrayList<List<Integer>>();
 		Collections.sort(nodePositionList);
 
 		int currentX = nodePositionList.get(0).x;
-		List<Integer> integerList = new ArrayList<>();
+		List<Integer> integerList = new ArrayList<Integer>();
 		integerList.add(nodePositionList.get(0).val);
 
 		for (int i = 1; i < nodePositionList.size(); i++) {
@@ -90,7 +213,7 @@ class Vertical_Order_Traversal_of_a_Binary_Tree_987 {
 				integerList.add(nodePositionList.get(i).val);
 			} else {
 				result.add(integerList);
-				integerList = new ArrayList<>();
+				integerList = new ArrayList<Integer>();
 				integerList.add(nodePositionList.get(i).val);
 				currentX = nodePositionList.get(i).x;
 			}
@@ -102,7 +225,6 @@ class Vertical_Order_Traversal_of_a_Binary_Tree_987 {
 
 		return result;
 	}
-
 
 	void dfs(TreeNode root, int x, int y, List<NodeCoordinate> list) {
 		if (root == null)
@@ -138,7 +260,25 @@ class Vertical_Order_Traversal_of_a_Binary_Tree_987 {
 	}
 }
 
-public class NodeCoordinate implements Comparable<NodeCoordinate> {
+class Pair<T, V> {
+	T key;
+	V value;
+
+	Pair(T x, V y) {
+		this.key = x;
+		this.value = y;
+	}
+
+	T getKey() {
+		return key;
+	}
+
+	V getValue() {
+		return value;
+	}
+}
+
+class NodeCoordinate implements Comparable<NodeCoordinate> {
 	int x;
 	int y;
 	int val;

@@ -400,7 +400,7 @@ class Solution {
                 if (!columnTable.containsKey(column)) {
                     columnTable.put(column, new ArrayList<Pair<Integer, Integer>>());
                 }
-                columnTable.get(column).add(new Pair<>(row, root.val));
+                columnTable.get(column).add(new Pair(row, root.val));
                 minColumn = Math.min(minColumn, column);
                 maxColumn = Math.max(maxColumn, column);
 
