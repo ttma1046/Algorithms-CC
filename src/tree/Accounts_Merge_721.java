@@ -3,6 +3,11 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Stack;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.Collections;
+
 /*
 Given a list accounts, each element accounts[i] is a list of strings, where the first element accounts[i][0] is a name, and the rest of the elements are emails representing emails of the account.
 
@@ -12,7 +17,12 @@ After merging the accounts, return the accounts in the following format: the fir
 
 Example 1:
 Input:
-accounts = [["John", "johnsmith@mail.com", "john00@mail.com"], ["John", "johnnybravo@mail.com"], ["John", "johnsmith@mail.com", "john_newyork@mail.com"], ["Mary", "mary@mail.com"]]
+accounts = [
+ ["John", "johnsmith@mail.com", "john00@mail.com"],
+ ["John", "johnnybravo@mail.com"],
+ ["John", "johnsmith@mail.com", "john_newyork@mail.com"],
+ ["Mary", "mary@mail.com"]
+ ]
 Output: [["John", 'john00@mail.com', 'john_newyork@mail.com', 'johnsmith@mail.com'],  ["John", "johnnybravo@mail.com"], ["Mary", "mary@mail.com"]]
 Explanation:
 The first and third John's are the same person as they have the common email "johnsmith@mail.com".
@@ -39,29 +49,113 @@ class Accounts_Merge_721 {
                 }
 
                 graph.computeIfAbsent(email, x-> new ArrayList<String>()).add(account.get(1));
+
+                /*
+                    key:johnnybravo@mail.com value:[johnnybravo@mail.com]
+                    key:john00@mail.com value:[johnsmith@mail.com]
+                    key:johnsmith@mail.com value:[johnsmith@mail.com, johnsmith@mail.com]
+                    key:mary@mail.com value:[mary@mail.com]
+                    key:john_newyork@mail.com value:[johnsmith@mail.com]
+                */
+
                 graph.computeIfAbsent(account.get(1), x-> new ArrayList<String>()).add(email);
+
+                /*
+
+                    johnsmith@mail.com value:[johnsmith@mail.com] =>
+                    johnsmith@mail.com value:[johnsmith@mail.com, johnsmith@mail.com]
+
+                    key:john00@mail.com value:[johnsmith@mail.com] =>
+                    key:john00@mail.com value:[johnsmith@mail.com]
+
+                    johnsmith@mail.com value:[johnsmith@mail.com, johnsmith@mail.com] =>
+                    johnsmith@mail.com value:[johnsmith@mail.com, johnsmith@mail.com, john00@mail.com]
+
+
+                    johnnybravo@mail.com value:[] =>
+                    johnnybravo@mail.com value:[johnnybravo@mail.com]
+
+
+                    johnnybravo@mail.com value:[johnnybravo@mail.com] =>
+                    johnnybravo@mail.com value:[johnnybravo@mail.com, johnnybravo@mail.com]
+
+
+                    johnsmith@mail.com value:[johnsmith@mail.com, johnsmith@mail.com, john00@mail.com] =>
+                    johnsmith@mail.com value:[johnsmith@mail.com, johnsmith@mail.com, john00@mail.com, johnsmith@mail.com]
+
+
+                    johnsmith@mail.com value:[johnsmith@mail.com, johnsmith@mail.com, john00@mail.com, johnsmith@mail.com] =>
+                    johnsmith@mail.com value:[johnsmith@mail.com, johnsmith@mail.com, john00@mail.com, johnsmith@mail.com, johnsmith@mail.com]
+
+
+                    key:john_newyork@mail.com value:[]
+                    key:john_newyork@mail.com value:[johnsmith@mail.com]
+
+                    johnsmith@mail.com value:[johnsmith@mail.com, johnsmith@mail.com, john00@mail.com, johnsmith@mail.com, johnsmith@mail.com] =>
+                    johnsmith@mail.com value:[johnsmith@mail.com, johnsmith@mail.com, john00@mail.com, johnsmith@mail.com, johnsmith@mail.com, john_newyork@mail.com]
+
+
+                    key:mary@mail.com value:[]
+                    key:mary@mail.com  value:[mary@mail.com]
+                    key:mary@mail.com value:[mary@mail.com]
+                    key:mary@mail.com  value:[mary@mail.com, mary@mail.com]
+                */
+
                 emailToName.put(email, name);
             }
         }
 
-        for (Map.Entry<String, ArrayList<String>> entry: graph.entrySet()) {
-            System.out.println("key:" + entry.getKey());
-            System.out.println("value:" + entry.getValue());
+        for (Map.Entry<String, ArrayList<String>> entry : graph.entrySet()) {
+            System.out.print("key:" + entry.getKey());
+            System.out.print(" value:" + entry.getValue());
+            System.out.println();
         }
 
-        List<List<String>> ans = new ArrayList<>();
+        System.out.println();
+
+        for (Map.Entry<String, String> entry : emailToName.entrySet()) {
+            System.out.print("key:" + entry.getKey());
+            System.out.print(" value:" + entry.getValue());
+            System.out.println();
+        }
+
+        System.out.println();
+
         /*
-        Set<String> seen = new HashSet();
-        for (String email: graph.keySet()) {
+        key:johnnybravo@mail.com value:[johnnybravo@mail.com]
+        key:john00@mail.com value:[johnsmith@mail.com]
+        key:johnsmith@mail.com value:[johnsmith@mail.com, johnsmith@mail.com]
+        key:mary@mail.com value:[mary@mail.com]
+        key:john_newyork@mail.com value:[johnsmith@mail.com]
+
+        key:johnnybravo@mail.com value:[johnnybravo@mail.com, johnnybravo@mail.com]
+        key:john00@mail.com value:[johnsmith@mail.com]
+        key:johnsmith@mail.com value:[johnsmith@mail.com, johnsmith@mail.com, john00@mail.com, johnsmith@mail.com, johnsmith@mail.com, john_newyork@mail.com]
+        key:mary@mail.com value:[mary@mail.com, mary@mail.com]
+        key:john_newyork@mail.com value:[johnsmith@mail.com]
+
+        key:johnnybravo@mail.com value:John
+        key:johnsmith@mail.com value:John
+        key:john00@mail.com value:John
+        key:john_newyork@mail.com value:John
+        key:mary@mail.com value:Mary
+        */
+
+        List<List<String>> ans = new ArrayList<>();
+
+        Set<String> seen = new HashSet<>();
+        for (String email : graph.keySet()) {
             if (!seen.contains(email)) {
                 seen.add(email);
-                Stack<String> stack = new Stack();
+
+                Stack<String> stack = new Stack<>();
                 stack.push(email);
-                List<String> component = new ArrayList();
+
+                List<String> component = new ArrayList<>();
                 while (!stack.empty()) {
                     String node = stack.pop();
                     component.add(node);
-                    for (String nei: graph.get(node)) {
+                    for (String nei : graph.get(node)) {
                         if (!seen.contains(nei)) {
                             seen.add(nei);
                             stack.push(nei);
@@ -73,18 +167,9 @@ class Accounts_Merge_721 {
                 ans.add(component);
             }
         }
-        */
+
         return ans;
     }
-
-/*
-    accounts = [
-                   ["John", "johnsmith@mail.com", "john00@mail.com"],
-                   ["John", "johnnybravo@mail.com"],
-                   ["John", "johnsmith@mail.com", "john_newyork@mail.com"],
-                   ["Mary", "mary@mail.com"]
-               ]
-*/
 
     public static void main(String[] args) {
         List<List<String>> accounts = new ArrayList<List<String>>();
@@ -116,61 +201,19 @@ class Accounts_Merge_721 {
         account.add("Mary");
         account.add("mary@mail.com");
 
+        accounts.add(account);
+
         new Accounts_Merge_721().accountsMerge(accounts);
     }
 
+    /* 
+    Time Complexity: O(\sum a_i \log a_i)O(∑ailogai), where a_iai
+​   
+    is the length of accounts[i]. Without the log factor, this is the complexity to build the graph and search for each component. The log factor is for sorting each component at the end.
 
-
-    /*
-    "johnsmith@mail.com", 0
-    "john00@mail.com", 1
-    johnnybravo@mail.com, 2
-    john_newyork@mail.com, 3
-    mary@mail.com 4
-
-    0 "John johnsmith@mail.com"
-    1 "John john00@mail.com"
-    2 John johnnybravo@mail.com
-    3 John john_newyork@mail.com
-    4 Mary mary@mail.com
-
-    [0, 0, 1, 0, 2]
-
-    0 => [John, johnsmith@mail.com, john00@mail.com, john_newyork@mail.com]
-    1 => [John, johnnybravo@mail.com]
-    2 => [Mary, mary@mail.com]
+    Space Complexity: O(\sum a_i)O(∑ai), the space used by our graph and our search.
     */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /*
     public class Node {
         Node parent;
         String name;
@@ -230,5 +273,12 @@ class Accounts_Merge_721 {
 
         return resultList;
     }
+
+    /*
+    Complexity Analysis
+
+    Time Complexity: O(A \log A)O(AlogA), where A = \sum a_iA=∑ai, and a_iai is the length of accounts[i]. If we used union-by-rank, this complexity improves to O(A \alpha(A)) \approx O(A)O(Aα(A))≈O(A), where \alphaα is the Inverse-Ackermann function.
+
+    Space Complexity: O(A)O(A), the space used by our DSU structure.
     */
 }
