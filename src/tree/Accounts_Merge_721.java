@@ -23,6 +23,63 @@ The length of accounts[i][j] will be in the range [1, 30].
 */
 
 class Accounts_Merge_721 {
+    public List<List<String>> accountsMerge(List<List<String>> accounts) {
+
+    }
+
+
+
+
+/*
+"johnsmith@mail.com", 0
+"john00@mail.com", 1
+johnnybravo@mail.com, 2
+john_newyork@mail.com, 3
+mary@mail.com 4
+
+0 "John johnsmith@mail.com"
+1 "John john00@mail.com"
+2 John johnnybravo@mail.com
+3 John john_newyork@mail.com
+4 Mary mary@mail.com
+
+[0, 0, 1, 0, 2]
+
+0 => [John, johnsmith@mail.com, john00@mail.com, john_newyork@mail.com]
+1 => [John, johnnybravo@mail.com]
+2 => [Mary, mary@mail.com]
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*
     public class Node {
         Node parent;
         String name;
@@ -82,4 +139,5 @@ class Accounts_Merge_721 {
         
         return resultList;
     }
+    */
 }
