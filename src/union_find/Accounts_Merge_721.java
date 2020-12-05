@@ -9,9 +9,9 @@ import java.util.HashSet;
 import java.util.Collections;
 
 /*
-Given a list accounts, each element accounts[i] is a list of strings, 
+Given a list accounts, each element accounts[i] is a list of strings,
 
-where the first element accounts[i][0] is a name, 
+where the first element accounts[i][0] is a name,
 and the rest of the elements are emails representing emails of the account.
 
 Now, we would like to merge these accounts. Two accounts definitely belong to the same person if there is some email that is common to both accounts. Note that even if two accounts have the same name, they may belong to different people as people could have the same name. A person can have any number of accounts initially, but all of their accounts definitely have the same name.
@@ -207,10 +207,10 @@ class Accounts_Merge_721 {
 
         accounts.add(account);
 
-        List<List<String>> result = new Accounts_Merge_721().accountsMergeII(accounts);
+        List<List<String>> result = new Accounts_Merge_721().accountsMergeMy(accounts);
 
         for (List<String> emails : result) {
-            for (String email: emails) {
+            for (String email : emails) {
                 System.out.print(email + ",");
 
             }
@@ -220,13 +220,124 @@ class Accounts_Merge_721 {
     }
 
     /*
+    Complexity Analysis
+
+    Time Complexity: O(A \log A)O(AlogA), where A = \sum a_iA=∑ai, and a_iai is the length of accounts[i]. If we used union-by-rank, this complexity improves to O(A \alpha(A)) \approx O(A)O(Aα(A))≈O(A), where \alphaα is the Inverse-Ackermann function.
+
+    Space Complexity: O(A)O(A), the space used by our DisjointSetUnion structure.
+    */
+
+    public List<List<String>> accountsMergeMy(List<List<String>> accounts) {
+        DisjointSetUnion dsu = new DisjointSetUnion();
+        Map<String, String> emailToName = new HashMap<String, String>();
+        Map<String, Integer> emailToId = new HashMap<String, Integer>();
+
+        int i = 0;
+        for (List<String> account : accounts) {
+            String name = "";
+            for (String str : account) {
+                if (name == "") {
+                    name = str;
+                    continue;
+                }
+
+                if (!emailToName.containsKey(str)) emailToName.put(str, name);
+                if (!emailToId.containsKey(str)) emailToId.put(str, i++);
+
+                dsu.union(emailToId.get(account.get(1)), emailToId.get(str));
+            }
+        }
+
+        Map<Integer, List<String>> ans = new HashMap<>();
+        for (String email : emailToId.keySet()) {
+            int index = dsu.find(emailToId.get(email));
+            ans.computeIfAbsent(index, x-> new ArrayList<String>()).add(email);
+        }
+
+        for (List<String> component : ans.values()) {
+            Collections.sort(component);
+            component.add(0, emailToName.get(component.get(0)));
+        }
+
+        return new ArrayList<List<String>>(ans.values());
+    }
+
+    public List<List<String>> accountsMergeII(List<List<String>> accounts) {
+        DisjointSetUnion dsu = new DisjointSetUnion();
+        Map<String, String> emailToName = new HashMap<>();
+        Map<String, Integer> emailToID = new HashMap<>();
+        int id = 0;
+        for (List<String> account : accounts) {
+            String name = "";
+            for (String email : account) {
+                if (name == "") {
+                    name = email;
+                    continue;
+                }
+
+                emailToName.put(email, name);
+
+                if (!emailToID.containsKey(email)) {
+                    emailToID.put(email, id++);
+                }
+
+                /*
+                key:johnnybravo@mail.com value:2
+                key:johnsmith@mail.com value:0
+                key:john00@mail.com value:1
+                key:john_newyork@mail.com value:3
+                key:mary@mail.com value:4
+
+                [
+                   ["John", "johnsmith@mail.com", "john00@mail.com"],
+                   ["John", "johnnybravo@mail.com"],
+                   ["John", "johnsmith@mail.com", "john_newyork@mail.com"],
+                   ["Mary", "mary@mail.com"]
+                ]
+                */
+                dsu.union(emailToID.get(account.get(1)), emailToID.get(email));
+
+                System.out.println(email);
+                for (int i = 0; i <= 5; ++i) {
+                    System.out.println(i + ":" + dsu.parent[i]);
+                }
+            }
+        }
+
+        for (Map.Entry<String, String> entry : emailToName.entrySet()) {
+            System.out.print("key:" + entry.getKey());
+            System.out.print(" value:" + entry.getValue());
+            System.out.println();
+        }
+
+
+        for (Map.Entry<String, Integer> entry : emailToID.entrySet()) {
+            System.out.print("key:" + entry.getKey());
+            System.out.print(" value:" + entry.getValue());
+            System.out.println();
+        }
+
+        Map<Integer, List<String>> ans = new HashMap<>();
+        for (String email : emailToName.keySet()) {
+            int index = dsu.find(emailToID.get(email));
+            ans.computeIfAbsent(index, x-> new ArrayList<>()).add(email);
+        }
+
+        for (List<String> component : ans.values()) {
+            Collections.sort(component);
+            component.add(0, emailToName.get(component.get(0)));
+        }
+
+        return new ArrayList<List<String>>(ans.values());
+    }
+
+    /*
     Time Complexity: O(\sum a_i \log a_i)O(∑ailogai), where a_iai
     ​
     is the length of accounts[i]. Without the log factor, this is the complexity to build the graph and search for each component. The log factor is for sorting each component at the end.
 
     Space Complexity: O(\sum a_i)O(∑ai), the space used by our graph and our search.
     */
-
     public Node findParent(Node node) {
         while (node.parent != node.parent.parent)
             node.parent = node.parent.parent;
@@ -274,89 +385,6 @@ class Accounts_Merge_721 {
 
         return resultList;
     }
-
-    /*
-    Complexity Analysis
-
-    Time Complexity: O(A \log A)O(AlogA), where A = \sum a_iA=∑ai, and a_iai is the length of accounts[i]. If we used union-by-rank, this complexity improves to O(A \alpha(A)) \approx O(A)O(Aα(A))≈O(A), where \alphaα is the Inverse-Ackermann function.
-
-    Space Complexity: O(A)O(A), the space used by our DisjointSetUnion structure.
-    */
-
-    public List<List<String>> accountsMergeII(List<List<String>> accounts) {
-        DisjointSetUnion dsu = new DisjointSetUnion();
-        Map<String, String> emailToName = new HashMap<>();
-        Map<String, Integer> emailToID = new HashMap<>();
-        int id = 0;
-        for (List<String> account : accounts) {
-            String name = "";
-            for (String email : account) {
-                if (name == "") {
-                    name = email;
-                    continue;
-                }
-
-
-
-                emailToName.put(email, name);
-
-                if (!emailToID.containsKey(email)) {
-                    emailToID.put(email, id++);
-                }
-
-
-                /*
-                key:johnnybravo@mail.com value:2
-                key:johnsmith@mail.com value:0
-                key:john00@mail.com value:1
-                key:john_newyork@mail.com value:3
-                key:mary@mail.com value:4
-
-                [
-                   ["John", "johnsmith@mail.com", "john00@mail.com"],
-                   ["John", "johnnybravo@mail.com"],
-                   ["John", "johnsmith@mail.com", "john_newyork@mail.com"],
-                   ["Mary", "mary@mail.com"]
-                ]
-                */
-                dsu.union(emailToID.get(account.get(1)), emailToID.get(email));
-
-
-                System.out.println(email);
-                for (int i = 0; i <= 5; ++i) {
-                    System.out.println(i + ":" + dsu.parent[i]);
-                }
-            }
-        }
-
-        for (Map.Entry<String, String> entry : emailToName.entrySet()) {
-            System.out.print("key:" + entry.getKey());
-            System.out.print(" value:" + entry.getValue());
-            System.out.println();
-        }
-
-
-        for (Map.Entry<String, Integer> entry : emailToID.entrySet()) {
-            System.out.print("key:" + entry.getKey());
-            System.out.print(" value:" + entry.getValue());
-            System.out.println();
-        }
-
-
-        Map<Integer, List<String>> ans = new HashMap<>();
-        for (String email : emailToName.keySet()) {
-            int index = dsu.find(emailToID.get(email));
-            ans.computeIfAbsent(index, x-> new ArrayList<>()).add(email);
-        }
-        
-        /*
-        for (List<String> component : ans.values()) {
-            Collections.sort(component);
-            component.add(0, emailToName.get(component.get(0)));
-        }*/
-
-        return new ArrayList<List<String>>(ans.values());
-    }
 }
 
 class DisjointSetUnion {
@@ -371,12 +399,14 @@ class DisjointSetUnion {
         return parent[x];
     }
     public void union(int x, int y) {
-        int t = find(x);
-        int s = find(y);
-        System.out.println("find(x):" + t);
-        System.out.println("find(y):" + s);
+//        int t = find(x);
+//        int s = find(y);
+//        System.out.println("find(x):" + t);
+//        System.out.println("find(y):" + s);
 
-        parent[t] = s;
+//        parent[t] = s;
+
+        parent[find(x)] = find(y);
     }
 }
 
