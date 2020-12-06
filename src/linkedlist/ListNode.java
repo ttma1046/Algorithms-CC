@@ -4,4 +4,5 @@ package linkedlist;
      int val;
      ListNode next;
      ListNode(int x) { val = x; }
+     ListNode() {}
  }
