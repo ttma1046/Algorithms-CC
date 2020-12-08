@@ -60,40 +60,43 @@ class Node {
 };
 
 class Insert_into_a_Sorted_Circular_Linked_List_708 {
+	Node curr;
+	Node prev;
+
 	public Node insert(Node head, int insertVal) {
-		Node aim = new Node(insertVal);
 		if (head == null) {
-			return new aim;
+			Node newNode = new Node(insertVal, null);
+			newNode.next = newNode;
+			return newNode;
 		}
 
-		Node curr = head;
-		if (curr.val > insertVal) {
-			while (curr.val > insertVal) {
-				curr = curr.prev;
+		Node prev = head;
+		Node curr = head.next;
+		do {
+			// Case
+			if ((prev.val <= insertVal && insertVal <= curr.val) 
+				|| (prev.val > curr.val && insertVal >= prev.val) 
+				|| (prev.val > curr.val && insertVal <= curr.val)) {
+				break;
 			}
 
-			aim.next = curr.next;
-			curr.next = aim;	
-		} else {
-			while (curr.val < insertVal) {
-				curr = curr.next;
-			}
+			prev = curr;
+			curr = curr.next;
+		} while (prev != head);
 
-			aim.prev = curr.prev;
-			curr.prev = aim;
-			aim.next = curr;
-		}
-		retrun curr;
+		prev.next = new Node(insertVal, curr);
+		return head;
 	}
 
 	public static void main(String[] args) {
-		Node one = new Node(1);
-		Node four = new Node(4);
-		Node head = new Node(3);
-		head.next = four;
-		four.next = one;
-		one.next = head;
+		Node head = new Node(1);
+		head.next = head;
 
-		System.out.println(new Insert_into_a_Sorted_Circular_Linked_List_708().insert(head, 2));
+		Node list = new Insert_into_a_Sorted_Circular_Linked_List_708().insert(head, 0);
+		Node curr = list;
+		do {
+			System.out.println(list.val);
+			list = list.next;
+		} while (list != curr);
 	}
 }
