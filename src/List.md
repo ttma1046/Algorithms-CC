@@ -136,7 +136,8 @@ It's executed as 1 . . 1 2 . 1, so the total time is 7.
 
 **Explanation:**
 
-![Facebook%20Interview%20Questions%20bd1b3458eca44161b9d4b90f411a0eb2/Untitled.png](Facebook%20Interview%20Questions%20bd1b3458eca44161b9d4b90f411a0eb2/Untitled.png)
+![List/Untitled.png](List/Untitled.png)
+
 
 **4. Design:**
 
