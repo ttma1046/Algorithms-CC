@@ -69,6 +69,38 @@ pickIndex will be called at most 10000 times.
 
 // S1: tree map
 // Rank: 25.88%
+class Random_Pick_with_Weight_528 {
+	private int[] prefixSums;
+	private int totalSum;
+
+	public Solution(int[] w) {
+        this.prefixSums = new int[w.length];
+
+        int prefixSum = 0;
+        for (int i = 0; i < w.length; ++i) {
+            prefixSum += w[i];
+            this.prefixSums[i] = prefixSum;
+        }
+        this.totalSum = prefixSum;
+    }
+
+	public int pickIndex() {
+		double target = this.totalSum * Math.random();
+
+		// run a binary search to find the target zone
+		int low = 0, high = this.prefixSums.length;
+		while (low < high) {
+			// better to avoid the overflow
+			int mid = low + (high - low) / 2;
+			if (target > this.prefixSums[mid])
+				low = mid + 1;
+			else
+				high = mid;
+		}
+		return low;
+	}
+}
+
 class Random_Pick_with_Weight_5281 {
 	int total = 0;
 	Random rand = new Random();
@@ -142,7 +174,7 @@ class Random_Pick_with_Weight_528 {
 		}
 
 		for (int i = 0; i < w.length; i++) {
-			int weightInPercentage = (int)((double)w[i] / sum * 100);
+			int weightInPercentage = (int) ((double) w[i] / sum * 100);
 			while (weightInPercentage-- > 0) {
 				indexes[size++] = i;
 			}
@@ -154,18 +186,16 @@ class Random_Pick_with_Weight_528 {
 		if (size == 0) {
 			return 0;
 		}
-		int rand = (int)(Math.random() * (size));
+		int rand = (int) (Math.random() * (size));
 		return indexes[rand];
 	}
 }
 
 /**
- * Your Solution object will be instantiated and called as such:
- * Solution obj = new Solution(w);
- * int param_1 = obj.pickIndex();
+ * Your Solution object will be instantiated and called as such: Solution obj =
+ * new Solution(w); int param_1 = obj.pickIndex();
  */
 /**
- * Your Solution object will be instantiated and called as such:
- * Solution obj = new Solution(w);
- * int param_1 = obj.pickIndex();
+ * Your Solution object will be instantiated and called as such: Solution obj =
+ * new Solution(w); int param_1 = obj.pickIndex();
  */
