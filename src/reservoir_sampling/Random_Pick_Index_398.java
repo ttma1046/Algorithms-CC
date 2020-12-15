@@ -1,7 +1,13 @@
 package reservoir_sampling;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Random;
 /*
-Given an array of integers with possible duplicates, 
-randomly output the index of a given target number. 
+Given an array of integers with possible duplicates,
+randomly output the index of a given target number.
 
 You can assume that the given target number must exist in the array.
 
@@ -21,11 +27,82 @@ solution.pick(1);
 */
 class Random_Pick_Index_398 {
 
-    public Solution(int[] nums) {
-        
-    }
-    
-    public int pick(int target) {
-        
-    }
+	/*
+	public int pick(int target) {
+		int[] sample = new int[target];
+
+		for(int i = 0; i < target; i++) {
+			sample[i] = nums[i];
+		}
+
+		for(int i = target; i < nums.length; i++) {
+			int randomId = rand.nextInt(i)
+			if (randomId < target) {
+				sample[randomId] = nums[i];
+			}
+		}
+
+		return sample;
+	}
+	*/
+
+
+	private int[] nums;
+	private Random rand;
+
+
+	public Random_Pick_Index_398(int[] target) {
+		this.nums = target;
+		this.rand = new Random();
+	}
+
+	public int pick(int target) {
+		int length = this.nums.length;
+
+		int count = 0;
+		int idx = 0;
+
+		for (int i = 0; i < length; ++i) {
+			if (this.nums[i] == target) {
+				count++;
+
+				if (rand.nextInt(count) == 0) {
+					idx = i;
+				}
+			}
+		}
+
+		return idx;
+	}
+
+	public static void main(String[] args) {
+
+	}
+}
+
+class Random_Pick_Index_398_II {
+	private Map<Integer, List<Integer>> map;
+	private Random rand;
+
+	public Random_Pick_Index_398_II(int[] nums) {
+		this.rand = new Random();
+		this.map = new HashMap<>();
+		for (int i = 0; i < nums.length; i++) {
+			if (!this.map.containsKey(nums[i])) {
+				this.map.put(nums[i], new ArrayList<Integer>());
+			}
+
+			this.map.get(nums[i]).add(i);
+		}
+	}
+
+	public int pick(int target) {
+		int l = map.get(target).size();
+
+		return map.get(target).get(rand.nextInt(l));
+	}
+
+	public static void main(String[] args) {
+
+	}
 }
