@@ -26,7 +26,9 @@ solution.pick(3);
 solution.pick(1);
 */
 class Random_Pick_Index_398 {
-
+    private int[] nums;
+    private Random rand;
+    
 	/*
 	public int pick(int target) {
 		int[] sample = new int[target];
