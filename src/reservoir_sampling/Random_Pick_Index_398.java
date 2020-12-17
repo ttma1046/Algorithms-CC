@@ -26,29 +26,6 @@ solution.pick(3);
 solution.pick(1);
 */
 class Random_Pick_Index_398 {
-    private int[] nums;
-    private Random rand;
-    
-	/*
-	public int pick(int target) {
-		int[] sample = new int[target];
-
-		for(int i = 0; i < target; i++) {
-			sample[i] = nums[i];
-		}
-
-		for(int i = target; i < nums.length; i++) {
-			int randomId = rand.nextInt(i)
-			if (randomId < target) {
-				sample[randomId] = nums[i];
-			}
-		}
-
-		return sample;
-	}
-	*/
-
-
 	private int[] nums;
 	private Random rand;
 
