@@ -1,4 +1,4 @@
-package leetcode;
+package twopointers;
 /*
 Given an array A of 0s and 1s, we may change up to K values from 0 to 1.
 
