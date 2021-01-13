@@ -11,62 +11,24 @@ class Minimum_Size_Subarray_Sum_209 {
 			while (sum >= s) {
 				ans = Math.min(ans, i + 1 - left);
 
-				// System.out.println("where is left now:" + left);
-
 				sum -= nums[left++];
-
-				// System.out.println("where is left after:" + left);
 			}
 		}
 
-		return (ans != Integer.MAX_VALUE) ? ans : 0;
+		return ans != Integer.MAX_VALUE ? ans : 0;
 	}
 
 	/*
-
 	Complexity analysis
 
 	Time complexity: O(n)O(n). Single iteration of O(n)O(n).
 	Each element can be visited atmost twice, once by the right pointer(ii) and (atmost)once by the \text{left}left pointer.
 	Space complexity: O(1)O(1) extra space. Only constant space required for \text{left}left, \text{sum}sum, \text{ans}ans and ii.
-
 	*/
 
-	public static void main(String[] args) {
-		new Minimum_Size_Subarray_Sum_209().minSubArrayLen(7, new int[] {2, 3, 1, 2, 4, 3});
-	}
+	// 7, {2, 3, 1, 2, 4, 3});
 
-	public int minSubArrayLen(int s, int[] nums) {
-		if (nums == null || nums.length == 0) return 0;
-
-		int[] sums = new int[nums.length + 1];
-		for (int i = 1; i < sums.length; i++) sums[i] = sums[i - 1] + nums[i - 1];
-		int minLen = Integer.MAX_VALUE;
-
-		for (int i = 0; i < sums.length; i++) {
-			int end = binarySearch(i + 1, sums.length - 1, sums[i] + s, sums);
-
-			if (end == sums.length) break;
-
-			if (end - i < minLen) minLen = end - i;
-		}
-
-		return minLen == Integer.MAX_VALUE ? 0 : minLen;
-	}
-
-	private int binarySearch(int lo, int hi, int key, int[] sums) {
-		while (lo <= hi) {
-			int mid = lo + (hi - lo) / 2;
-			if (sums[mid] >= key) {
-				hi = mid - 1;
-			} else {
-				lo = mid + 1;
-			}
-		}
-		return lo;
-	}
-
-	public int minSubArrayLen(int s, int[] nums) {
+	public int minSubArrayLenII(int s, int[] nums) {
 		int i = 0, j = 0;
 		int len = nums.length;
 		int sum = 0;
@@ -76,6 +38,12 @@ class Minimum_Size_Subarray_Sum_209 {
 			j++;
 		}
 
+		// sum: 8
+		// j index: 4
+		System.out.println(sum);
+
+		System.out.println(j);
+
 		if (sum < s)
 			return 0;
 
@@ -84,18 +52,32 @@ class Minimum_Size_Subarray_Sum_209 {
 			i++;
 		}
 
+		// 8 - 2 = 6 < 7, so i index: 0;
+
+		System.out.println(i);
+
 		while (j < len) {
 			sum = sum + nums[j] - nums[i];
+
+			// sum = 8 + nums[j = 4] - nums[i = 0];
+			// sum = 8 + 4 - 2;
+			// sum = 10;
+
 			j++;
+			// j = 5
 			i++;
+			// i = 1;
 			while (sum - nums[i] >= s) {
 				sum -= nums[i];
 				i++;
 			}
+
+			//
 		}
 
 		return j - i;
 	}
+
 	/*
 	Complexity analysis
 
@@ -104,5 +86,80 @@ class Minimum_Size_Subarray_Sum_209 {
 	Therefore, total time complexity = O(n * \log(n))O(n∗log(n))
 	Space complexity : O(n)O(n). Additional O(n)O(n) space for \text {sums} sums vector
 	*/
+	public int minSubArrayLenIII(int s, int[] nums) {
+		if (nums == null || nums.length == 0) return 0;
+
+		int n = nums.length, len = Integer.MAX_VALUE;
+
+		int[] sums = new int[n + 1];
+
+		for (int i = 1; i <= n; i++) {
+			sums[i] = sums[i - 1] + nums[i - 1];
+		}
+
+		for (int item: sums) {
+			System.out.println(item);
+		}
+
+
+		for (int i = n; i >= 0 && sums[i] >= s; i--) {
+			int j = upper_bound(sums, 0, i, sums[i] - s);
+			if (i - j + 1 < len) len = i - j + 1;
+			System.out.println("i:" + i);
+			System.out.println("len:" + len);
+		}
+
+		return len == Integer.MAX_VALUE ? 0 : len;
+	}
+
+	private int upper_bound(int[] a, int low, int high, int element) {
+		/*
+		element = 15 - 7 = 8
+		low - 0
+		high - 6
+		middle - 3
+		a[middle] -6
+
+		low - 4
+		high - 6
+		middle - 5
+
+		a[middle] - 12
+		low - 4
+		high - 5
+		middle - 4
+
+		*/
+
+		/*
+              0  1  2  3  4   5   6 
+		//7  [0, 2, 5, 6, 8, 12, 15]
+              l        m          h
+                          
+                          l   m   h
+                          
+                          l   h
+                          m
+                          
+                          l
+                          m
+                          h
+		*/
+
+		while (low < high) {
+			int middle = low + (high - low) / 2;
+			if (a[middle] > element) {
+				high = middle;
+			} else {
+				low = middle + 1;
+			}
+		}
+
+		return low;
+	}
+
+	public static void main(String[] args) {
+		System.out.println(new Minimum_Size_Subarray_Sum_209().minSubArrayLenIII(7, new int[] {4, 3, 2, 3, 1, 2}));
+	}
 }
 
