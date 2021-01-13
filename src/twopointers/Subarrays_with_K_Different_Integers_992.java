@@ -1,4 +1,6 @@
 package twopointers;
+import java.util.Map;
+import java.util.HashMap;
 
 /*
 Given an array A of positive integers, 
@@ -31,7 +33,36 @@ Note:
 */
 
 class Subarrays_with_K_Different_Integers_992 {
-    public int subarraysWithKDistinct(int[] A, int K) {
-        
+    public int subarraysWithKDistinct(int[] nums, int K) {
+    	return atMostK(nums, K) - atMostK(nums, K - 1);
+    }
+
+    private int atMostK(int[] nums, int K) {
+    	int result = 0, i = 0;
+    	// Map<Integer, Integer> map = new HashMap<>();
+
+    	int[] map = new int[nums.length];
+
+
+    	for (int j = 0; j < nums.length; j++) {
+    		if (map[nums[j] - 1] == 0) K--;
+    		map[nums[j] - 1] += 1;
+
+    		while(K < 0) {
+    			map[nums[i] - 1] -= 1;
+
+    			if (map[nums[i] - 1] == 0) K++;
+
+    			i++;
+    		}
+
+    		result += j - i + 1; 
+    	}
+
+    	return result;
+    }
+
+    public static void main(String[] args) {
+    	System.out.println(new Subarrays_with_K_Different_Integers_992().subarraysWithKDistinct(new int[] {1, 2, 1, 2, 3}, 2));
     }
 }
