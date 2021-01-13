@@ -1,4 +1,4 @@
-package leetcode;
+package twopointers;
 /*
 Given an array A of 0s and 1s, we may change up to K values from 0 to 1.
 
@@ -38,69 +38,69 @@ class Max_Consecutive_Ones_III_1004 {
 				if (A[left] == 0) K++;
 				left++;
 			}
-
 		}
+
 		return right - left;
 	}
 
 	public static void main(String[] args) {
-		new Max_Consecutive_Ones_III_1004().longestOnes(new int[] {1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0}, 2);
+		System.out.println(new Max_Consecutive_Ones_III_1004().longestOnes(new int[] {1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0}, 2));
 	}
 }
 /*
 0 1 2 3 4 5 6 7 8 9 10
 1,1,1,0,0,0,1,1,1,1,0
 |
-i
-j
+l
+r
 K = 2
 
 0 1 2 3 4 5 6 7 8 9 10
 1,1,1,0,0,0,1,1,1,1,0
 | |
-i j
+l r
 K = 2
 
 0 1 2 3 4 5 6 7 8 9 10
 1,1,1,0,0,0,1,1,1,1,0
 |   |
-i   j
+l   r
 K = 2
 
 0 1 2 3 4 5 6 7 8 9 10
 1,1,1,0,0,0,1,1,1,1,0
 |     |
-i     j
-K = 1
+l     r
+K: 2 => 1
 
 0 1 2 3 4 5 6 7 8 9 10
 1,1,1,0,0,0,1,1,1,1,0
 |       |
-i       j
-K = 0
+l       r
+K: 1 => 0
 
 0 1 2 3 4 5 6 7 8 9 10
 1,1,1,0,0,0,1,1,1,1,0
   |       |
-  i       j
-K = -1
+  l       r
+K: 0 => -1
 
 0 1 2 3 4 5 6 7 8 9 10
 1,1,1,0,0,0,1,1,1,1,0
     |       |
-    i       j
+    l       r
 K = -1
 
 0 1 2 3 4 5 6 7 8 9 10
 1,1,1,0,0,0,1,1,1,1,0
       |       |
-      i       j
+      l       r
 K = -1
 
 0 1 2 3 4 5 6 7 8 9 10
 1,1,1,0,0,0,1,1,1,1,0
         |       |
-        i       j
+        l       r
 K = 0
 
 0 1 2 3 4 5 6 7 8 9 10
@@ -113,5 +113,5 @@ K = 0
 1,1,1,0,0,0,1,1,1,1,0
           |         |
           i         j
-K = 0
+K: 0 => -1 => 0
 */
