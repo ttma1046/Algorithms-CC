@@ -3,9 +3,9 @@ import java.util.Map;
 import java.util.HashMap;
 
 /*
-Given an array A of positive integers, 
+Given an array A of positive integers,
 
-call a (contiguous, not necessarily distinct) subarray of A good 
+call a (contiguous, not necessarily distinct) subarray of A good
 
 if the number of different integers in that subarray is exactly K.
 
@@ -23,7 +23,7 @@ Example 2:
 Input: A = [1,2,1,3,4], K = 3
 Output: 3
 Explanation: Subarrays formed with exactly 3 different integers: [1,2,1,3], [2,1,3], [1,3,4].
- 
+
 
 Note:
 
@@ -33,36 +33,62 @@ Note:
 */
 
 class Subarrays_with_K_Different_Integers_992 {
-    public int subarraysWithKDistinct(int[] nums, int K) {
-    	return atMostK(nums, K) - atMostK(nums, K - 1);
-    }
+	public int subarraysWithKDistinct(int[] nums, int K) {
+		return atMostK(nums, K) - atMostK(nums, K - 1);
+	}
 
-    private int atMostK(int[] nums, int K) {
-    	int result = 0, i = 0;
-    	// Map<Integer, Integer> map = new HashMap<>();
+	private int atMostK(int[] nums, int K) {
+		int result = 0, i = 0;
+		// Map<Integer, Integer> map = new HashMap<>();
 
-    	int[] map = new int[nums.length];
+		int[] map = new int[nums.length];
 
 
-    	for (int j = 0; j < nums.length; j++) {
-    		if (map[nums[j] - 1] == 0) K--;
-    		map[nums[j] - 1] += 1;
+		for (int j = 0; j < nums.length; j++) {
+			if (map[nums[j] - 1] == 0) K--;
+			map[nums[j] - 1] += 1;
 
-    		while(K < 0) {
-    			map[nums[i] - 1] -= 1;
+			while (K < 0) {
+				map[nums[i] - 1] -= 1;
 
-    			if (map[nums[i] - 1] == 0) K++;
+				if (map[nums[i] - 1] == 0) K++;
 
-    			i++;
-    		}
+				i++;
+			}
 
-    		result += j - i + 1; 
-    	}
+			result += j - i + 1;
+		}
 
-    	return result;
-    }
+		return result;
+	}
 
-    public static void main(String[] args) {
-    	System.out.println(new Subarrays_with_K_Different_Integers_992().subarraysWithKDistinct(new int[] {1, 2, 1, 2, 3}, 2));
-    }
+	public int subarraysWithKDistinct(int[] A, int K) {
+		int res = 0, prefix = 0, uniques = 0, i = 0;
+		int[] map = new int[A.length + 1];
+
+		for (int j = 0; j < A.length; ++j) {
+			if (map[A[j]]++ == 0) ++uniques;
+
+			if (uniques > K) {
+				--map[A[i++]];
+				--uniques;
+				prefix = 0;
+			}
+
+			while (map[A[i]] > 1) {
+				++prefix;
+				--map[A[i++]];
+			}
+
+			if (uniques == K) { 
+				res += prefix + 1; 
+			}
+		}
+
+		return res;
+	}
+
+	public static void main(String[] args) {
+		System.out.println(new Subarrays_with_K_Different_Integers_992().subarraysWithKDistinct(new int[] {1, 2, 1, 2, 3}, 2));
+	}
 }
