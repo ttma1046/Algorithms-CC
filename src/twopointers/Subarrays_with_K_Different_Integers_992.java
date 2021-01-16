@@ -63,32 +63,6 @@ class Subarrays_with_K_Different_Integers_992 {
     }
 
     public int subarraysWithKDistinct(int[] nums, int K) {
-        int prefix = 0, res = 0, n = nums.length;
-        int[] map = new int[n];
-
-        for (int i = 0, j = 0, uniques = 0; j < n; ++j) {
-            if (map[nums[j++] - 1] == 0) ++uniques;
-
-            if (uniques > K) {
-                --map[nums[i++] - 1];
-                --uniques;
-                prefix = 0;
-            }
-
-            while (map[nums[i] - 1] > 1) {
-                ++prefix;
-                --map[nums[i++] - 1];
-            }
-
-            if (uniques == K) {
-                res += prefix + 1;
-            }
-        }
-
-        return prefix;
-    }
-
-    public int subarraysWithKDistinct(int[] nums, int K) {
         return atMost(nums, K) - atMost(nums, K - 1);
     }
 
@@ -100,8 +74,6 @@ class Subarrays_with_K_Different_Integers_992 {
             if (map[nums[j] - 1]++ == 0) --K;
 
             while (K < 0) {
-                // --map[nums[i] - 1];
-
                 if (--map[nums[i] - 1] == 0) ++K;
 
                 ++i;
@@ -111,35 +83,6 @@ class Subarrays_with_K_Different_Integers_992 {
         }
 
         return res;
-    }
-
-    public int subarraysWithKDistinct(int[] nums, int K) {
-        return atMostK(nums, K) - atMostK(nums, K - 1);
-    }
-
-    private int atMostK(int[] nums, int K) {
-        int result = 0, i = 0;
-        // Map<Integer, Integer> map = new HashMap<>();
-
-        int[] map = new int[nums.length];
-
-
-        for (int j = 0; j < nums.length; j++) {
-            if (map[nums[j] - 1] == 0) K--;
-            map[nums[j] - 1] += 1;
-
-            while (K < 0) {
-                map[nums[i] - 1] -= 1;
-
-                if (map[nums[i] - 1] == 0) K++;
-
-                i++;
-            }
-
-            result += j - i + 1;
-        }
-
-        return result;
     }
 
     public static void main(String[] args) {

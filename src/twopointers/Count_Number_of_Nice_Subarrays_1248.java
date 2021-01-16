@@ -1,8 +1,6 @@
 package twopointers;
 
 /*
-Intuition
-Have you read this?
 992. Subarrays with K Different Integers
 
 Explanation
@@ -11,8 +9,6 @@ Exactly K times = at most K times - at most K - 1 times
 Complexity
 Time O(N) for one pass
 Space O(1)
-
-Java:
 */
 
 class Count_Number_of_Nice_Subarrays_1248 {
@@ -77,7 +73,6 @@ class Count_Number_of_Nice_Subarrays_1248 {
 			while (k < 0)
 				k += A[i++] % 2;
 
-			System.out.println("res += " + (j - i + 1));
 			res += j - i + 1;
 		}
 		return res;

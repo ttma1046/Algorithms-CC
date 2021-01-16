@@ -3,13 +3,13 @@ package twopointers;
 /*
 Given an array of n positive integers and a positive integer s, find the minimal length of a contiguous subarray of which the sum ≥ s. If there isn't one, return 0 instead.
 
-Example: 
+Example:
 
 Input: s = 7, nums = [2,3,1,2,4,3]
 Output: 2
 Explanation: the subarray [4,3] has the mimanimal length under the problem constraint.
 Follow up:
-If you have figured out the O(n) solution, try coding another solution of which the time complexity is O(n log n). 
+If you have figured out the O(n) solution, try coding another solution of which the time complexity is O(n log n).
 */
 
 class Minimum_Size_Subarray_Sum_209 {
@@ -31,6 +31,27 @@ class Minimum_Size_Subarray_Sum_209 {
 		return ans != Integer.MAX_VALUE ? ans : 0;
 	}
 
+	public int minSubArrayLen(int[] nums, int s) {
+		if (nums == null || nums.length == 0) return 0;
+
+		int i = 0, n = nums.length, sum = 0;
+
+		int res = Integer.MAX_VALUE;
+
+		for (int j = 0; j < n; j++) {
+			sum += nums[j];
+
+			while (sum >= s) {
+				if (j - i + 1 < res) {
+					res = j - i + 1;
+				}
+				sum -= nums[i++];
+			}
+		}
+
+		return res != Integer.MAX_VALUE ? res : 0;
+	}
+
 	/*
 	Complexity analysis
 
@@ -40,7 +61,6 @@ class Minimum_Size_Subarray_Sum_209 {
 	*/
 
 	// 7, {2, 3, 1, 2, 4, 3});
-
 	public int minSubArrayLenII(int s, int[] nums) {
 		int i = 0, j = 0;
 		int len = nums.length;
@@ -110,7 +130,7 @@ class Minimum_Size_Subarray_Sum_209 {
 			sums[i] = sums[i - 1] + nums[i - 1];
 		}
 
-		for (int item: sums) {
+		for (int item : sums) {
 			System.out.println(item);
 		}
 
@@ -145,18 +165,18 @@ class Minimum_Size_Subarray_Sum_209 {
 		*/
 
 		/*
-              0  1  2  3  4   5   6 
+		      0  1  2  3  4   5   6
 		//7  [0, 2, 5, 6, 8, 12, 15]
-              l        m          h
-                          
-                          l   m   h
-                          
-                          l   h
-                          m
-                          
-                          l
-                          m
-                          h
+		      l        m          h
+
+		                  l   m   h
+
+		                  l   h
+		                  m
+
+		                  l
+		                  m
+		                  h
 		*/
 
 		while (low < high) {
