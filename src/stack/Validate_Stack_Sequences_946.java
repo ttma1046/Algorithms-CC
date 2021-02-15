@@ -1,8 +1,8 @@
 package stack;
 
 /*
-
-Given two sequences pushed and popped with distinct values, return true if and only if this could have been the result of a sequence of push and pop operations on an initially empty stack.
+Given two sequences pushed and popped with distinct values,
+return true if and only if this could have been the result of a sequence of push and pop operations on an initially empty stack.
 
 Example 1:
 
@@ -29,18 +29,18 @@ pushed and popped have distinct values.
 
 class Validate_Stack_Sequances_946 {
 	public boolean validateStackSequences(int[] pushed, int[] popped) {
-		int N = pushed.length;
+		int length = pushed.length;
 		Stack<Integer> stack = new Stack();
 
 		int j = 0;
 		for (int x : pushed) {
 			stack.push(x);
-			while (!stack.isEmpty() && j < N && stack.peek() == popped[j]) {
+			while (!stack.isEmpty() && j < length && stack.peek() == popped[j]) {
 				stack.pop();
 				j++;
 			}
 		}
 
-		return j == N;
+		return j == length;
 	}
 }

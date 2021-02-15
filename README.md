@@ -42,3 +42,6 @@ https://leetcode.com/problems/find-lucky-integer-in-an-array/solution/
 https://leetcode.com/problems/design-underground-system/solution/
 https://leetcode.com/problems/integer-to-roman/solution/
 https://leetcode.com/problems/flatten-nested-list-iterator/solution/
+https://leetcode.com/problems/shortest-path-in-binary-matrix/solution/
+https://leetcode.com/problems/furthest-building-you-can-reach/solution/
+https://leetcode.com/problems/strobogrammatic-number/solution/
