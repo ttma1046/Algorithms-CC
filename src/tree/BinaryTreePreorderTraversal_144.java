@@ -28,6 +28,26 @@ public class BinaryTreePreorderTraversal_144 {
         return result;
     }
 
+    public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode curr = root;
+        // preorder traversal : left -> node -> right
+        while (curr != null || !stack.isEmpty()) {
+            while (curr != null) {
+                result.add(curr.val);
+
+                stack.push(curr);
+                curr = curr.left;
+            }
+
+            curr = stack.pop();
+            curr = curr.right;
+        }
+        
+        return result;
+    }
+
     public static void main(String[] args) {
         TreeNode twenty = new TreeNode(20);
         twenty.left = new TreeNode(15);
