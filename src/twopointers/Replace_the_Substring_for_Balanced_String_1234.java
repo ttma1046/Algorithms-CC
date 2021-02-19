@@ -52,8 +52,6 @@ Complexity
 Time O(N), one pass for counting, one pass for sliding window
 Space O(1)
 
-
-Java
 */
 
 class Replace_the_Substring_for_Balanced_String_1234 {
@@ -63,14 +61,35 @@ class Replace_the_Substring_for_Balanced_String_1234 {
         for (int j = 0; j < n; ++j) {
             ++count[s.charAt(j)];
         }
+
         for (int j = 0; j < n; ++j) {
+            System.out.println("j:" + j);
             --count[s.charAt(j)];
+
+            System.out.println("j => count[" + s.charAt(j) + "]:" + count[s.charAt(j)]);
+
             while (i < n && count['Q'] <= k && count['W'] <= k && count['E'] <= k && count['R'] <= k) {
+                System.out.println("i:" + i);
                 res = Math.min(res, j - i + 1);
-                ++count[s.charAt(i++)];
+
+                System.out.println("res:" + res);
+
+                ++count[s.charAt(i)];
+                System.out.println("i => count[" + s.charAt(i) + "]:" + count[s.charAt(i)]);
+                i++;
             }
         }
+
+        System.out.println(count['Q']);
+        System.out.println(count['W']);
+        System.out.println(count['E']);
+        System.out.println(count['R']);
+
         return res;
+    }
+
+    public static void main(String[] args) {
+        new Replace_the_Substring_for_Balanced_String_1234().balancedString("QEEQ");
     }
 }
 
