@@ -52,46 +52,148 @@ Complexity
 Time O(N), one pass for counting, one pass for sliding window
 Space O(1)
 
+QQQE
+
+Q3
+E1
+
+j = 0 => 1
+
+=>
+Q1
+E1
+
+res = 2
+
+Q2
+E1
+
+i = 0 -> 1
+
+j = 1 -> 2
+
+Q1
+E1
+
+res = 2
+
+Q2
+E1
+
+i 1 => 2
+
+j = 2 => 3
+
+Q2
+E0
 */
 
 class Replace_the_Substring_for_Balanced_String_1234 {
     public int balancedString(String s) {
-        int[] count = new int[128];
+
+        int[] count = new int[4];
+
         int n = s.length(), res = n, i = 0, k = n / 4;
+
         for (int j = 0; j < n; ++j) {
-            ++count[s.charAt(j)];
+            if (s.charAt(j) == 'Q') ++count[0];
+            if (s.charAt(j) == 'W') ++count[1];
+            if (s.charAt(j) == 'E') ++count[2];
+            if (s.charAt(j) == 'R') ++count[3];
         }
 
+        System.out.println("j => count[0] Q:" + count[0]);
+        System.out.println("j => count[1] W:" + count[1]);
+        System.out.println("j => count[2] E:" + count[2]);
+        System.out.println("j => count[3] R:" + count[3]);
+
         for (int j = 0; j < n; ++j) {
-            System.out.println("j:" + j);
-            --count[s.charAt(j)];
+            System.out.println("j:" + j + ", s.charAt(j):" + s.charAt(j));
 
-            System.out.println("j => count[" + s.charAt(j) + "]:" + count[s.charAt(j)]);
+            if (s.charAt(j) == 'Q')
+                --count[0];
+            if (s.charAt(j) == 'W')
+                --count[1];
+            if (s.charAt(j) == 'E')
+                --count[2];
+            if (s.charAt(j) == 'R')
+                --count[3];
 
-            while (i < n && count['Q'] <= k && count['W'] <= k && count['E'] <= k && count['R'] <= k) {
-                System.out.println("i:" + i);
+            System.out.println("j => count[0] Q:" + count[0]);
+            System.out.println("j => count[1] W:" + count[1]);
+            System.out.println("j => count[2] E:" + count[2]);
+            System.out.println("j => count[3] R:" + count[3]);
+
+            while (i < n && count[0] <= k && count[1] <= k && count[2] <= k && count[3] <= k) {
+                System.out.println("i:" + i + ", s.charAt(i):" + s.charAt(i));
                 res = Math.min(res, j - i + 1);
 
                 System.out.println("res:" + res);
 
-                ++count[s.charAt(i)];
-                System.out.println("i => count[" + s.charAt(i) + "]:" + count[s.charAt(i)]);
+                if (s.charAt(i) == 'Q')
+                    ++count[0];
+                if (s.charAt(i) == 'W')
+                    ++count[1];
+                if (s.charAt(i) == 'E')
+                    ++count[2];
+                if (s.charAt(i) == 'R')
+                    ++count[3];
+                System.out.println("i => count[0]: Q" + count[0]);
+                System.out.println("i => count[1]: W" + count[1]);
+                System.out.println("i => count[2]: E" + count[2]);
+                System.out.println("i => count[3]: R" + count[3]);
+                System.out.println("i:before" + i);
+
                 i++;
+
+                System.out.println("i:after" + i);
             }
         }
 
-        System.out.println(count['Q']);
-        System.out.println(count['W']);
-        System.out.println(count['E']);
-        System.out.println(count['R']);
+        System.out.println("count['Q']:" + count[0]);
+        System.out.println("count['W']:" + count[1]);
+        System.out.println("count['E']:" + count[2]);
+        System.out.println("count['R']:" + count[3]);
 
         return res;
     }
 
     public static void main(String[] args) {
-        new Replace_the_Substring_for_Balanced_String_1234().balancedString("QEEQ");
+        new Replace_the_Substring_for_Balanced_String_1234().balancedString("WWEQERQWQWWRWWERQWEQ");
     }
 }
+
+/*
+0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19
+W W E Q E R Q W Q W  W  R  W  W  E  R  Q  W  E  Q
+              j        
+i
+
+res = 8
+  i
+                j
+                  j
+    i
+                    j
+
+*/
+
+/*
+WWEQERQWQWWRWWERQWEQ
+
+Q 5
+W 8
+E 4
+R 3
+
+
+WWEQERQWQRRREWERQWEQ
+
+Q 5
+W 5
+E 5
+R 5
+*/
 
 
 /*

@@ -27,3 +27,14 @@ https://leetcode.com/problems/number-of-substrings-containing-all-three-characte
 904 Fruit Into Baskets
 https://leetcode.com/problems/fruit-into-baskets/
 
+1438 Longest Continuous Subarray With Absolute Diff Less Than or Equal to Limit
+https://leetcode.com/problems/longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit/
+
+1297 Maximum Number of Occurrences of a Substring
+https://leetcode.com/problems/maximum-number-of-occurrences-of-a-substring/
+
+239 Sliding Window Maximum
+https://leetcode.com/problems/sliding-window-maximum/
+
+76. Minimum Window Substring
+https://leetcode.com/problems/minimum-window-substring/
