@@ -89,6 +89,119 @@ E0
 */
 
 class Replace_the_Substring_for_Balanced_String_1234 {
+
+    // Checks that freq[char] <= 0 meaning we have an elligible substring
+    private boolean fulfilled(int[] extra) {
+        boolean fulfilled = true;
+        for (int f : extra) {
+            if (f > 0) fulfilled = false;
+        }
+        return fulfilled;
+    }
+
+    // Q 0 W 1 E 2 R 3
+    private int charToIdx(char c) {
+        switch (c) {
+        case 'Q': return 0;
+        case 'W': return 1;
+        case 'E': return 2;
+        }
+        return 3;
+    }
+
+    public int balancedStringII(String s) {
+        // 1) Find freq of each first
+        int N = s.length();
+        int required = N / 4;
+
+        int[] freq = new int[4];
+        for (int i = 0; i < N; ++i) {
+            char c = s.charAt(i);
+            ++freq[charToIdx(c)];
+        }
+
+        // 2) Determine the ones we need to change
+        boolean equal = true;
+        for (int i = 0; i < 4; ++i) {
+            if (freq[i] != required) equal = false;
+            freq[i] = Math.max(0, freq[i] - required);
+        }
+
+        if (equal) return 0; // Early return if all are equal
+
+        // 3) Use sliding window and try to track what more is needed to find smallest window
+        int start = 0;
+        int minLen = N; // Maximum will only ever be N
+
+
+        System.out.println("freq.Q:" + freq[0]);
+        System.out.println("freq.W:" + freq[1]);
+        System.out.println("freq.E:" + freq[2]);
+        System.out.println("freq.R:" + freq[3]);
+
+
+
+        for (int end = 0; end < N; ++end) {
+            char c = s.charAt(end);
+            System.out.println("s:end: " + end + ", character:" + c);
+            --freq[charToIdx(c)];
+
+
+            System.out.println("freq.Q:" + freq[0]);
+            System.out.println("freq.W:" + freq[1]);
+            System.out.println("freq.E:" + freq[2]);
+            System.out.println("freq.R:" + freq[3]);
+            System.out.println("--------------------");
+
+
+
+            while (fulfilled(freq)) {
+                System.out.println("end:" + end);
+                System.out.println("start:" + start);
+                System.out.println("end - start + 1: " + (end - start + 1));
+                minLen = Math.min(end - start + 1, minLen);
+                System.out.println("minLen:" + minLen);
+
+                System.out.println("--------------------");
+
+                char st = s.charAt(start);
+                System.out.println("s:start: " + start + ", character:" + st);
+
+                ++freq[charToIdx(st)];
+                ++start;
+                System.out.println("plus:");
+
+                System.out.println("freq.Q:" + freq[0]);
+                System.out.println("freq.W:" + freq[1]);
+                System.out.println("freq.E:" + freq[2]);
+                System.out.println("freq.R:" + freq[3]);
+                System.out.println("start:" + start);
+                
+                System.out.println("--------------------");
+
+            }
+        }
+
+        return minLen;
+    }
+
+
+    /*
+
+    0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19
+    W W E Q E R Q W Q W  W  R  W  W  E  R  Q  W  E  Q
+
+    Q 5
+    W 8
+    E 4
+    R 3
+
+    Q
+    W => 3
+    E
+    R
+    */
+
     public int balancedString(String s) {
 
         int[] count = new int[4];
@@ -159,14 +272,14 @@ class Replace_the_Substring_for_Balanced_String_1234 {
     }
 
     public static void main(String[] args) {
-        new Replace_the_Substring_for_Balanced_String_1234().balancedString("WWEQERQWQWWRWWERQWEQ");
+        new Replace_the_Substring_for_Balanced_String_1234().balancedStringII("WWEQERQWQWWRWWERQWEQ");
     }
 }
 
 /*
 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19
 W W E Q E R Q W Q W  W  R  W  W  E  R  Q  W  E  Q
-              j        
+              j
 i
 
 res = 8

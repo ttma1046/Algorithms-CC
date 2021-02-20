@@ -4,7 +4,7 @@ The idea is to first count up each type of character. Since we know there are on
 
 Then once we count them up, we look at the number of occurrences of each and see if any of them > N/4 (where `N` is the length of the String). If they are, this means that we need this `freq[character] - (N/4)` number of this character in the substring we choose to replace.
 
-E.g. If we have `N = 12` and `freq[Q] = freq[0] = 6`. Since we know each character must occur `N/4 = 12/4 = 3` times. We have 3 extra Qs. So we need to make sure our substring at the end has 3 Qs in it. The same principle applies when there are `multiple characters > (N/4)`.
+E.g. If we have `N = 12` and `freq['Q'] = freq[0] = 6`. Since we know each character must occur `N/4 = 12/4 = 3` times. We have 3 extra Qs. So we need to make sure our substring at the end has 3 Qs in it. The same principle applies when there are `multiple characters > (N/4)`.
 
 Essentially, we reduced the problem to finding a minimum substring containing a certain number of each character.
 
