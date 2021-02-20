@@ -22,7 +22,7 @@ There is no subarray of size 3 as size of whole
 array is 2.
 */
 
-class Maximum_Sum_of_k_Different_Elements {
+class Maximum_Sum_of_k_Consecutive_Elements {
 	// Returns maximum sum in
 	// a subarray of size k.
 	// Brute Force Approach
@@ -55,6 +55,7 @@ class Maximum_Sum_of_k_Different_Elements {
 
 		for (int i = k; i < n; i++) {
 			window_sum += arr[i] - arr[i - k];
+			
 			if (window_sum > max_sum) {
 				max_sum = window_sum;
 			}
@@ -68,6 +69,6 @@ class Maximum_Sum_of_k_Different_Elements {
 		int arr[] = { 1, 4, 2, 10, 2, 3, 1, 0, 20 };
 		int k = 4;
 		int n = arr.length;
-		System.out.println(new Maximum_Sum_of_k_Different_Elements().maxSum(arr, n, k));
+		System.out.println(new Maximum_Sum_of_k_Consecutive_Elements().maxSum(arr, n, k));
 	}
 }

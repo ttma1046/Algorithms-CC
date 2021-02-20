@@ -21,10 +21,10 @@ class Minimum_Size_Subarray_Sum_209 {
 
 		int left = 0, sum = 0, ans = Integer.MAX_VALUE;
 
-		for (int i = 0; i < nums.length; i++) {
-			sum += nums[i];
+		for (int right = 0; right < nums.length; right++) {
+			sum += nums[right];
 			while (sum >= s) {
-				ans = Math.min(ans, i + 1 - left);
+				ans = Math.min(ans, right - left + 1);
 
 				sum -= nums[left++];
 			}
@@ -36,18 +36,19 @@ class Minimum_Size_Subarray_Sum_209 {
 	public int minSubArrayLen(int[] nums, int s) {
 		if (nums == null || nums.length == 0) return 0;
 
-		int i = 0, n = nums.length, sum = 0;
+		int left = 0, n = nums.length, sum = 0;
 
 		int res = Integer.MAX_VALUE;
 
-		for (int j = 0; j < n; j++) {
-			sum += nums[j];
+		for (int right = 0; right < n; right++) {
+			sum += nums[right];
 
 			while (sum >= s) {
-				if (j - i + 1 < res) {
-					res = j - i + 1;
+				if (right - left + 1 < res) {
+					res = right - left + 1;
 				}
-				sum -= nums[i++];
+				
+				sum -= nums[left++];
 			}
 		}
 
