@@ -32,7 +32,6 @@ public class Maximum_Difference_Between_Node_and_Ancestor_1026 {
 	}
 
 	public static void main(String[] args) {
-
 		TreeNode thirteen = new TreeNode(13);
 		TreeNode fourteen = new TreeNode(14);
 		fourteen.left = thirteen;
