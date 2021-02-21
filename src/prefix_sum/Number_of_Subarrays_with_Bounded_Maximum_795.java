@@ -3,14 +3,39 @@ package prefix_sum;
 /*
 We are given an array A of positive integers, and two positive integers L and R (L <= R).
 
-Return the number of (contiguous, non - empty) subarrays such that the value of the maximum array element in that subarray is at least L and at most R.
+Return the number of (contiguous, non - empty) subarrays 
+
+such that the value of the maximum array element in that subarray is at least L and at most R.
 
 Example :
 Input:
 A = [2, 1, 4, 3]
-L = 2
-R = 3
+L = 2 R = 3
 Output: 3
+
+2 i = 0
+2 < 3 left = -1
+2 >= 2 right = 0; 
+
+result = 0 - -1 = 1
+
+1 i = 1
+1 < 3  left = -1
+1 < 2  right = 0
+result = 1 + 0 - -1 = 2
+
+4 i = 2
+4 > 3  left = 2
+4 >= 2 right = 2
+result = 2 + 0 = 2;
+
+3 i = 3
+3 == 3 left = 2 
+3 >= 2 right = 3
+
+result = 2 + 3 - 2 = 3
+
+
 Explanation: There are three subarrays that meet the requirements: [2], [2, 1], [3].
 Note:
 
@@ -19,7 +44,6 @@ The length of A will be in the range of [1, 50000].
 */
 
 class Number_of_Subarryas_with_Bounded_Maximum_795 {
-
 	public int numSubarrayBoundedMax(int[] A, int L, int R) {
 		int result = 0, left = -1, right = -1;
 		for (int i = 0; i < A.length; i++) {
@@ -29,7 +53,6 @@ class Number_of_Subarryas_with_Bounded_Maximum_795 {
 		}
 		return result;
 	}
-
 
 	public int countSubArrayLessThanK(int[] nums, int k)  {
 		int ans = 0, pre = 0;
@@ -46,11 +69,11 @@ class Number_of_Subarryas_with_Bounded_Maximum_795 {
 		return ans;
 	}
 
-	public int numSubarrayBoundedMaxII(int[] A, int L, int R) {
+	public int myNumSubarrayBoundedMaxII(int[] A, int L, int R) {
 		return countSubArrayLessThanK(A, R) - countSubArrayLessThanK(A, L - 1);
 	}
 
-	public int numSubarrayBoundedMax(int[] A, int L, int R) {
+	public int numSubarrayBoundedMaxI(int[] A, int L, int R) {
 		return count(A, R) - count(A, L - 1);
 	}
 
