@@ -31,7 +31,9 @@ Can we reduce the time for palindromic checks to O(1) by reusing some previous c
 class Longest_Palindromic_Substring_5 {
 	public String longestPalindrome(String s) {
 		int n = s.length();
-		String res = "";
+		String ans = "";
+
+		if (n <= 0) return ans;
 
 		boolean[][] dp = new boolean[n][n];
 
@@ -39,13 +41,13 @@ class Longest_Palindromic_Substring_5 {
 			for (int j = i; j < n; j++) {
 				dp[i][j] = s.charAt(i) == s.charAt(j) && (j - i < 3 || dp[i + 1][j - 1]);
 
-				if (dp[i][j] && (res == null || j - i + 1 > res.length())) {
-					res = s.substring(i, j + 1);
+				if (dp[i][j] && (ans == null || j - i + 1 > ans.length())) {
+					ans = s.substring(i, j + 1);
 				}
 			}
 		}
 
-		return res;
+		return ans;
 	}
 
 
