@@ -23,11 +23,11 @@ class Quiz_One {
 		return ans;
 	}
 
-	public int ountSubArrayIncreaseOne(int[] nums) {
+	public int countSubArrayIncreaseOne(int[] nums) {
 		int ans = 0;
 		int pre = 0;
 		for (int i = 1; i < nums.length; i++) {
-			if (nums[i] - nums[i - 1] > 0) {
+			if (nums[i] - nums[i - 1] == 1) {
 				pre += 1;
 			} else {
 				pre = 0;
@@ -41,7 +41,7 @@ class Quiz_One {
 	public static void main(String[] args) {
 		System.out.println(new Quiz_One().countSubArray(new int[] {1, 3, 4}));
 
-		System.out.println(new Quiz_One().ountSubArrayIncreaseOne(new int[] {1, 3, 2}));
+		System.out.println(new Quiz_One().countSubArrayIncreaseOne(new int[] {1, 3, 2}));
 
 		System.out.println(new Quiz_One().countSubArrayEqualK(3, new int[] {1, 3, 4}));
 	}
