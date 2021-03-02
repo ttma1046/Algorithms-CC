@@ -26,112 +26,95 @@ cache.get(3);       // returns 3
 cache.get(4);       // returns 4
 
 */
-import java.util.Hashtable;
+import java.util.Map;
+import java.util.HashMap;
 
-class DoubleLinkedNode {
+
+class DLinkedNode {
+    int val;
     int key;
-    int value;
-    DoubleLinkedNode pre;
-    DoubleLinkedNode post;
+    DLinkedNode prev;
+    DLinkedNode next;
+
+    DLinkedNode() {}
+
+    DLinkedNode(int key, int val) {
+        this.val = val;
+        this.key = key;
+    }
 }
 
-public class LRUCache {
-    private Map<Integer, DoubleLinkedNode> cache = new HashMap<Integer, DoubleLinkedNode>();
-    private int count;
+public class LRUCache_146 {
+    private Map<Integer, DLinkedNode> cache = new HashMap<>();
+    private int size;
     private int capacity;
-    private DoubleLinkedNode head, tail; .
+    private DLinkedNode head, tail;
 
-    public LRUCache(int capacity) {
-        this.count = 0;
+    private void addNode(DLinkedNode node) {
+        node.prev = head;
+        node.next = head.next;
+
+        head.next.prev = node;
+        head.next = node;
+    }
+
+    private void removeNode(DLinkedNode node) {
+        DLinkedNode prev = node.prev;
+        DLinkedNode next = node.next;
+
+        prev.next = next;
+        next.prev = prev;
+    }
+
+    private void moveToHead(DLinkedNode node) {
+        removeNode(node);
+        addNode(node);
+    }
+
+    private DLinkedNode popTail() {
+        DLinkedNode realTail = tail.prev;
+        removeNode(realTail);
+
+        return realTail;
+    }
+
+    public LRUCache_146(int capacity) {
+        this.size = 0;
         this.capacity = capacity;
 
-        head = new DoubleLinkedNode();
-        head.pre = null;
+        head = new DLinkedNode();
+        tail = new DLinkedNode();
 
-        tail = new DoubleLinkedNode();
-        tail.post = null;
-
-        head.post = tail;
-        tail.pre = head;
+        head.next = tail;
+        tail.prev = head;
     }
 
     public int get(int key) {
-        DoubleLinkedNode node = cache.get(key);
-        if (node == null) {
-            return -1; // should raise exception here.
+        if (!cache.containsKey(key)) {
+            return -1;
         }
 
-        // move the accessed node to the head;
-        this.moveToHead(node);
-
-        return node.value;
+        DLinkedNode node = cache.get(key);
+        moveToHead(node);
+        return node.val;
     }
-
 
     public void put(int key, int value) {
-        DoubleLinkedNode node = cache.get(key);
-
-        if (node == null) {
-            DoubleLinkedNode newNode = new DoubleLinkedNode();
-            newNode.key = key;
-            newNode.value = value;
-
-            this.cache.put(key, newNode);
-            this.addNode(newNode);
-
-            ++count;
-
-            if (count > capacity) {
-                // pop the tail
-                DoubleLinkedNode tail = this.popTail();
-                this.cache.remove(tail.key);
-                --count;
+        if (!cache.containsKey(key)) {
+            if (size == capacity) {
+                DLinkedNode tail = popTail();
+                cache.remove(tail.key);
+                --size;
             }
+
+            DLinkedNode newNode = new DLinkedNode(key, value);
+            cache.put(key, newNode);
+            addNode(newNode);
+            size++;
         } else {
-            // update the value.
-            node.value = value;
-            this.moveToHead(node);
+            DLinkedNode node = cache.get(key);
+            node.val = value;
+            moveToHead(node);
         }
-    }
-
-    /**
-     * Move certain node in between to the head.
-     */
-    private void moveToHead(DoubleLinkedNode node) {
-        this.removeNode(node);
-        this.addNode(node);
-    }
-
-    /**
-    * Always add the new node right after head;
-    */
-    private void addNode(DoubleLinkedNode node) {
-        node.pre = head;
-        node.post = head.post;
-
-        head.post.pre = node;
-        head.post = node;
-    }
-
-    /**
-     * Remove an existing node from the linked list.
-     */
-    private void removeNode(DoubleLinkedNode node) {
-        DoubleLinkedNode pre = node.pre;
-        DoubleLinkedNode post = node.post;
-
-        pre.post = post;
-        post.pre = pre;
-    }
-
-    // pop the current tail.
-    private DoubleLinkedNode popTail() {
-        DoubleLinkedNode res = tail.pre;
-        this.removeNode(res);
-        return res;
-    }
-
-    public static void main(String[] args) {
-
     }
 }
