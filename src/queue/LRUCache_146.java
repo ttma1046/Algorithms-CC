@@ -24,66 +24,36 @@ cache.put(4, 4);    // evicts key 1
 cache.get(1);       // returns -1 (not found)
 cache.get(3);       // returns 3
 cache.get(4);       // returns 4
-
 */
 import java.util.Map;
 import java.util.HashMap;
 
-
-class DLinkedNode {
-    int val;
-    int key;
-    DLinkedNode prev;
-    DLinkedNode next;
-
-    DLinkedNode() {}
-
-    DLinkedNode(int key, int val) {
-        this.val = val;
-        this.key = key;
-    }
-}
-
 public class LRUCache_146 {
-    private Map<Integer, DLinkedNode> cache = new HashMap<>();
+    class DlinkedNode {
+        int key;
+        int value;
+
+        DlinkedNode prev;
+        DlinkedNode next;
+
+        DlinkedNode() {}
+
+        DlinkedNode(int key, int value) {
+            this.key = key;
+            this.value = value;
+        }
+    }
+
+    private DlinkedNode head, tail;
     private int size;
     private int capacity;
-    private DLinkedNode head, tail;
-
-    private void addNode(DLinkedNode node) {
-        node.prev = head;
-        node.next = head.next;
-
-        head.next.prev = node;
-        head.next = node;
-    }
-
-    private void removeNode(DLinkedNode node) {
-        DLinkedNode prev = node.prev;
-        DLinkedNode next = node.next;
-
-        prev.next = next;
-        next.prev = prev;
-    }
-
-    private void moveToHead(DLinkedNode node) {
-        removeNode(node);
-        addNode(node);
-    }
-
-    private DLinkedNode popTail() {
-        DLinkedNode realTail = tail.prev;
-        removeNode(realTail);
-
-        return realTail;
-    }
+    private HashMap<Integer, DlinkedNode> cache = new HashMap<>();
 
     public LRUCache_146(int capacity) {
         this.size = 0;
         this.capacity = capacity;
-
-        head = new DLinkedNode();
-        tail = new DLinkedNode();
+        head = new DlinkedNode();
+        tail = new DlinkedNode();
 
         head.next = tail;
         tail.prev = head;
@@ -94,27 +64,70 @@ public class LRUCache_146 {
             return -1;
         }
 
-        DLinkedNode node = cache.get(key);
+        DlinkedNode node = cache.get(key);
         moveToHead(node);
-        return node.val;
+        return node.value;
     }
 
     public void put(int key, int value) {
         if (!cache.containsKey(key)) {
             if (size == capacity) {
-                DLinkedNode tail = popTail();
-                cache.remove(tail.key);
+                DlinkedNode realTail = popTail();
+                cache.remove(realTail.key);
                 --size;
             }
 
-            DLinkedNode newNode = new DLinkedNode(key, value);
+            DlinkedNode newNode = new DlinkedNode(key, value);
             cache.put(key, newNode);
             addNode(newNode);
-            size++;
+            ++size;
         } else {
-            DLinkedNode node = cache.get(key);
-            node.val = value;
+            DlinkedNode node = cache.get(key);
+            node.value = value;
             moveToHead(node);
         }
     }
+
+    private void addNode(DlinkedNode node) {
+        node.prev = head;
+        node.next = head.next;
+        head.next.prev = node;
+        head.next = node;
+    }
+
+    private void addNode(DlinkedNode node, DlinkedNode after) {
+        node.prev = after;
+        node.next = after.next;
+        after.next.prev = node;
+        after.next = node;
+    }
+
+    private void removeNode(DlinkedNode node) {
+        DlinkedNode prev = node.prev;
+        DlinkedNode next = node.next;
+
+        prev.next = next;
+        next.prev = prev;
+    }
+
+    private void moveToHead(DlinkedNode node) {
+        removeNode(node);
+        addNode(node);
+    }
+
+    private DlinkedNode popTail() {
+        DlinkedNode realTail = tail.prev;
+        removeNode(realTail);
+
+        return realTail;
+    }
 }
+
+/*
+Complexity Analysis:
+
+Time complexity: O(1) both for put and get.
+
+Space complexity: O(capacity) since the space is used only for a hashmap and double linked list with at most capacity + 1 elements.
+
+*/

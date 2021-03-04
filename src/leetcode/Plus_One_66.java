@@ -1,5 +1,4 @@
 package leetcode;
-import java.util.Stack;
 /*
 Given a non-empty array of digits representing a non-negative integer, increment one to the integer.
 

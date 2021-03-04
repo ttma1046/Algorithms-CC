@@ -85,11 +85,15 @@ Java 中的 LinkedHashMap 以及 Python 中的 OrderedDict 底层都是双向链
 伪代码：
 
 ```
-
 temp = 待插入位置的前驱节点.next
 待插入位置的前驱节点.next = 待插入指针
 待插入指针.next = temp
+```
 
+```java
+Node temp = target.next;
+target.next = node;
+node.next = temp
 ```
 
 如果没有给定指针，我们需要先遍历找到节点，因此最坏情况下时间复杂度为 <code>O(N)</code>。
@@ -107,6 +111,11 @@ temp = 待插入位置的前驱节点.next
 ```
 待删除位置的前驱节点.next = 待删除位置的前驱节点.next.next
 ```
+
+```java
+prev.next = prev.next.next
+```
+
 
 > 提示 1: 考虑头尾指针的情况。
 
@@ -127,6 +136,14 @@ while 当前指针不为空 {
 
 ```
 
+```java
+node = head;
+while(node != null) {
+  print(node.value);
+  node = node.next;
+}
+```
+
 ## 常见题型
 
 ### 题型一：反转链表
@@ -138,6 +155,19 @@ while 当前指针不为空 {
 ![](https://tva1.sinaimg.cn/large/007S8ZIlly1gfih5wm9vzj31em080abx.jpg)
 （图 1）
 
+```java
+  prev = null;
+  curr = head;
+  temp = null;
+
+  while(curr != null) {
+    temp = curr.next;
+    curr.next = prev;
+    prev = curr;
+    curr = temp;
+  }
+
+```
 ### 题型二：合并链表
 
 1. 将两条有序或无序的链表合并成一条有序链表
