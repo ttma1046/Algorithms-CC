@@ -181,7 +181,7 @@ class Largest_Rectangle_in_Histogram_84 {
     public int largestRectangleArea(int[] heights) {
         Stack<Integer> stack = new Stack<>();
         stack.push(-1);
-        int n = heights.length;
+        int n = heights.length; 
         int max = 0;
 
         for (int i = 0; i < n; ++i) {
