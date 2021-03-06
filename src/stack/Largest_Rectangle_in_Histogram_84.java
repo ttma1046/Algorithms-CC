@@ -1,6 +1,30 @@
 package stack;
 
 import java.util.Stack;
+
+
+/*
+Given an array of integers heights representing the histogram's bar height where the width of each bar is 1,
+return the area of the largest rectangle in the histogram.
+
+Example 1:
+
+Input: heights = [2,1,5,6,2,3]
+Output: 10
+Explanation: The above is a histogram where width of each bar is 1.
+The largest rectangle is shown in the red area, which has an area = 10 units.
+
+Example 2:
+
+Input: heights = [2,4]
+Output: 4
+
+Constraints:
+
+1 <= heights.length <= 105
+0 <= heights[i] <= 104
+*/
+
 /*
 class Largest_Rectangle_in_Histogram_84_Segment_Tree {
     public int largestRectangleArea(int[] heights) {
@@ -71,7 +95,7 @@ Space complexity : O(n). Space required for Segment Tree.
 
 class Largest_Rectangle_in_Histogram_84 {
 
-    public int largestRectangleAreaI(int[] heights) {
+    public int largestRectangleAreaBFI(int[] heights) {
         int maxarea = 0;
         for (int i = 0; i < heights.length; i++) {
             for (int j = i; j < heights.length; j++) {
@@ -97,7 +121,7 @@ class Largest_Rectangle_in_Histogram_84 {
 
     */
 
-    public int largestRectangleAreaII(int[] heights) {
+    public int largestRectangleAreaBFII(int[] heights) {
         int max = 0;
         for (int i = 0; i < heights.length; ++i) {
             int height = Integer.MAX_VALUE;
@@ -132,7 +156,7 @@ class Largest_Rectangle_in_Histogram_84 {
                    Math.max(calculateArea(heights, start, index - 1), calculateArea(heights, index + 1, end)));
     }
 
-    public int largestRectangleAreaIII(int[] heights) {
+    public int largestRectangleAreaDivideAndConquer(int[] heights) {
         return calculateArea(heights, 0, heights.length - 1);
     }
 
@@ -178,10 +202,10 @@ class Largest_Rectangle_in_Histogram_84 {
     }
     */
 
-    public int largestRectangleArea(int[] heights) {
+    public int largestRectangleAreaStack(int[] heights) {
         Stack<Integer> stack = new Stack<>();
         stack.push(-1);
-        int n = heights.length; 
+        int n = heights.length;
         int max = 0;
 
         for (int i = 0; i < n; ++i) {
@@ -208,37 +232,91 @@ class Largest_Rectangle_in_Histogram_84 {
         }
 
         return max;
+    }
 
+
+    public int largestRectangleAreaStackII(int[] heights) {
+        int n = heights.length, i = 0, max = 0;
+
+        Stack<Integer> s = new Stack<>();
+
+        while (i < n) {
+            // as long as the current bar is shorter than the last one in the stack
+            // we keep popping out the stack and calculate the area based on
+            // the popped bar
+            while (!s.isEmpty() && heights[i] < heights[s.peek()]) {
+                // tricky part is how to handle the index of the left bound
+                max = Math.max(max, heights[s.pop()] * (i - (s.isEmpty() ? 0 : s.peek() + 1)));
+            }
+            // put current bar's index to the stack
+            s.push(i++);
+        }
+
+        // finally pop out any bar left in the stack and calculate the area based on it
+        while (!s.isEmpty()) {
+            max = Math.max(max, heights[s.pop()] * (n - (s.isEmpty() ? 0 : s.peek() + 1)));
+        }
+
+        return max;
     }
 
     public int largestRectangleArea(int[] heights) {
-        if (heights == null || heights.length == 0) {
+        int n = heights.length;
+
+        if (n == 0) {
             return 0;
         }
-        int[] lessFromLeft = new int[heights.length]; // idx of the first bar in the left that is lower than current
-        int[] lessFromRight = new int[heights.length]; // idx of the first bar the right that is lower than current
-        lessFromRight[heights.length - 1] = heights.length;
-        lessFromLeft[0] = -1;
 
-        for (int i = 1; i < heights.length; i++) {
+        int[] lessFromLeft = new int[n]; // idx of the first bar in the left that is lower than current
+        int[] lessFromRight = new int[n]; // idx of the first bar the right that is lower than current
+
+        lessFromLeft[0] = -1;
+        lessFromRight[n - 1] = n;
+
+        for (int i = 1; i < n; i++) {
             int p = i - 1;
+            System.out.println("p:" + p);
+            System.out.println("i:" + i);
+
+            System.out.println("heights[p]" + p + ":" + heights[p]);
+            System.out.println("heights[i]" + i + ":" + heights[i]);
             while (p >= 0 && heights[p] >= heights[i]) {
+                System.out.println("enter while");
+                System.out.println("lessFromLeft[p]" + p + ":" + lessFromLeft[p]);
                 p = lessFromLeft[p];
             }
-            lessFromLeft[i] = p;
-        }
-        for (int i = heights.length - 2; i >= 0; i--) {
-            int p = i + 1;
 
-            while (p < heights.length && heights[p] >= heights[i]) {
+            System.out.println("exit while");
+
+            lessFromLeft[i] = p;
+            System.out.println("lessFromLeft[i]" + i + ":" + lessFromLeft[i]);
+        }
+
+        System.out.println("-------------------------");
+
+        for (int i = n - 2; i >= 0; i--) {
+            int p = i + 1;
+            System.out.println("p:" + p);
+            System.out.println("i:" + i);
+
+            while (p < n && heights[p] >= heights[i]) {
+                System.out.println("enter while");
+                System.out.println("lessFromRight[p]" + p + ":" + lessFromRight[p]);
                 p = lessFromRight[p];
             }
+
+            System.out.println("exit while");
+
             lessFromRight[i] = p;
+            System.out.println("lessFromRight[i]" + i + ":" + lessFromRight[i]);
         }
+
         int maxArea = 0;
-        for (int i = 0; i < heights.length; i++) {
+
+        for (int i = 0; i < n; i++) {
             maxArea = Math.max(maxArea, heights[i] * (lessFromRight[i] - lessFromLeft[i] - 1));
         }
+
         return maxArea;
     }
 
@@ -252,6 +330,6 @@ class Largest_Rectangle_in_Histogram_84 {
 
     public static void main(String[] args) {
         System.out.println(new Largest_Rectangle_in_Histogram_84().largestRectangleArea(new int[] {2, 1, 5, 6, 2, 3}));
-        System.out.println(new Largest_Rectangle_in_Histogram_84().largestRectangleArea(new int[] {2, 4}));
+        // System.out.println(new Largest_Rectangle_in_Histogram_84().largestRectangleArea(new int[] {2, 4}));
     }
 }
