@@ -275,40 +275,22 @@ class Largest_Rectangle_in_Histogram_84 {
 
         for (int i = 1; i < n; i++) {
             int p = i - 1;
-            System.out.println("p:" + p);
-            System.out.println("i:" + i);
 
-            System.out.println("heights[p]" + p + ":" + heights[p]);
-            System.out.println("heights[i]" + i + ":" + heights[i]);
             while (p >= 0 && heights[p] >= heights[i]) {
-                System.out.println("enter while");
-                System.out.println("lessFromLeft[p]" + p + ":" + lessFromLeft[p]);
                 p = lessFromLeft[p];
             }
 
-            System.out.println("exit while");
-
             lessFromLeft[i] = p;
-            System.out.println("lessFromLeft[i]" + i + ":" + lessFromLeft[i]);
         }
-
-        System.out.println("-------------------------");
 
         for (int i = n - 2; i >= 0; i--) {
             int p = i + 1;
-            System.out.println("p:" + p);
-            System.out.println("i:" + i);
 
             while (p < n && heights[p] >= heights[i]) {
-                System.out.println("enter while");
-                System.out.println("lessFromRight[p]" + p + ":" + lessFromRight[p]);
                 p = lessFromRight[p];
             }
 
-            System.out.println("exit while");
-
             lessFromRight[i] = p;
-            System.out.println("lessFromRight[i]" + i + ":" + lessFromRight[i]);
         }
 
         int maxArea = 0;
