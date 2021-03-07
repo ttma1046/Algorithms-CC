@@ -1,22 +1,23 @@
 package graph;
 
 import java.util.List;
+import java.util.ArrayList;
 
 public class Dijkstra {
     public double[] ShortestDistances() {
         return shortestDistances;
     }
-    public double[] Paths() {
-        return previousVerticws;
+    public int[] PreviousVertices() {
+        return previousVertices;
     }
 
     private double[] shortestDistances;
-    private double[] previousVerticws;
-    private List<Integer> unvisitedVertices;
+    private int[] previousVertices;
+    private List<Integer> unvisitedVertices = new ArrayList<>();
 
     public Dijkstra(double[][] adjacencyMatrix, int totalVertices) {
          shortestDistances = new double[totalVertices];
-         previousVerticws = new double[totalVertices];
+         previousVertices = new int[totalVertices];
 
          for(int i = 0; i < totalVertices; i++) {
              unvisitedVertices.add(i);
@@ -32,7 +33,7 @@ public class Dijkstra {
                 if (adjacencyMatrix[currentVertex][i] > 0) {
                      if (shortestDistances[currentVertex] + adjacencyMatrix[currentVertex][i] < shortestDistances[i]) {
                          shortestDistances[i] = shortestDistances[currentVertex] + adjacencyMatrix[currentVertex][i];
-                         previousVerticws[i] = currentVertex;
+                         previousVertices[i] = currentVertex;
                      }
                 }
              }
@@ -51,7 +52,7 @@ public class Dijkstra {
             }
         }
 
-        unvisitedVertices.remove(vertex);
+        unvisitedVertices.remove(unvisitedVertices.indexOf(vertex));
         return vertex;
     }
 
@@ -63,12 +64,32 @@ public class Dijkstra {
     //
 
     public static void main(String[] args) {
-        Dijkstra graph = new Dijkstra(new double[3][3], 5);
+        double[][] adjacencyMatrix = new double[][] {{0, 6, 0, 1, 0}, {6, 0, 5, 2, 2}, {0, 5, 0, 0, 5}, {1, 2, 0, 0, 1}, {0, 2, 5, 1, 0}};
+        Dijkstra graph = new Dijkstra(adjacencyMatrix, 5);
         double[] distances = graph.ShortestDistances();
-        double[] paths = graph.Paths();
+        int[] previousVertices = graph.PreviousVertices();
 
         for (int i = 0; i < distances.length; i++) {
-            System.out.println("Vertex " + i + "  Distance = " + distances[i] + " Via Vertex" + paths[i]);
+            System.out.println("Vertex " + i + " Shortest Distance from Vertex 0 is " + distances[i] + " Via Vertex:" + previousVertices[i]);
         }
     }
+
+    class Graph {
+        List<String> vertexs = new ArrayList<String>();
+        void AddVertex(String vertex) {
+            vertexs.add(vertex);
+        }
+
+        void AddEdge(int start, int end, int weight) { }
+    }
+
+/*
+
+      0 1 2 3 4
+    0 0 6 0 1 0
+    1 6 0 5 2 2
+    2 0 5 0 0 5
+    3 1 2 0 0 1
+    4 0 2 5 1 0
+*/
 }

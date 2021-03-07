@@ -32,6 +32,42 @@ n == height.length
 */
 
 class Trapping_Rain_Water_42 {
+    public int trap(int[] height) {
+        int left = 0, right = height.length - 1;
+        int maxLeft = 0, maxRight = 0;
+        int ans = 0;
+        while (left < right) {
+            if (height[left] < height[right]) {
+                if (height[left] > maxLeft) {
+                    maxLeft = height[left];
+                } else {
+                    ans += maxLeft - height[left];
+                }
+
+                ++left;
+            } else {
+                if (height[right] > maxRight) {
+                    maxRight = height[right];
+                } else {
+                    ans += maxRight - height[right];
+                }
+
+                --right;
+            }
+        }
+
+        return ans;
+    }
+
+    /*
+    Complexity analysis
+
+    Time complexity: O(n). Single iteration of O(n).
+    Space complexity: O(1) extra space.
+    Only constant space required for left, right, left_max and right_max.
+    */
+
+    // monotonic stack：decrement
     public int trapStack(int[] height) {
         Stack<Integer> stack = new Stack<>();
         int ans = 0;
@@ -58,6 +94,15 @@ class Trapping_Rain_Water_42 {
         return ans;
     }
 
+    /*
+    Time complexity: O(n).
+    Single iteration of O(n) in which each bar can be touched at most twice
+    (due to insertion and deletion from stack)
+    and insertion and deletion from stack takes O(1) time.
+
+    Space complexity: O(n). Stack can take upto O(n) space in case of stairs-like or flat structure.
+    */
+
     public int trapDP(int[] height) {
         int ans = 0;
         int size = height.length;
@@ -82,34 +127,6 @@ class Trapping_Rain_Water_42 {
         return ans;
     }
 
-    public int trap(int[] height) {
-        int left = 0, right = height.length - 1;
-        int res = 0;
-        int maxleft = 0, maxright = 0;
-        
-        while (left < right) {
-            if (height[left] < height[right]) {
-                if (height[left] >= maxleft) { 
-                    maxleft = height[left]; 
-                } else { 
-                    res += maxleft - height[left]; 
-                }
-
-                left++;
-            } else {
-                if (height[right] >= maxright) { 
-                    maxright = height[right];
-                } else {
-                    res += maxright - height[right];
-                }
-
-                right--;
-            }
-        }
-        
-        return res;
-    }
-
     public int trapShort(int[] height) {
         int left = 0, right = height.length - 1;
         int max = 0;
@@ -126,28 +143,8 @@ class Trapping_Rain_Water_42 {
                 right--;
             }
         }
-        
+
         return max;
-    }
-
-
-    public int trapStackII(int[] height) {
-        int ans = 0, current = 0;
-        Stack<Integer> stack = new Stack<>();
-
-        while (current < height.length) {
-            while (!stack.isEmpty() && height[current] > height[stack.peek()]) {
-                int top = stack.peek();
-                stack.pop();
-                if (stack.empty())
-                    break;
-                int distance = current - stack.peek() - 1;
-                int bounded_height = Math.min(height[current], height[stack.peek()]) - height[top];
-                ans += distance * bounded_height;
-            }
-            stack.push(current++);
-        }
-        return ans;
     }
 
     public static void main(String[] args) {
