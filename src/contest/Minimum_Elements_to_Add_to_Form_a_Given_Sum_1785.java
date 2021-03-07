@@ -10,7 +10,7 @@ Return the minimum number of elements you need to add to make the sum of the arr
 
 Note that abs(x) equals x if x >= 0, and -x otherwise.
 
- 
+
 
 Example 1:
 
@@ -23,27 +23,36 @@ Input: nums = [1,-10,9,1], limit = 100, goal = 0
 Output: 1
 
 
-Try thinking about the problem as if the array is empty. 
+Try thinking about the problem as if the array is empty.
 Then you only need to form goal using elements whose absolute value is <= limit.
 
-You can greedily set all of the elements except one to limit or -limit, 
+You can greedily set all of the elements except one to limit or -limit,
 so the number of elements you need is ceil(abs(goal)/ limit).
 
-You can "normalize" goal by offsetting it by the sum of the array. 
+You can "normalize" goal by offsetting it by the sum of the array.
 For example, if the goal is 5 and the sum is -3, then it's exactly the same as if the goal is 8 and the array is empty.
 
 The answer is ceil(abs(goal-sum)/limit) = (abs(goal-sum)+limit-1) / limit.
 */
 
 class Solution {
-    public int minElements(int[] nums, int limit, int goal) {
-        int res = 0;
-        for(int i: nums) {
-            res += i;
-        }
-        
-        int target = Math.abs(goal - res);
-        
-        return target / limit + 1;
-    }
+	public int minElements(int[] nums, int limit, int goal) {
+		long res = 0;
+		for (int i : nums) {
+			res += i;
+		}
+
+		long target = Math.abs(goal - res);
+
+		return (int)((target + limit - 1) / limit);
+
+		/*
+		Ian Nelson's solution:
+
+		int pageCount = (records + recordsPerPage - 1) / recordsPerPage;
+		Can be simplified to:
+
+		int pageCount = (records - 1) / recordsPerPage + 1;
+		*/
+	}
 }
