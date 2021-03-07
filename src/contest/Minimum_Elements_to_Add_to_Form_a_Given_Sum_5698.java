@@ -21,6 +21,18 @@ Example 2:
 
 Input: nums = [1,-10,9,1], limit = 100, goal = 0
 Output: 1
+
+
+Try thinking about the problem as if the array is empty. 
+Then you only need to form goal using elements whose absolute value is <= limit.
+
+You can greedily set all of the elements except one to limit or -limit, 
+so the number of elements you need is ceil(abs(goal)/ limit).
+
+You can "normalize" goal by offsetting it by the sum of the array. 
+For example, if the goal is 5 and the sum is -3, then it's exactly the same as if the goal is 8 and the array is empty.
+
+The answer is ceil(abs(goal-sum)/limit) = (abs(goal-sum)+limit-1) / limit.
 */
 
 class Solution {
