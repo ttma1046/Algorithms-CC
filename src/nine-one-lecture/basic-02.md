@@ -91,9 +91,9 @@ temp = 待插入位置的前驱节点.next
 ```
 
 ```java
-Node temp = target.next;
-target.next = node;
-node.next = temp
+Node next = insertAfterThisNode.next;
+insertAfterThisNode.next = insertNode;
+insertNode.next = next
 ```
 
 如果没有给定指针，我们需要先遍历找到节点，因此最坏情况下时间复杂度为 <code>O(N)</code>。
@@ -158,14 +158,16 @@ while(node != null) {
 ```java
   prev = null;
   curr = head;
-  temp = null;
-
+  
   while(curr != null) {
-    temp = curr.next;
+    Node temp = curr.next;
     curr.next = prev;
     prev = curr;
     curr = temp;
+
   }
+
+  return prev;
 
 ```
 ### 题型二：合并链表
@@ -193,15 +195,16 @@ while(node != null) {
 
 针对上面的四种题型， 我们分别介绍如何用套路进行应对。
 
-### 套路一：反转链表
+### 套路一：反转链表 206. Reverse Linked List    
 
 伪代码:
 
 ```
 当前指针 =  头指针
 前一个节点 = null;
+
 while 当前指针不为空 {
-	下一个节点 = 当前指针.next;
+    下一个节点 = 当前指针.next;
     当前指针.next = 前一个节点
     前一个节点 = 当前指针
     当前指针 = 下一个节点
@@ -228,12 +231,11 @@ return pre;
 - 时间复杂度：<code>O(N)</code>
 - 空间复杂度：<code>O(1)</code>
 
-### 套路二：合并链表
+### 套路二：合并链表 21. Merge Two Sorted Lists
 
 伪代码:
 
-```jsx
-
+```js
 ans = new Node(-1) // ans 为需要返回的头节点
 cur = ans
 // l1和l2分别为需要合并的两个链表的头节点
@@ -271,12 +273,55 @@ if (l1 === null) {
 return ans.next;
 ```
 
+```java
+public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+    ListNode head = new ListNode(0);
+    ListNode handler = head;
+    while(l1 != null && l2 != null) {
+        if (l1.val <= l2.val) {
+            handler.next = l1;
+            l1 = l1.next;
+        } else {
+            handler.next = l2;
+            l2 = l2.next;
+        }
+        handler = handler.next;
+    }
+    
+    if (l1 != null) {
+        handler.next = l1;
+    } else if (l2 != null) {
+        handler.next = l2;
+    }
+    
+    return head.next;
+}
+```
+
+```java
+public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+    if (l1 == null) return l2;
+    if (l2 == null) return l1;
+    
+    ListNode handler;
+    if(l1.val < l2.val) {
+        handler = l1;
+        handler.next = mergeTwoLists(l1.next, l2);
+    } else {
+        handler = l2;
+        handler.next = mergeTwoLists(l1, l2.next);
+    }
+    
+    return handler;
+}
+```
+
 **复杂度分析**
 
 - 时间复杂度：<code>O(N)</code>
 - 空间复杂度：<code>O(1)</code>
 
-### 套路三：相交或环形链表
+### 套路三：相交或环形链表 160. Intersection of Two Linked Lists
 
 ##### 链表相交求交点
 
@@ -389,7 +434,7 @@ class Solution:
 - 时间复杂度：<code>O(N)</code>
 - 空间复杂度：<code>O(1)</code>
 
-##### 环形链表求环的起点
+##### 环形链表求环的起点 142. Linked List Cycle II
 
 ###### 解法一：哈希法
 

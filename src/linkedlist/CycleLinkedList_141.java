@@ -2,7 +2,7 @@ package linkedlist;
 
 import java.util.HashSet;
 
-public class CycleLinkedList {
+public class CycleLinkedList_141 {
     class ListNode {
         int val;
         ListNode next;

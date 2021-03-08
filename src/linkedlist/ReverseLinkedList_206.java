@@ -11,12 +11,11 @@ public class ReverseLinkedList_206 {
         }
 
         ListNode prev = null;
-        ListNode temp = null;
         ListNode curr = head;
 
         while (curr != null) {
-            temp = curr.next;
-
+            ListNode temp = curr.next;
+ 
             curr.next = prev;
 
             prev = curr;
