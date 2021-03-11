@@ -6,7 +6,7 @@ class ListNode {
     ListNode(int x) { val = x; }
 }
 
-public class Middle_of_the_Linked_List_dayeight {
+public class Middle_of_the_Linked_List_dayeight_876 {
     public ListNode middleNode(ListNode head) {
         if (head == null) {
             return null;
