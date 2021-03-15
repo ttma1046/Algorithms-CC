@@ -2,49 +2,56 @@ package tree;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class BinaryTreePreorderTraversal_144 {
     public List<Integer> preorderTraversal(TreeNode root) {
-        if (root == null) {
-            return null;
-        }
+        if (root == null) return new ArrayList<Integer>();
 
         List<Integer> result = new ArrayList<Integer>();
 
-        if (root != null) {
-            result.add(root.val);
-
-
-            if (root.left != null) {
-                preorderTraversal(root.left);
-            }
-
-
-            if (root.right != null) {
-                preorderTraversal(root.right);
-            }
-        }
+        preorderTraversal(root, result);
 
         return result;
     }
 
+    public void preorderTraversal(TreeNode current, List<Integer> list) {
+        list.add(current.val);
+
+        if (current.left != null) preorderTraversal(current.left, list);
+
+        if (current.right != null) preorderTraversal(current.right, list);
+    }
+
+
     public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> result = new ArrayList<Integer>();
+        preorder(root, result);
+        return result;
+    }
+
+    public void preorder(TreeNode current, List<Integer> list) {
+        if (current == null) return;
+        list.add(current.val);
+        preorder(current.left, list);
+        preorder(current.right, list);
+    }
+
+    public List<Integer> preorderTraversalII(TreeNode root) {
         List<Integer> result = new ArrayList<>();
         Stack<TreeNode> stack = new Stack<>();
         TreeNode curr = root;
-        // preorder traversal : left -> node -> right
+        // preorder traversal : node -> left -> right top -> bottom left -> right
         while (curr != null || !stack.isEmpty()) {
             while (curr != null) {
                 result.add(curr.val);
-
                 stack.push(curr);
                 curr = curr.left;
             }
-
             curr = stack.pop();
             curr = curr.right;
         }
-        
+
         return result;
     }
 
@@ -59,7 +66,7 @@ public class BinaryTreePreorderTraversal_144 {
 
         List<Integer> results = new BinaryTreePreorderTraversal_144().preorderTraversal(root);
 
-        for (int result: results) {
+        for (int result : results) {
             System.out.println(result);
         }
     }
