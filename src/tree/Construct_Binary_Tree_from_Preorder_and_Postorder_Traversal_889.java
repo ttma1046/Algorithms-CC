@@ -5,8 +5,6 @@ Return any binary tree that matches the given preorder and postorder traversals.
 
 Values in the traversals pre and post are distinct positive integers.
 
- 
-
 Example 1:
 
 Input: pre = [1,2,4,5,3,6,7], post = [4,5,2,6,7,3,1]
@@ -37,8 +35,6 @@ class Construct_Binary_Tree_from_Preorder_and_Postorder_Traversal_889 {
         return root; 
     }
     */
-
-
     public TreeNode constructFromPrePost(int[] pre, int[] post) {
         if (pre == null) return null;
 
@@ -59,6 +55,38 @@ class Construct_Binary_Tree_from_Preorder_and_Postorder_Traversal_889 {
 
     public static void main(String[] args) {
         TreeNode res = new Construct_Binary_Tree_from_Preorder_and_Postorder_Traversal_889().constructFromPrePost(new int[] {1,2,4,5,3,6,7},  new int[] {4,5,2,6,7,3,1});
+        res = new Construct_Binary_Tree_from_Preorder_and_Postorder_Traversal_889().constructFromPrePostII(new int[] {1,2,4,5,3,6,7},  new int[] {4,5,2,6,7,3,1});
+    }
+
+    public TreeNode constructFromPrePost(int[] pre, int[] post) {
+        if (pre.length != post.length) return null;
+        return constructFromPrePost(pre, 0, pre.length - 1, post, 0, post.length - 1);
+    }
+
+    public TreeNode constructFromPrePost(int[] pre, int prelow, int prehigh, int[] post, int postlow, int posthigh) {
+        if (prelow > prehigh || postlow > posthigh) return null;
+
+        // Input: pre = [1,2,4,5,3,6,7], post = [4,5,2,6,7,3,1]
+
+        TreeNode curr = new TreeNode(pre[prelow]);
+    
+        int postOrderNextIndex = -1;
+
+        for (int i = postlow; i < posthigh; ++i){
+            if (post[i] == pre[prelow + 1]) {
+                postOrderNextIndex = i;
+                break;
+            }
+        }
+
+        if (postOrderNextIndex == -1) return curr;
+
+        int length = postOrderNextIndex - postlow;
+
+        curr.left = constructFromPrePost(pre, prelow + 1, prelow + 1 + length, post, postlow, postOrderNextIndex);
+        curr.right = constructFromPrePost(pre, prelow + 2 + length, prehigh, post, postOrderNextIndex + 1, posthigh - 1);
+
+        return curr;
     }
 }
 

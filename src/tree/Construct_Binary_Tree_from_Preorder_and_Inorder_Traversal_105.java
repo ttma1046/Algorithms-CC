@@ -29,22 +29,45 @@ preorder is guaranteed to be the preorder traversal of the tree.
 inorder is guaranteed to be the inorder traversal of the tree.
 */
 class Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105 {
+    // preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]
 
     /*
-    def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
-        # 实际上inorder 和 postorder一定是同时为空的，因此你无论判断哪个都行
-        if not preorder:
-            return None
-        root = TreeNode(preorder[0])
+    3   9   20 15 7
 
-        i = inorder.index(root.val)
-        root.left = self.buildTree(preorder[1:i + 1], inorder[:i])
-        root.right = self.buildTree(preorder[i + 1:], inorder[i + 1:])
-
-        return root
+    9   3   15 20 7
     */
 
+
+    /*
     public TreeNode buildTree(int[] preorder, int[] inorder) {
+        if (preorder.length != inorder.length) return null;
+        return build(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1);
+    }
+
+    public TreeNode build(int [] preorder, int preLow, int preHigh, int[] inorder, int inLow, int inHigh) {
+        if (preLow > preHigh || inLow > inHigh) return null;
+        TreeNode root = new TreeNode(preorder[preLow]);
+
+        int inorderRoot = inLow;
+        for (int i = inLow; i <= inHigh; i++) {
+            if (inorder[i] == root.val) { 
+                inorderRoot = i; 
+                break; 
+            }
+        }
+
+        int leftTreeLen = inorderRoot - inLow;
+        root.left = build(preorder, preLow + 1, preLow + leftTreeLen, inorder, inLow, inorderRoot - 1);
+        root.right = build(preorder, preLow + leftTreeLen + 1, preHigh, inorder, inorderRoot + 1, inHigh);
+        return root;
+    }
+    */
+
+    
+    private int pre = 0;
+    private int in = 0;
+
+    public TreeNode buildTreeFast(int[] preorder, int[] inorder) {
         return build(preorder, inorder, Integer.MIN_VALUE);
     }
 
@@ -74,16 +97,6 @@ class Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105 {
         return root;
         */
 
-
-        // preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]
-
-        /*
-
-        3   9   20 15 7
-
-        9   3   15 20 7
-        */
-
         if (preorder == null) return null;
 
         int n = preorder.length;
@@ -104,8 +117,11 @@ class Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105 {
     // O(n) Time Complexcity
     // O(n) Space Complexity
     public static void main(String[] args) {
-        TreeNode res = new Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105().buildTree(new int[] {3, 9, 20, 15, 7},  new int[] {9, 3, 15, 20, 7});
-        TreeNode binaryTree = new Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105().buildBinarySearchTree(new int[] {3, 9, 20, 15, 7});
+        // TreeNode res = new Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105().buildTree(new int[] {3, 9, 20, 15, 7},  new int[] {9, 3, 15, 20, 7});
+        // TreeNode binaryTree = new Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105().buildBinarySearchTree(new int[] {3, 9, 20, 15, 7});
+
+
+        TreeNode binaryTree = new Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105().buildTreeNice(new int[] {3, 9, 20, 15, 7},  new int[] {9, 3, 15, 20, 7});
     }
 
     public TreeNode buildBinarySearchTree(int[] preorder) {
@@ -123,5 +139,40 @@ class Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105 {
         }
 
         return buildTree(preorder, temp);
+    }
+
+    public TreeNode buildTreeNice(int[] preorder, int[] inorder) {
+        if (preorder.length != inorder.length) return null;
+        return buildTreeNode(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1);
+    }
+
+    public TreeNode buildTreeNode(int[] preorder, int prelow, int prehigh, int[] inorder, int inlow, int inhigh) {
+        if (prelow > prehigh || inlow > inhigh) return null;
+
+        TreeNode current = new TreeNode(preorder[prelow]);
+
+        int inorderRootIndex = inlow;
+        for (int i = inlow; i <= inhigh; i++) {
+            if (inorder[i] == current.val) {
+                inorderRootIndex = i;
+                break;
+            }
+        }
+
+        // preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]
+
+        /*
+        3   9   20 15 7
+
+        9   3   15 20 7
+        */
+
+        int length = inorderRootIndex - inlow;
+
+        current.left = buildTreeNode(preorder, prelow + 1, prelow + length, inorder, inlow, inorderRootIndex - 1);
+
+        current.right = buildTreeNode(preorder, prelow + length + 1, prehigh, inorder, inorderRootIndex + 1, inhigh);
+
+        return current;
     }
 }
