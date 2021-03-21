@@ -10,7 +10,7 @@ import java.util.Map;
 /*
 Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
 
-According to the definition of LCA on Wikipedia: 
+According to the definition of LCA on Wikipedia:
 
 “The lowest common ancestor is defined between two nodes p and q as the lowest node in T that has both p and q as descendants (where we allow a node to be a descendant of itself).”
 
@@ -77,7 +77,7 @@ class Lowest_Common_Ancestor_of_a_Binary_Tree_236 {
             return null;
         }
 
-        if (root == p && root == q) {
+        if (root == p && root == q) { // p and q are same.
             return root;
         }
 
@@ -98,6 +98,22 @@ class Lowest_Common_Ancestor_of_a_Binary_Tree_236 {
         } else {
             return x == null ? y : x; /* return the non-null value */
         }
+    }
+
+    public TreeNode lowestCommonAncestorTee(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null) return null;
+
+        if (root == q || root == p) return root;
+
+        TreeNode x = lowestCommonAncestorTee(root.left, p, q);
+        TreeNode y = lowestCommonAncestorTee(root.right, p, q);
+        
+        if (x != null && y != null) return root;
+
+        if (x != null) return x;
+        if (y != null) return y;
+
+        return null;
     }
 
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
@@ -154,6 +170,9 @@ class Lowest_Common_Ancestor_of_a_Binary_Tree_236 {
         TreeNode p = new TreeNode(4);
         TreeNode q = new TreeNode(3);
         new Lowest_Common_Ancestor_of_a_Binary_Tree_236().lowestCommonAncestorIterative(root, p, q);
+
+        new Lowest_Common_Ancestor_of_a_Binary_Tree_236().lowestCommonAncestorIterative(root, p, q);
+
     }
 }
 

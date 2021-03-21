@@ -55,6 +55,28 @@ public class BinaryTreePreorderTraversal_144 {
         return result;
     }
 
+    public List<Integer> preorderTraversalIII(TreeNode root) {
+        LinkedList<TreeNode> stack = new LinkedList<>();
+        List<Integer> output = new ArrayList<>();
+        if (root == null) {
+            return output;
+        }
+
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+            output.push(node.val);
+            if (node.right != null) {
+                stack.push(node.right);
+            }
+
+            if (node.left != null) {
+                stack.push(node.left);
+            }
+        }
+        return output;
+    }
+
     public static void main(String[] args) {
         TreeNode twenty = new TreeNode(20);
         twenty.left = new TreeNode(15);
