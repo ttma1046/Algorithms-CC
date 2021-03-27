@@ -1,15 +1,107 @@
+package hashtable;
+import java.util.HashMap;
+
+class multiple {
+
+	public int maxGirls(int[][] input) {
+		HashMap<Integer, Integer> hashMap = new HashMap<>();
+		for (int[] girl : input) {
+			for (int i = girl[0]; i <= girl[1]; ++i) {
+				hashMap.put(i, hashMap.getOrDefault(i, 0) + 1);
+			}
+		}
+
+		int ans = 0;
+		for (int i : hashMap.keySet()) {
+			if (hashMap.get(i) > ans) ans = hashMap.get(i);
+		}
+
+		return ans;
+	}
+
+	public static void main(String[] args) {
+		int[][] girls = new int[][] {{0, 30}, {5, 10}, {15, 20}, {17, 25}};
+		System.out.println(new multiple().maxGirls(girls));
+	}
+}
+
+
 /*
-已知小猪每晚都要约好几个女生到酒店房间。
 
-每个女生 i 与小猪约好的时间由 [si , ei］表示，其中 si 表示女生进入房间的时间， 
 
-ei 表示女生离开房间的时间。由于小猪心胸开阔，思想开明，
+res = -1
 
-不同女生可以同时存在于小猪的房间。请计算出小猪最多同时在做几人的「多人运动」。
+for everyGirl in girls:
+    for curTime in [everyGirl.start, everyGirl.end]:
+	if curTime in hashtable:
+	    hashtable[curTime] += 1
+	else
+	    hashtable[curTime] = 1
 
-例子：
+	res = max(res, hashtable[curTime])
 
-Input ： [[ 0 , 30] ,[ 5 , 10 ] ， [15 , 20 ] ]
+		0            30
+	 5 10
+	      15 20
 
-OutPut ：最多同时有两个女生的「三人运动」
+	        17 25
+
 */
+
+
+class Heap {
+    Heap(int[] list) {
+        this.list = list;
+        this.init();
+    }
+
+    init() {
+        int size = this.size();
+        for (let i = Math.floor(size / 2) - 1; i >= 0; i--) {
+            this.heapify(this.list, size, i);
+        }
+    }
+
+    insert(int n) {
+        this.list.push(n);
+        int size = this.size();
+        for (let i = Math.floor(size / 2) - 1; i >= 0; i--) {
+            this.heapify(this.list, size, i);
+        }
+    }
+
+    pop() {
+        int last = this.list.pop();
+        if (this.size() === 0) return last;
+        int returnItem = this.list[0];
+        this.list[0] = last;
+        this.heapify(this.list, this.size(), 0);
+        return returnItem;
+    }
+
+    peek() {
+        return this.list[0];
+    }
+
+    size() {
+        return this.list.length;
+    }
+}
+class MinHeap extends Heap {
+    constructor(list) {
+        super(list);
+    }
+
+    heapify(arr, size, i) {
+        let smallest = i;
+        int left = Math.floor(i * 2 + 1);
+        int right = Math.floor(i * 2 + 2);
+        if (left < size && arr[smallest] > arr[left]) smallest = left;
+        if (right < size && arr[smallest] > arr[right]) smallest = right;
+
+        if (smallest !== i) {
+            [arr[smallest], arr[i]] = [arr[i], arr[smallest]];
+            this.heapify(arr, size, smallest);
+        }
+    }
+}
