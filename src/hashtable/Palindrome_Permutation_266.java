@@ -7,15 +7,23 @@ class Palindrome_Permutation_266 {
 	public boolean canPermutePalindrome(String s) {
 		boolean flag = false;
 
+		/*
 		Map<Character, Integer> map = new HashMap<Character, Integer>();
 		for (char c : s.toCharArray()) {
 			map.put(c, map.getOrDefault(c, 0) + 1);
 		}
 
-		for (Integer frequency : map.values()) {
-			if (flag && frequency % 2 == 1) {
-				return false;
-			} else if (frequency % 2 == 1) {
+		for (int frequency : map.values()) {
+		*/
+
+		int[] table = new int[128];
+		for (char c : s.toCharArray()) {
+			table[c]++;
+		}
+
+		for (int frequency : table) {
+			if (frequency > 0 && frequency % 2 == 1) {
+				if (flag) return false;
 				flag = true;
 			}
 		}
@@ -23,12 +31,9 @@ class Palindrome_Permutation_266 {
 		return true;
 	}
 
-
 	public boolean canPermutePalindromeII(String s) {
 		int[] table = new int[128];
-		for (char c : s.toCharArray()) {
-			table[c]++;
-		}
+		
 
 		int countOdd = 0;
 

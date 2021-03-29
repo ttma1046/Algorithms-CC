@@ -51,6 +51,40 @@ board[i][j] is a digit or '.'.
 */
 
 class Valid_Sudoku_36 {
+
+
+	public boolean isValidSudoku(char[][] board) {
+
+		int l = board.length;
+		HashMap<Integer, Integer>[] rows = new HashMap()[l];
+		HashMap<Integer, Integer>[] columns = new HashMap()[l];
+		HashMap<Integer, Integer>[] boxes = new HashMap()[l];
+
+		for (int i = 0; i < l; i++) {
+			rows[i] = new HashMap<>();
+			columns[i] = new HashMap<>();
+			boxes[i] = new HashMap<>();
+		}
+
+
+		for (int i = 0; i < 9; i++) {
+			for (int j = 0; j < 9; j++) {
+				if (board[i][j] != '.') {
+					int n = Integer.valueOf(board[i][j]);
+					int box_index = i / 3 * 3 + j / 3;
+					if (rows[i].containsKey(n) || columns[j].containsKey(n) || boxes[box_index].containsKey(n)) return false;
+
+					rows[i].put(n, 1);
+					columns[j].put(n, 1);
+					boxes[box_index].put(n, 1);
+				}
+			}
+		}
+
+		return true;
+	}
+
+
 	public boolean isValidSudoku(char[][] board) {
 		HashMap<Integer, Integer>[] rows = new HashMap[9];
 		HashMap<Integer, Integer>[] columns = new HashMap[9];
@@ -86,13 +120,9 @@ class Valid_Sudoku_36 {
 		return true;
 	}
 
-
-
-
 	public static void main(String[] args) {
-
 		char[][] kk = new char[][] {
-			  {'5', '3', '.', '.', '7', '.', '.', '.', '.'}
+			{'5', '3', '.', '.', '7', '.', '.', '.', '.'}
 			, {'6', '.', '.', '1', '9', '5', '.', '.', '.'}
 			, {'.', '9', '8', '.', '.', '.', '.', '6', '.'}
 			, {'8', '.', '.', '.', '6', '.', '.', '.', '3'}
@@ -105,9 +135,8 @@ class Valid_Sudoku_36 {
 
 		System.out.println(new Valid_Sudoku_36().isValidSudoku(kk));
 
-
 		kk = new char[][] {
-			  {'8', '3', '.', '.', '7', '.', '.', '.', '.'}
+			{'8', '3', '.', '.', '7', '.', '.', '.', '.'}
 			, {'6', '.', '.', '1', '9', '5', '.', '.', '.'}
 			, {'.', '9', '8', '.', '.', '.', '.', '6', '.'}
 			, {'8', '.', '.', '.', '6', '.', '.', '.', '3'}
@@ -146,10 +175,10 @@ class Valid_Sudoku_36 {
 					rows[i].put(number, rows[i].getOrDefault(number, 0) + 1);
 					columns[j].put(number, columns[j].getOrDefault(number, 0) + 1);
 					boxes[box_index].put(number, boxes[box_index].getOrDefault(number, 0) + 1);
-				} 
+				}
 			}
 		}
 
 		return true;
 	}
-} 
+}
