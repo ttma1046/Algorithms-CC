@@ -3,10 +3,6 @@ package sort;
 public class MergeSort {
     public void mergesort(int[] array) {
         mergesort(array, new int[array.length], 0, array.length - 1);
-
-        for (int i = 0; i < array.length; i++) {
-            System.out.println(array[i]);
-        }
     }
 
     public void mergesort(int[] array, int[] temp, int leftStart, int rightEnd) {
@@ -63,15 +59,21 @@ public class MergeSort {
     }
 
     public static void main(String[] args) {
-        mergesort(new int[] {38, 27, 43, 3, 9, 82, 10});
+        int[] array = new int[] {38, 27, 43, 3, 9, 82, 10};
+        new MergeSort().mergesort(array);
+        for (int i : array) {
+            System.out.println(i);
+        }
     }
 
+    /*
     public void mergeSort(int[] array) {
-        .
         int[] temp = new int[array.length];
         mergeSort(array, temp, 0, array.length - 1);
 
-        return temp;
+        for (int i: temp) {
+            System.out.println(i);
+        }
     }
 
     private void mergeSort(int[] array, int[] temp, int left, int right) {
@@ -79,8 +81,8 @@ public class MergeSort {
             return;
         }
 
-        int middle = (left + right) / 2
-                     mergeSort(array, temp, left, middle);
+        int middle = (left + right) / 2;
+        mergeSort(array, temp, left, middle);
         mergeSort(array, temp, middle + 1, right);
         mergeHalves(array, temp, left, right);
     }
@@ -94,7 +96,7 @@ public class MergeSort {
         int right = rightStart; // 1
 
         int index = leftStart;  // 0
-        
+
         // 5 3
         while (left <= leftEnd && right <= rightEnd) {
             if (array[left] <= array[right]) {
@@ -102,14 +104,14 @@ public class MergeSort {
                 left++;
             } else {
                 temp[index] = array[right];   // temp[0] = array[1] = 3
-                right++;                      // right = 2 
-            }                                   
-            index++;                          // index = 1  
-        } 
+                right++;                      // right = 2
+            }
+            index++;                          // index = 1
+        }
 
         if (left <= leftEnd) {                // 0 <= 0
             temp[index] = array[left];        // temp[1] = array[0] = 5
-            index++;                          // index = 2  
+            index++;                          // index = 2
             left++;                           // left = 1
         }
 
@@ -121,6 +123,7 @@ public class MergeSort {
         // System.arraycopy(src, srcPos, dest, destPos, length);
         System.arraycopy(temp, leftStart, array, leftStart, size);
     }
+    */
 }
 
 /*
