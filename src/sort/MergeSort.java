@@ -1,15 +1,11 @@
 package sort;
 
 public class MergeSort {
-    public static void mergesort(int[] array) {
+    public void mergesort(int[] array) {
         mergesort(array, new int[array.length], 0, array.length - 1);
-
-        for(int i = 0;i < array.length;i++) {
-            System.out.println(array[i]);
-        }
     }
 
-    public static void mergesort(int[] array, int[] temp, int leftStart, int rightEnd) {
+    public void mergesort(int[] array, int[] temp, int leftStart, int rightEnd) {
         if (leftStart >= rightEnd) {
             return;
         }
@@ -21,7 +17,7 @@ public class MergeSort {
         margeHalves(array, temp, leftStart, rightEnd);
     }
 
-    public static void margeHalves(int[] array, int[] temp, int leftStart, int rightEnd) {
+    public void margeHalves(int[] array, int[] temp, int leftStart, int rightEnd) {
         int leftEnd = (leftStart + rightEnd) / 2;
         int rightStart = leftEnd + 1;
 
@@ -33,12 +29,11 @@ public class MergeSort {
 
         // Walking thru each half of the array
         // and copy the smaller element
-        while(left <= leftEnd && right <= rightEnd) {
+        while (left <= leftEnd && right <= rightEnd) {
             if (array[left] <= array[right]) {
                 temp[index] = array[left];
                 left++;
-            }
-            else {
+            } else {
                 temp[index] = array[right];
                 right++;
             }
@@ -64,8 +59,71 @@ public class MergeSort {
     }
 
     public static void main(String[] args) {
-        mergesort(new int[] {38, 27, 43, 3, 9, 82, 10});
+        int[] array = new int[] {38, 27, 43, 3, 9, 82, 10};
+        new MergeSort().mergesort(array);
+        for (int i : array) {
+            System.out.println(i);
+        }
     }
+
+    /*
+    public void mergeSort(int[] array) {
+        int[] temp = new int[array.length];
+        mergeSort(array, temp, 0, array.length - 1);
+
+        for (int i: temp) {
+            System.out.println(i);
+        }
+    }
+
+    private void mergeSort(int[] array, int[] temp, int left, int right) {
+        if (left >= right) {
+            return;
+        }
+
+        int middle = (left + right) / 2;
+        mergeSort(array, temp, left, middle);
+        mergeSort(array, temp, middle + 1, right);
+        mergeHalves(array, temp, left, right);
+    }
+
+    private void mergeHalves(int[] array, int[] temp, int leftStart, int rightEnd) {
+        int leftEnd = (leftStart + rightEnd) / 2; // 0
+        int rightStart = leftEnd + 1;   // 1
+        int size = rightEnd - leftStart + 1;  // 2
+
+        int left = leftStart;   // 0
+        int right = rightStart; // 1
+
+        int index = leftStart;  // 0
+
+        // 5 3
+        while (left <= leftEnd && right <= rightEnd) {
+            if (array[left] <= array[right]) {
+                temp[index] = array[left];
+                left++;
+            } else {
+                temp[index] = array[right];   // temp[0] = array[1] = 3
+                right++;                      // right = 2
+            }
+            index++;                          // index = 1
+        }
+
+        if (left <= leftEnd) {                // 0 <= 0
+            temp[index] = array[left];        // temp[1] = array[0] = 5
+            index++;                          // index = 2
+            left++;                           // left = 1
+        }
+
+        if (right <= rightEnd) {
+            temp[index] = array[right];
+            index++;
+            right++;
+        }
+        // System.arraycopy(src, srcPos, dest, destPos, length);
+        System.arraycopy(temp, leftStart, array, leftStart, size);
+    }
+    */
 }
 
 /*
