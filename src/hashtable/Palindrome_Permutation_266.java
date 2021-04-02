@@ -55,4 +55,27 @@ class Palindrome_Permutation_266 {
 		System.out.println(new Palindrome_Permutation_266().canPermutePalindrome("carerac"));
 		System.out.println(new Palindrome_Permutation_266().canPermutePalindrome("code"));
 	}
+
+	public boolean canPermutePalindrome(String s) {
+		int[] dict = new int[128];
+		int l = s.length();
+
+		while (char c: s.toCharArray()) {
+			dict[c - 'a']++;
+		}
+
+		int countOdd = 0;
+
+		for (int c: dict) {
+			if (c % 2 != 0) {
+				countOdd++;
+			}
+		}
+		
+		if (l % 2 == 1) {
+			return countOdd == 1;
+		} else {
+			return countOdd == 0;
+		}
+	}
 }
