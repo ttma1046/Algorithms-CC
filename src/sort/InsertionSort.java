@@ -11,12 +11,14 @@ public class InsertionSort {
 				array[j] = array[j - 1];
 				array[j - 1] = temp;
 
+				/*
 				for (int k : array) {
 					System.out.print(k);
 					System.out.print(",");
 
 				}
-					System.out.println();
+				System.out.println();
+				*/
 			}
 		}
 	}
