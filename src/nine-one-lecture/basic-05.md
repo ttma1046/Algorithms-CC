@@ -164,7 +164,7 @@ return 合适的值
 - 16.3Sum Closest (Medium)
 - 713.Subarray Product Less Than K (Medium)
 - 977.Squares of a Sorted Array (Easy)
-- Dutch National Flag Problem
+- [Dutch National Flag Problem (Three way Quick sort)](https://en.wikipedia.org/wiki/Dutch_national_flag_problem)
 
 > 下面是二分类型
 
