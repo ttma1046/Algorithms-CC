@@ -24,6 +24,9 @@ public class QuickSort {
     }
 
     public int partitionII(int[] array, int left, int right, int pivot) {
+        System.out.println("pivot:" + pivot);
+        System.out.println("left:" + left);
+        System.out.println("right:" + right);
         while (left <= right) {
             while (array[left] < pivot) {
                 left++;
@@ -34,7 +37,26 @@ public class QuickSort {
             }
 
             if (left <= right) {
+                System.out.println("left index:" + left + ":value:" + array[left]);
+                System.out.println("right index:" + right + ":value:" + array[right]);
+
+                System.out.println("before swap:");
+                for (int i: array) {
+                    System.out.print(i);
+                    System.out.print(",");
+                }
+                System.out.println();
+
+
                 swap(array, left, right);
+
+                System.out.println("after swap:");
+                for (int i: array) {
+                    System.out.print(i);
+                    System.out.print(",");
+                }
+                System.out.println();
+
                 left++;
                 right--;
             }
@@ -157,6 +179,32 @@ public class QuickSort {
         a[i] = a[j];
         a[j] = t;
     }
+    */
+    
+    
+    /*
+
+
+    15 3 9 8 5 2 7 1 6
+    L                R
+    
+
+    5
+
+    15 3 9 8 5 2 7 1 6
+    L              R
+
+    1 3 9 8 5 2 7 15 6
+      L         R
+
+    1 3 9 8 5 2 7 15 6
+        L     R
+
+    1 3 2 8 5 9 7 15 6
+          L R
+
+    1 3 2 5 8 9 7 15 6
+          R L
     */
 }
 
