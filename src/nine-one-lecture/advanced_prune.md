@@ -33,3 +33,25 @@
 练习剪枝最有利的方式就是通过回溯法。 由于回溯本质就是暴力穷举， 因此如果不剪枝很可能会超时。 毫不夸张地说，剪枝剪地好，回溯 AC 少不了。
 
 比如 N 皇后问题，如果暴力穷举就是 $N ^ N$，如果使用剪枝则可大大减少时间，可以减少到 $N!$。推荐一篇 N 皇后的文章给大家 https://old-panda.com/2020/12/12/eight-queens-puzzle/?hmsr=toutiao.io&utm_medium=toutiao.io&utm_source=toutiao.io
+
+
+
+     0  1  2  3  4
+  0  0 -1 -2 -3 -4    left => right
+  1  1  0 -1 -2 -3
+  2  2  1  0 -1 -2
+  3  3  2  1  0 -1  
+  4  4  3  2  1  0
+
+
+
+same col * n
+
+if (i - j) == (newi - newj)
+
+     0  1  2  3  4
+  0  0  1  2  3  4
+  1  1  2  3  4  5    right => left
+  2  2  3  4  5  6
+  3  3  4  5  6  7 
+  4  4  5  6  7  8
