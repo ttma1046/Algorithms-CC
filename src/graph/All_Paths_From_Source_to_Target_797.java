@@ -118,6 +118,8 @@ class All_Paths_From_Source_to_Target_797 {
 	}
 	*/
 
+	/*
+
 	private Map<Integer, List<List<Integer>>> memo;
 
 	public List<List<Integer>> allPathsSourceTargetDP(int index, int[][] graph, int target) {
@@ -150,6 +152,40 @@ class All_Paths_From_Source_to_Target_797 {
 		this.memo = new HashMap<>();
 
 		return allPathsSourceTargetDP(0, graph, graph.length - 1);
+	}
+	*/
+	
+	private Map<Integer, List<List<Integer>>> memo;
+
+	public List<List<Integer>> allPathsSourceTargetDP(int[][] graph) {
+		this.memo = new HashMap<>();
+
+		return allPathsSourceTargetDP(graph, 0, graph.length - 1);
+	}
+
+	public List<List<Integer>> allPathsSourceTargetDP(int[][] graph, int index, int target) {
+		if (memo.containsKey(index)) return memo.get(index);
+
+		List<List<Integer>> res = new ArrayList<>();
+
+		if (index == target) {
+			List<Integer> list = new ArrayList<>();
+			list.add(index);
+			res.add(list);
+			return res;
+		}
+
+		for (int next: graph[index]) {
+			for (List<Integer> sub : allPathsSourceTargetDP(graph, next, target)) {
+				List<Integer> list = new ArrayList<>();
+				list.add(index);
+				list.addAll(sub);
+				res.add(list);
+			}
+		}
+
+		memo.put(index, res);
+		return res;
 	}
 
 	public static void main(String[] args) {
