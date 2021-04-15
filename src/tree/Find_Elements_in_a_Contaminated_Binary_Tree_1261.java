@@ -1,4 +1,6 @@
-
+package tree;
+import java.util.Set;
+import java.util.HashSet;
 
 /*
 Given a binary tree with the following rules:
@@ -82,7 +84,8 @@ Total calls of find() is between [1, 10^4]
  *     }
  * }
  */
-class FindElements {
+class Find_Elements_in_a_Contaminated_Binary_Tree_1261 {
+	/*
 	// sln 1
 	TreeNode mainRoot;
 	public FindElements(TreeNode root) {
@@ -184,17 +187,27 @@ class FindElements {
 			}
 		}
 	}
+	*/
 
-
-
-
-
+	// my sln
 	Set<Integer> set = new HashSet<Integer>();
 
-	public FindElements(TreeNode root) {
-		
+	public Find_Elements_in_a_Contaminated_Binary_Tree_1261(TreeNode root) {
+		if (root != null) {
+			root.val = 0;
+			bfs(root, 0);
+		}
 	}
 
+	private void bfs(TreeNode node, int val) {
+		set.add(val);
+		if (node.left != null) bfs(node.left, val * 2 + 1);
+		if (node.right != null) bfs(node.right, val * 2 + 2);
+	}
+
+	public boolean find(int target) {
+		return set.contains(target);
+	}
 
 	public static void main(String[] args) {
 		TreeNode one = new TreeNode(-1);
@@ -202,7 +215,7 @@ class FindElements {
 		TreeNode root = new TreeNode(-1);
 		root.right = one;
 
-		FindElements fe = new FindElements(root);
+		Find_Elements_in_a_Contaminated_Binary_Tree_1261 fe = new Find_Elements_in_a_Contaminated_Binary_Tree_1261(root);
 
 		System.out.println(fe.find(1));
 
