@@ -94,10 +94,11 @@ class Minimize_Rounding_Error_to_Meet_Target_1058 {
 		double err = 0;
 		int n = prices.length;
 
-		double[] dprices = new double[prices.length];
+		double[] dprices = new double[n];
 
-		for (String s : prices) {
-			double f = Double.valueOf(s);
+		for (int i = 0; i < n; i++) {
+			double f = Double.valueOf(prices[i]);
+			dprices[i] = f;
 			int low = (int)Math.floor(f);
 			int high = (int)Math.ceil(f);
 			max += high;
@@ -108,28 +109,42 @@ class Minimize_Rounding_Error_to_Meet_Target_1058 {
 
 		int round_ups = target - min;
 
-		return "-1";
+		// return "-1";
 
 		// Arrays.sort(dprices, (a, b)->(Math.ceil(a) - a) < (Math.ceil(b) - b));
 
 
 
-		Arrays.sort(dprices, (a, b)->Double.compare((double)(Math.ceil(a) - a), (double)(Math.ceil(b) - b)));
+		// Arrays.sort(dprices, (a, b)->Double.compare((double)(Math.ceil(a) - a), (double)(Math.ceil(b) - b)));
 
+		// Arrays.sort(dprices, Comparator.comparingDouble(a -> (Math.ceil(a) - a)));
+
+		for (double ss : dprices) {
+			System.out.println(ss);
+		}
+
+		
+		dprices[0] = 4.9;
+		dprices[1] = 2.8;
+		dprices[2] = 0.7;
+		
 		/*
 		Arrays.sort(dprices, new Comparator<Double>() {
 			@Override
-			public int compare(double a, double b) {
+			public int compare(Double a, Double b) {
 				if (Double.compare(Math.ceil(a) - a, Math.ceil(b) - b) == 0) {
 					return 0;
-				} else if (Double.compare(Math.ceil(a) - a, Math.ceil(b) - b) > 0) {
-					return 1;;
-				} else {
-					return -1;
 				}
+
+				if (Double.compare(Math.ceil(a) - a, Math.ceil(b) - b) > 0) {
+					return 1;;
+				}
+
+				return -1;
 			}
-		});
-		*/
+		});*/
+
+		System.out.println("round_ups: " + round_ups);
 
 		for (int i = 0; i < dprices.length; ++ i) {
 			if (c < round_ups && Math.ceil(dprices[i]) - dprices[i] != 0) {
@@ -235,7 +250,6 @@ class Minimize_Rounding_Error_to_Meet_Target_1058 {
 			this.diff = diff;
 		}
 	}
-
 
 	// java easy to understand dp
 	public String minimizeErrorEasyDP(String[] prices, int target) {
@@ -634,19 +648,20 @@ class Minimize_Rounding_Error_to_Meet_Target_1058 {
 
 		// 0.1 - 0.9 = -0.8
 
-		/*
+		
 		while (target-- > 0) {
 			double kk = pq.poll();
 			System.out.println(kk);
 			res += kk;
 		}
-		*/
+		
 		return String.format("%.3f", res);
 	}
 
 	public static void main(String[] args) {
 		String[] strs = new String[] { "0.700", "2.800", "4.900" };
-		new Minimize_Rounding_Error_to_Meet_Target_1058().minimizeError(strs, 8);
+		String res = new Minimize_Rounding_Error_to_Meet_Target_1058().minimizeError(strs, 8);
+		System.out.println(res);
 		// System.out.println(new Minimize_Rounding_Error_to_Meet_Target_1058().minimizeErrorDP(strs, 8));
 
 

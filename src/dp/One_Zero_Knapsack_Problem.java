@@ -45,7 +45,7 @@ class One_Zero_Knapsack_Problem {
 				if (i == 0 || w == 0)
 					K[i][w] = 0;
 				else if (weightArray[i - 1] <= w)
-					K[i][w] = max(
+					K[i][w] = Math.max(
 					              valueArray[i - 1] + K[i - 1][w - weightArray[i - 1]],
 					              K[i - 1][w]);
 				else
@@ -54,6 +54,14 @@ class One_Zero_Knapsack_Problem {
 		}
 
 		return K[length][maxWeight];
+	}
+
+	knapSack() {
+		if (j < weight[i]) {
+			K[i][j] = K[i - 1][j];
+		} else {
+			K[i][j] = Math.max(value[i] + K[i - 1][j - weight[i]], K[i - 1][j]);
+		}
 	}
 
 }
