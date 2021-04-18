@@ -1,4 +1,5 @@
 package leetcode;
+import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.List;
 import java.util.ArrayList;
@@ -6,8 +7,13 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.HashMap;
 import java.text.DecimalFormat;
+import java.math.BigDecimal;
 /*
-Given an array of prices [p1,p2...,pn] and a target, round each price pi to Roundi(pi) so that the rounded array [Round1(p1),Round2(p2)...,Roundn(pn)] sums to the given target. Each operation Roundi(pi) could be either Floor(pi) or Ceil(pi).
+Given an array of prices [p1,p2...,pn] and a target,
+
+round each price pi to Roundi(pi) so that the rounded array [Round1(p1),Round2(p2)...,Roundn(pn)] sums to the given target.
+
+Each operation Roundi(pi) could be either Floor(pi) or Ceil(pi).
 
 Return the string "-1" if the rounded array is impossible to sum to target. Otherwise, return the smallest rounding error, which is defined as Σ |Roundi(pi) - (pi)| for i from 1 to n, as a string with three places after the decimal.
 
@@ -37,31 +43,6 @@ Each string prices[i] represents a real number in the range [0.0, 1000.0] and ha
 0 <= target <= 106
 */
 class Minimize_Rounding_Error_to_Meet_Target_1058 {
-	// Priority Queue
-	public String minimizeErrorPQ(String[] prices, int target) {
-		float res = 0;
-		PriorityQueue<Double> diffHeap = new PriorityQueue<>();
-
-		for (String s : prices) {
-			float f = Float.valueOf(s);
-			double low = Math.floor(f);
-			double high = Math.ceil(f);
-
-			if (low != high)
-				diffHeap.offer((high - f) - (f - low));
-
-			res += f - low;
-			target -= low;
-		}
-
-		if (target < 0 || target > diffHeap.size())
-			return "-1";
-
-		while (target-- > 0)
-			res += diffHeap.poll();
-
-		return String.format("%.3f", res);
-	}
 
 	// c++ greedy
 	/*
@@ -90,8 +71,79 @@ class Minimize_Rounding_Error_to_Meet_Target_1058 {
 	}
 	*/
 
-	// java Greedy + Selection
+
 	/*
+	Try to use ceil for each price, we can then find a maximum target
+
+	Try also to use floor for each price, we can get a minimum target
+
+	If the parameter is not within such [minimum, maximum] range, return "-1"
+
+	If target is within the range of [minimum, maximum] range, we can find out the number of round_ups by target - _min.
+
+	Sort the prices array by ascending order of round errors, smallers errors for round up come first.
+
+	The only cornor case is when there is no round up error, we need to skip such element
+
+	Converted everything back to double for processing... Time complexity should be O(NlogN) due to sorting.
+
+	greedy
+	*/
+	public String minimizeError(String[] prices, int target) {
+		int max = 0, min = 0, c = 0;
+		double err = 0;
+		int n = prices.length;
+
+		double[] dprices = new double[prices.length];
+
+		for (String s : prices) {
+			double f = Double.valueOf(s);
+			int low = (int)Math.floor(f);
+			int high = (int)Math.ceil(f);
+			max += high;
+			min += low;
+		}
+
+		if (target < min || target > max) return "-1";
+
+		int round_ups = target - min;
+
+		return "-1";
+
+		// Arrays.sort(dprices, (a, b)->(Math.ceil(a) - a) < (Math.ceil(b) - b));
+
+
+
+		Arrays.sort(dprices, (a, b)->Double.compare((double)(Math.ceil(a) - a), (double)(Math.ceil(b) - b)));
+
+		/*
+		Arrays.sort(dprices, new Comparator<Double>() {
+			@Override
+			public int compare(double a, double b) {
+				if (Double.compare(Math.ceil(a) - a, Math.ceil(b) - b) == 0) {
+					return 0;
+				} else if (Double.compare(Math.ceil(a) - a, Math.ceil(b) - b) > 0) {
+					return 1;;
+				} else {
+					return -1;
+				}
+			}
+		});
+		*/
+
+		for (int i = 0; i < dprices.length; ++ i) {
+			if (c < round_ups && Math.ceil(dprices[i]) - dprices[i] != 0) {
+				err += Math.ceil(dprices[i]) - dprices[i];
+				c++;
+			} else if (c >= round_ups) {
+				err += dprices[i] - Math.floor(dprices[i]);
+			}
+		}
+
+		return String.format("%.3f", err);
+	}
+
+	// java Greedy + Selection
 	public String minimizeErrorGreedy(String[] prices, int target) {
 		List<BigDecimal> errors = new ArrayList<>();
 		double min = 0;
@@ -148,7 +200,6 @@ class Minimize_Rounding_Error_to_Meet_Target_1058 {
 			return selectKthSmallest(errors, smallEqualIdx + 1, hb, k);
 		}
 	}
-	*/
 
 	// simple java (CeilPriceWithDiff)
 	public String minimizeErrorCeilPriceWithDiff(String[] prices, int target) {
@@ -185,109 +236,18 @@ class Minimize_Rounding_Error_to_Meet_Target_1058 {
 		}
 	}
 
-	// java dp
-	public String minimizeErrorDP(String[] prices, int target) {
-		int l = prices.length;
-		double[] d = new double[l];
-		int sum = 0;
-		for (int i = 0; i < l; i++) {
-			double cur = Double.valueOf(prices[i]);
-			int floor = (int)Math.floor(cur);
-			target -= floor;
-			d[i] = cur - floor;
-			sum += d[i] > 0 ? 1 : 0;
-		}
-		if (target < 0 || sum < target) {
-			return "-1";
-		}
-		double[][] dp = new double[target + 1][l + 1];
-		for (int i = 1; i <= l; i++) {
-			dp[0][i] = dp[0][i - 1] + d[i - 1];
-
-		}
-		for (int i = 1; i <= target; i++) {
-			for (int j = i; j <= l; j++) {
-				if (j > i) {
-					dp[i][j] = Math.min(dp[i - 1][j - 1] + 1 - d[j - 1], dp[i][j - 1] + d[j - 1]);
-				} else if (i == j) {
-					dp[i][j] = dp[i - 1][j - 1] + 1 - d[j - 1];
-				}
-			}
-		}
-		String res = String.format("%.3f", dp[target][l]);
-		return res;
-	}
-
-
-	/*
-	Example 1:
-
-	Input: prices = ["0.700","2.800","4.900"], target = 8
-	Output: "1.000"
-	Explanation:
-	Use Floor, Ceil and Ceil operations to get (0.7 - 0) + (3 - 2.8) + (5 - 4.9) = 0.7 + 0.2 + 0.1 = 1.0 .
-
-	Example 2:
-
-	Input: prices = ["1.500","2.500","3.500"], target = 10
-	Output: "-1"
-	Explanation: It is impossible to meet the target.
-
-	Example 3:
-
-	Input: prices = ["1.500","2.500","3.500"], target = 9
-	Output: "1.500"
-	*/
 
 	// java easy to understand dp
 	public String minimizeErrorEasyDP(String[] prices, int target) {
-		DecimalFormat df = new DecimalFormat("#0.000");
-		@SuppressWarnings("unchecked")
-		Map<Integer, Double>[] memo = new HashMap[prices.length + 1];
-
-		double ans = dp(0, target, memo, prices);
-
-		if (ans == 0) return "0.000";
-
-		return ans <= 1000000 ? df.format(ans) : "-1";
-	}
-
-	private double dp(int index, int target, Map<Integer, Double>[] memo, String[] prices) {
-		if (target < 0) return 2000000;
-
-		if (memo[index] != null && memo[index].containsKey(target)) return memo[index].get(target);
-
-		if (index == prices.length) {
-			if (target == 0) return 0;
-
-			return 2000000;
-		}
-
-		double curr = Double.parseDouble(prices[index]);
-		int floor = (int) Math.floor(curr);
-		int ceil = (int) Math.ceil(curr);
-
-		double currError = Math.min(curr - floor + dp(index + 1, target - floor, memo, prices),
-		                            ceil - curr + dp(index + 1, target - ceil, memo, prices));
-
-		if (memo[index] == null) memo[index] = new HashMap<Integer, Double>();
-
-		memo[index].put(target, currError);
-
-		return currError;
-	}
-
-	/*
-	public String minimizeError(String[] prices, int target) {
 		DecimalFormat df = new DecimalFormat("#.000");
 		HashMap<Integer, Double>[] memo = new HashMap[prices.length + 1];
-		double ans = minimizeError(memo, 0, target, prices);
+		double ans = minimizeErrorEasyDP(memo, 0, target, prices);
 		if (ans == 0)
 			return "0.000";
 		return ans <= 1000000 ? df.format(ans) : "-1";
 	}
 
-	public double minimizeError(HashMap<Integer, Double>[] memo, int index, int target, String[] prices) {
+	public double minimizeErrorEasyDP(HashMap<Integer, Double>[] memo, int index, int target, String[] prices) {
 		if (target < 0) {
 			return 2000000;
 		}
@@ -306,8 +266,8 @@ class Minimize_Rounding_Error_to_Meet_Target_1058 {
 		double current = Double.parseDouble(prices[index]);
 		int floor =  (int) Math.floor(current);
 		int ceil = (int) Math.ceil(current);
-		double currError = Math.min(current - floor + minimizeError(memo, index + 1, target - floor, prices),
-		                            ceil - current + minimizeError(memo, index + 1, target - ceil, prices));
+		double currError = Math.min(current - floor + minimizeErrorEasyDP(memo, index + 1, target - floor, prices),
+		                            ceil - current + minimizeErrorEasyDP(memo, index + 1, target - ceil, prices));
 
 		if (memo[index] == null) {
 			memo[index] = new HashMap<Integer, Double>();
@@ -316,7 +276,6 @@ class Minimize_Rounding_Error_to_Meet_Target_1058 {
 		memo[index].put(target, currError);
 		return currError;
 	}
-	*/
 
 	// DFS backtracking with memorization
 	public String minimizeErrorDFS(String[] prices, int target) {
@@ -396,11 +355,7 @@ class Minimize_Rounding_Error_to_Meet_Target_1058 {
 
 				if (j > i) {
 					dp[i][j] = Math.min(dp[i - 1][j - 1] + 1 - p[j - 1], dp[i][j - 1] + p[j - 1]);
-				}
-
-
-				//using j items and require the target to be j, it means all numbers have to be roud up
-				else if (i == j) {
+				} else if (i == j) { 				//using j items and require the target to be j, it means all numbers have to be roud up
 					dp[i][j] = dp[i - 1][j - 1] + 1 - p[j - 1];
 				}
 
@@ -412,9 +367,8 @@ class Minimize_Rounding_Error_to_Meet_Target_1058 {
 		return res;
 	}
 
-
-	// fastest
-	public String minimizeError(String[] prices, int target) {
+	// fastest II
+	public String minimizeErrorI(String[] prices, int target) {
 		int intSum = 0;
 		int unchangable = 0;
 		List<Integer> lst = new ArrayList<>(prices.length);
@@ -469,8 +423,8 @@ class Minimize_Rounding_Error_to_Meet_Target_1058 {
 		return ans;
 	}
 
-	// fastest
-	public String minimizeError(String[] prices, int target) {
+	// fastest II
+	public String minimizeErrorII(String[] prices, int target) {
 		DecimalFormat formatter = new DecimalFormat("#0.000");
 
 		PriorityQueue<Double> pq = new PriorityQueue<>();
@@ -482,7 +436,7 @@ class Minimize_Rounding_Error_to_Meet_Target_1058 {
 			double priceD = Double.valueOf(price);
 			double priceMin = Math.floor(priceD);
 			double priceMax = Math.ceil(priceD);
-			double round = priceD - (double) priceMin;
+			double round = priceD - priceMin;
 			minSum = minSum + priceMin;
 			maxSum = maxSum + priceMax;
 			pq.add(1.000 - round);
@@ -506,13 +460,197 @@ class Minimize_Rounding_Error_to_Meet_Target_1058 {
 		return formatter.format(result);
 	}
 
+	// Java beat 96%
+	public String minimizeErrorQuick(String[] prices, int target) {
+		int sum = 0;
+		double[] d = new double[prices.length];
+		int nn = prices.length;
+		for (int i = 0; i < prices.length; i++) {
+			String p = prices[i];
+			double dv = Double.valueOf(p);
+			int v = (int)dv;
+			sum += v;
+			d[i] = dv - v;
+			if (d[i] == 0) nn--;
+		}
+		if (sum > target || sum + nn < target) return "-1";
+		Arrays.sort(d);
+		int n = target - sum;
+		double ans = 0;
+		int i = d.length - 1;
+		for (; i >= d.length - n; i--) {
+			ans += 1 - d[i];
+		}
+		for (; i > -1; i--) {
+			ans += d[i];
+		}
+		return String.format("%.3f", ans);
+	}
+
+	/*
+	The idea is similar to the classic knapsack problem, but here we want a min value and we have round up a fixed number of elements.
+
+	We can first preprocess the array to make all the numbers smaller than 1 and change the value of target accordingly to make the following calculation more clear.
+
+	We can use a 2d array, and iterate between 1 - target and 1 - len.
+
+	For every element in the array, we can either
+
+		choose (which means a cost of round up)
+
+	or
+	    not choose (cost of round down),
+
+	then we can reach final result dp[target][len].
+
+	Since there's a requirement that the target amount of elements have to be rounded up,
+
+	then there're some cells in the 2d array we can't reach.
+
+	(where index of elements smaller than index of target)
+
+	We can also just use a 1d array and for 1d array we need to generate a new 1d array for each iteration of the target.
+	*/
+	// java dp not understand
+	public String minimizeErrorDPnotUnderstand(String[] prices, int target) {
+		int n = prices.length;
+		double[] newPrices = new double[n];
+		int sum = 0;
+
+		for (int i = 0; i < n; i++) {
+			double cur = Double.valueOf(prices[i]);
+			int floor = (int)Math.floor(cur);
+			target -= floor;
+			newPrices[i] = cur - floor;
+			sum += newPrices[i] > 0 ? 1 : 0;
+		}
+
+		if (target < 0 || target > sum) {
+			return "-1";
+		}
+
+		/*
+		System.out.println("target: " + target + " sum: " + sum);
+		System.out.println(sum);
+
+		*/
+
+		// 3.7 2.8 4.9 (3 + 2 + 4) > 8
+
+		// 0.7 2.8 4.9 10
+
+		// (1 + 3 + 5) < 10
+
+		// 10 - 0 - 2 - 4 = 4
+
+		// 4 - 0.7 - 0.8 - 0.9
+
+		System.out.println(target);
+		double[][] dp = new double[target + 1][n + 1];
+		for (int i = 1; i <= n; i++) {
+			dp[0][i] = dp[0][i - 1] + newPrices[i - 1];
+		}
+
+		/*
+		for (double k: newPrices) {
+			System.out.println(k);
+		}
+
+		for (double t: dp[0]) {
+			System.out.println(t);
+		}
+		*/
+
+		/*
+		target = 2
+
+		n = 3
+		prices = [ "0.700", "2.800", "4.900" ];
+		newPrices = [ 0.700, 0.800, 0.900 ];
+		dp[0] = [0, 0.700, 1.500, 2.400];
+
+		[   0    1      2      3
+			0[0, 0.700, 1.500, 2.400]
+			1[0, 0.300, 0.900, 1.599]
+			2[0, 0,     0.500, 0.999]
+		]
+		*/
+
+		for (int i = 1; i <= target; ++i) {
+			for (int j = i; j <= n; ++j) {
+				if (j > i) {
+					dp[i][j] = Math.min(dp[i - 1][j - 1] + 1 - newPrices[j - 1], dp[i][j - 1] + newPrices[j - 1]);
+				} else if (i == j) {
+					dp[i][j] = dp[i - 1][j - 1] + 1 - newPrices[j - 1];
+				}
+			}
+		}
+
+		/*
+		for (int row = 0; row < dp.length; row++) {
+			for (int col = 0; col < dp[row].length; col++) {
+				System.out.print(dp[row][col]);
+				System.out.print(",");
+			}
+
+			System.out.println();
+		}
+		*/
+
+		String res = String.format("%.3f", dp[target][n]);
+		return res;
+	}
+
+	public String minimizeErrorPQ(String[] prices, int target) {
+		float res = 0;
+		PriorityQueue<Double> pq = new PriorityQueue<>();
+
+		for (String s : prices) {
+			float f = Float.valueOf(s);
+			double low = Math.floor(f);
+			double high = Math.ceil(f);
+
+			if (low != high)
+				pq.offer((high - f) - (f - low));
+
+			res += f - low;
+			target -= low;
+		}
+
+		System.out.println("pq.size(): " + pq.size() + " target: " + target);
+
+		if (target < 0 || pq.size() < target) // assuming every price uses ceils but still less than the (target - all floors)
+			return "-1";
+
+		/*
+		while(!pq.isEmpty()) {
+			System.out.println(pq.poll());
+		}
+		*/
+
+		// 0.3 - 0.7 = -0.4
+
+		// 0.2 - 0.8 = -0.6
+
+		// 0.1 - 0.9 = -0.8
+
+		/*
+		while (target-- > 0) {
+			double kk = pq.poll();
+			System.out.println(kk);
+			res += kk;
+		}
+		*/
+		return String.format("%.3f", res);
+	}
 
 	public static void main(String[] args) {
 		String[] strs = new String[] { "0.700", "2.800", "4.900" };
-		System.out.println(new Minimize_Rounding_Error_to_Meet_Target_1058().minimizeErrorEasyDP(strs, 10));
+		new Minimize_Rounding_Error_to_Meet_Target_1058().minimizeError(strs, 8);
+		// System.out.println(new Minimize_Rounding_Error_to_Meet_Target_1058().minimizeErrorDP(strs, 8));
 
 
-		strs = new String[] { "0.700", "2.800", "4.900" };
-		System.out.println(new Minimize_Rounding_Error_to_Meet_Target_1058().minimizeErrorEasyDP(strs, 8));
+		// strs = new String[] { "0.700", "2.800", "4.900" };
+		// System.out.println(new Minimize_Rounding_Error_to_Meet_Target_1058().minimizeErrorEasyDP(strs, 8));
 	}
 }
