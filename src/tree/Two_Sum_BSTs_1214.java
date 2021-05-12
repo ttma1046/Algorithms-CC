@@ -1,5 +1,8 @@
 package tree;
-
+import java.util.Set;
+import java.util.HashSet;
+import java.util.Stack;
+import java.util.LinkedList;
 /*
 Given the roots of two binary search trees, root1 and root2,
 
@@ -37,88 +40,112 @@ The number of nodes in each tree is in the range [1, 5000].
  *     }
  * }
  */
-class Solution {
-    public boolean twoSumBSTs(TreeNode root1, TreeNode root2, int target) {
+class Two_Sum_BSTs_1214 {
+    public boolean twoSumBSTsI(TreeNode root1, TreeNode root2, int target) {
         Set<Integer> set = inHashset(root1, target, new HashSet<Integer>());
 
-        return check(root2, set);
+        return inCheck(root2, set);
     }
 
-    public boolean check(TreeNode node, Set<Integer> set) {
+    public boolean inCheck(TreeNode node, Set<Integer> set) {
         if (node == null) return false;
 
-        return check(node.left, set) || set.contains(node.val) || check(node.right, set);
+        return inCheck(node.left, set) || set.contains(node.val) || inCheck(node.right, set);
     }
 
     private Set<Integer> inHashset(TreeNode node, int target, Set<Integer> set) {
-        if (node == null) return false;
+        if (node == null) return set;
         inHashset(node.left, target, set);
-        set.add(target - r.val);
+        set.add(target - node.val);
         inHashset(node.right, target, set);
-        return s;
+        return set;
     }
 
-    public boolean twoSumBSTs(TreeNode root1, TreeNode root2, int target) {
-        ArrayDeque<TreeNode> stack = new ArrayDeque();
-        Set<Integer> s = new HashSet();
-        // traverse the first tree
-        // and store node complements (target - val) in hashset
-        while (!stack.isEmpty() || root1 != null) {
-            while (root1 != null) {
-                stack.push(root1);
-                root1 = root1.left;
-            }
-            root1 = stack.pop();
-            s.add(target - root1.val);
-            root1 = root1.right;
-        }
 
-        // traverse the second tree
-        // and check if one of the values exists in hashset
-        while (!stack.isEmpty() || root2 != null) {
-            while (root2 != null) {
-                stack.push(root2);
-                root2 = root2.left;
-            }
-            root2 = stack.pop();
-            if (s.contains(root2.val)) {
+
+ public boolean twoSumBSTs(TreeNode root1, TreeNode root2, int target) {
+        if (root1 == null) {
+            return false;
+        }
+        
+        if (findTarget(root1, root2, target)) {
+            return true;
+        }
+        
+        return helper(root1.left, root2, target) || helper(root1.right, root2, target);
+    }
+    
+    private boolean helper(TreeNode root, TreeNode root2, int target) {
+        if (root == null) {
+            return false;
+        }
+        
+        if (findTarget(root, root2, target)) {
+            return true;
+        }
+        
+        return helper(root.left, root2, target) || helper(root.right, root2, target);
+    }
+    
+    private boolean findTarget(TreeNode p, TreeNode root, int target) {
+        while (root != null) {
+            if (p.val + root.val == target) {
                 return true;
+            } 
+            
+            if (p.val + root.val < target) {
+                root = root.right;
+            } else {
+                root = root.left;
             }
-            root2 = root2.right;
         }
-
+        
         return false;
     }
+    
+    public static void main(String[] args) {
+        Two_Sum_BSTs_1214 obj = new Two_Sum_BSTs_1214();
+
+        TreeNode treeOneone = new TreeNode(1);
+        TreeNode treeOnefour = new TreeNode(4);
+
+        TreeNode treeOne = new TreeNode(2);
+        treeOne.left = treeOneone;
+        treeOne.right = treeOnefour;
+
+        TreeNode treeTwoZero = new TreeNode(0);
+        TreeNode treeTwoThree = new TreeNode(3);
+
+        TreeNode treeTwo = new TreeNode(1);
+        treeTwo.left = treeTwoZero;
+        treeTwo.right = treeTwoThree;
+
+        System.out.println(obj.twoSumBSTsI(treeOne, treeTwo, 5));
+    }
 
     public boolean twoSumBSTs(TreeNode root1, TreeNode root2, int target) {
-        Stack<TreeNode> stack = new LinkedList<TreeNode>();
+        Set<Integer> set = new HashSet<>();
+        Stack<TreeNode> stack = new Stack<>();
 
-        Set<TreeNode> set = new HashSet<TreeNode>();
-
-        while (!stack.isEmpty() || root1 != null) {
-            while(root1 != null) {
+        while (root1 != null || !stack.isEmpty()) {
+            while (root1 != null) {
                 stack.push(root1);
                 root1 = root1.left;
             }
 
             root1 = stack.pop();
             set.add(target - root1.val);
-
             root1 = root1.right;
         }
 
-        while (!stack.isEmpty() || root2 != null) {
+        while (root2 != null || !stack.isEmpty()) {
             while (root2 != null) {
                 stack.push(root2);
                 root2 = root2.left;
             }
 
-            root2 = root2.pop();
-
-            if (set.contains(root2.val)) {
-                return true;
-            }
-
+            root2 = stack.pop();
+            if (set.contains(root2.val)) return true;
             root2 = root2.right;
         }
 
