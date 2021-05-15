@@ -61,48 +61,46 @@ class Two_Sum_BSTs_1214 {
         return set;
     }
 
-
-
- public boolean twoSumBSTs(TreeNode root1, TreeNode root2, int target) {
+    public boolean twoSumBSTs(TreeNode root1, TreeNode root2, int target) {
         if (root1 == null) {
             return false;
         }
-        
+
         if (findTarget(root1, root2, target)) {
             return true;
         }
-        
+
         return helper(root1.left, root2, target) || helper(root1.right, root2, target);
     }
-    
+
     private boolean helper(TreeNode root, TreeNode root2, int target) {
         if (root == null) {
             return false;
         }
-        
+
         if (findTarget(root, root2, target)) {
             return true;
         }
-        
+
         return helper(root.left, root2, target) || helper(root.right, root2, target);
     }
-    
+
     private boolean findTarget(TreeNode p, TreeNode root, int target) {
         while (root != null) {
             if (p.val + root.val == target) {
                 return true;
-            } 
-            
+            }
+
             if (p.val + root.val < target) {
                 root = root.right;
             } else {
                 root = root.left;
             }
         }
-        
+
         return false;
     }
-    
+
     public static void main(String[] args) {
         Two_Sum_BSTs_1214 obj = new Two_Sum_BSTs_1214();
 
