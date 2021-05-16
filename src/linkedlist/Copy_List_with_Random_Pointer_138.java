@@ -92,7 +92,7 @@ class Node {
 class Copy_List_with_Random_Pointer_138 {
 	Map<Node, Node> map = new HashMap<>();
 
-	public Node copyRandomList(Node head) {
+	public Node copyRandomListRecursive(Node head) {
 		if (head == null) return head;
 
 		if (map.containsKey(head)) return this.map.get(head);
@@ -112,6 +112,42 @@ class Copy_List_with_Random_Pointer_138 {
 	}
 
 	/*
+	Time Complexity : O(N) because we make one pass over the original linked list.
+	Space Complexity : O(N) as we have a dictionary containing mapping from old list nodes to new list nodes. Since there are N nodes, we have O(N) space complexity.
+	*/
+	Map<Node, Node> visited = new HashMap<Node, Node>();
+
+	public Node getClonedNode(Node node) {
+		if (node == null) return node;
+
+		if (this.visited.containsKey(node)) { 
+			return this.visited.get(node); 
+		} else {
+			this.visited.put(node, new Node(node.val));
+			return this.visited.get(node);
+		}
+	}
+
+	public Node copyRandomListIterative(Node head) {
+		if (head == null) return head;
+
+		Node oldNode = head;
+
+		Node newNode = new Node(oldNode.val);
+		this.map.put(oldNode, newNode);
+
+		while(oldNode != null) {
+			newNode.random = this.getClonedNode(oldNode.random);
+			newNode.next = this.getClonedNode(oldNode.next);
+
+			oldNode = oldNode.next;
+			newNode = newNode.next;
+		}
+
+		return this.visited.get(head);
+	}
+
+	/*
 	Time Complexity: O(N)
 		where N is the number of nodes in the linked list.
 
@@ -120,103 +156,41 @@ class Copy_List_with_Random_Pointer_138 {
 		But asymptotically, the complexity is O(N).
 	*/
 
-	// Visited dictionary to hold old node reference as "key" and new node reference as the "value"
-	HashMap<Node, Node> visited = new HashMap<Node, Node>();
-
-	public Node getClonedNode(Node node) {
-		// If the node exists then
-		if (node != null) {
-			// Check if the node is in the visited dictionary
-			if (this.visited.containsKey(node)) {
-				// If its in the visited dictionary then return the new node reference from the dictionary
-				return this.visited.get(node);
-			} else {
-				// Otherwise create a new node, add to the dictionary and return it
-				this.visited.put(node, new Node(node.val));
-				return this.visited.get(node);
-			}
-		}
-
-		return null;
-	}
-
 	public Node copyRandomList(Node head) {
-		if (head == null) return null;
+		if (head == null) return head;
 
-		Node oldNode = head;
-
-		// Creating the new head node.
-		Node newNode = new Node(oldNode.val);
-		this.visited.put(oldNode, newNode);
-
-		// Iterate on the linked list until all nodes are cloned.
-		while (oldNode != null) {
-			// Get the clones of the nodes referenced by random and next pointers.
-			newNode.random = this.getClonedNode(oldNode.random);
-			newNode.next = this.getClonedNode(oldNode.next);
-
-			// Move one step ahead in the linked list.
-			oldNode = oldNode.next;
-			newNode = newNode.next;
-		}
-		return this.visited.get(head);
-	}
-
-	/*
-	Time Complexity : O(N) because we make one pass over the original linked list.
-	Space Complexity : O(N) as we have a dictionary containing mapping from old list nodes to new list nodes. Since there are N nodes, we have O(N) space complexity.
-	*/
-
-	public Node copyRandomList(Node head) {
-		if (head == null) return null;
-
-		// Creating a new weaved list of original and copied nodes.
 		Node ptr = head;
-		while (ptr != null) {
 
-			// Cloned node
+		while(ptr != null) {
 			Node newNode = new Node(ptr.val);
-
-			// Inserting the cloned node just next to the original node.
-			// If A->B->C is the original linked list,
-			// Linked list after weaving cloned nodes would be A->A'->B->B'->C->C'
 			newNode.next = ptr.next;
 			ptr.next = newNode;
 			ptr = newNode.next;
 		}
 
-		/*
-		newNode 
-
-		Ptr
-          |
-		[7, null] => [13, 0] => [11, 4] => [10, 2] => [1, 0]
-
-
-		[7, null]
-		*/
-
 		ptr = head;
 
-		// Now link the random pointers of the new nodes created.
-		// Iterate the newly created list and use the original nodes' random pointers,
-		// to assign references to random pointers for cloned nodes.
-		while (ptr != null) {
+		while(ptr != null) {
 			ptr.next.random = (ptr.random != null) ? ptr.random.next : null;
 			ptr = ptr.next.next;
 		}
 
-		// Unweave the linked list to get back the original linked list and the cloned list.
-		// i.e. A->A'->B->B'->C->C' would be broken to A->B->C and A'->B'->C'
-		Node ptr_old_list = head; // A->B->C
-		Node ptr_new_list = head.next; // A'->B'->C'
+		Node ptr_old_list = head;
+		Node ptr_new_list = head.next;
+
 		Node head_old = head.next;
-		while (ptr_old_list != null) {
+
+		while(ptr_old_list != null) {
 			ptr_old_list.next = ptr_old_list.next.next;
 			ptr_new_list.next = (ptr_new_list.next != null) ? ptr_new_list.next.next : null;
+
 			ptr_old_list = ptr_old_list.next;
 			ptr_new_list = ptr_new_list.next;
 		}
+
 		return head_old;
 	}
+
+	// Time Complexity : O(N)
+	// Space Complexity : O(1)
 }
