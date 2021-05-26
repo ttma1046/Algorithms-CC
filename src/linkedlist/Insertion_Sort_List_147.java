@@ -12,9 +12,43 @@ package linkedlist;
  */
 class Insertion_Sort_List_147 {
     public ListNode sortList(ListNode head) {
-        
+		ListNode dummy = new Listnode();
+
+		ListNode curr = head;
+
+		while(curr != null) {
+			ListNode prev = dummy;
+
+			while(prev.next != null && prev.next.val < curr.val) {
+				prev = prev.next;
+			}
+
+			ListNode next = curr.next;
+			
+			curr.next = prev.next;
+
+			prev.next = curr;
+			
+			curr = next;
+		}
+
+		return dummy.next;
     }
 }
+
+
+
+4 ----> 3 ----> 5
+
+next = 3 ---> 5
+
+4 ===> null
+
+
+
+
+null => 4;
+
 
 
 
