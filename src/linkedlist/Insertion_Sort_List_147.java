@@ -1,5 +1,4 @@
 package linkedlist;
-
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -12,42 +11,41 @@ package linkedlist;
  */
 class Insertion_Sort_List_147 {
     public ListNode sortList(ListNode head) {
-		ListNode dummy = new Listnode();
+    	ListNode dummy = new ListNode();
 
-		ListNode curr = head;
+    	ListNode curr = head;
 
-		while(curr != null) {
-			ListNode prev = dummy;
+    	while (curr != null) {
+    		List prev = dummy;
 
-			while(prev.next != null && prev.next.val < curr.val) {
-				prev = prev.next;
-			}
+    		while (prev.next != null && prev.next.val < curr.val) {
+    			prev = prev.next;
+    		}
 
-			ListNode next = curr.next;
-			
-			curr.next = prev.next;
+    		ListNode next = curr.next;
 
-			prev.next = curr;
-			
-			curr = next;
-		}
+    		curr.next = prev.next;
 
-		return dummy.next;
+    		prev.next = curr;
+
+    		curr = next;
+    	}
+
+    	return dummy.next;
+
     }
 }
-
-
-
+/*
 4 ----> 3 ----> 5
 
 next = 3 ---> 5
 
 4 ===> null
 
-
-
-
 null => 4;
+
+3--->5;
+*/
 
 
 

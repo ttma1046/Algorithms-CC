@@ -33,14 +33,3 @@ public class InsertionSort {
 		}
 	}
 }
-
-
-
-
-for (int i = 1; i < N; i++) {
-	for (int j = i; j > 0 && array[j] < array[j - 1]; j--) {
-		int temp = array[j - 1];
-		array[j - 1] = array[j];
-		array[j - 1] = temp;
-	}
-}
