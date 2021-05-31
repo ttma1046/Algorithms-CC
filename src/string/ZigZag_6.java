@@ -6,7 +6,11 @@ public class ZigZag_6 {
      * of rows like this: (you may want to display this pattern in a fixed font for
      * better legibility)
      * 
-     * P A H N A P L S I I G Y I R And then read line by line: "PAHNAPLSIIGYIR"
+     * P   A   H   N 
+     * A P L S I I G 
+     * Y   I   R 
+     *
+     * And then read line by line: "PAHNAPLSIIGYIR"
      * 
      * Write the code that will take a string and make this conversion given a
      * number of rows:
@@ -46,8 +50,7 @@ public class ZigZag_6 {
     }
 
     public String convert(String s, int numRows) {
-        if (numRows == 1)
-            return s;
+        if (numRows == 1) return s;
 
         StringBuilder ret = new StringBuilder();
         int n = s.length();
