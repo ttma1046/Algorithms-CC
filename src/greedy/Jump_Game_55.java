@@ -1,3 +1,4 @@
+package greedy;
 /*
 
 Given an array of non-negative integers, you are initially positioned at the first index of the array.
@@ -25,7 +26,6 @@ Constraints:
 
 */
 
-package greedy;
 
 class Jump_Game_55 {
     public boolean canJumpBackTracking(int[] nums) {

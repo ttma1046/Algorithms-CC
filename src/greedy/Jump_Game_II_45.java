@@ -12,39 +12,60 @@ Input: [2,3,1,1,4]
 Output: 2
 Explanation: The minimum number of jumps to reach the last index is 2.
     Jump 1 step from index 0 to 1, then 3 steps to the last index.
+
 Note:
-*/
 You can assume that you can always reach the last index.
+*/
 
-class Jump_Game_II {
+class Jump_Game_II_45 {
     public int jump(int[] nums) {
-        if (nums == null || nums.length <= 0) {
-            return -1;
-        }
+        int n = nums.length;
 
-        int lastPos = nums.length - 1;
+        int dp[] = new int[n + 1];
 
-        for (int i = nums.length - 1; i >= 0; i--) {
-            if (i + nums[i] >= lastPos) {
-                lastPos = i;
+        Arrays.fill(dp, -1);
+
+        int res = soln(nums, n, dp);
+
+        if (res != Integer.MAX_VALUE) return res;
+        else return -1;
+    }
+
+    public static int soln(int arr[], int n, int dp[]) {
+        if (n == 1) return 0;
+
+        if (dp[n] != -1) return dp[n];
+
+        dp[n] = Integer.MAX_VALUE;
+
+        for(int i = 0; i <= n - 2; i++) {
+            if (i + arr[i] >= n - 1) {
+                int subRes = soln(arr, i + 1, dp);
+
+                if (subRes != Integer.MAX_VALUE) dp[n] = Math.min(dp[n], subRes + 1);
             }
         }
 
-        return lastPos == 0;
+        return dp[n];
     }
 
-
     public int jump(int[] nums) {
-        if (nums == null || nums.length <= 0) {
-            return -1;
+        int jumps = 0, fastest = 0, currentJumpEnd = 0;
+
+        for (int i = 0; i < nums.length - 1; ++i) {
+            fastest = Math.max(fastest, i + nums[i]);
+
+            if (i == currentJumpEnd) {
+                jumps++;
+                fastest = currentJumpEnd;
+            }
         }
 
-        int minSteps = 0;
+        return jumps;
+    }
 
-        for(int i = 0; i < nums.length; i++) {
-            currentSteps++;
-            minSteps = Math.min(minSteps, currentSteps);
-        }
-        return minSteps
+    public static void main(String[] args) {
+        Jump_Game_II_45 obj = new Jump_Game_II_45();
+        obj.jump(new int[] {2, 3, 1, 1, 4});
     }
 }
