@@ -104,18 +104,18 @@ public class InorderSuccessorinBST_285 {
     }
 
     /* recursive */
-    public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
+    public TreeNode inorderSuccessorRec(TreeNode root, TreeNode p) {
         if (root == null || p == null) return null;
 
         if (root.val <= p.val) {
-            return inorderSuccessor(root.right, p);
+            return inorderSuccessorRec(root.right, p);
         } else {
-            TreeNode closestLeft = inorderSuccessor(root.left, p);
+            TreeNode closestLeft = inorderSuccessorRec(root.left, p);
             return closestLeft != null ? closestLeft : root;
         }
     }
 
-    public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
+    public TreeNode inorderSuccessorIte(TreeNode root, TreeNode p) {
         if (root == null || p == null) return null;
 
         TreeNode successor = null;
@@ -132,19 +132,20 @@ public class InorderSuccessorinBST_285 {
         return successor;
     }
 
-    public TreeNode inorderPredecessor(TreeNode root, TreeNode p) {
+    public TreeNode inorderPredecessorRec(TreeNode root, TreeNode p) {
         if (root == null || p == null) return null;
 
         if (root.val >= p.val) {
-            return inorderPredecessor(root.left, p);
+            return inorderPredecessorRec(root.left, p);
         } else {
-            TreeNode closestRight = inorderPredecessor(root.right, p);
+            TreeNode closestRight = inorderPredecessorRec(root.right, p);
             return closestRight != null ? closestRight : root;
         }
     }
 
-    public TreeNode inorderPredecessor(TreeNode root, TreeNode p) {
+    public TreeNode inorderPredecessorIte(TreeNode root, TreeNode p) {
         if (root == null || p == null) return null;
+        
         TreeNode predecessor = null;
 
         while (root != null) {
