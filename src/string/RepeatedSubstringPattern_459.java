@@ -47,16 +47,16 @@ public class RepeatedSubstringPattern_459 {
 
     public boolean repeatedSubstringPattern3(String s) {
         String ori;
-        int n=s.length();
-        int k=0;
-        for(int i=n/2;i>=1;i--){
-            if(n%i==0){
-                ori=s.substring(0,i);
-                k=i;
-                while(k<s.length()&&s.startsWith(ori,k)){
-                    k+=i;
+        int n = s.length();
+        int k = 0;
+        for(int i = n / 2; i >= 1; i--) {
+            if(n % i == 0) {
+                ori = s.substring(0, i);
+                k = i;
+                while(k < s.length() && s.startsWith(ori, k)) {
+                    k += i;
                 }
-                if(k==s.length()){
+                if(k == s.length()) {
                     return true;
                 }
             }
@@ -85,44 +85,66 @@ public class RepeatedSubstringPattern_459 {
     }
 
     public boolean repeatedSubstringPattern(String s) {
-
-        if(s.length() < 2){
+        if(s.length() < 2) {
             return false;
         }
 
         String s2 = s.substring(1, s.length()) + s.substring(0, s.length() - 1);
         return s2.indexOf(s) >= 0;
-        //return true;
     }
 
     public boolean repeatedSubstringPatternKMP(String str) {
-        //This is the kmp issue
         int[] prefix = kmp(str);
-        int len = prefix[str.length()-1];
+        int len = prefix[str.length() - 1];
         int n = str.length();
-        return (len > 0 && n%(n-len) == 0);
+        return (len > 0 && n % (n - len) == 0);
     }
 
-    private int[] kmp(String s){
+    private int[] kmp(String s) {
         int len = s.length();
         int[] res = new int[len];
         char[] ch = s.toCharArray();
         int i = 0, j = 1;
         res[0] = 0;
-        while(i < ch.length && j < ch.length){
-            if(ch[j] == ch[i]){
-                res[j] = i+1;
+        while(i < ch.length && j < ch.length) {
+            if(ch[j] == ch[i]) {
+                res[j] = i + 1;
                 i++;
                 j++;
-            }else{
-                if(i == 0){
+            } else {
+                if(i == 0) {
                     res[j] = 0;
                     j++;
-                }else{
-                    i = res[i-1];
+                } else {
+                    i = res[i - 1];
                 }
             }
         }
         return res;
+    }
+
+    public boolean repeatedSubstringPatternKMPII(String s) {
+        int n = s.length();
+        int[] dp = new int[n];
+        int j = 0, i = 1;
+
+        while (i < n) {
+            if (s.charAt(i) == s.charAt(j)) dp[i++] = ++j;
+            else if (j != 0) j = dp[j - 1];
+            else i++;
+        }
+
+        int end = n - 1;
+
+        return dp[end] != 0 && (dp[end] % (n - dp[end])) == 0;
+    }
+
+    public static void main(String[] args) {
+        RepeatedSubstringPattern_459 obj = new RepeatedSubstringPattern_459();
+        System.out.println(obj.repeatedSubstringPattern("abcdeabcdeabcdeabcde"));
+
+        System.out.println(obj.repeatedSubstringPattern("abab"));
+
+        System.out.println(obj.repeatedSubstringPattern("aba"));
     }
 }
