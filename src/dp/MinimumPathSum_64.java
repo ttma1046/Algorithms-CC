@@ -1,13 +1,32 @@
 package dp;
+/*
+Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right, which minimizes the sum of all numbers along its path.
 
-public class MinimumPathSum {
+Note: You can only move either down or right at any point in time.
+
+Example 1:
+
+Input: grid = [[1,3,1],[1,5,1],[4,2,1]]
+Output: 7
+Explanation: Because the path 1 → 3 → 1 → 1 → 1 minimizes the sum.
+
+Example 2:
+
+Input: grid = [[1,2,3],[4,5,6]]
+Output: 12
+
+Constraints:
+
+m == grid.length
+n == grid[i].length
+1 <= m, n <= 200
+*/
+public class MinimumPathSum_64 {
     public static void main(String[] args) {
-        int result = new MinimumPathSum().minPathSum(new int[][]{
-
-                {1, 3, 1},
-                {1, 5, 1},
-                {4, 2, 1}
-
+        int result = new MinimumPathSum_64().minPathSum(new int[][] {
+            {1, 3, 1},
+            {1, 5, 1},
+            {4, 2, 1}
         });
 
         System.out.println(result);
@@ -18,8 +37,21 @@ public class MinimumPathSum {
             return 0;
         }
 
-        // return minPathSum(grid.length - 1, grid[0].length - 1, grid);
+        int[][] dp = new int[grid.length][grid[0].length];
+        
+        for (int i = 0; i < dp.length; i++) {
+            for (int j = 0; j < dp[i].length; j++) {
+                dp[i][j] += grid[i][j];
+                if (i > 0 && j > 0) dp[i][j] += Math.min(dp[i - 1][j], dp[i][j - 1]);
+                else if (i > 0) dp[i][j] += dp[i - 1][j];
+                else if (j > 0) dp[i][j] += dp[i][j - 1];
+            }
+        }
 
+        return dp[grid.length - 1][grid[0].length - 1];
+
+        // return minPathSum(grid.length - 1, grid[0].length - 1, grid);
+        /* 
         int[][] dp = new int[grid.length][grid[0].length];
 
         for(int i = 0; i < dp.length; i++) {
@@ -36,12 +68,12 @@ public class MinimumPathSum {
         }
 
         return dp[dp.length - 1][dp[0].length - 1];
-
+        */
         /*
 
         class Solution {
         public:
-        
+
             int minPathSum(vector<vector<int>> &grid) {
                 if(!grid.size())return 0;
                 const int rows=grid.size(),cols=grid[0].size();
@@ -77,6 +109,7 @@ public class MinimumPathSum {
         */
     }
 
+    /*
     private int minPathSum(int i, int j, int[][] grid) {
         if (i > 0 && j > 0) {
             return Math.min(minPathSum(i - 1, j, grid), minPathSum(i, j - 1, grid)) + grid[i][j];
@@ -90,4 +123,5 @@ public class MinimumPathSum {
 
         return 0;
     }
+    */
 }
