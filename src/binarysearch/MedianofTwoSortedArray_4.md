@@ -1,4 +1,5 @@
 
+```
 
 There are two sorted arrays `nums1` and `nums2` of size m and n respectively.
 
@@ -20,6 +21,9 @@ Example 2:
 
     The median is (2 + 3)/2 = 2.5
 
+
+
+```
 
 To solve this problem, we need to understand "What is the use of median". 
 
