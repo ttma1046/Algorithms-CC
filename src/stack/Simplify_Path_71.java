@@ -2,13 +2,23 @@ package stack;
 import java.util.Stack;
 /*
 
-Given an absolute path for a file (Unix-style), simplify it. Or in other words, convert it to the canonical path.
+Given a string path, which is an absolute path (starting with a slash '/') 
 
-In a UNIX-style file system, a period . refers to the current directory. Furthermore, a double period .. moves the directory up a level.
+to a file or directory in a Unix-style file system, convert it to the simplified canonical path.
 
-Note that the returned canonical path must always begin with a slash /, and there must be only a single slash / between two directory names. The last directory name (if it exists) must not end with a trailing /. Also, the canonical path must be the shortest string representing the absolute path.
+In a Unix-style file system, a period '.' refers to the current directory, 
 
- 
+a double period '..' refers to the directory up a level, 
+
+and any multiple consecutive slashes (i.e. '//') are treated as a single slash '/'. For this problem, any other format of periods such as '...' are treated as file/directory names.
+
+The canonical path should have the following format:
+
+The path starts with a single slash '/'.
+Any two directories are separated by a single slash '/'.
+The path does not end with a trailing '/'.
+The path only contains the directories on the path from the root directory to the target file or directory (i.e., no period '.' or double period '..')
+Return the simplified canonical path.
 
 Example 1:
 
@@ -40,7 +50,7 @@ Output: "/a/b/c"
 
 */
 
-class Simplify_Path_7 {
+class Simplify_Path_71 {
     public String simplifyPath(String path) {
         if (path.isEmpty() || path == null) {
             return path;
@@ -120,12 +130,12 @@ class Simplify_Path_7 {
     }
 
     public static void main(String[] args) {
-    	System.out.println(new Simplify_Path_7().simplifyPath("/home/"));
-    	System.out.println(new Simplify_Path_7().simplifyPath("/../"));
-    	System.out.println(new Simplify_Path_7().simplifyPath("/home//foo/"));
-    	System.out.println(new Simplify_Path_7().simplifyPath("/a/./b/../../c/"));
-    	System.out.println(new Simplify_Path_7().simplifyPath("/a/../../b/../c//.//"));
-    	System.out.println(new Simplify_Path_7().simplifyPath("/a//b////c/d//././/.."));
+    	System.out.println(new Simplify_Path_71().simplifyPath("/home/"));
+    	System.out.println(new Simplify_Path_71().simplifyPath("/../"));
+    	System.out.println(new Simplify_Path_71().simplifyPath("/home//foo/"));
+    	System.out.println(new Simplify_Path_71().simplifyPath("/a/./b/../../c/"));
+    	System.out.println(new Simplify_Path_71().simplifyPath("/a/../../b/../c//.//"));
+    	System.out.println(new Simplify_Path_71().simplifyPath("/a//b////c/d//././/.."));
     }
 
     public String simplifyPathIII(String path) {

@@ -133,11 +133,55 @@ public class RepeatedSubstringPattern_459 {
             else if (j != 0) j = dp[j - 1];
             else i++;
         }
-
+        
         int end = n - 1;
-
         return dp[end] != 0 && (dp[end] % (n - dp[end])) == 0;
     }
+
+    public boolean repeatedSubstringPattern(String s) {
+        int n = s.length();
+
+        int[] kmp = new int[n];
+
+        int i = 1, j = 0;
+
+        char[] chars = s.toCharArray();
+
+        while(i < n) {
+            if (chars[i] == chars[j]) kmp[i++] = ++j;
+            else if (j != 0) j = kmp[j - 1]; 
+            else i++;
+        }
+
+        int end = n - 1;
+        return kmp[end] != 0 && (kmp[end] % (n - kmp[end])) == 0;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public static void main(String[] args) {
         RepeatedSubstringPattern_459 obj = new RepeatedSubstringPattern_459();
