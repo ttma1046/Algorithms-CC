@@ -87,35 +87,31 @@ class Simplify_Path_71 {
     }
 
     public String simplifyPathII(String path) {
-        
         // Handle empty string
-        if (path.isEmpty()) {
+        if (path.length() == 0 || path == null) {
             return path;
         }
         
         // Initialize a stack
-        Stack<String> stack = new Stack<String>();
-        String[] components = path.split("/");
+        Stack<String> stack = new Stack<>();
+        String[] components = path.trim().split("/");
         
         // Split the input string on "/" as the delimiter
         // and process each portion one by one
         for (String directory : components) {
-            
             // A no-op for a "." or an empty string
-            if (directory.equals(".") || directory.isEmpty()) {
-                continue;
-            } else if (directory.equals("..")) {
+            if (directory.equals(".") || directory.length() == 0) continue;
+            if (directory.equals("..")) {
                 
                 // If the current component is a "..", then
                 // we pop an entry from the stack if it's non-empty
-                if (!stack.isEmpty()) {
-                    stack.pop();
-                }
+                if (!stack.isEmpty()) stack.pop();
+                
             } else {
                 
                 // Finally, a legitimate directory name, so we add it
                 // to our stack
-                stack.add(directory);
+                stack.push(directory);
             }
         }
         
@@ -126,7 +122,7 @@ class Simplify_Path_71 {
             result.append(dir);
         }
         
-        return result.length() > 0 ? result.toString() : "/" ;
+        return result.length() == 0 ? "/" : sb.toString() ;
     }
 
     public static void main(String[] args) {
@@ -136,34 +132,5 @@ class Simplify_Path_71 {
     	System.out.println(new Simplify_Path_71().simplifyPath("/a/./b/../../c/"));
     	System.out.println(new Simplify_Path_71().simplifyPath("/a/../../b/../c//.//"));
     	System.out.println(new Simplify_Path_71().simplifyPath("/a//b////c/d//././/.."));
-    }
-
-    public String simplifyPathIII(String path) {
-        if (path.isEmpty() || path == null) {
-            return path;
-        }
-
-        Stack<String> myStack = new Stack<String>();
-        String[] components = path.split("/");
-
-        for (String item: components) {
-            if (item.equals(".") || item.isEmpty()) {
-                continue;
-            } else if (item.equals("..")) {
-                if (!myStack.isEmpty()) {
-                    myStack.pop();
-                }
-            } else {
-                myStack.push(item);
-            }
-        }
-
-        StringBuilder result = new StringBuilder();
-        for (String item: myStack) {
-            result.append("/");
-            result.append(item);
-        }
-
-        return result.length() > 0 ? result.toString() : "/";
     }
 }
