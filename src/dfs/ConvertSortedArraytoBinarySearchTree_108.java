@@ -19,9 +19,7 @@ One possible answer is: [0,-3,9,-10,null,5], which represents the following heig
  */
 class ConvertSortedArraytoBinarySearchTree_108 {
     public TreeNode sortedArrayToBST(int[] nums) {
-        if (nums == null || nums.length == 0) {
-            return null;
-        }
+        if (nums == null || nums.length == 0) return null;
 
         return myDFS(nums, 0, nums.length - 1);
     }
@@ -39,5 +37,23 @@ class ConvertSortedArraytoBinarySearchTree_108 {
         node.right = myDFS(nums, mid + 1, end);
 
         return node;
+    }
+
+    public TreeNode sortedArrayToBST(int[] nums) {
+        if (nums == null || nums.length == 0) return null;
+        return dfs(nums, 0, nums.length - 1);
+    }
+
+    TreeNode dfs(int[] nums, int start, int end) {
+        if (start > end) return null;
+
+        int mid = start + (end - start) / 2;
+
+        TreeNode curr = new TreeNode(nums[mid]);
+
+        curr.left = dfs(nums, start, mid - 1);
+        curr.right = dfs(nums, mid + 1, end);
+
+        return curr;
     }
 }
