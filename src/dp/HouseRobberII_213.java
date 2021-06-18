@@ -1,17 +1,17 @@
 package dp;
 
 /*
-You are a professional robber planning to rob houses along a street. 
+You are a professional robber planning to rob houses along a street.
 
-Each house has a certain amount of money stashed. 
+Each house has a certain amount of money stashed.
 
-All houses at this place are arranged in a circle. 
+All houses at this place are arranged in a circle.
 
-That means the first house is the neighbor of the last one. Meanwhile, 
+That means the first house is the neighbor of the last one. Meanwhile,
 
 adjacent houses have security system connected and it will automatically contact the police if two adjacent houses were broken into on the same night.
 
-Given a list of non-negative integers representing the amount of money of each house, 
+Given a list of non-negative integers representing the amount of money of each house,
 
 determine the maximum amount of money you can rob tonight without alerting the police.
 
@@ -26,11 +26,11 @@ Example 2:
 Input: [1,2,3,1]
 Output: 4
 Explanation: Rob house 1 (money = 1) and then rob house 3 (money = 3).
-             Total amount you can rob = 1 + 3 = 4.           
+             Total amount you can rob = 1 + 3 = 4.
 */
-public class HouseRobberII {
-    public static int rob(int[] nums) {
-        if (nums == null || nums.lenght == 0) {
+public class HouseRobberII_213 {
+    public static int robDP(int[] nums) {
+        if (nums == null || nums.length == 0) {
             return 0;
         }
 
@@ -65,7 +65,7 @@ public class HouseRobberII {
         return Math.max(dpOne[length - 2], dpTwo[length - 2 ]);
     }
 
-    public static int rob(int[] nums) {
+    public static int robDPII(int[] nums) {
         if (nums == null || nums.length == 0) {
             return 0;
         }
@@ -127,8 +127,32 @@ public class HouseRobberII {
         return Math.max(tmp, tmp2);
     }
 
-    public static void main(String[] args) {
-        System.out.println(rob(new int[] {2, 7, 9, 3, 1}));
+    public int rob(int[] nums) {
+        if (nums.length == 1) return nums[0];
+        // if (nums.length == 2) return nums[0] > nums[1] ? nums[0] : nums[1];
+
+        int pre2Round1 = 0, pre1Round1 = 0;
+        for (int i = 0; i < nums.length - 1; i++) {
+            int tmp = pre1Round1;
+            pre1Round1 = Math.max(pre1Round1, pre2Round1 + nums[i]);
+            pre2Round1 = tmp;
+        }
+
+        int pre2Round2 = 0, pre1Round2 = 0;
+        for (int i = 1; i < nums.length; i++) {
+            int tmp2 = pre1Round2;
+            pre1Round2 = Math.max(pre1Round2, pre2Round2 + nums[i]);
+            pre2Round2 = tmp2;
+        }
+
+        return Math.max(pre1Round1, pre1Round2);
     }
 
+
+    public static void main(String[] args) {
+        HouseRobberII_213 obj = new HouseRobberII_213();
+
+        System.out.println(obj.rob(new int[] {2, 3, 2}));
+        System.out.println(obj.rob(new int[] {1, 2, 3, 1}));
+    }
 }
