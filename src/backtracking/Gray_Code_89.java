@@ -155,7 +155,7 @@ class Gray_Code_89 {
     The space occupied by the output result is not considered in the space complexity analysis.
 
     */
-    public List<Integer> grayCode(int n) {
+    public List<Integer> grayCodeII(int n) {
         List<Integer> result = new ArrayList<>();
         grayCodeHelper(result, n);
         return result;
@@ -173,11 +173,13 @@ class Gray_Code_89 {
         int mask = 1 << (n - 1);
         for (int i = currentSequenceLength - 1; i >= 0; i--) {
             // mask is used to set the (n - 1)th bit from the LSB of all the numbers present in the current sequence.
+            System.out.println("mask:" + mask);
+            System.out.println(result.get(i) | mask);
             result.add(result.get(i) | mask);
         }
     }
 
-    public List<Integer> grayCode(int n) {
+    public List<Integer> grayCodeIII(int n) {
         List<Integer> result = new ArrayList<>();
         // there are 2 ^ n numbers in the Gray code sequence.
         int sequenceLength = 1 << n;
@@ -188,7 +190,7 @@ class Gray_Code_89 {
         return result;
     }
 
-    public List<Integer> grayCode(int n) {
+    public List<Integer> grayCodeIV(int n) {
         List<Integer> result = new ArrayList<>();
         result.add(0);
 
@@ -204,21 +206,21 @@ class Gray_Code_89 {
 
     int nextNum = 0;
 
-    public List<Integer> grayCode(int n) {
+    public List<Integer> grayCodeV(int n) {
         List<Integer> result = new ArrayList<>();
-        grayCodeHelper(result, n);
+        grayCodeHelperI(result, n);
         return result;
     }
 
-    private void grayCodeHelper(List<Integer> result, int n) {
+    private void grayCodeHelperI(List<Integer> result, int n) {
         if (n == 0) {
             result.add(nextNum);
             return;
         }
-        grayCodeHelper(result, n - 1);
+        grayCodeHelperI(result, n - 1);
         // Flip the bit at (n - 1)th position from right
         nextNum = nextNum ^ (1 << (n - 1));
-        grayCodeHelper(result, n - 1);
+        grayCodeHelperI(result, n - 1);
 
     }
 
