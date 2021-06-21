@@ -27,17 +27,16 @@ Then 4 is the first bad version.
 */
 public class FirstBadVersion_278 {
     public int firstBadVersionII(int n) {
-        if (n <= 0) {
-            return 0;
-        }
+        if (n <= 0) return 0;
 
-        int start = 1;
-        int end = n;
-        while (start < end) {
-            int mid = start + (end - start) / 2;
-            if (!isBadVersion(mid))
-             start = mid + 1;
-             else end = mid;
+        int low = 1, high = n, mid = 0;
+        while (low < high) {
+            mid = low + (high - low) / 2;
+            if (!isBadVersion(mid)) {
+                low = mid + 1;
+            } else {
+                high = mid;
+            }
         }
 
         return start;
