@@ -1,6 +1,22 @@
 package array;
 
 class Merge_Sorted_Array_88 {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        int p1 = m-1, p2 = n-1, p = nums1.length - 1;
+        while (p > -1) {
+            int cand1 = p1 > -1 ? nums1[p1] : Integer.MIN_VALUE;
+            int cand2 = p2 > -1 ? nums2[p2] : Integer.MIN_VALUE;
+            if (cand1 > cand2) {
+                nums1[p] = cand1;
+                p1--;
+            } else {
+                nums1[p] = cand2;
+                p2--;
+            }
+            p--;
+        }
+    }
+
     public int[] merge(int[] nums1, int m, int[] nums2, int n) {
         // Make a copy of nums1.
         int [] nums1_copy = new int[m];

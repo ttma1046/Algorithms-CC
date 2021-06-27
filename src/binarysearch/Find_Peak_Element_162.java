@@ -8,7 +8,7 @@ You may imagine that nums[-1] = nums[n] = -∞.
 
 You must write an algorithm that runs in O(log n) time.
 
- 
+
 
 Example 1:
 
@@ -20,7 +20,7 @@ Example 2:
 Input: nums = [1,2,1,3,5,6,4]
 Output: 5
 Explanation: Your function can return either index number 1 where the peak element is 2, or index number 5 where the peak element is 6.
- 
+
 
 Constraints:
 
@@ -40,4 +40,13 @@ class Find_Peak_Element_162 {
         }
         return low;
     }
+    /*
+    Complexity Analysis
+
+    Time complexity : O(log2(n)). We reduce the search space in half at every step. 
+    Thus, the total search space will be consumed in O(log2(n)) steps. 
+    Here, nn refers to the size of numsnums array.
+
+    Space complexity : O(1). Constant extra space is used.
+    */
 }
