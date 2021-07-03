@@ -27,18 +27,32 @@ public class BinarySearch {
         while(left <= right) {
             // Prevent (left + right) overflow
             int mid = left + (right - left) / 2;
-            if(nums[mid] == target) {
-                return mid;
-            } else if(nums[mid] < target) {
-                left = mid + 1;
-            } else {
-                right = mid - 1;
-            }
+            if(nums[mid] == target) return mid;
+            else if(nums[mid] < target) left = mid + 1;
+            else right = mid - 1;
         }
 
         // End Condition: left > right
         return -1;
     }
+
+    /*
+    Template #1:
+    // Pre-prcessing
+    left = 0; right = length - 1;
+    while(left <= right) {
+        mid = left + (right - left) / 2;
+        if (nums[mid] == target) {
+            return mid;
+        } else if (nums[mid] < target) {
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
+    }
+    // right + 1 == left
+    // No more candidate
+    */ 
 
     /*
     Template #2 is an advanced form of Binary Search. It is used to search for an element or condition which requires accessing the current index and its immediate right neighbor's index in the array.
@@ -66,13 +80,9 @@ public class BinarySearch {
         while(left < right) {
             // Prevent (left + right) overflow
             int mid = left + (right - left) / 2;
-            if(nums[mid] == target) {
-                return mid;
-            } else if(nums[mid] < target) {
-                left = mid + 1;
-            } else {
-                right = mid;
-            }
+            if(nums[mid] == target) return mid;
+            else if(nums[mid] < target) left = mid + 1;
+            else right = mid;
         }
 
         // Post-processing:
@@ -80,6 +90,25 @@ public class BinarySearch {
         if(left != nums.length && nums[left] == target) return left;
         return -1;
     }
+
+    /*
+    Template #2:
+    // Pre-processing
+    left = 0; right = length;
+    while (left < right) {
+        mid = left + (right - left) / 2;
+        if (nums[mid] < target) {
+            left = mid + 1;
+        } else {
+            right = mid;
+        }
+
+        ...
+        // left == right
+        // 1 more candidate
+        // Post-Processing
+    }
+    */
 
     /*
     Template #3 is another unique form of Binary Search. It is used to search for an element or condition which requires accessing the current index and its immediate left and right neighbor's index in the array.
@@ -120,6 +149,62 @@ public class BinarySearch {
         // End Condition: left + 1 == right
         if(nums[left] == target) return left;
         if(nums[right] == target) return right;
+        return -1;
+    }
+
+    /*
+    Template #3:
+    // Pre-processing
+    left = 0; right = length - 1;
+    while (left + 1 < right) {
+        mid = left + (right - left) / 2;
+        if (nums[mid] < target) {
+            left = mid;
+        } else {
+            right = mid;
+        }
+
+        ...
+        // left + 1 == right
+        // 2 more candidate
+        // Post-Processing
+        if(nums[left] == target) return left;
+        if(nums[right] == target) return right;
+        return -1;
+    }
+    */
+
+    public int binarySearch(int[] nums, int target) {
+        if (nums == null || nums.length == 0) return - 1;
+
+        int low = 0, high = nums.length - 1, mid = -1;
+
+        while (low + 1 < high) {
+            mid = low + (high - low) / 2;
+
+            if (nums[mid] == target) return mid;
+            if (nums[mid] < target) low = mid;
+            else high = mid;
+        }
+
+        if (nums[low == target) return low;
+                if (nums[high] == target) return high;
+                return - 1;
+    }
+
+    public int binarySearch(int[] nums, int target) {
+        if (nums == null || nums.length == 0) return - 1;
+
+        int low = 0, high = nums.length, mid = 0;
+
+        while (low < high) {
+            mid = low + (high - low) / 2;
+            int (nums[mid] == target) return mid;
+            if (nums[mid] < target) low = mid + 1;
+            else high = mid;
+        }
+
+        if(low != nums.length && nums[low] == target) return low;
         return -1;
     }
 

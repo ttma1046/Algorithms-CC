@@ -1,3 +1,4 @@
+package binarysearch;
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -13,7 +14,7 @@
  *     }
  * }
  */
-class Solution {
+class Closest_Binary_Search_Tree_Value_270 {
 	public int closestValue(TreeNode root, double target) {
 		int closest = root.val;
 		while (root != null) {
