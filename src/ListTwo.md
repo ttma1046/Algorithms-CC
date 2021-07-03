@@ -7,7 +7,6 @@
 6. [https://leetcode.com/problems/kth-smallest-element-in-a-bst/](https://leetcode.com/problems/kth-smallest-element-in-a-bst/)
 7. You are given a m*n grid. You are asked to generate k mines on this grid randomly. Each cell should have equal probability of k / m*n of being chosen. Your algorithm should run in O(m) time.
 [https://leetcode.com/discuss/interview-question/124759/](https://leetcode.com/discuss/interview-question/124759/)
-
 8. [https://leetcode.com/problems/continuous-subarray-sum/](https://leetcode.com/problems/continuous-subarray-sum/)
 (Given a list of positive numbers and a target integer k, write a function to check if the array has a continuous subarray which sums to k.)
 9. [https://leetcode.com/problems/verifying-an-alien-dictionary/](https://leetcode.com/problems/verifying-an-alien-dictionary/)
@@ -82,6 +81,7 @@ null being rest of the salary
 11. [https://leetcode.com/discuss/interview-question/432086/Facebook-or-Phone-Screen-or-Task-Scheduler/394783](https://leetcode.com/discuss/interview-question/432086/Facebook-or-Phone-Screen-or-Task-Scheduler/394783)
 12. [https://leetcode.com/problems/find-all-anagrams-in-a-string](https://leetcode.com/problems/find-all-anagrams-in-a-string)
 13. [https://leetcode.com/problems/is-graph-bipartite](https://leetcode.com/problems/is-graph-bipartite)
+
 14. [https://leetcode.com/problems/merge-sorted-array](https://leetcode.com/problems/merge-sorted-array)
 15. [https://leetcode.com/problems/maximum-subarray](https://leetcode.com/problems/maximum-subarray)
 16. [https://leetcode.com/problems/serialize-and-deserialize-binary-tree](https://leetcode.com/problems/serialize-and-deserialize-binary-tree)
