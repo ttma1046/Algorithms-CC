@@ -25,14 +25,21 @@ class Valid_Perect_Square_367 {
 	public boolean isPerfectSquare(int num) {
 		if (num < 2) return true;
 
-		long left = 2, right = num / 2, mid, guessSquared;
+		long left = 2, right = num / 2, mid, t;
 		while (left <= right) {
 			mid = left + (right - left) / 2;
-			guessSquared = mid * mid;
-			if (guessSquared == num) return true;
-			else if (guessSquared > num) right = mid - 1;
+			t = mid * mid;
+			if (t == num) return true;
+			else if (t > num) right = mid - 1;
 			else left = mid + 1;
 		}
+
 		return false;
+	}
+
+	public static void main(String[] args) {
+		Valid_Perect_Square_367 obj = new Valid_Perect_Square_367();
+
+		System.out.println(obj.isPerfectSquare(16));
 	}
 }

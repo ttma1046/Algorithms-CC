@@ -1,4 +1,4 @@
-package leetcode;
+package binarysearch;
 /*
 Implement pow(x, n), which calculates x raised to the power n (i.e. xn).
 
@@ -57,42 +57,6 @@ public class Pow_50 {
 	result = 3^2 * 3^8 = 3^10
 	3^8 => 3^16
 	1 => 0
-
-
-	*/
-
-	public double myPowIII(double x, int n) {
-		long N = n;
-		if (N < 0) {
-			x = 1 / x;
-			N = -N;
-		}
-		double ans = 1;
-		double current_product = x;
-		for (long i = N; i > 0; i /= 2) {
-			if ((i % 2) == 1) {
-				ans = ans * current_product;
-			}
-			current_product = current_product * current_product;
-		}
-		return ans;
-
-
-
-		int result = 1;
-		while (b > 0) {
-			if (b % 2 == 1) result *= a;
-			a *= a;
-			b /= 2;
-		}
-
-		return result;
-	}
-
-	/*
-	Time complexity : O(logn). Each time we apply the formula (x ^ n) ^ 2 = x ^ {2 * n}, n is reduced by half. Thus we need at most O(logn) computations to get the result.
-
-	Space complexity : O(logn). For each computation, we need to store the result of x ^ {n / 2}. We need to do the computation for O(logn) times, so the space complexity is O(logn).
 	*/
 	public double fastPow(double x, long n) {
 		if (n == 0) {
@@ -166,7 +130,14 @@ public class Pow_50 {
 		}
 		return ans;
 	}
+	/*
+	Time complexity : O(logn). Each time we apply the formula (x ^ n) ^ 2 = x ^ {2 * n}, 
+	n is reduced by half. Thus we need at most O(logn) computations to get the result.
 
+	Space complexity : O(logn). 
+	For each computation, we need to store the result of x ^ {n / 2}. 
+	We need to do the computation for O(logn) times, so the space complexity is O(logn).
+	*/
 
 	public static void main(String[] args) {
 		System.out.println(new Pow_50().myPow(2, 10));
