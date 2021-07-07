@@ -27,16 +27,16 @@ Input: s = "catsandog", wordDict = ["cats", "dog", "sand", "and", "cat"]
 Output: false
 */
 class Word_Break_139 {
-    public boolean wordBreakBruteForce(String s, List<String> wordDict) {
-        return word_BreakBruteForce(s, new HashSet(wordDict), 0);
+    public boolean wordBreakRecur(String s, List<String> wordDict) {
+        return wordBreakRecur(s, new HashSet(wordDict), 0);
     }
 
-    public boolean wordBreakBruteForce(String s, Set<String> wordDict, int start) {
+    public boolean wordBreakRecur(String s, Set<String> wordDict, int start) {
         if (start == s.length()) {
             return true;
         }
         for (int end = start + 1; end <= s.length(); end++) {
-            if (wordDict.contains(s.substring(start, end)) && wordBreakBruteForce(s, wordDict, end)) {
+            if (wordDict.contains(s.substring(start, end)) && wordBreakRecur(s, wordDict, end)) {
                 return true;
             }
         }
@@ -145,6 +145,5 @@ class Word_Break_139 {
         System.out.println(new Word_Break_139().wordBreak("leetcode", Arrays.asList("leet", "code")));
         System.out.println(new Word_Break_139().wordBreak("applepenapple", Arrays.asList("apple", "pen")));
         System.out.println(new Word_Break_139().wordBreak("catsandog", Arrays.asList("cats", "dog", "sand", "and", "cat")));
-
     }
 }
