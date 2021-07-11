@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.HashMap;
 
 /*
@@ -44,6 +45,7 @@ class Word_Break_II_140 {
     public static void main(String[] args) {
         Word_Break_II_140 obj = new Word_Break_II_140();
         String s = "catsanddog";
+
         List<String> wordDict = new ArrayList<>();
         wordDict.add("cat");
         wordDict.add("cats");
@@ -51,90 +53,201 @@ class Word_Break_II_140 {
         wordDict.add("sand");
         wordDict.add("dog");
 
-        System.out.println(s.substring(4));
-        System.out.println(s.substring(4, s.length()));
-
-        s = "aaaaaaa";
-        wordDict = new ArrayList<>();
-        wordDict.add("aaaa");
-        wordDict.add("aa");
-        wordDict.add("a");
-
-
-
         List<String> res = obj.wordBreakII(s, wordDict);
 
         for (String k : res) System.out.println(k);
     }
 
+    public List<String> wordBreak(String s, List<String> wordDict) {
+        if (s == null || s.length() == 0 || wordDict == null) return new ArrayList<String>();
+        Set<String> set = new HashSet<>(wordDict);
+        Map<Integer, List<String>> map = new HashMap<>();
 
-    public List<String> wordBreakII(String s, List<String> wordDict) {
-        if (s == null || s.length() == 0) return new ArrayList<>();
-        Set<String> wordSet = new HashSet<>(wordDict);
-
-        return dfs(s, wordSet, new HashMap<Integer, List<String>>(), 0);
+        return dfs(s, set, map, 0);
     }
 
-    List<String> dfs(String s, Set<String> wordDict, HashMap<Integer, List<String>> map, int start) {
+    public List<String> dfs(String s, Set<String> set, Map<Integer, List<String>> map, int start) {
         if (map.containsKey(start)) return map.get(start);
 
         List<String> res = new ArrayList<String>();
 
-        if (wordDict.contains(s.substring(start))) res.add(s.substring(start));
+        if (set.contains(s.substring(start))) res.add(s.substring(start));
 
-        for (String word : wordDict) {
-            if (s.substring(start).startsWith(word)) {
-                int n = word.length();
-                List<String> sublist = dfs(s, wordDict, map, start + n);
-                if (sublist.size() != 0) {
+        for (int i = start + 1; i < s.length(); i++) {
+            String word = s.substring(start, i);
+            if (set.contains(word)) {
+                List<String> subList = dfs(s, set, map, i);
+                if (subList.size() > 0) {
                     StringBuilder sb;
-                    for (String sub : sublist) {
+                    for (String sub : subList) {
                         sb = new StringBuilder();
                         sb.append(word);
-                        if (!sub.isEmpty()) {
-                            sb.append(" ");
-                            sb.append(sub);
-                        }
+                        sb.append(" ");
+                        sb.append(sub);
                         res.add(sb.toString());
                     }
                 }
             }
         }
-
         map.put(start, res);
         return res;
     }
 
+    /*
     public List<String> wordBreak(String s, List<String> wordDict) {
         if (s == null || s.length() == 0) return new ArrayList<>();
         Set<String> dict = new HashSet<>(wordDict);
-        HashMap<Integer, List<String>> map = new HashMap<>();
+        Map<Integer, List<String>> map = new HashMap<>();
         return dfs(s, dict, map, 0);
     }
 
-    private List<String> dfs(String s, Set<String> dict, HashMap<Integer, List<String>> map, int start) {
-        List<String> res = new ArrayList<>();
+    private List<String> dfs(String s, Set<String> dict, Map<Integer, List<String>> map, int start) {
         if (map.containsKey(start)) return map.get(start);
-        if (dict.contains(s.substring(start, s.length()))) res.add(s.substring(start, s.length()));
+        List<String> res = new ArrayList<>();
+        if (dict.contains(s.substring(start))) res.add(s.substring(start));
 
         for (int i = start + 1; i < s.length(); i++) {
             // Top-down
-            String t = s.substring(start, i);
-            if (dict.contains(t)) {
+            String word = s.substring(start, i);
+            if (dict.contains(word)) {
                 List<String> temp = dfs(s, dict, map, i);
                 if (temp.size() != 0) {
                     StringBuilder sb;
-                    for (int j = 0 ; j < temp.size() ; j++) {
+                    for (String tst : temp) {
                         sb = new StringBuilder();
-                        sb.append(t);
+                        sb.append(word);
                         sb.append(" ");
-                        sb.append(temp.get(j));
+                        sb.append(tst);
                         res.add(sb.toString());
                     }
                 }
             }
         }
         map.put(start, res);
+        return res;
+    }
+    */
+
+    List<String> ans;
+    public List<String> wordBreakIV(String s, List<String> wordDict) {
+        ans = new ArrayList<String>();
+        scan(s, 0, wordDict, new ArrayList<Integer>());
+        return ans;
+    }
+
+    void scan(String s, int start, List<String> words, List<Integer> path) {
+        // base
+        if (start > s.length()) return;
+        if (start == s.length()) {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < path.size(); i++) {
+                sb.append(words.get(path.get(i)));
+                if (i < path.size() - 1) sb.append(" ");
+            }
+            ans.add(sb.toString());
+            return;
+        }
+
+        for (int i = 0; i < words.size(); i++) {
+            String word = words.get(i);
+            if (s.startsWith(word, start)) {
+                path.add(i);
+                scan(s, start + word.length(), words, path);
+                path.remove(path.size() - 1);
+            }
+        }
+    }
+
+    public List<String> wordBreakIII(String s, List<String> wordDict) {
+        Set<String> wordDictSet = new HashSet<>();
+        for(String word : wordDict) {
+            wordDictSet.add(word);
+        }
+        List<String> result = new ArrayList<>();
+        List<List<String>> listOfTmps = _wordBreak(s, wordDictSet);
+        for(List<String> list : listOfTmps) {
+            StringBuilder sw = new StringBuilder();
+            for(int i = 0; i < list.size(); i++) {
+                if(i < list.size() - 1) {
+                    sw.append(list.get(i));
+                    sw.append(" ");
+                } else {
+                    sw.append(list.get(i));
+                }
+            }
+            result.add(sw.toString());
+        }
+        return result;
+    }
+
+    private List<List<String>> _wordBreak(String s, Set<String> wordDictSet) {
+        List<List<String>> listOfTmps = new ArrayList<>();
+        for(int i = 0; i < s.length(); i++) {
+            String tmp = s.substring(0, i + 1);
+            if(i == s.length() - 1) {
+                if(wordDictSet.contains(tmp)) {
+                    List<String> tmpArr = new ArrayList<>();
+                    tmpArr.add(tmp);
+                    listOfTmps.add(tmpArr);
+                }
+            } else {
+                if(wordDictSet.contains(tmp)) {
+                    String _nuS = s.substring(tmp.length());
+                    for(List<String> list : _wordBreak(_nuS, wordDictSet)) {
+                        list.add(0, tmp);
+                        listOfTmps.add(list);
+                    };
+                }
+            }
+        }
+        return listOfTmps;
+    }
+
+    public List<String> wordBreakII(String s, List<String> wordDict) {
+        if (s == null || s.length() == 0 || wordDict == null) return new ArrayList<>();
+        Set<String> set = new HashSet<String>(wordDict);
+        Map<Integer, List<String>> map = new HashMap<>();
+        return wordBreakIIdfs(s, set, map, 0);
+    }
+
+    private List<String> wordBreakIIdfs(String s, Set<String> set, Map<Integer, List<String>> map, int start) {
+        if (map.containsKey(start)) return map.get(start);
+
+        List<String> res = new ArrayList<String>();
+
+        if (set.contains(s.substring(start))) {
+            System.out.println("start:" + start);
+            res.add(s.substring(start));
+        }
+
+        for (String word : set) {
+            if (s.substring(start).startsWith(word)) {
+                int wordLength = word.length();
+                List<String> sublist = wordBreakIIdfs(s, set, map, start + wordLength);
+                if (sublist.size() != 0) {
+                    StringBuilder sb;
+                    for(String sub : sublist) {
+                        sb = new StringBuilder();
+                        sb.append(word);
+                        sb.append(" ");
+                        sb.append(sub);
+
+                        res.add(sb.toString());
+                    }
+                }
+            }
+        }
+        map.put(start, res);
+
+        for (Map.Entry<Integer, List<String>> entry : map.entrySet()) {
+            System.out.println("key:" + entry.getKey());
+            for (String t : entry.getValue()) {
+                System.out.print("value:" + t);
+                System.out.print(",");
+            }
+            // System.out.println();
+        }
+
         return res;
     }
 }
