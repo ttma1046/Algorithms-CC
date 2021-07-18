@@ -1,5 +1,5 @@
 
-
+/*
 Problem:
 This problem is a variant of closest pair sum. 
 You'll be given two arrays:
@@ -11,4 +11,5 @@ Find the pairs from both the arrays whose vaue add upto a sum which is less than
 
 Output for the above example:
 { {1, 2} } // Note that the output should be in id's
+*/
 
