@@ -37,3 +37,7 @@ class Binary_Search_704 {
 		}
 	}
 }
+
+
+
+
