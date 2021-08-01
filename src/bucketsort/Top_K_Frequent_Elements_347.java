@@ -1,5 +1,10 @@
 package bucketsort;
-import java.u
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Map;
+import java.util.HashMap;
 /*
 Given an integer array nums and an integer k, return the k most frequent elements. You may return the answer in any order.
 
@@ -22,30 +27,96 @@ It is guaranteed that the answer is unique.
 Follow up: Your algorithm's time complexity must be better than O(n log n), where n is the array's size.
 */
 class Top_K_Frequent_elements_347 {
+    public static void main(String[] args) {
+        Top_K_Frequent_elements_347 obj = new Top_K_Frequent_elements_347();
+        int[] nums = new int[] {1, 1, 1, 2, 2, 3};
+        int[] res = obj.topKFrequent(nums, 2);
+
+        for (int i : res) System.out.println(i);
+
+        nums = new int[] {1};
+        res = obj.topKFrequent(nums, 1);
+
+        for (int i : res) System.out.println(i);
+    }
+
+    /*    
+    int largest(int[] arr) {
+         int i;
+           
+         // Initialize maximum element
+         int max = arr[0];
+        
+         // Traverse array elements from second and
+         // compare every element with current max  
+         for (i = 1; i < arr.length; i++)
+             if (arr[i] > max)
+                 max = arr[i];
+        
+         return max;
+    }
+
     public int[] topKFrequent(int[] nums, int k) {
         int n = nums.length;
 
         int[] temp = nums;
-        Collections.sort(temp, (a, b) -> b - a);
+        Arrays.sort(temp);
 
-        int[] freq = new int[temp[0]];
+        int[] freq = new int[temp[temp.length - 1] + 1];
         for (int i : nums) freq[i]++;
 
-        int maxFreq = Collections.max(freq);
+        int maxFreq = largest(freq);
 
-        List<Integer>[] bucket = new ArrayList[maxFreq + 1];
+        List<List<Integer>> bucket = new ArrayList<>();
+
+        for (int i = 0; i <= maxFreq - 1; ++i) bucket.add(new ArrayList<Integer>());
 
         for (int i = 0; i < freq.length; ++i) {
-            if (freq[i] > 0) bucket[freq[i]].add(i);
+            if (freq[i] > 0) bucket.get(freq[i]).add(i);
         }
 
         int[] res = new int[k];
         int j = maxFreq;
         while (k > 0 && j > 0) {
-            List<Integer> numbers = bucket[j--];
+            List<Integer> numbers = bucket.get(j--);
 
             for (int number : numbers) {
-                res[(k--) - 1] = b;
+                res[(k--) - 1] = number;
+
+                if (k == 0) break;
+            }
+        }
+
+        return res;
+    }
+    */
+
+    // bucket sort
+    public int[] topKFrequent(int[] nums, int k) {
+        int n = nums.length;
+
+        Map<Integer, Integer> freq = new HashMap<Integer, Integer>();
+
+        for (int i: nums) freq.put(i, freq.getOrDefault(i, 0) + 1);
+
+        List<List<Integer>> bucket = new ArrayList<>();
+
+        int maximumFrequency = Collections.max(freq.values());
+
+        for (int i = 0; i <= maximumFrequency; ++i) bucket.add(new ArrayList<Integer>());
+
+        for (int key: freq.keySet()) {
+            int frequency = freq.get(key);
+            bucket.get(frequency).add(key);
+        }
+
+        int[] res = new int[k];
+
+        int index = maximumFrequency;
+
+        while(k > 0 && index > 0) {
+            for (int j : bucket.get(index--)) {
+                res[--k] = j;
 
                 if (k == 0) break;
             }
@@ -54,7 +125,8 @@ class Top_K_Frequent_elements_347 {
         return res;
     }
 
-    public int[] topKFrequent(int[] nums, int k) {
+    // bucket sort (copied)
+    public int[] topKFrequentII(int[] nums, int k) {
         Map<Integer, Integer> frequencyMap = new HashMap<Integer, Integer>();
 
         for (int n : nums) {
@@ -84,10 +156,12 @@ class Top_K_Frequent_elements_347 {
         for (int i = 0; i < rel.length; i++) {
             rel[i] = res.get(i).intValue();
         }
+
         return rel;
     }
 
-    public int[] topKFrequent(int[] nums, int k) {
+    // quick sort
+    public int[] topKFrequentIII(int[] nums, int k) {
         Map<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
             map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);
