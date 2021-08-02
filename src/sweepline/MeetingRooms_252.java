@@ -1,7 +1,30 @@
-package backtracking;
+package sweepline;
 
 import java.util.Arrays;
 import java.util.Comparator;
+
+class multiple {
+    public int maxGirls(int[][] input) {
+        HashMap<Integer, Integer> hashMap = new HashMap<>();
+        for (int[] girl : input) {
+            for (int i = girl[0]; i <= girl[1]; ++i) {
+                hashMap.put(i, hashMap.getOrDefault(i, 0) + 1);
+            }
+        }
+
+        int ans = 0;
+        for (int i : hashMap.keySet()) {
+            if (hashMap.get(i) > ans) ans = hashMap.get(i);
+        }
+
+        return ans;
+    }
+
+    public static void main(String[] args) {
+        int[][] girls = new int[][] {{0, 30}, {5, 10}, {15, 20}, {17, 25}};
+        System.out.println(new multiple().maxGirls(girls));
+    }
+}
 
 class MeetingRooms_252 {
     public boolean canAttendMettings(int[][] intervals) {
@@ -43,29 +66,20 @@ class MeetingRooms_252 {
     }
 
     public boolean canAttendMettingsIII(int[][] intervals) {
-        if (intervals == null || intervals.length == 0) {
-            return true;
-        }
+        if (intervals == null || intervals.length == 0) return true;
 
-        Arrays.sort(intervals, new Comparator<int[]>() {
-            public int compare(int[] a, int[] b) {
-                return a[0] - b[0];
-            }
-        });
+        Arrays.sort(intervals, (int[] a, int[] b) -> a[0] - b[0]);
 
-        for(int i = 0; i < intervals.length - 1; i++) {
-            if (intervals[i][1] > intervals[i + 1][0]) {
-                return false;
-            }
-        }
+        for(int i = 0; i < intervals.length - 1; i++)
+            if (intervals[i][1] > intervals[i + 1][0]) return false;
 
         return true;
     }
 
     /*
-        Time complexity : O(nlogn). 
-        The time complexity is dominated by sorting. 
-        Once the array has been sorted, 
+        Time complexity : O(nlogn).
+        The time complexity is dominated by sorting.
+        Once the array has been sorted,
         only O(n) time is taken to go through the array and determine if there is any overlap.
 
         Space complexity : O(1). Since no additional space is allocated.

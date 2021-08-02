@@ -1,4 +1,5 @@
-package backtracking;
+package sweepling;
+
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.PriorityQueue;
@@ -21,7 +22,7 @@ Output: 1
 NOTE: input types have been changed on April 15, 2019.
 Please reset to default code definition to get new method signature.
 */
-class MeetingRoomsII_253 {
+class MeetingRooms_II_253 {
     private MinHeap myMinHeap = new MinHeap();
     public int minMeetingRooms(int [][] intervals) {
         if (intervals == null || intervals.length == 0) {
@@ -57,19 +58,19 @@ class MeetingRoomsII_253 {
         // Min heap
         PriorityQueue<Integer> allocator = new PriorityQueue<Integer>(
             intervals.length,
-            new Comparator<Integer>() {
-                public int compare(Integer a, Integer b) {
-                    return a - b;
-                }
+        new Comparator<Integer>() {
+            public int compare(Integer a, Integer b) {
+                return a - b;
             }
+        }
         );
 
         // Sort the intervals by start time
         Arrays.sort(intervals, new Comparator<int[]>() {
-                public int compare(final int[] a, final int[] b) {
-                    return a[0] - b[0];
-                }
-            });
+            public int compare(final int[] a, final int[] b) {
+                return a[0] - b[0];
+            }
+        });
 
         // Add the first meeting
         allocator.add(intervals[0][1]);
@@ -94,21 +95,22 @@ class MeetingRoomsII_253 {
     public int minMeetingRoomsII(int[][] intervals) {
         int[] starts = new int[intervals.length];
         int[] ends = new int[intervals.length];
+        
         for (int i = 0; i < intervals.length; i++) {
             starts[i] = intervals[i][0];
             ends[i] = intervals[i][1];
         }
+        
         Arrays.sort(starts);
         Arrays.sort(ends);
         int rooms = 0;
-        int endsItr = 0;
+        int end = 0;
+        
         for (int i = 0; i < starts.length; i++) {
-            if (starts[i] < ends[endsItr]) {
-                rooms++;
-            } else {
-                endsItr++;
-            }
+            if (starts[i] < ends[ends]) rooms++;
+            else end++;
         }
+
         return rooms;
     }
 

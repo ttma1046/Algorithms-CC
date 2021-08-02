@@ -1,31 +1,5 @@
 package hashtable;
 import java.util.HashMap;
-
-class multiple {
-
-	public int maxGirls(int[][] input) {
-		HashMap<Integer, Integer> hashMap = new HashMap<>();
-		for (int[] girl : input) {
-			for (int i = girl[0]; i <= girl[1]; ++i) {
-				hashMap.put(i, hashMap.getOrDefault(i, 0) + 1);
-			}
-		}
-
-		int ans = 0;
-		for (int i : hashMap.keySet()) {
-			if (hashMap.get(i) > ans) ans = hashMap.get(i);
-		}
-
-		return ans;
-	}
-
-	public static void main(String[] args) {
-		int[][] girls = new int[][] {{0, 30}, {5, 10}, {15, 20}, {17, 25}};
-		System.out.println(new multiple().maxGirls(girls));
-	}
-}
-
-
 /*
 
 
@@ -87,6 +61,7 @@ class Heap {
         return this.list.length;
     }
 }
+
 class MinHeap extends Heap {
     constructor(list) {
         super(list);
