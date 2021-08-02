@@ -2,15 +2,13 @@ package sort;
 
 import java.util.Arrays;
 import java.util.Comparator;
-
+import java.util.concurrent.ThreadLocalRandom;
 /*
 We have a list of points on the plane.  Find the K closest points to the origin (0, 0).
 
 (Here, the distance between two points on a plane is the Euclidean distance.)
 
 You may return the answer in any order.  The answer is guaranteed to be unique (except for the order that it is in.)
-
-
 
 Example 1:
 
@@ -21,12 +19,12 @@ The distance between (1, 3) and the origin is sqrt(10).
 The distance between (-2, 2) and the origin is sqrt(8).
 Since sqrt(8) < sqrt(10), (-2, 2) is closer to the origin.
 We only want the closest K = 1 points from the origin, so the answer is just [[-2,2]].
+
 Example 2:
 
 Input: points = [[3,3],[5,-1],[-2,4]], K = 2
 Output: [[3,3],[-2,4]]
 (The answer [[-2,4],[3,3]] would also be accepted.)
-
 
 Note:
 
@@ -34,7 +32,6 @@ Note:
 -10000 < points[i][0] < 10000
 -10000 < points[i][1] < 10000
 */
-import java.util.concurrent.ThreadLocalRandom;
 
 class K_Closest_Points_to_Origin_973 {
 	public int[][] kClosestSlow(int[][] points, int K) {
@@ -147,9 +144,7 @@ class K_Closest_Points_to_Origin_973 {
 		points[j][1] = t1;
 	}
 
-
 	// quick sort
-
 	public int[][] kClosestQuickSort(int[][] points, int K) {
 		int len = points.length,
 		    l = 0, r = len - 1, mid = 0;
@@ -240,6 +235,5 @@ class K_Closest_Points_to_Origin_973 {
 				System.out.println(i);
 			}
 		}
-
 	}
 }
