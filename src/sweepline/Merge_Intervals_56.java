@@ -1,4 +1,7 @@
 package sweepline;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Arrays;
 /*
 Given an array of intervals where intervals[i] = [starti, endi],
 
@@ -24,24 +27,28 @@ intervals[i].length == 2
 */
 class Merge_Intervals_56 {
     public int[][] merge(int[][] intervals) {
-        if (intervals.length == 0 || intervals == null) return new int[0][];
+        if (intervals == null || intervals.length == 0) return new int[0][];
+
+        int length = intervals.length;
+
+        if (length <= 1) return intervals;
 
         Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
 
         List<int[]> res = new ArrayList<>();
-
         int[] curr = intervals[0];
 
         for (int[] next : intervals) {
-            if (cur[1] >= next[0]) cur[1] = Math.max(cur[1], next[1]);
-            else {
+            if (curr[1] > next[0]) {
+                curr[1] = Math.max(curr[1], next[1]);
+            } else {
                 res.add(curr);
                 curr = next;
             }
         }
 
         res.add(curr);
-        return res.toArray(new int[0][]);
+        return res.toArray(new int[res.size()][]);
     }
 
     public int[][] mergeII(int[][] intervals) {
@@ -80,6 +87,9 @@ class Merge_Intervals_56 {
     public static void main(String[] args) {
         Merge_Intervals_56 obj = new Merge_Intervals_56();
         int[][] intervals = new int[][] {{ 1, 3 }, { 2, 6 }, { 8, 10 }, { 15, 18 }};
-        obj.merge(intervals);
+        int[][] res = obj.merge(intervals);
+        for (int[] item: res) { 
+            for (int i: item) System.out.println(i);
+        }
     }
 }
