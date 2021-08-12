@@ -38,69 +38,114 @@ public class TreeNode {
 */
 
 public class Binary_Tree_Right_Side_View_199 {
-	public List<Integer> rightSideViewII(TreeNode root) {
-		Queue<TreeNode> queue = new LinkedList<TreeNode>();
+    public List<Integer> rightSideViewII(TreeNode root) {
+        List<Integer> res = new ArrayList<Integer>();
 
-		List<Integer> res = new ArrayList<Integer>();
+        if (root == null) return res;
 
-		if (root != null) {
-			queue.offer(root);
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
 
-			while (!queue.isEmpty()) {
-				int length = queue.size();
+        queue.offer(root);
 
-				while (length > 0) {
-					TreeNode current = queue.poll();
+        while (queue.size() > 0) {
+            int length = queue.size();
 
-					if (current.left != null) queue.offer(current.left);
-					if (current.right != null) queue.offer(current.right);
-					if (length == 1) res.add(current.val);
-					length--;
-				}
-			}
-		}
+            for (int i = 0; i < length; i++) {
+                TreeNode current = queue.poll();
+                if (i == length - 1) res.add(current.val);
+                if (current.left != null) queue.offer(current.left);
+                if (current.right != null) queue.offer(current.right);
+            }
+        }
 
-		return res;
-	}
+        return res;
+    }
 
+    public List<Integer> leftSideView(TreeNode root) {
+        List<Integer> res = new ArrayList<Integer>();
 
-	List<Integer> rightside = new ArrayList<Integer>();
+        if (root == null) return res;
 
-	public void helper(TreeNode node, int level) {
-		if (level == rightside.size())
-			rightside.add(node.val);
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
 
-		if (node.right != null)
-			helper(node.right, level + 1);
-		
-		if (node.left != null)
-			helper(node.left, level + 1);
-	}
+        queue.offer(root);
 
-	public List<Integer> rightSideView(TreeNode root) {
-		if (root == null) return rightside;
+        while (queue.size() > 0) {
+            int length = queue.size();
 
-		helper(root, 0);
-		return rightside;
-	}
+            for (int i = 0; i < length; i++) {
+                TreeNode current = queue.poll();
+                if (i == 0) res.add(current.val);
+                if (current.left != null) queue.offer(current.left);
+                if (current.right != null) queue.offer(current.right);
+            }
+        }
 
-	public static void main(String[] args) {
-		TreeNode five = new TreeNode(5);
-		TreeNode two = new TreeNode(2);
-		two.right = five;
+        return res;
+    }
 
-		TreeNode four = new TreeNode(4);
-		TreeNode three = new TreeNode(3);
-		three.right = four;
+    public List<Integer> rightSideViewI(TreeNode root) {
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
 
-		TreeNode root = new TreeNode(1);
-		root.left = two;
-		root.right = three;
+        List<Integer> res = new ArrayList<Integer>();
 
-		List<Integer> result = new Binary_Tree_Right_Side_View_199().rightSideView(root);
+        if (root != null) {
+            queue.offer(root);
 
-		for (int i : result) {
-			System.out.println(i);
-		}
-	}
+            while (!queue.isEmpty()) {
+                int length = queue.size();
+
+                while (length > 0) {
+                    TreeNode current = queue.poll();
+
+                    if (current.left != null) queue.offer(current.left);
+                    if (current.right != null) queue.offer(current.right);
+                    if (length == 1) res.add(current.val);
+                    length--;
+                }
+            }
+        }
+
+        return res;
+    }
+
+    List<Integer> rightside = new ArrayList<Integer>();
+
+    public void helper(TreeNode node, int level) {
+        if (level == rightside.size())
+            rightside.add(node.val);
+
+        if (node.right != null)
+            helper(node.right, level + 1);
+
+        if (node.left != null)
+            helper(node.left, level + 1);
+    }
+
+    public List<Integer> rightSideView(TreeNode root) {
+        if (root == null) return rightside;
+
+        helper(root, 0);
+        return rightside;
+    }
+
+    public static void main(String[] args) {
+        TreeNode five = new TreeNode(5);
+        TreeNode two = new TreeNode(2);
+        two.right = five;
+
+        TreeNode four = new TreeNode(4);
+        TreeNode three = new TreeNode(3);
+        three.right = four;
+
+        TreeNode root = new TreeNode(1);
+        root.left = two;
+        root.right = three;
+
+        List<Integer> result = new Binary_Tree_Right_Side_View_199().rightSideViewII(root);
+
+        for (int i : result) {
+            System.out.println(i);
+        }
+    }
 }
