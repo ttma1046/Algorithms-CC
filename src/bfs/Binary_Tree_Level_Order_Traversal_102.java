@@ -38,49 +38,53 @@ return its level order traversal as:
  * }
  */
 class Binary_Tree_Level_Order_Traversal_102 {
-	public List<List<Integer>> levelOrder(TreeNode root) {
-		List<List<Integer>> result = new ArrayList<List<Integer>>();
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
 
-		if (root == null) return result;
+        if (root == null) return result;
 
 
-		Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
 
-		queue.offer(root);
+        queue.offer(root);
 
-		while (!queue.isEmpty()) {
-			int length = queue.size();
+        while (!queue.isEmpty()) {
+            int length = queue.size();
 
-			List<Integer> temp = new ArrayList<Integer>();
-			for (int i = 0; i < length; i++) {
-				TreeNode current = queue.poll();
+            List<Integer> temp = new ArrayList<Integer>();
+            for (int i = 0; i < length; i++) {
+                TreeNode current = queue.poll();
 
-				temp.add(current.val);
-				if (current.left != null) queue.offer(current.left);
-				if (current.right != null) queue.offer(current.right);
-			}
+                temp.add(current.val);
+                if (current.left != null) queue.offer(current.left);
+                if (current.right != null) queue.offer(current.right);
+            }
 
-			result.add(temp);
-		}
+            result.add(temp);
+        }
 
-		return result;
-	}
+        return result;
+    }
 
 
     // dfs
-	public List<List<Integer>> levelOrder(TreeNode root) {
-		List<List<Integer>> res = new ArrayList<List<Integer>>();
-		levelHelper(res, root, 0);
-		return res;
-	}
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
+        levelHelper(res, root, 0);
+        return res;
+    }
 
-	public void levelHelper(List<List<Integer>> res, TreeNode root, int height) {
-		if (root == null) return;
-		if (height >= res.size()) {
-			res.add(new LinkedList<Integer>());
-		}
-		res.get(height).add(root.val);
-		levelHelper(res, root.left, height + 1);
-		levelHelper(res, root.right, height + 1);
-	}
+    public void levelHelper(List<List<Integer>> res, TreeNode root, int height) {
+        if (root == null) return;
+        if (height >= res.size()) {
+            res.add(new LinkedList<Integer>());
+        }
+        res.get(height).add(root.val);
+        levelHelper(res, root.left, height + 1);
+        levelHelper(res, root.right, height + 1);
+    }
+
+    public static void main(String[] args) {
+    	
+    }
 }
