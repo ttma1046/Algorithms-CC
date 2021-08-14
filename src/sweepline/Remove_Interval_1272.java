@@ -1,20 +1,22 @@
 package sweepline;
+import java.util.List;
+import java.util.ArrayList;
 /*
-A set of real numbers can be represented as the union of several disjoint intervals, 
+A set of real numbers can be represented as the union of several disjoint intervals,
 
-where each interval is in the form [a, b). 
+where each interval is in the form {a, b).
 
 A real number x is in the set if one of its intervals [a, b) contains x (i.e. a <= x < b).
 
-You are given a sorted list of disjoint intervals intervals representing a set of real numbers as described above, 
+You are given a sorted list of disjoint intervals intervals representing a set of real numbers as described above,
 
-where intervals[i] = [ai, bi] represents the interval [ai, bi). 
+where intervals[i] = [ai, bi] represents the interval [ai, bi).
 
 You are also given another interval toBeRemoved.
 
-Return the set of real numbers with the interval toBeRemoved removed from intervals. 
+Return the set of real numbers with the interval toBeRemoved removed from intervals.
 
-In other words, return the set of real numbers such that every x in the set is in intervals but not in toBeRemoved. 
+In other words, return the set of real numbers such that every x in the set is in intervals but not in toBeRemoved.
 
 Your answer should be a sorted list of disjoint intervals as described above.
 
@@ -22,7 +24,7 @@ Example 1:
 
 Input: intervals = [[0,2],[3,4],[5,7]], toBeRemoved = [1,6]
 Output: [[0,1],[6,7]]
-
+ 
 Example 2:
 
 Input: intervals = [[0,5]], toBeRemoved = [2,3]
@@ -40,18 +42,71 @@ Constraints:
 */
 class Remove_Interval_1272 {
     public List<List<Integer>> removeInterval(int[][] intervals, int[] toBeRemoved) {
-    	List<List<Integer>> res = new ArrayList<>();
-        for(int[] i: intervals) {
-        	if (i[1] <= toBeRemoved[0] || i[0] >= toBeRemoved[1]) {
-        		res.add(Arrays.asList(i[0], i[1]));
-        	} else {
-        		if (i[0] < toBeRemoved[0])
-        			res.add(Arrays.asList(i[0], toBeRemoved[0]));
-        		if (i[1] > toBeRemoved[1])
-        			res.add(Arrays.asList(toBeRemoved[1], i[1]));
-        	}
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
+
+        for (int[] interval : intervals) {
+            if (interval[1] <= toBeRemoved[0] || interval[0] >= toBeRemoved[1]) {
+                // List<Integer> temp = new ArrayList<Integer>();
+                // temp.add(interval[0]);
+                // temp.add(interval[1]);
+                // res.add(temp);
+
+
+                res.add(Arrays.asList(interval[0], interval[1]));
+            } else {
+                if (interval[0] < toBeRemoved[0]) {
+                    /*
+                    List<Integer> temp = new ArrayList<Integer>();
+                    temp.add(interval[0]);
+                    temp.add(toBeRemoved[0]);
+                    res.add(temp);
+                    */
+
+                    res.add(Arrays.asList(interval[0], toBeRemoved[0]));
+                }
+
+                if (interval[1] > toBeRemoved[1]) {
+                    /*
+                    List<Integer> temp = new ArrayList<Integer>();
+                    temp.add(toBeRemoved[1]);
+                    temp.add(interval[1]);
+                    res.add(temp);
+                    */
+
+                    res.add(Arrays.asList(toBeRemoved[1], interval[1]));
+                }
+            }
         }
 
         return res;
+    }
+
+    public List<List<Integer>> removeInterval(int[][] intervals, int[] toBeRemoved) {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+
+        for (int[] interval : intervals) {
+            // If there are no overlaps, add the interval to the list as is.
+            if (interval[0] > toBeRemoved[1] || interval[1] < toBeRemoved[0]) {
+                result.add(Arrays.asList(interval[0], interval[1]));
+            } else {
+                // Is there a left interval we need to keep?
+                if (interval[0] < toBeRemoved[0]) {
+                    result.add(Arrays.asList(interval[0], toBeRemoved[0]));
+                }
+                // Is there a right interval we need to keep?
+                if (interval[1] > toBeRemoved[1]) {
+                    result.add(Arrays.asList(toBeRemoved[1], interval[1]));
+                }
+            }
+        }
+
+        return result;
+    }
+
+    public static void main(String[] args) {
+        Remove_Interval_1272 obj = new Remove_Interval_1272();
+        int[][] intervals = new int[][] {{-5, -4}, {-3, -2}, {1, 2}, {3, 5}, {8, 9}};
+        int[] toBeRemoved = new int[] {-1, 4};
+        System.out.println(obj.removeInterval(intervals, toBeRemoved));
     }
 }
