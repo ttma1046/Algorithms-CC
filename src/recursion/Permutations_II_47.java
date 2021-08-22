@@ -15,7 +15,7 @@ Output:
   [2,1,1]
 ]
 */
-class Permutations_with_Dups {
+class Permutations_II_47 {
     public List<List<Integer>> permuteUnique(int[] nums) {
         ArrayList<List<Integer>> permutations = new ArrayList<List<Integer>>();
         ArrayList<Integer> arrayList = new ArrayList<Integer>();

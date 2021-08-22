@@ -3,7 +3,7 @@ package recursion;
 import java.util.ArrayList;
 import java.util.List;
 
-class Permutations {
+class Permutations_46 {
     /*
       array: {1,2,3}
       1
