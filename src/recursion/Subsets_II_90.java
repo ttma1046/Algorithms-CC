@@ -27,7 +27,7 @@ Constraints:
 */
 
 class Subsets_II_90 {
-	public List<List<Integer>> subsetsWithDup(int[] nums) {
+	public List<List<Integer>> subsetsWithDupI(int[] nums) {
 		Arrays.sort(nums);
 		List<List<Integer>> res = new ArrayList<>();
 		helper(res, new ArrayList<>(), nums, 0, false);
@@ -78,7 +78,7 @@ class Subsets_II_90 {
 		return result;
 	}
 
-	public List<List<Integer>> subsetsWithDup(int[] nums) {
+	public List<List<Integer>> subsetsWithDupII(int[] nums) {
 		List<List<Integer>> list = new ArrayList<>();
 		Arrays.sort(nums);
 		backtrack(list, new ArrayList<>(), nums, 0);
@@ -95,9 +95,29 @@ class Subsets_II_90 {
 		}
 	}
 
+	public List<List<Integer>> subsetsWithDupMy(int[] nums) {
+		List<List<Integer>> res = new ArrayList<>();
+		Arrays.sort(nums);
+		backtracking(res, new ArrayList<Integer>(), nums, 0);
+		return res;
+	}
+
+	void backtracking(List<List<Integer>> res, List<Integer> list, int[] nums, int index) {
+		List<Integer> temp = new ArrayList<>();
+		for (int i: list) temp.add(i);
+		res.add(temp);
+
+		for(int i = index; i < nums.length; ++i) {
+			if (i > index && nums[i] == nums[i - 1]) continue;
+			list.add(nums[i]);
+			backtracking(res, list, nums, i + 1);
+			list.remove(list.size() - 1);
+		}
+	}
+
 	public static void main(String[] args) {
 		int[] nums = new int[] {3, 1, 2};
-		List<List<Integer>> res = new Subsets_II_90().subsetVI(nums);
+		List<List<Integer>> res = new Subsets_II_90().subsetsWithDupMy(nums);
 
 		for (List<Integer> item : res) {
 			for (int k : item) {

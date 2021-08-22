@@ -72,6 +72,7 @@ class Subsets_78 {
     }
     */
 
+    /*
     public List<List<Integer>> subsetsIII(int[] nums) {
         if (nums == null || nums.length <= 0) {
             return null;
@@ -134,10 +135,66 @@ class Subsets_78 {
             tempList.remove(tempList.size() - 1);
         }
     }
+    */
+
+    /*
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+
+        backtracking(nums, new ArrayList<Integer>(), res, 0);
+
+        return res;
+    }
+
+    void backtracking(int[] nums, List<Integer> list, List<List<Integer>> res, int index) {
+        List<Integer> temp = new ArrayList<Integer>();
+        for(int i: list) temp.add(i);
+        res.add(temp);
+
+        for(int i = 0; i < nums.length; ++i) {
+            list.add(nums[i]);
+            backtracking(nums, list, res, i + 1);
+            list.remove(list.size() - 1);
+        }
+    }
+    */
+
+    public List<List<Integer>> subsets(int[] nums) {
+        int totalNumber = 1 << nums.length;
+        List<List<Integer>> res = new ArrayList<>();
+
+        for (int mask = 0; mask < totalNumber; ++mask) {
+            List<Integer> set = new ArrayList<>();
+
+            for (int j = 0; j < nums.length; j++) {
+                System.out.println("mask:" + mask);
+                System.out.println("1 << j:" + (1 << j));
+
+
+                System.out.println("mask & (1 << j):" + (mask & (1 << j)));
+
+
+                if ((mask & (1 << j)) != 0) set.add(nums[j]);
+            }
+
+            res.add(set);
+        }
+        return res;
+    }
 
     public static void main(String[] args) {
+
+        int j = 2;
+
+        int z = 1 << j;
+
+        System.out.println(j);
+        System.out.println(z);
+
+
+        
         int[] nums = new int[] {3, 1, 2};
-        List<List<Integer>> res = new Subsets_78().subsetVI(nums);
+        List<List<Integer>> res = new Subsets_78().subsets(nums);
 
         for (List<Integer> item : res) {
             for (int k : item) {
@@ -149,3 +206,17 @@ class Subsets_78 {
         }
     }
 }
+
+
+/*
+00000000
+00000000
+
+00000000  
+00000010  
+
+00000000  3
+00000100
+
+*/
+
