@@ -4,7 +4,8 @@ import java.util.Arrays;
 
 
 /*
-Given a circular array (the next element of the last element is the first element of the array), print the Next Greater Number for every element. The Next Greater Number of a number x is the first greater number to its traversing-order next in the array, which means you could search circularly to find its next greater number. If it doesn't exist, output -1 for this number.
+Given a circular array (the next element of the last element
+is the first element of the array), print the Next Greater Number for every element. The Next Greater Number of a number x is the first greater number to its traversing-order next in the array, which means you could search circularly to find its next greater number. If it doesn't exist, output -1 for this number.
 
 Example 1:
 Input: [1,2,1]
@@ -22,73 +23,6 @@ class Next_Greater_Element_II_503 {
         Arrays.fill(res, -1);
         Stack<Integer> stack = new Stack<>();
 
-        /*
-        1 2 1
-
-
-        012 345
-        012 012
-        */
-
-        /*
-        0
-        While
-        1
-        2
-        3
-        While
-        While
-        4
-        5
-        2
-        -1
-        2
-
-        0 1 2
-        1 2 1
-
-        i = 0
-        Stack = 0
-
-        i = 1
-        A[0] < A[1]
-        While {
-        	res[0] = A[1] = 2;
-        	Stack = null
-        }
-        res[2, -1, -1]
-        Stack = 1
-
-        i = 2
-        A[1] !< A[2]
-        res[2, -1, -1]
-        Stack = 1 2
-
-        i = 3
-        A[2] !< A[0]
-        res[2, -1, -1]
-        Stack = 1 2 0
-
-        i = 4
-        While {
-        	A[0] < A[1]
-        	res[0] = A[1] = 2;
-        	Stack = 1 2
-
-        	A[2] < A[1]
-        	res[2] = A[1] = 2;
-        	Stack = 1
-
-        	A[1] == A[1]
-        }
-
-        res[2, -1, 2]
-        Stack = 1 1
-
-        i = 5
-        Stack = 1 1 2
-
-        */
         for (int i = 0; i < n * 2; i++) {
             while (!stack.isEmpty() && nums[stack.peek()] < nums[i % n]) {
 
@@ -124,63 +58,6 @@ class Next_Greater_Element_II_503 {
         return res;
     }
 
-
-    /*
-    0
-    While
-    1
-    2
-    3
-    While
-    While
-    4
-    5
-    2
-    -1
-    2
-
-    0 1 2
-    1 2 1
-
-    i = 0
-    Stack = 0
-
-    i = 1
-    A[0] < A[1]
-    While {
-    	res[0] = A[1] = 2;
-    	Stack = null
-    }
-    res[2, -1, -1]
-    Stack = 1
-
-    i = 2
-    A[1] !< A[2]
-    res[2, -1, -1]
-    Stack = 1 2
-
-    i = 3
-    A[2] !< A[0]
-    res[2, -1, -1]
-    Stack = 1 2
-
-    i = 4
-    While {
-    	A[2] < A[1]
-    	res[2] = A[1] = 2;
-    	Stack = 1
-
-    	A[1] == A[1]
-    }
-
-    res[2, -1, 2]
-    Stack = 1
-
-    i = 5
-    Stack = 1
-
-    */
-
     public int[] nextGreaterElements(int[] nums) {
         int n = nums.length, next[] = new int[n];
 
@@ -202,17 +79,37 @@ class Next_Greater_Element_II_503 {
     }
 
     public int[] nextGreaterElements(int[] nums) {
+        int[] res = new int[nums.length];
+        Stack<Integer> stack = new Stack<>();
+        int n = nums.length;
+        for (int i = 2 * n - 1; i >= 0; --i) {
+            while (stack.size() > 0 && nums[stack.peek()] <= nums[i % n]) {
+                stack.pop();
+            }
+
+            res[i % n] = stack.size() > 0 ? -1 : nums[stack.peek()];
+            stack.push(i % n);
+        }
+        return res;
+    }
+
+    public int[] nextGreaterElements(int[] nums) {
         int n = nums.length, res[] = new int[n];
 
         Stack<Integer> stack = new Stack<>();
         for (int i = 2 * n - 1; i >= 0; i--) {
-            while
+            while (stack.size() > 0 && nums[i % n] >= stack.peek()) stack.pop();
+
+            res[i % n] = stack.size() > 0 ? -1 : stack.peek();
+
+            stack.push(nums[i % n]);
         }
+
+        return res;
     }
 
     public static void main(String[] args) {
         int[] result = new Next_Greater_Element_II_503().nextGreaterElements(new int[] {1, 2, 1});
-
 
         for (int x : result) {
             System.out.println(x);
