@@ -4,53 +4,68 @@ import java.util.Arrays;
 
 public class BinarySearch {
     /*
-    Template #1 is the most basic and elementary form of Binary Search. It is the standard Binary Search Template that most high schools or universities use when they first teach students computer science. Template #1 is used to search for an element or condition which can be determined by accessing a single index in the array.
+    Template #1 is the most basic and elementary form of Binary Search. 
+    It is the standard Binary Search Template that most high schools or universities use 
+    when they first teach students computer science. 
+
+    Template #1 is used to search for an element or condition which 
+    can be determined by accessing a single index in the array.
 
     Key Attributes:
 
     Most basic and elementary form of Binary Search
-    Search Condition can be determined without comparing to the element's neighbors (or use specific elements around it)
-    No post-processing required because at each step, you are checking to see if the element has been found. If you reach the end, then you know the element is not found
+    Search Condition can be determined 
+    without comparing to the element's neighbors 
+    (or use specific elements around it)
+    
+    No post-processing required because at each step, 
+    you are checking to see if the element has been found. 
+
+    If you reach the end, then you know the element is not found
 
     Distinguishing Syntax:
 
-    Initial Condition: left = 0, right = length-1
-    Termination: left > right
-    Searching Left: right = mid-1
-    Searching Right: left = mid+1
+    Initial Condition: start = 0, end = length - 1
+    Termination: start > end
+    Searching towards to left: end = mid - 1
+    Searching towards to the right: start = mid + 1
     */
     int binarySearch(int[] nums, int target) {
         if(nums == null || nums.length == 0)
             return -1;
 
-        int left = 0, right = nums.length - 1;
-        while(left <= right) {
-            // Prevent (left + right) overflow
-            int mid = left + (right - left) / 2;
+        int start = 0, end = nums.length - 1;
+        while(start <= end) {
+            // Prevent (start + end) overflow
+            int mid = start + (end - start) / 2;
             if(nums[mid] == target) return mid;
-            else if(nums[mid] < target) left = mid + 1;
-            else right = mid - 1;
+            else if(nums[mid] < target) start = mid + 1;
+            else end = mid - 1;
         }
 
-        // End Condition: left > right
+        // End Condition: start > end
+        // (end, start)
+
+        System.out.println(start);
+        System.out.println(end);
         return -1;
     }
 
     /*
     Template #1:
     // Pre-prcessing
-    left = 0; right = length - 1;
-    while(left <= right) {
-        mid = left + (right - left) / 2;
+    start = 0; end = length - 1;
+    while(start <= end) {
+        mid = start + (end - start) / 2;
         if (nums[mid] == target) {
             return mid;
         } else if (nums[mid] < target) {
-            left = mid + 1;
+            start = mid + 1;
         } else {
-            right = mid - 1;
+            end = mid - 1;
         }
     }
-    // right + 1 == left
+    // end + 1 == start
     // No more candidate
     */ 
 
@@ -109,9 +124,9 @@ public class BinarySearch {
         // Post-Processing
     }
     */
-
-    /*
-    Template #3 is another unique form of Binary Search. It is used to search for an element or condition which requires accessing the current index and its immediate left and right neighbor's index in the array.
+    Template #3 is another unique form of Binary Search. 
+    It is used to search for an element or condition 
+    which requires accessing the current index and its immediate left and right neighbor's index in the array.
 
     Key Attributes:
 
@@ -132,23 +147,23 @@ public class BinarySearch {
         if (nums == null || nums.length == 0)
             return -1;
 
-        int left = 0, right = nums.length - 1;
-        while (left + 1 < right) {
-            // Prevent (left + right) overflow
-            int mid = left + (right - left) / 2;
+        int start = 0, end = nums.length - 1;
+        while (start + 1 < end) {
+            // Prevent (start + end) overflow
+            int mid = start + (end - start) / 2;
             if (nums[mid] == target) {
                 return mid;
             } else if (nums[mid] < target) {
-                left = mid;
+                start = mid;
             } else {
-                right = mid;
+                end = mid;
             }
         }
 
         // Post-processing:
-        // End Condition: left + 1 == right
-        if(nums[left] == target) return left;
-        if(nums[right] == target) return right;
+        // End Condition: start + 1 == end
+        if(nums[start] == target) return start;
+        if(nums[end] == target) return end;
         return -1;
     }
 

@@ -39,9 +39,8 @@ public class FirstBadVersion_278 {
             }
         }
 
-        return start;
+        return low;
     }
-
 
     public int firstBadVersion(int n) {
         if (n <= 0) {
@@ -69,9 +68,59 @@ public class FirstBadVersion_278 {
         return versionNumber > 3;
     }
 
+    int firstBadVersionV(int versionNumber) {
+        int start = 1, end = versionNumber;
+
+        while (start <= end) {
+            int mid = start + (end - start) / 2;
+
+            if (!isBadVersion(mid))
+                start = mid  + 1;
+            else
+                end = mid - 1;
+        }
+
+        return start;
+    }
+
+    int firstBadVersionVI(int versionNumber) {
+        int start = 1, end = versionNumber;
+
+        while (start < end) {
+            int mid = start + (end - start) / 2;
+
+            if (!isBadVersion(mid))
+                start = mid  + 1;
+            else
+                end = mid;
+        }
+
+        return start;
+    }
+
+    int firstBadVersionVII(int versionNumber) {
+        if (versionNumber == 1) return isBadVersion(versionNumber) ? 1 : -1;
+        int start = 1, end = versionNumber;
+
+        while (start + 1< end) {
+            int mid = start + (end - start) / 2;
+
+            if (!isBadVersion(mid))
+                start = mid;
+            else
+                end = mid;
+        }
+        if (isBadVersion(start)) return start;
+        if (isBadVersion(end)) return end;
+        return -1;
+    }
+
     public static void main(String[] args) {
         System.out.println(new FirstBadVersion_278().firstBadVersion(5));
         System.out.println(new FirstBadVersion_278().firstBadVersionII(5));
+        System.out.println(new FirstBadVersion_278().firstBadVersionV(5));
+        System.out.println(new FirstBadVersion_278().firstBadVersionVI(5));
+        System.out.println(new FirstBadVersion_278().firstBadVersionVII(5));
     }
 
     // left  1    1     2     3     4
