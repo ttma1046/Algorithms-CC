@@ -139,6 +139,29 @@ public class Pow_50 {
 	We need to do the computation for O(logn) times, so the space complexity is O(logn).
 	*/
 
+	public double pow(double x, int n) {
+		int power = 1;
+		for (int i = 0; i < n; i++)
+			power = power * x;
+
+		return power;
+	}
+
+
+	public double myPow(double x, int n) {
+		if (x == 0 || x == 1) return x;
+		if (n < 0) return 1 / pow(x, -n);
+		return pow(x, n);
+	}
+
+	private double pow(double x, int n) {
+		if (n == 0) return 1;
+		double y = pow(x, n / 2);
+		if (n % 2 == 0) return y * y;
+		else return y * y * x;
+	}
+
+
 	public static void main(String[] args) {
 		System.out.println(new Pow_50().myPow(2, 10));
 
