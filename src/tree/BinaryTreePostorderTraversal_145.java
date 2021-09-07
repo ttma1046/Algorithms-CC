@@ -81,7 +81,7 @@ public class BinaryTreePostorderTraversal_145 {
                 }
                 stack.push(root);
                 root = root.left;
-            }
+            }  
 
             root = stack.pop();
 
@@ -98,5 +98,27 @@ public class BinaryTreePostorderTraversal_145 {
         }
 
         return result;
+    }
+
+    public List<Integer> postorderTraversalGu(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<>();
+        Stack<TreeNode> resStack = new Stack<>();
+
+        if (root != null) stack.push(root);
+        TreeNode curr = root;
+        while(curr != null || stack.size() > 0) {
+            if (curr != null) {
+                resStack.push(curr);
+                stack.push(curr);
+                curr = curr.right;
+            } else {
+                curr = stack.pop();
+                curr = curr.left;
+            }
+        }
+
+        List<Integer> res = new ArrayList<>();
+        while(resStack.size() > 0) res.add(resStack.pop().val);
+        return res;
     }
 }

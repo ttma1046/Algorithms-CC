@@ -19,7 +19,7 @@ return its level order traversal as:
   [3],
   [9,20],
   [15,7]
-]
+]sdsds
 */
 
 /**
@@ -84,6 +84,18 @@ class Binary_Tree_Level_Order_Traversal_102 {
         res.get(height).add(root.val);
         levelHelper(res, root.left, height + 1);
         levelHelper(res, root.right, height + 1);
+    }
+
+    public List<TreeNode> levelOrder(TreeNode root) {
+        List<TreeNode> res = new ArrayList();
+        int slow = 0;
+        res.add(root);
+        while (slow < res.size()) {
+            TreeNode cur = res.get(slow++);
+            if (cur.left != null) res.add(cur.left);
+            if (cur.right != null) res.add(cur.right);
+        }
+        return res;
     }
 
     public static void main(String[] args) {
