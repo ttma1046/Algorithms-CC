@@ -89,16 +89,16 @@ public class Serialization_and_Deserialize_N_ary_Tree_428 {
     }
 
     private static void letsprint(Node node) {
-    	System.out.print(node.val);
+        System.out.print(node.val);
 
-    	if (node.children != null) {
-    		System.out.println();
+        if (node.children != null) {
+            System.out.println();
 
-    		for (Node k: node.children) {
-    			letsprint(k);
-    			System.out.print(" ");
-    		}
-    	}
+            for (Node k : node.children) {
+                letsprint(k);
+                System.out.print(" ");
+            }
+        }
     }
 }
 

@@ -143,7 +143,7 @@ class Codec {
     TreeNode deserializeMy(String data) {
         if (data.length() == 0 || data == null) return null;
         Queue<String> q = new LinkedList<>(Arrays.asList(data.split(",")));
-        return deserialize(q);
+        return deserializeMy(q);
     }
 
     TreeNode deserializeMy(Queue<String> q) {
