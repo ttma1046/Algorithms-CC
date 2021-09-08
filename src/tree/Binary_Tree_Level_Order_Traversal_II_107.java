@@ -1,4 +1,9 @@
 package tree;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Queue;
+import java.util.Collections;
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -31,8 +36,12 @@ class Binary_Tree_Level_Order_Traversal_II_107 {
                 if (cur.left != null) q.offer(cur.left);
                 if (cur.right != null) q.offer(cur.right);
             }
-            res.add(0, level);
+
+            // res.add(0, level);
+            res.add(level);
         }
+
+        Collections.reverse(res);
         
         return res;
     }
