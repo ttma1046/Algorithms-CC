@@ -108,6 +108,20 @@ class Next_Greater_Element_II_503 {
         return res;
     }
 
+
+    public int[] nextGreaterElements(int[] nums) {
+        int n = nums.length, res[] = new int[n];
+
+        Stack<Integer> stack = new Stack<>();
+        for (int i = 0; i < n * 2; ++i) {
+            
+            res[i % n] = stack.size() > 0 ? stack.peek() : -1;
+            stack.push(i % n);
+        }
+
+        return res;
+    }
+
     public static void main(String[] args) {
         int[] result = new Next_Greater_Element_II_503().nextGreaterElements(new int[] {1, 2, 1});
 

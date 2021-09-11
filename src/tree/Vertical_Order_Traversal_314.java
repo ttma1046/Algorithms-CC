@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 
-class Vertical_Order_Traversal_314 {
 /*
 Given the root of a binary tree, return the vertical order traversal of its nodes' values. (i.e., from top to bottom, column by column).
 
@@ -36,6 +35,9 @@ Constraints:
 The number of nodes in the tree is in the range [0, 100].
 -100 <= Node.val <= 100
 */
+public class Vertical_Order_Traversal_314 {
+
+  
   Map<Integer, ArrayList<Pair<Integer, Integer>>> columnTable = new HashMap<>();
   int minColumn = 0, maxColumn = 0;
 
@@ -120,9 +122,5 @@ The number of nodes in the tree is in the range [0, 100].
     }
 
     return output;
-  }
-
-  public static void main(String[] args) {
-
-  }
+  } 
 }

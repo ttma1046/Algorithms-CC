@@ -72,7 +72,6 @@ public class BinaryTreeInorderTraversal_94 {
         dfs(res, node.right);
     }
 
-
     public List<Integer> inorderTraversalStack(TreeNode root) {
         List<Integer> res = new ArrayList<>();
 
@@ -84,10 +83,29 @@ public class BinaryTreeInorderTraversal_94 {
                 stack.push(curr);
                 curr = curr.left;
             }
-
             curr = stack.pop();
             res.add(curr.val);
             curr = curr.right;
+        }
+
+        return res;
+    }
+
+    public List<Integer> inorderTraversalStack(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+
+        Stack<TreeNode> stack = new Stack<>();
+
+        TreeNode curr = root;
+        while (curr != null || stack.size() > 0) {
+            if (curr != null) {
+                stack.push(curr);
+                curr = curr.left;
+            } else {
+                curr = stack.pop();
+                res.add(curr.val);
+                curr = curr.right;
+            }
         }
 
         return res;

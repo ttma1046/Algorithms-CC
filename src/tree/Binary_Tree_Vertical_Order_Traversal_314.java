@@ -9,9 +9,12 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.ArrayDeque;
 import java.util.Comparator;
+import java.util.TreeMap;
 
 /*
-Given a binary tree, return the vertical order traversal of its nodes' values. (ie, from top to bottom, column by column).
+Given a binary tree, return the vertical order traversal of its nodes' values.
+
+(ie, from top to bottom, column by column).
 
 If two nodes are in the same row and column, the order should be from left to right.
 
@@ -63,13 +66,13 @@ Input: [3,9,8,4,0,1,7,null,null,null,2,5] (0's right child is 2 and 1's left chi
      3
     /\
    /  \
-   9   8
-  /\  /\
- /  \/  \
- 4  01   7
-    /\
-   /  \
-   5   2
+  9    8
+ /\   /\
+/  \ /  \
+4  0 1   7
+   \ /
+   / \
+  5   2
 
 Output:
 
@@ -80,6 +83,16 @@ Output:
   [8,2],
   [7]
 ]
+
+Example 4:
+
+Input: root = []
+Output: []
+
+
+Constraints:
+The number of nodes in the tree is in the range [0, 100].
+-100 <= Node.val <= 100
 */
 
 /**
@@ -98,259 +111,252 @@ Output:
  * }
  */
 class Binary_Tree_Vertical_Order_Traversal_314 {
-	public static void main(String[] args) {
-		TreeNode fifteen = new TreeNode(15);
-		TreeNode seven = new TreeNode(7);
+    public static void main(String[] args) {
+        TreeNode fifteen = new TreeNode(15);
+        TreeNode seven = new TreeNode(7);
 
-		TreeNode twenty = new TreeNode(20);
+        TreeNode twenty = new TreeNode(20);
 
-		twenty.left = fifteen;
-		twenty.right = seven;
+        twenty.left = fifteen;
+        twenty.right = seven;
 
-		TreeNode nine = new TreeNode(9);
-		TreeNode three = new TreeNode(3);
+        TreeNode nine = new TreeNode(9);
+        TreeNode three = new TreeNode(3);
 
-		three.left = nine;
-		three.right = twenty;
+        three.left = nine;
+        three.right = twenty;
 
-		List<List<Integer>> res = new Binary_Tree_Vertical_Order_Traversal_314().verticalOrderMyDFS(three);
+        List<List<Integer>> res = new Binary_Tree_Vertical_Order_Traversal_314().verticalOrderMyDFS(three);
 
-		for (List<Integer> items : res) {
-			for (Integer item : items) {
-				System.out.println(item);
-			}
-		}
+        for (List<Integer> items : res) {
+            for (Integer item : items) {
+                System.out.println(item);
+            }
+        }
 
+        res = new Binary_Tree_Vertical_Order_Traversal_314().verticalOrderMyBFS(three);
 
-		res = new Binary_Tree_Vertical_Order_Traversal_314().verticalOrderMyBFS(three);
+        for (List<Integer> items : res) {
+            for (Integer item : items) {
+                System.out.print(item);
+                System.out.print(",");
+            }
+            System.out.println();
+        }
+    }
 
-		for (List<Integer> items : res) {
-			for (Integer item : items) {
-				System.out.print(item);
-				System.out.print(",");
-			}
-			System.out.println();
-		}
-	}
+    public List<List<Integer>> verticalOrderBFSGu(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        Map<Integer, List<Integer>> colToNode = new HashMap<>();
+        Map<TreeNode, Integer> position = new HashMap<>();
+        Queue<TreeNode> q = new LinkedList<>();
 
-	public List<List<Integer>> verticalOrderMyBFS(TreeNode root) {
-		List<List<Integer>> output = new ArrayList<>();
+        if (root != null) q.offer(root);
+        position.put(root, 0);
 
-		if (root == null) {
-			return output;
-		}
+        int min = 0;
+        while(q.size() > 0) {
+            TreeNode cur = q.poll();
+            int col = position.get(cur);
+            colToNode.computeIfAbsent(col, x -> new ArrayList<>()).add(cur.val);
+            if (cur.left != null) {
+                q.add(cur.left);
+                position.put(cur.left, col - 1);
+            }
 
-		Map<Integer, ArrayList<Integer>> map = new HashMap<>();
-		Queue<Pair<TreeNode, Integer>> queue = new LinkedList<>();
+            if (cur.right != null) {
+                q.add(cur.right);
+                position.put(cur.right, col + 1);
+            }
 
-		int column = 0;
-		int minColumn = 0, maxColumn = 0;
+            min = Math.min(min, col);
+        }
 
-		queue.offer(new Pair<TreeNode, Integer>(root, column));
+        while (colToNode.containsKey(min)) res.add(colToNode.get(min++));
+        return res;
+    }
 
-		while (!queue.isEmpty()) {
-			Pair<TreeNode, Integer> p = queue.poll();
-			TreeNode curr = p.getKey();
-			column = p.getValue();
+    public List<List<Integer>> verticalOrderIII(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (root == null) return res;
 
-			if (curr != null) {
-				if (!map.containsKey(column)) {
-					map.put(column, new ArrayList<Integer>());
-				}
+        Map<Integer, ArrayList<Integer>> columnTable = new HashMap<>();
+        // Pair of node and its column offset
+        Queue<Pair<TreeNode, Integer>> queue = new ArrayDeque<>();
+        int column = 0;
+        int minColumn =  0, maxColumn = 0;
 
-				map.get(column).add(curr.val);
+        queue.offer(new Pair<TreeNode, Integer>(root, column));
 
-				maxColumn = Math.max(maxColumn, column);
-				minColumn = Math.min(minColumn, column);
+        while (!queue.isEmpty()) {
+            Pair<TreeNode, Integer> p = queue.poll();
+            TreeeNode curr = p.getKey();
+            column = p.getValue();
 
-				queue.offer(new Pair<TreeNode, Integer>(curr.left, column - 1));
-				queue.offer(new Pair<TreeNode, Integer>(curr.right, column + 1));
-			}
-		}
+            if (curr != null) {
+                if (!columnTable.containsKey(column)) columnTable.put(column, new ArrayList<Integer>());
 
-		for (int i = minColumn; i < maxColumn + 1; ++i) {
-			output.add(map.get(i));
-		}
+                columnTable.get(column).add(curr.val);
 
-		return output;
-	}
+                minColumn = Math.min(minColumn, column);
+                maxColumn = Math.max(maxColumn, column);
 
-	Map<Integer, ArrayList<Integer>> map = new HashMap<>();
+                queue.offer(new Pair<TreeNode, Integer>(curr.left, column - 1));
+                queue.offer(new Pair<TreeNode, Integer>(curr.right, column + 1));
+            }
+        }
 
-	public List<List<Integer>> verticalOrderMyDFS(TreeNode root) {
-		List<List<Integer>> output = new ArrayList<>();
+        for (int i = minColumn; i < maxColumn + 1; ++i) res.add(columnTable.get(i));
 
-		if (root == null) {
-			return output;
-		}
+        return res;
+    }
 
-		int minColumn = 0, maxColumn = 0;
+    public List<List<Integer>> verticalOrderII(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (root == null) return res;
 
-		DFS(root, 0);
+        Map<Integer, ArrayList<Integer>> columnTable = new HashMap<>();
+        Queue<Pair<TreeNode, Integer>> queue = new ArrayDeque<>();
+        int column = 0;
+        queue.offer(new Pair<TreeNode, Integer>(root, column));
 
-		for (int i = minColumn; i <= maxColumn; ++i) {
-			output.add(map.get(i));
-		}
+        while (!queue.isEmpty()) {
+            Pair<TreeNode, Integer> p = queue.poll();
+            root = p.getKey();
+            column = p.getValue();
 
-		return output;
-	}
+            if (root != null) {
+                if (!columnTable.containsKey(column)) {
+                    columnTable.put(column, new ArrayList<Integer>());
+                }
 
-	private void DFS(TreeNode node, int column) {
-		if (!map.containsKey(column)) {
-			map.put(column, new ArrayList<Integer>());
-		}
+                columnTable.get(column).add(root.val);
 
-		map.get(column).add(node.val);
+                queue.offer(new Pair<TreeNode, Integer>(root.left, column - 1));
+                queue.offer(new Pair<TreeNode, Integer>(root.right, column + 1));
+            }
+        }
 
-		maxColumn = Math.max(maxColumn, column);
-		minColumn = Math.min(minColumn, column);
+        List<Integer> sortedKeys = new ArrayList<Integer>(columnTable.keySet());
+        Collections.sort(sortedKeys);
+        for (int k : sortedKeys) res.add(columnTable.get(k));
+        return res;
+    }
 
+    public List<List<Integer>> verticalOrderDFSGu(TreeNode root) {
+        Map<Integer, List<int[]>> colToNode = new TreeMap<>();
 
-		if (node.left != null) {
-			DFS(node.left, column - 1);
-		}
+        dfs(root, 0, 0, colToNode); // <col, <level, node>>
+        List<List<Integer>> res = new ArrayList<>();
 
-		if (node.right != null) {
-			DFS(node.right, column + 1);
-		}
-	}
+        for (List<int[]> nodes : colToNode.values()) {
+            Collections.sort(nodes, (node1, node2) -> node1[0] - node2[0]);
+            List<Integer> tmp = new LinkedList<>();
+            for (int[] node : nodes) tmp.add(node[1]);
+            res.add(tmp);
+        }
 
-	public List<List<Integer>> verticalOrderII(TreeNode root) {
-		List<List<Integer>> output = new ArrayList<>();
-		if (root == null) {
-			return output;
-		}
+        return res;
+    }
 
-		Map<Integer, ArrayList<Integer>> columnTable = new HashMap<>();
-		Queue<Pair<TreeNode, Integer>> queue = new ArrayDeque<>();
-		int column = 0;
-		queue.offer(new Pair<TreeNode, Integer>(root, column));
+    public void dfs(TreeNode root, int depth, int offset, Map<Integer, List<int[]>> colToNode) {
+        if (root == null) return;
+        if (!colToNode.containsKey(offset)) colToNode.put(offset, new LinkedList<>());
 
-		while (!queue.isEmpty()) {
-			Pair<TreeNode, Integer> p = queue.poll();
-			root = p.getKey();
-			column = p.getValue();
+        colToNode.get(offset).add(new int[] { depth, root.val });
+        dfs(root.left, depth + 1, offset - 1, colToNode);
+        dfs(root.right, depth + 1, offset + 1, colToNode);
+    }
 
-			if (root != null) {
-				if (!columnTable.containsKey(column)) {
-					columnTable.put(column, new ArrayList<Integer>());
-				}
-				columnTable.get(column).add(root.val);
+    Map<Integer, ArrayList<Integer>> map = new HashMap<>();
+    // int minColumn = 0, maxColumn = 0;
 
-				queue.offer(new Pair<TreeNode, Integer>(root.left, column - 1));
-				queue.offer(new Pair<TreeNode, Integer>(root.right, column + 1));
-			}
-		}
+    public List<List<Integer>> verticalOrderMyDFS(TreeNode root) {
+        List<List<Integer>> output = new ArrayList<>();
 
-		List<Integer> sortedKeys = new ArrayList<Integer>(columnTable.keySet());
-		Collections.sort(sortedKeys);
-		for (int k : sortedKeys) {
-			output.add(columnTable.get(k));
-		}
+        if (root == null) return output;
 
-		return output;
-	}
+        int minColumn = 0, maxColumn = 0;
 
-	public List<List<Integer>> verticalOrderIII(TreeNode root) {
-		List<List<Integer>> output = new ArrayList<>();
-		if (root == null) {
-			return output;
-		}
+        DFS(root, 0);
 
-		Map<Integer, ArrayList<Integer>> columnTable = new HashMap<>();
-		// Pair of node and its column offset
-		Queue<Pair<TreeNode, Integer>> queue = new ArrayDeque<>();
-		int column = 0;
-		queue.offer(new Pair<TreeNode, Integer>(root, column));
+        for (int i = minColumn; i <= maxColumn; ++i) output.add(map.get(i));
 
-		int minColumn =  0, maxColumn = 0;
+        return output;
+    }
 
-		while (!queue.isEmpty()) {
-			Pair<TreeNode, Integer> p = queue.poll();
-			root = p.getKey();
-			column = p.getValue();
+    private void DFS(TreeNode node, int column) {
+        if (!map.containsKey(column)) map.put(column, new ArrayList<Integer>());
 
-			if (root != null) {
-				if (!columnTable.containsKey(column)) {
-					columnTable.put(column, new ArrayList<Integer>());
-				}
-				columnTable.get(column).add(root.val);
-				minColumn = Math.min(minColumn, column);
-				maxColumn = Math.max(maxColumn, column);
+        map.get(column).add(node.val);
 
-				queue.offer(new Pair<TreeNode, Integer>(root.left, column - 1));
-				queue.offer(new Pair<TreeNode, Integer>(root.right, column + 1));
-			}
-		}
+        maxColumn = Math.max(maxColumn, column);
+        minColumn = Math.min(minColumn, column);
 
-		for (int i = minColumn; i < maxColumn + 1; ++i) {
-			output.add(columnTable.get(i));
-		}
+        if (node.left != null) DFS(node.left, column - 1);
 
-		return output;
-	}
+        if (node.right != null) DFS(node.right, column + 1);
+    }
 
-	Map<Integer, ArrayList<Pair<Integer, Integer>>> columnTable = new HashMap<>();
-	int minColumn = 0, maxColumn = 0;
+    Map<Integer, ArrayList<Pair<Integer, Integer>>> columnTable = new HashMap<>();
+    int minColumn = 0, maxColumn = 0;
 
-	private void DFSII(TreeNode node, Integer row, Integer column) {
-		if (node == null)
-			return;
+    public List<List<Integer>> verticalOrderIV(TreeNode root) {
+        List<List<Integer>> output = new ArrayList<>();
+        if (root == null) return output;
 
-		if (!columnTable.containsKey(column)) {
-			this.columnTable.put(column, new ArrayList<Pair<Integer, Integer>>());
-		}
+        this.DFSII(root, 0, 0);
 
-		this.columnTable.get(column).add(new Pair<Integer, Integer>(row, node.val));
-		this.minColumn = Math.min(minColumn, column);
-		this.maxColumn = Math.max(maxColumn, column);
-		// preorder DFS traversal
-		this.DFSII(node.left, row + 1, column - 1);
-		this.DFSII(node.right, row + 1, column + 1);
-	}
+        // Retrieve the resuts, by ordering by column and sorting by row
+        for (int i = minColumn; i < maxColumn + 1; ++i) {
+            Collections.sort(columnTable.get(i), new Comparator<Pair<Integer, Integer>>() {
+                @Override
+                public int compare(Pair<Integer, Integer> p1, Pair<Integer, Integer> p2) {
+                    return p1.getKey() - p2.getKey();
+                }
+            });
 
-	public List<List<Integer>> verticalOrderIV(TreeNode root) {
-		List<List<Integer>> output = new ArrayList<>();
-		if (root == null) {
-			return output;
-		}
+            List<Integer> sortedColumn = new ArrayList<>();
+            for (Pair<Integer, Integer> p : columnTable.get(i)) {
+                sortedColumn.add(p.getValue());
+            }
+            output.add(sortedColumn);
+        }
 
-		this.DFSII(root, 0, 0);
+        return output;
+    }
 
-		// Retrieve the resuts, by ordering by column and sorting by row
-		for (int i = minColumn; i < maxColumn + 1; ++i) {
-			Collections.sort(columnTable.get(i), new Comparator<Pair<Integer, Integer>>() {
-				@Override
-				public int compare(Pair<Integer, Integer> p1, Pair<Integer, Integer> p2) {
-					return p1.getKey() - p2.getKey();
-				}
-			});
+    private void DFSII(TreeNode node, Integer row, Integer column) {
+        if (node == null)
+            return;
 
-			List<Integer> sortedColumn = new ArrayList<>();
-			for (Pair<Integer, Integer> p : columnTable.get(i)) {
-				sortedColumn.add(p.getValue());
-			}
-			output.add(sortedColumn);
-		}
+        if (!columnTable.containsKey(column)) {
+            this.columnTable.put(column, new ArrayList<Pair<Integer, Integer>>());
+        }
 
-		return output;
-	}
+        this.columnTable.get(column).add(new Pair<Integer, Integer>(row, node.val));
+        this.minColumn = Math.min(minColumn, column);
+        this.maxColumn = Math.max(maxColumn, column);
+        // preorder DFS traversal
+        this.DFSII(node.left, row + 1, column - 1);
+        this.DFSII(node.right, row + 1, column + 1);
+    }
 }
 
 class Pair<T, V> {
-	T key;
-	V value;
+    T key;
+    V value;
 
-	Pair(T x, V y) {
-		this.key = x;
-		this.value = y;
-	}
+    Pair(T x, V y) {
+        this.key = x;
+        this.value = y;
+    }
 
-	T getKey() {
-		return key;
-	}
+    T getKey() {
+        return key;
+    }
 
-	V getValue() {
-		return value;
-	}
+    V getValue() {
+        return value;
+    }
 }
