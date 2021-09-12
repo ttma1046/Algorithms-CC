@@ -154,7 +154,7 @@ class Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105 {
         int inorderRootIndex = inlow;
         for (int i = inlow; i <= inhigh; i++) {
             if (inorder[i] == current.val) {
-                inorderRootIndex = i;
+                inorderRootIndex = i; 
                 break;
             }
         }
@@ -174,5 +174,44 @@ class Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105 {
         current.right = buildTreeNode(preorder, prelow + length + 1, prehigh, inorder, inorderRootIndex + 1, inhigh);
 
         return current;
+    }
+
+    int[] preOrder; // [3, 9, 1, 2, 20, 15, 7]
+    int[] inOrder;  // [1, 9, 2, 3, 15, 20, 7]
+    int preOrderIndex;
+    Map<Integer, Integer> map = new HashMap<>();
+
+    public TreeNode buildTree(int[] preOrder, int[] inOrder) {
+        this.preOrder = preOrder;
+        this.inOrder = inOrder;
+
+        this.preOrderIndex = 0;
+        int length = preOrder.length;
+
+        for (int i = 0; i < length; i++) map.put(inOrder[i], i);
+        return helperbuilder(0, length - 1);
+    }
+
+    /*
+    [ 
+       { 1, 0 },
+       { 9, 1 },
+       { 2, 2 },
+       { 3, 3 },
+       { 15, 4 },
+       { 20, 5 },
+       { 7, 6 }
+    ]
+    */
+    public TreeNode helperbuilder(int inStart, int inEnd) {
+        if (inStart > inEnd) return null;
+
+        TreeNode root = new TreeNode(this.preOrder[this.preOrderIndex++]);
+
+        int index = map.get(root.val);
+
+        root.left = helperbuilder(inStart, index - 1);
+        root.right = helperbuilder(index + 1, inEnd);
+        return root;
     }
 }
