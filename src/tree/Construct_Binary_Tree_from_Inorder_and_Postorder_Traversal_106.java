@@ -105,6 +105,30 @@ class Construct_Binary_Tree_from_Inorder_and_Postorder_Traversal_106 {
         return current;
     }
 
- 
+    int[] inorder;
+    int[] postorder;
+    Map<Integer, Integer> map = new HashMap<>();
+
+    public TreeNode buildTreeMap(int[] inorder, int[] postorder) {
+        this.inorder = inorder;
+        this.postorder = postorder;
+        int length = inorder.length;
+        for (int i = 0; i < length; ++i) map.put(inorder[i], i);
+
+        return helper(0, length - 1, 0, length - 1);
+    }
+
+    public TreeNode helper(int inStart, int inEnd, int postStart, int postEnd) {
+        if (inStart > inEnd) return null;
+
+        TreeNode root = new TreeNode(postorder[postEnd]);
+
+        int inIndex = map.get(root.val);
+        int rightTreeSize = inEnd - inIndex;
+
+        root.left = helper(inStart, inIndex - 1, postStart, postEnd - rightTreeSize - 1);
+        root.right = helper(inIndex + 1, inEnd, postEnd - rightTreeSize, postEnd - 1);
+        return root;
+    }
 }
     
