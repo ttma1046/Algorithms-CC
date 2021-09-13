@@ -30,12 +30,11 @@ Output: 1
 
 Constraints:
 
-The number of nodes in the tree is in the range [2, 105].
+The number of nodes in the tree is in the range [2, 10^5].
 -109 <= Node.val <= 109
 All Node.val are unique.
 p != q
 p and q will exist in the tree.
-
 */
 
 /**
@@ -47,22 +46,6 @@ p and q will exist in the tree.
  *     TreeNode(int x) { val = x; }
  * }
 */
-class Frame {
-    TreeNode node;
-    Frame parent;
-    ArrayList<TreeNode> subs;
-
-    Frame() {
-        this.subs = new ArrayList<TreeNode>();
-    }
-
-    Frame(TreeNode node, Frame parent) {
-        this.node = node;
-        this.parent = parent;
-        this.subs = new ArrayList<TreeNode>();
-    }
-}
-
 class Lowest_Common_Ancestor_of_a_Binary_Tree_236 {
     public TreeNode lowestCommonAncestorI(TreeNode root, TreeNode p, TreeNode q) {
         if (root == null || root == p || root == q) return root;
@@ -100,14 +83,14 @@ class Lowest_Common_Ancestor_of_a_Binary_Tree_236 {
         }
     }
 
-    public TreeNode lowestCommonAncestorTee(TreeNode root, TreeNode p, TreeNode q) {
+    public TreeNode lowestCommonAncestorTree(TreeNode root, TreeNode p, TreeNode q) {
         if (root == null) return null;
 
         if (root == q || root == p) return root;
 
-        TreeNode x = lowestCommonAncestorTee(root.left, p, q);
-        TreeNode y = lowestCommonAncestorTee(root.right, p, q);
-        
+        TreeNode x = lowestCommonAncestorTree(root.left, p, q);
+        TreeNode y = lowestCommonAncestorTree(root.right, p, q);
+
         if (x != null && y != null) return root;
 
         if (x != null) return x;
@@ -133,23 +116,32 @@ class Lowest_Common_Ancestor_of_a_Binary_Tree_236 {
                 stack.push(node.right);
             }
         }
+
         Set<TreeNode> ancestors = new HashSet<>();
+        
         while (p != null) {
             ancestors.add(p);
             p = parent.get(p);
         }
+        
         while (!ancestors.contains(q))
             q = parent.get(q);
+        
         return q;
     }
 
     public TreeNode lowestCommonAncestorIterative(TreeNode root, TreeNode p, TreeNode q) {
         Frame answer = new Frame();
         Stack<Frame> stack = new Stack<Frame>();
+
         stack.push(new Frame(root, answer));
+
         while (!stack.isEmpty()) {
-            Frame top = stack.peek(), parent = top.parent;
+            Frame top = stack.peek();
+
+            Frame parent = top.parent;
             TreeNode node = top.node;
+            
             if (node == null || node == p || node == q) {
                 parent.subs.add(node);
                 stack.pop();
@@ -157,12 +149,36 @@ class Lowest_Common_Ancestor_of_a_Binary_Tree_236 {
                 stack.push(new Frame(node.right, top));
                 stack.push(new Frame(node.left, top));
             } else {
-                TreeNode left = top.subs.get(0), right = top.subs.get(1);
+                TreeNode left = top.subs.get(0);
+                TreeNode right = top.subs.get(1);
                 parent.subs.add(left == null ? right : right == null ? left : node);
                 stack.pop();
             }
         }
+
         return answer.subs.get(0);
+    }
+
+    Map<TreeNode, TreeNode> parent = new HashMap<>();
+
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        dfs(null, root);
+
+        Set<TreeNode> ancestors = new HashSet<>();
+        while(p != null) {
+            ancestors.add(p);
+            p = parent.get(p);
+        }
+
+        while(!ancestors.contains(q)) q = parent.get(q);
+        return q;
+    }
+
+    private void dfs(TreeNode parentNode, TreeNode cur) {
+        if (cur == null) return;
+        parent.put(cur, parentNode);
+        dfs(cur, cur.left);
+        dfs(cur, cur.right);
     }
 
     public static void main(String[] args) {
@@ -170,11 +186,25 @@ class Lowest_Common_Ancestor_of_a_Binary_Tree_236 {
         TreeNode p = new TreeNode(4);
         TreeNode q = new TreeNode(3);
         new Lowest_Common_Ancestor_of_a_Binary_Tree_236().lowestCommonAncestorIterative(root, p, q);
-
-        new Lowest_Common_Ancestor_of_a_Binary_Tree_236().lowestCommonAncestorIterative(root, p, q);
-
     }
 }
+
+class Frame {
+    TreeNode node;
+    Frame parent;
+    ArrayList<TreeNode> subs;
+
+    Frame() {
+        this.subs = new ArrayList<TreeNode>();
+    }
+
+    Frame(TreeNode node, Frame parent) {
+        this.node = node;
+        this.parent = parent;
+        this.subs = new ArrayList<TreeNode>();
+    }
+}
+
 
 
 

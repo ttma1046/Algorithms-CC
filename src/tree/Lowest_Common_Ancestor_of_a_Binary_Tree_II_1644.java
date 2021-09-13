@@ -38,30 +38,60 @@ class Lowest_Common_Ancestor_of_a_Binary_Tree_II {
 	   7 4
 	*/
 
-	boolean pFound = false;
-	boolean qFound = false;
+	//two pass
+	public TreeNode lowestCommonAncestorSlow(TreeNode root, TreeNode p, TreeNode q) {
+		boolean resP = looking(root, p);
+		boolean resQ = looking(root, q);
 
-	public TreeNode lowestCommonAncestorII(TreeNode root, TreeNode p, TreeNode q) {
-		TreeNode LCA = LCA(root, p, q);
-		return pFound && qFound ? LCA : null;
+		return resP && resQ ? lca(root, p, q) : null;
 	}
 
-	public TreeNode LCA(TreeNode current, TreeNode p, TreeNode q) {
-		if (current == null) return current;
+	private boolean looking(TreeNode node, TreeNode look) {
+		if (node == null) return false;
 
-		TreeNode left = LCA(current.left, p, q);
-		TreeNode right = LCA(current.right, p, q);
+		if (node.val == look.val) return true;
 
-		if (current == p) {
-			pFound = true;
-			return current;
-		}
-		if (current == q) {
+		Boolean resLeft = looking(node.left, look);
+		Boolean resRight = looking(node.right, look);
+
+		return resLeft || resRight;
+	}
+
+	private TreeNode lca(TreeNode root, TreeNode p, TreeNode q) {
+		if (root == null || root.val == p.val || root.val == q.val) return root;
+
+		TreeNode left = lca(root.left, p, q);
+		TreeNode right = lca(root.right, p, q);
+
+		return left == null ? right : (right == null ? left : root);
+	}
+
+	boolean qFound = false;
+	boolean pFound = false;
+	
+	public TreeNode lowestCommonAncestorII(TreeNode root, TreeNode q, TreeNode p) {
+		TreeNode res = recursive(root, q, p);
+		return qFound && pFound ? res : null;
+	}
+
+	private TreeNode recursive(TreeNode curr, TreeNode q, TreeNode p) {
+		if (curr == null) return curr;
+
+		if (curr.val == q.val) {
 			qFound = true;
-			return current;
+			return curr;
 		}
 
-		return left == null ? right : right == null ? left : current;
+
+		if (curr.val == p.val) {
+			pFound = true;
+			return curr;
+		}
+
+		TreeNode left = recursive(curr.left, q, p);
+		TreeNode right = recursive(curr.right, q, p);
+
+		return left == null ? right : (right == null ? left : curr);
 	}
 
 	public static void main(String[] args) {
