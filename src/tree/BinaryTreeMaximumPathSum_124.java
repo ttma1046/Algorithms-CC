@@ -31,33 +31,38 @@ The number of nodes in the tree is in the range [1, 3 * 104].
 */
 
 public class BinaryTreeMaximumPathSum_124 {
-    int result = Integer.MIN_VALUE;
+    int maxValue = Integer.MIN_VALUE;
+
     public int maxPathSum(TreeNode root) {
         if (root == null) return 0;
-        postorderTraversal(root);
-        return result;
+        dfs(root);
+        dfsTwo(root);
+        return maxValue;
     }
 
-    private int postorderTraversal(TreeNode node) {
+    private int dfs(TreeNode node) {
         if (node == null) return 0;
-        int left = Math.max(postorderTraversal(node.left), 0);
-        int right = Math.max(postorderTraversal(node.right), 0);
-        result = Math.max(result, left + right + node.val);
-        return node.val + Math.max(left, right);
+
+        int left = 0; 
+        int dfsLeft = dfs(node.left);
+        if (dfsLeft > 0) left = dfsLeft;
+        
+        int right = 0;
+        int dfsRight = dfs(node.right);
+        if (dfsRight > 0) right = dfsRight;
+
+        maxValue = Math.max(maxValue, node.val + right + left);
+
+        return Math.max(left, right) + node.val;
     }
 
-    public int maxPathSumIII(TreeNode root) {
-        if (root == null) return 0;
-        postorderTraversalIII(root);
-        return result;
-    }
-
-    private int postorderTraversalIII(TreeNode node) {
+    public int dfsTwo(TreeNode node) {
         if (node == null) return 0;
-        int leftSum = postorderTraversalIII(node.left);
-        int rightSum = postorderTraversalIII(node.right);
-        result = Math.max(result, node.val + leftSum + rightSum);
-        return Math.max(0, node.val + Math.max(leftSum, rightSum));
+        int left = Math.max(0, dfsTwo(node.left));
+        int right = Math.max(0, dfsTwo(node.right));
+
+        maxValue = Math.max(maxValue, left + right + node.val);
+        return Math.max(left, right) + node.val;
     }
 
     public int maxPathSumII(TreeNode root) {
