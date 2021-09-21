@@ -107,19 +107,43 @@ class Lowest_Common_Ancestor_of_Deepest_Leaves_1123 {
     }
 
     // O(n)
-    public TreeNode subtreeWithAllDeepest(TreeNode root) {
-    	Pair res = dfs(root, 0);
+    public TreeNode lcaDeepestLeaves(TreeNode root) {
+        Pair res = dfs(root);
 
-    	return res.node;
+        return res.node;
     }
 
-    public Pair dfs(TreeNode node, int depth) {
-    	if (node == null) return Pair(null, depth);
+    public Pair dfs(TreeNode node) {
+        if (node == null) return new Pair(null, 0);
 
-    	TreeNode l = dfs(node.left, depth + 1),
-    			r = dfs(node.right, depth + 1);
+        Pair left = dfs(node.left), right = dfs(node.right);
 
-    	return l.depth == r.depth ? new Pair(node, l.depth) : (l.depth > r.depth ? l : r);
+        /*
+        if (left.depth == right.depth) {
+            return new Pair(node, left.depth + 1);
+        } else if (left.depth > right.depth) {
+            left.depth++;
+            return left;
+        } else {
+            right.depth++;
+            return right;
+        }
+        */
+
+        return left.depth == right.depth ? new Pair(node, left.length + 1) : (left.depth > right.depth ? new Pair(left.node, left.depth + 1) : new Pair(right.node, right.depth + 1));
+    }
+
+    public TreeNode subtreeWithAllDeepest(TreeNode root) {
+        return deep(root).getValue();
+    }
+
+    public Pair<Integer, TreeNode> deep(TreeNode root) {
+        if (root == null) return new Pair(0, null);
+
+        Pair<Integer, TreeNode> l = deep(root.left), r = deep(root.right);
+
+        int d1 = l.getKey(), d2 = r.getKey();
+        return new Pair(Math.max(d1, d2) + 1, d1 == d2 ? root: d1 > d2 ? l.getValue() : r.getValue()); 
     }
 }
 

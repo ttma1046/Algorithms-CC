@@ -92,115 +92,135 @@ root is a valid binary search tree.
  * }
  */
 class Delete_Node_in_a_BST_450 {
-  private int Successor(TreeNode node) {
-    node = node.right;
-    while (node.left != null) node = node.left;
-    return node.val;
-  }
+    private int Successor(TreeNode node) {
+        node = node.right;
+        while (node.left != null) node = node.left;
+        return node.val;
+    }
 
-  private int Predecessor(TreeNode node) {
-    node = node.left;
-    while (node.right != null) node = node.right;
-    return node.val;
-  }
+    private int Predecessor(TreeNode node) {
+        node = node.left;
+        while (node.right != null) node = node.right;
+        return node.val;
+    }
 
-  public TreeNode deleteNodeI(TreeNode root, int key) {
-    if (root == null) return null;
+    public TreeNode deleteNodeI(TreeNode root, int key) {
+        if (root == null) return null;
 
-    // delete from the right subtree
-    if (key > root.val) root.right = deleteNode(root.right, key);
-    // delete from the left subtree
-    else if (key < root.val) root.left = deleteNode(root.left, key);
-    // delete the current node
-    else {
-      // the node is a leaf
-      if (root.left == null && root.right == null) root = null;
-      // the node is not a leaf and has a right child
-      else if (root.right != null) {
-        root.val = Successor(root);
+        // delete from the right subtree
+        if (key > root.val) root.right = deleteNode(root.right, key);
+        // delete from the left subtree
+        else if (key < root.val) root.left = deleteNode(root.left, key);
+        // delete the current node
+        else {
+            // the node is a leaf
+            if (root.left == null && root.right == null) root = null;
+            // the node is not a leaf and has a right child
+            else if (root.right != null) {
+                root.val = Successor(root);
+                root.right = deleteNode(root.right, root.val);
+            }
+            // the node is not a leaf, has no right child, and has a left child
+            else {
+                root.val = Predecessor(root);
+                root.left = deleteNode(root.left, root.val);
+            }
+        }
+        return root;
+    }
+
+    private int getSuccessorValue(TreeNode node) {
+        TreeNode temp = node.right;
+
+        while (temp.left != null) {
+            temp = temp.left;
+        }
+
+        return temp.val;
+    }
+
+    private int getPredecessorValue(TreeNode node) {
+        TreeNode temp = node.left;
+
+        while (temp.right != null) {
+            temp = temp.right;
+        }
+
+        return temp.val;
+    }
+
+    public TreeNode deleteNode(TreeNode root, int key) {
+        if (key > root.val) {
+            root.right = deleteNode(root.right, key);
+        } else if (key < root.val) {
+            root.left = deleteNode(root.left, key);
+        } else {
+            if (root.right == null || root.left == null) {
+                root = null;
+            } else if (root.right != null) {
+                root.val = getSuccessorValue(root);
+                root.right = deleteNode(root.right, root.val);
+            } else {
+                root.val = getPredecessorValue(root);
+                root.left = deleteNode(root.left, root.val);
+            }
+        }
+
+        return root;
+    }
+
+
+    public TreeNode deleteNode(TreeNode root, int key) {
+        if (root == null) return null;
+
+        if (root.val > key) deleteNode(root.left, key);
+        if (root.val < key) deleteNode(root.right, key);
+        if (root.left == null) return root.right;
+        if (root.right == null) return root.left;
+
+        root.val = findMin(root.right);
         root.right = deleteNode(root.right, root.val);
-      }
-      // the node is not a leaf, has no right child, and has a left child
-      else {
-        root.val = Predecessor(root);
-        root.left = deleteNode(root.left, root.val);
-      }
-    }
-    return root;
-  }
 
-  private int getSuccessorValue(TreeNode node) {
-    TreeNode temp = node.right;
-
-    while (temp.left != null) {
-      temp = temp.left;
+        return root;
     }
 
-    return temp.val;
-  }
-
-  private int getPredecessorValue(TreeNode node) {
-    TreeNode temp = node.left;
-
-    while (temp.right != null) {
-      temp = temp.right;
+    private int findMin(TreeNode node) {
+        while(node.left != null) node = node.left;
+        return node.val;
     }
 
-    return temp.val;
-  }
+    public static void main(String[] args) {
+        TreeNode two = new TreeNode(2);
+        TreeNode four = new TreeNode(4);
 
-  public TreeNode deleteNode(TreeNode root, int key) {
-    if (key > root.val) {
-      root.right = deleteNode(root.right, key);
-    } else if (key < root.val) {
-      root.left = deleteNode(root.left, key);
-    } else {
-      if (root.right == null || root.left == null) {
-        root = null;
-      } else if (root.right != null) {
-        root.val = getSuccessorValue(root);
-        root.right = deleteNode(root.right, root.val);
-      } else {
-        root.val = getPredecessorValue(root);
-        root.left = deleteNode(root.left, root.val);
-      }
+        TreeNode three = new TreeNode(3);
+        three.left = two;
+        three.right = four;
+
+        TreeNode seven = new TreeNode(7);
+        TreeNode six = new TreeNode(6);
+        six.right = seven;
+
+        TreeNode five = new TreeNode(5);
+
+        five.left = three;
+        five.right = six;
+        TreeNode result = new Delete_Node_in_a_BST_450().deleteNode(five, 3);
+
+        new Delete_Node_in_a_BST_450().preorderTraversal(result);
     }
 
-    return root;
-  }
+    private void preorderTraversal(TreeNode current) {
+        if (current == null) return;
 
-  public static void main(String[] args) {
-    TreeNode two = new TreeNode(2);
-    TreeNode four = new TreeNode(4);
+        System.out.println(current.val);
 
-    TreeNode three = new TreeNode(3);
-    three.left = two;
-    three.right = four;
+        if (current.left != null) {
+            preorderTraversal(current.left);
+        }
 
-    TreeNode seven = new TreeNode(7);
-    TreeNode six = new TreeNode(6);
-    six.right = seven;
-
-    TreeNode five = new TreeNode(5);
-
-    five.left = three;
-    five.right = six;
-    TreeNode result = new Delete_Node_in_a_BST_450().deleteNode(five, 3);
-
-    new Delete_Node_in_a_BST_450().preorderTraversal(result);
-  }
-
-  private void preorderTraversal(TreeNode current) {
-    if (current == null) return;
-
-    System.out.println(current.val);
-
-    if (current.left != null) {
-      preorderTraversal(current.left);
+        if (current.right != null) {
+            preorderTraversal(current.right);
+        }
     }
-
-    if (current.right != null) {
-      preorderTraversal(current.right);
-    }
-  }
 }

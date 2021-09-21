@@ -1,6 +1,9 @@
 package tree;
+
 /*
-Given the root of a binary tree, return the maximum average value of a subtree of that tree. Answers within 10-5 of the actual answer will be accepted.
+Given the root of a binary tree, return the maximum average value of a subtree of that tree.
+
+Answers within 10-5 of the actual answer will be accepted.
 
 A subtree of a tree is any node of that tree plus all its descendants.
 
@@ -26,11 +29,10 @@ Constraints:
 The number of nodes in the tree is in the range [1, 104].
 0 <= Node.val <= 105
 */
-
 /**
  * Definition for a binary tree node.
  */
-public class TreeNode {
+class TreeNode {
     int val;
     TreeNode left;
     TreeNode right;
@@ -44,39 +46,45 @@ public class TreeNode {
         this.right = right;
     }
 }
-* /
+
+class Pair {
+    int sum = 0;
+    int nodeCount = 0;
+
+    Pair(int s, int n) {
+        this.sum = s;
+        this.nodeCount = n;
+    }
+}
+
 class Maximum_Average_Subtree_1120 {
-	double maxAvg;
+    double res = 0;
     public double maximumAverageSubtree(TreeNode root) {
-    	maxAvg = 0.0;
-    	sumTree(root);
-    	return maxAvg;
+        dfs(root);
+
+        return res;
     }
 
-    public int[] sumTree(TreeNode node) {
-    	if (node == null) return new int[2];
+    private int[] dfs(TreeNode node) {
+        if (node == null) return new int[2];
 
-	   	sumTree(node.left);
+        int[] rightSide = dfs(node.right);
+        int[] leftSide = dfs(node.left);
 
-    	sumTree(node.right);
+        int sum = node.val + leftSide[0] + rightSide[0];
+        int nodeCount = rightSide[1] + leftSide[1] + 1;
+
+        res = Math.max(res, (double)sum / nodeCount);
+        return new int[] {sum, nodeCount};
     }
 
-    /*
-    public int[] sumTree(TreeNode root) {
-    	if (root == null) return new int[2];
+    public static void main(String[] args) {
+        TreeNode one = new TreeNode(1);
 
-    	int[] res = new int[2];
+        TreeNode two = new TreeNode(2);
+        two.right = one;
 
-    	int[] left = sumTree(root.left);
-    	int[] right = sumTree(root.right);
-
-		res[0] = left[0] + right[0] + root.val;
-
-		res[1] = left[1] + right[1] + 1;
-
-		maxAvg = Math.max(maxAvg, (double)res[0] / (double)res[1]);
-
-		return res;
+        Maximum_Average_Subtree_1120 obj = new Maximum_Average_Subtree_1120();
+        System.out.println(obj.maximumAverageSubtree(two));
     }
-    */
 }
