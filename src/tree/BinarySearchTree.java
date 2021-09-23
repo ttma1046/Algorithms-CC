@@ -54,20 +54,23 @@ public class BinarySearchTree {
 
     // iterative
     public TreeNode insert(TreeNode root, int target) {
-        TreeNode cur = root;
+        TreeNode curr = root;
 
-        if (curr == null) return new TreeNode(target);
+        TreeNode node = new TreeNode(target);
+
+        if (curr == null) return node;
 
         TreeNode prev = null;
 
-        while(cur != null) {
-            prev = cur;
-            if (cur.val < target) cur = cur.right;
-            else cur = cur.left;
+        while(curr != null) {
+            prev = curr;
+            if (curr.val < target) curr = curr.right;
+            else curr = curr.left;
         }
 
-        if (prev.val < target) prev.right = newNode;
-        else prev.left = newNode;
+        if (prev.val < target) prev.right = node;
+        else prev.left = node;
+        
         return root;
     }
 }

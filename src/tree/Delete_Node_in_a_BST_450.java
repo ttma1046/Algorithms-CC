@@ -1,4 +1,5 @@
 package tree;
+
 /*
 Given a root node reference of a BST and a key,
 
@@ -169,26 +170,36 @@ class Delete_Node_in_a_BST_450 {
         return root;
     }
 
-
     public TreeNode deleteNode(TreeNode root, int key) {
         if (root == null) return null;
 
-        if (root.val > key) deleteNode(root.left, key);
-        if (root.val < key) deleteNode(root.right, key);
-        if (root.left == null) return root.right;
-        if (root.right == null) return root.left;
-
-        root.val = findMin(root.right);
-        root.right = deleteNode(root.right, root.val);
-
+        if (root.val < key) root.right = deleteNode(root.right, key);
+        else if (root.val > key) root.left = deleteNode(root.left, key);
+        else if (root.right == null) return root.left;
+        else if (root.left == null) return root.right;
+        else {
+            root.val = findMin(root.right);
+            root.right = deleteNode(root.right, root.val);
+        }
         return root;
     }
 
-    private int findMin(TreeNode node) {
-        while(node.left != null) node = node.left;
-        return node.val;
+    private int findMin(TreeNode curr) {
+        while(curr.left != null) curr = curr.left;
+        return curr.val;
     }
 
+    /*
+    Time complexity: O(log N).
+    During the algorithm execution we go down the tree all the time - on the left or on the right,
+    first to search the node to delete(O(H1)) time complexity as already discussed and then to actually delete it.
+    H1 is a tree height from the root to the node to delete.
+    Delete process takes O(H2) time, hwere H2 is a tree height from the root to delete to the leafs.
+    That in total results in O(H1 + H2) = O(H) time xomplexity, hwere H is a tree height, equal to Log N in the case of the balanced tree.
+
+    Space complexity: O(H) to keep the recursion stack, where H is a tree height.
+    H = log N for the balanced tree.
+    */
     public static void main(String[] args) {
         TreeNode two = new TreeNode(2);
         TreeNode four = new TreeNode(4);
