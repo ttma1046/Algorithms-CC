@@ -2,9 +2,20 @@ package tree;
 import java.util.Stack;
 
 /*
-Implement an iterator over a binary search tree (BST). Your iterator will be initialized with the root node of a BST.
+Implement the BSTIterator class that represents an iterator over the in-order traversal of a binary search tree (BST):
 
-Calling next() will return the next smallest number in the BST.
+BSTIterator(TreeNode root) 
+    Initializes an object of the BSTIterator class. The root of the BST is given as part of the constructor. 
+    The pointer should be initialized to a non-existent number smaller than any element in the BST.
+
+boolean hasNext() 
+    Returns true if there exists a number in the traversal to the right of the pointer, otherwise returns false.
+
+int next() Moves the pointer to the right, then returns the number at the pointer.
+
+Notice that by initializing the pointer to a non-existent smallest number, the first call to next() will return the smallest element in the BST.
+
+You may assume that next() calls will always be valid. That is, there will be at least a next number in the in-order traversal when next() is called.
 
 Example:
 
@@ -18,7 +29,6 @@ iterator.next();    // return 15
 iterator.hasNext(); // return true
 iterator.next();    // return 20
 iterator.hasNext(); // return false
-
 
 Note:
 
@@ -43,21 +53,16 @@ You may assume that next() call will always be valid, that is, there will be at 
 class Binary_Search_Tree_Iterator_173 {
     private Stack<Integer> stack = new Stack<Integer>();
     public Binary_Search_Tree_Iterator_173(TreeNode root) {
-        if (root != null) {
-            res(root);
-        }
+        if (root != null) res(root);
     }
 
     private void res(TreeNode root) {
         if (root.right != null) res(root.right);
 
-        if (root != null) {
-            stack.push(root.val);
-        }
+        if (root != null) stack.push(root.val);
 
         if (root.left != null) res(root.left);
     }
-
 
     /** @return the next smallest number */
     public int next() {
@@ -68,6 +73,7 @@ class Binary_Search_Tree_Iterator_173 {
     public boolean hasNext() {
         return !stack.isEmpty();
     }
+
 
     public Binary_Search_Tree_Iterator_173(TreeNode root) {
         res(root);
@@ -83,9 +89,7 @@ class Binary_Search_Tree_Iterator_173 {
     public int next() {
         TreeNode node = stack.pop();
 
-        if (node.right != null) {
-            res(node.right);
-        }
+        if (node.right != null) res(node.right);
 
         return node.val;
     }
