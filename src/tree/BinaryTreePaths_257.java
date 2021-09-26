@@ -1,9 +1,10 @@
-package dfs;
+package tree;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.LinkedList;
 import java.util.Stack;
+import java.util.Queue;
 /*
 Given a binary tree, return all root-to-leaf paths.
 
@@ -58,6 +59,69 @@ class MyPair {
 }
 
 class BinaryTreePaths_257 {
+
+    /*
+    public List<String> binaryTreePaths(TreeNode root) {
+        TreeNode curr = root;
+
+        List<String> res = new ArrayList<>();
+
+        while(curr != null) {
+            if (curr.left == null && curr.right == null) {
+                res.add(temp);
+            } else {
+                String temp += "->";
+
+                if (curr.left != null) {
+                    temp += String.valueOf(curr.left);
+
+                    curr = curr.left;
+                }
+
+                if (curr.right != null) {
+                    temp += String.valueOf(curr.left);
+
+                    curr = curr.right;
+                }
+            }
+        }
+
+        return res;
+    }
+    */
+
+
+    /* BFS - Queue */
+    public List<String> binaryTreePaths(TreeNode root) {
+        List<String> res = new ArrayList<>();
+        if (root == null) return res;
+
+        Queue<TreeNode> queue = new LinkedList<>();
+        Queue<String> path = new LinkedList<>();
+
+        path.offer(root.val + "");
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            TreeNode cur = queue.poll();
+            String item = path.poll();
+
+            if (cur.left == null && cur.right == null) res.add(item);
+
+            if (cur.left != null) {
+                queue.offer(cur.left);
+                path.offer(item + "->" + cur.left.val);
+            }
+
+            if (cur.right != null) {
+                queue.offer(cur.right);
+                path.offer(item + "->" + cur.right.val);
+            }
+        }
+
+        return res;
+    }
+
     /* Stack */
     public List<String> binaryTreePathsII(TreeNode root) {
         List<String> result = new ArrayList<String>();
@@ -66,7 +130,9 @@ class BinaryTreePaths_257 {
 
             stack.add(new MyPair(root, ""));
 
-            while (!stack.isEmpty()) {
+            while (stack.size() > 0) {
+                System.out.println(stack.size());
+
                 MyPair item = stack.pop();
 
                 TreeNode node = item.key;
@@ -129,19 +195,19 @@ class BinaryTreePaths_257 {
         return result;
     }
 
-    /* recursion */
-    public List<String> binaryTreePaths(TreeNode root) {
+    // dfs StringBuilder II
+    public List<String> binaryTreePathsSBII(TreeNode root) {
         List<String> result = new ArrayList<String>();
 
         if (root != null) {
             StringBuilder sb = new StringBuilder();
-            dfs(root, sb, result);
+            dfsII(root, sb, result);
         }
 
         return result;
     }
 
-    private void dfs(TreeNode node, StringBuilder path, List<String> result) {
+    private void dfsII(TreeNode node, StringBuilder path, List<String> result) {
         if (node != null) {
             path.append(Integer.toString(node.val));
 
@@ -150,10 +216,80 @@ class BinaryTreePaths_257 {
             } else {
                 path.append("->");
                 String save = path.toString();
-                dfs(node.left, path, result);
-                dfs(node.right, new StringBuilder(save), result);
+                dfsII(node.left, path, result);
+                dfsII(node.right, new StringBuilder(save), result);
             }
         }
+    }
+
+    // dfs StringBuilder
+    public List<String> binaryTreePathsSB(TreeNode root) {
+        List<String> res = new ArrayList<>();
+        if (root != null) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(String.valueOf(root.val));
+            dfsSB(root, sb, res);
+        }
+        return res;
+    }
+
+    private void dfsSB(TreeNode root, StringBuilder sb, List<String> res) {
+        if (root.left == null && root.right == null) res.add(sb.toString());
+
+        String save = sb.toString();
+
+        if (root.left != null) {
+            sb.append("->");
+            dfsSB(root.left, sb.append(root.left.val), res);
+        }
+
+        if (root.right != null) {
+            StringBuilder anotherSB = new StringBuilder(save);
+
+            anotherSB.append("->");
+            dfsSB(root.left, sb.append(root.right.val), res);
+        }
+    }
+
+    // dfs
+    public List<String> binaryTreePathsSlow(TreeNode root) {
+        List<String> res = new ArrayList<>();
+        if (root != null) helper(root, String.valueOf(root.val), res);
+        return res;
+    }
+
+    private void helper(TreeNode node, String path, List<String> res) {
+        if (node.left == null && node.right == null) {
+            res.add(path);
+            return;
+        }
+
+        if (node.left != null) helper(node.left, path + "->" + node.left.val, res);
+        if (node.right != null) helper(node.right, path + "->" + node.right.val, res);
+    }
+
+    public List<String> binaryTreePathsIV(TreeNode root) {
+        List<String> result = new ArrayList<String>();
+
+        if (root != null) myDfs(root, "", result);
+
+        return result;
+    }
+
+    private void myDfs(TreeNode current, String currentString, List<String> result) {
+        if (current == null) return;
+
+        currentString += Integer.toString(current.val);
+
+        if (current.right == null && current.left == null) {
+            result.add(currentString);
+            return;
+        }
+
+        currentString += "->";
+
+        myDfs(current.left, currentString, result);
+        myDfs(current.right, currentString, result);
     }
 
     public static void main(String[] args) {
@@ -166,9 +302,5 @@ class BinaryTreePaths_257 {
         one.right = three;
 
         List<String> result = new BinaryTreePaths_257().binaryTreePathsII(one);
-
-        for (String item : result) {
-            System.out.println(item);
-        }
     }
 }
