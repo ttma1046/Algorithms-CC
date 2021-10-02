@@ -17,15 +17,16 @@ Explanation: The linked-lists are:
 ]
 merging them into one sorted list:
 1->1->2->3->4->4->5->6
+
 Example 2:
 
 Input: lists = []
 Output: []
+
 Example 3:
 
 Input: lists = [[]]
 Output: []
-
 
 Constraints:
 
@@ -60,6 +61,18 @@ class Merge_k_sorted_lists_23 {
 
         PriorityQueue<ListNode> pq = new PriorityQueue<>((a, b) -> a.val - b.val);
 
+        /*
+        PriorityQueue<ListNode> pq = new PriorityQueue<ListNode>(
+            lists.length,
+            new Comparator<ListNode>() {
+                @Override
+                public int compare(ListNode n1, ListNode n2) {
+                    return n1.val - n2.val;
+                }
+            }
+        )
+        */
+
         for (ListNode list : lists) if (list != null) pq.offer(list);
 
         ListNode dummy = new ListNode(0);
@@ -76,13 +89,6 @@ class Merge_k_sorted_lists_23 {
         }
 
         return dummy.next;
-    }
-
-    public static void main(String[] args) {
-        Merge_k_sorted_lists_23 obj = new Merge_k_sorted_lists_23();
-
-        ListNode[] input = new ListNode[] { new ListNode(1) };
-        obj.mergeKListsI(input);
     }
 
     // O(Nlogk)
@@ -114,6 +120,13 @@ class Merge_k_sorted_lists_23 {
             l2.next = conquer(l1, l2.next);
             return l2;
         }
+    }
+
+    public static void main(String[] args) {
+        Merge_k_sorted_lists_23 obj = new Merge_k_sorted_lists_23();
+
+        ListNode[] input = new ListNode[] { new ListNode(1) };
+        obj.mergeKListsI(input);
     }
 
     /*
