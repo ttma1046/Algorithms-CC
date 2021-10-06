@@ -30,8 +30,6 @@ val: an integer representing Node.val
 random_index: the index of the node (range from 0 to n-1) that the random pointer points to, or null if it does not point to any node.
 Your code will only be given the head of the original linked list.
 
-
-
 Example 1:
 
 
