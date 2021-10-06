@@ -37,6 +37,23 @@ class ListNode {
 
 class Remove_Duplicates_from_Sorted_List_I_83 {
     public ListNode deleteDuplicates(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+
+        while(fast != null) {
+            if (slow.val != fast.val) {
+                slow.next = fast;
+
+                slow = slow.next;
+            }
+
+            fast = fast.next;
+        }
+        slow.next = null;
+        return head;
+    }
+
+    public ListNode deleteDuplicates(ListNode head) {
         if (head == null || head.next == null) return head;
 		ListNode curr = head;
 		while (curr != null && curr.next != null) {
@@ -50,23 +67,27 @@ class Remove_Duplicates_from_Sorted_List_I_83 {
 		return head;
     }
 
+    // iterative
     public ListNode deleteDuplicates(ListNode head) {
-    	if (head == null || head.next == null) return head;
+        ListNode curr = head;
 
-    	ListNode fast = head;
-    	ListNode slow = head;
+        while(curr != null) {
+            while(curr.next != null && curr.val == curr.next.val)
+                curr.next = curr.next.next;
 
-    	while (fast != null) {
-    		if (slow.val != fast.val) {
-    			slow.next = fast;
-    			slow = slow.next;
-    		}
-    		fast = fast.next
-    	}
+            curr = curr.next;
+        }
 
-    	slow.next = null;
+        return head;
+    }
 
-    	return head;
+    // recursive
+    public ListNode deleteDuplicates(ListNode head) {
+        if (head == null || head.next == null) return null;
+
+        head.next = deleteDuplicates(head.next);
+
+        return head.val == head.next.val ? head.next : head;
     }
 
     public static void main(String[] args) {
