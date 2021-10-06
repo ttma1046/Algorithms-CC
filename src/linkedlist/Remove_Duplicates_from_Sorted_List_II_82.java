@@ -38,79 +38,25 @@ class ListNode {
 class Remove_Duplicates_from_Sorted_List_II_82 {
     public ListNode deleteDuplicatesII(ListNode head) {
         if (head == null) return null;
-        ListNode node = new ListNode(0);
-        node.next = head;
-        ListNode pre = node;
-        ListNode fast = head;
 
-        while (fast != null) {
-            while (fast.next != null && fast.val == fast.next.val) {
-                fast = fast.next;
-            }
-
-            if (pre.next == fast) {
-                pre = pre.next;
-            } else {
-                pre.next = fast.next;
-            }
-
-            fast = fast.next;
-        }
-
-        return node.next;
-    }
-
-    public ListNode deleteDuplicatesIII(ListNode head) {
-        if (head == null) return null;
-
-        ListNode node = new ListNode(0);
+        ListNode node = new ListNode(-1);
 
         node.next = head;
-        ListNode pre = node;
-        ListNode fast = head;
-
-        while (fast != null) {
-            while (fast.next != null && fast.val == fast.next.val) {
-                fast = fast.next;
-            }
-
-            if (pre.next == fast) {
-                pre = pre.next;
-            } else {
-                pre.next = fast.next;
-            }
-
-            fast = fast.next;
-        }
-
-        return node.next;
-    }
-
-    public ListNode deleteDuplicates(ListNode head) {
-        if (head == null || head.next == null) return head;
-        ListNode node = new ListNode(0);
 
         ListNode slow = node;
-        slow.next = head;
         ListNode fast = head;
 
-        while (fast != null) {
-            while(fast.next != null && fast.val == fast.next.val) {
-                fast = fast.next;
-            }
+        while(fast != null) {
+            while (fast.next != null && fast.val == fast.next.val) fast = fast.next;
 
-            if (slow.next == fast) {
-                slow = slow.next;
-            } else {
-                slow.next = fast.next;
-            }
+            if (slow.next == fast) slow = slow.next;
+            else slow.next = fast.next;
 
             fast = fast.next;
         }
 
         return node.next;
     }
-
 
     public static void main(String[] args) {
         ListNode one =
