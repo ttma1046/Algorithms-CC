@@ -97,6 +97,37 @@ Follow up: Could you write a solution that runs in O(n) time and use only O(1) m
 
 class Intersection_of_two_linked_lists_160 {
 	public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+		int lenA = length(headA), lenB = length(headB);
+
+		while (lenA > lenB) {
+			headA = headA.next;
+			lenA--;
+		}
+
+		while (lenA < lenB) {
+			headB = headB.next;
+			lenB--;
+		}
+
+		while(headA != null && headB != null) {
+			if (headA == headB) return headA;
+			headA = headA.next;
+			headB = headB.next;
+		}
+
+		return null;
+	}
+
+	public int length(ListNode node) {
+		int len = 0;
+		while(node != null) {
+			len++;
+			node = node.next;
+		}
+		return len;
+	}
+
+	public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
 		Set<ListNode> set = new HashSet<>();
 
 		ListNode currentA = headA;
