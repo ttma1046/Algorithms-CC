@@ -40,7 +40,7 @@ Constraints:
 All the values of preorder are unique.
 */
 
-public class ConstructBinarySearchTreefromPreOrderTraversal_1008 {
+public class Construct_Binary_Search_Tree_from_PreOrder_Traversal_1008 {
     /*
     private int index;
 

@@ -28,9 +28,10 @@ The number of nodes in the list is sz.
 Follow up: Could you do this in one pass?
 */
 class Remove_Nth_Node_From_End_of_List_19 {
+
     public ListNode removeNthFromEnd(ListNode head, int n) {
-        /*
         if(head.next == null) return null;
+
 
         ListNode dummy = new ListNode(-1);
 
@@ -48,13 +49,40 @@ class Remove_Nth_Node_From_End_of_List_19 {
         slow.next = slow.next.next;
 
         return dummy.next;
-        */
+    }
+
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        if (head == null) return null;
+        if (n == 0) return head;
+
+        ListNode start = new ListNode();
+        start.next = head;
+
+        ListNode slow = start;
+        ListNode fast = start;
+        int count = n + 1;
+        while (count-- > 0) {
+            fast = fast.next;
+        }
+
+        while (fast != null) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+
+        ListNode temp = slow.next;
+        slow.next = slow.next.next;
+        temp = null;
+        return start.next;
+    }
+
+    public ListNode removeNthFromEnd(ListNode head, int n) {
         if(head.next == null) return null;
 
         ListNode dummy = new ListNode(-1);
 
         dummy.next = head;
-        
+
         ListNode slow = dummy, fast = dummy;
 
         for(int i = 0; i < n + 1; ++i) fast = fast.next;
@@ -66,6 +94,29 @@ class Remove_Nth_Node_From_End_of_List_19 {
 
         slow.next = slow.next.next;
 
+        return dummy.next;
+    }
+
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        int length = 0;
+        ListNode first = head;
+
+        while(first != null) {
+            length++;
+            first = first.next;
+        }
+
+        length -= n;
+        first = dummy;
+
+        while(length > 0) {
+            length--;
+            first = first.next;
+        }
+
+        first.next = first.next.next;
         return dummy.next;
     }
 

@@ -55,10 +55,9 @@ public class Linked_List_Cycle_II_142 {
 
 	// Time Complexity: O(N)
 	// Space Complexity: O(N)
-
 	public ListNode detectCycleTwopointers(ListNode head) {
-		if (head == null) return false;
-		ListNode fast = head.next;
+		if (head == null) return null;
+		ListNode fast = head;
 		ListNode slow = head;
 		while (fast != null && fast.next != null ) {
 			fast = fast.next.next;
@@ -75,6 +74,7 @@ public class Linked_List_Cycle_II_142 {
 				return slow;
 			}
 		}
+
 		return null;
 	}
 

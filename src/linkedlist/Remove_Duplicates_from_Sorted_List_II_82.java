@@ -1,6 +1,8 @@
 package linkedlist;
 /*
-Given the head of a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list. Return the linked list sorted as well.
+Given the head of a sorted linked list, delete all nodes that have duplicate numbers, 
+
+leaving only distinct numbers from the original list. Return the linked list sorted as well.
 
 Example 1:
 
@@ -18,7 +20,6 @@ The number of nodes in the list is in the range [0, 300].
 -100 <= Node.val <= 100
 The list is guaranteed to be sorted in ascending order.
 */
-
 /**
  * Definition for singly-linked list.
  */
@@ -39,6 +40,27 @@ class Remove_Duplicates_from_Sorted_List_II_82 {
     public ListNode deleteDuplicatesII(ListNode head) {
         if (head == null) return null;
 
+        ListNode prev = new ListNode(-1);
+
+        prev.next = head;
+        ListNode front = head;
+        ListNode back = head;
+
+        while(front != null && back != null) {
+            while(front.next != null && front.val == front.next.val) front = front.next;
+            
+            if (back.next == front) back = back.next;
+            else back.next = front.next;
+
+            fast = fast.next;
+        }
+
+        return prev.next;
+    }
+
+    public ListNode deleteDuplicatesII(ListNode head) {
+        if (head == null) return null;
+
         ListNode node = new ListNode(-1);
 
         node.next = head;
@@ -56,6 +78,25 @@ class Remove_Duplicates_from_Sorted_List_II_82 {
         }
 
         return node.next;
+    }
+
+    public ListNode deleteDuplicatesII(ListNode head) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode pre = dummy, cur = head;
+
+        while(cur != null && cur.next != null) {
+            if (cur.val == cur.next.val) {
+                int temp = cur.val;
+                while (cur != null && temp == cur.val) cur = cur.next;
+                pre.next = cur;
+            } else {
+                pre = pre.next;
+                cur = cur.next;
+            }
+        }
+
+        return dummy.next;
     }
 
     public static void main(String[] args) {

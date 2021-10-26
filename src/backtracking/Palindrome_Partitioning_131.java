@@ -23,6 +23,7 @@ Constraints:
 s contains only lowercase English letters.
 */
 class Palindrome_Partitioning_131 {
+    /*
     public List<List<String>> partition(String s) {
         List<List<String>> res = new ArrayList<>();
         dfs(res, new ArrayList<String>(), s.toCharArray(), 0);
@@ -31,6 +32,7 @@ class Palindrome_Partitioning_131 {
 
     void dfs(List<List<String>> res, ArrayList<String> list, char[] c, int pos) {
         if (pos == c.length) res.add(new ArrayList<>(list));
+
         for (int i = pos; i < c.length; i++) {
             if (isPal(c, pos, i)) {
                 list.add(new String(c, pos, i - pos + 1));
@@ -45,23 +47,7 @@ class Palindrome_Partitioning_131 {
         return true;
     }
 
-    public List<List<String>> partition(String s) {
-        List<List<String>> res = new ArrayList<List<String>>();
-        dfs(s, 0, res, new ArrayList<String>());
-        return res;
-    }
 
-    private void dfs(String s, int start, List<List<String>> res, List<String> currentList) {
-        if (start >= s.length()) res.add(new ArrayList<String>(currentList));
-
-        for (int end = start; end < s.length(); ++end) {
-            if (isPalindrome(s, start, end)) {
-                currentList.add(s.substring(start, end + 1));
-                dfs(s, end + 1, res, currentList);
-                currentList.remove(currentList.size() - 1);
-            }
-        }
-    }
 
     private boolean isPalindrome(String s, int start, int end) {
         while (start < end) {
@@ -93,6 +79,7 @@ class Palindrome_Partitioning_131 {
             }
         }
     }
+    */
 
     /*
     Complexity Analysis:
@@ -108,7 +95,7 @@ class Palindrome_Partitioning_131 {
 
     public static void main(String[] args) {
         Palindrome_Partitioning_131 obj = new Palindrome_Partitioning_131();
-        List<List<String>> res = obj.partitionII("aab");
+        List<List<String>> res = obj.partition("aab");
 
         for (List<String> item : res) {
             for (String s : item) {
@@ -119,6 +106,51 @@ class Palindrome_Partitioning_131 {
             System.out.println();
         }
     }
+
+    public List<List<String>> partition(String s) {
+        List<List<String>> res = new ArrayList<>();
+
+        recursive(s, 0, res, new ArrayList<String>());
+
+        return res;
+    }
+
+    private void recursive(String s, int start, List<List<String>> res, List<String> temp) {
+        if (start >= s.length()) res.add(new ArrayList<String>(temp));
+
+        for (int end = start; end < s.length(); ++end) {
+            if (isPalindrome(s, start, end)) {
+                temp.add(s.substring(start, end + 1));
+                recursive(s, end + 1, res, temp);
+                temp.remove(temp.size() - 1);
+            }
+        }
+    }
+
+    private boolean isPalindrome(String s, int start, int end) {
+        while(start < end) if (s.charAt(start++) != s.charAt(end--)) return false;
+        return true;
+    }
+
+    /*
+    public List<List<String>> partition(String s) {
+        List<List<String>> res = new ArrayList<List<String>>();
+        dfs(s, 0, res, new ArrayList<String>());
+        return res;
+    }
+
+    private void dfs(String s, int start, List<List<String>> res, List<String> currentList) {
+        if (start >= s.length()) res.add(new ArrayList<String>(currentList));
+
+        for (int end = start; end < s.length(); ++end) {
+            if (isPalindrome(s, start, end)) {
+                currentList.add(s.substring(start, end + 1));
+                dfs(s, end + 1, res, currentList);
+                currentList.remove(currentList.size() - 1);
+            }
+        }
+    }
+    */
 }
 
 

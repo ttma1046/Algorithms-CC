@@ -57,10 +57,9 @@ At most 3000 calls will be made to enQueue, deQueue, Front, Rear, isEmpty, and i
 /*
 class MyCircularQueue {
     private Node head, tail;
-    private int count;
-    private int capacity;
+    private int count, capacity;
     // Additional variable to secure the access of our queue
-    private ReentrantLock queueLock = new ReentrantLock();
+    ReentrantLock queueLock = new ReentrantLock();
 
     // Initialize your data structure here. Set the size of the queue to be k.
     public MyCircularQueue(int k) {
@@ -176,8 +175,7 @@ class Design_Circular_Queue_622 {
     }
 }
 
-/*
-class Design_Circular_Queue_622 {
+class Design_Circular_Queue_622_II  {
     private int[] queue;
     private int headIndex;
     private int count;
@@ -249,4 +247,47 @@ class Design_Circular_Queue_622 {
     // where N is the pre-assigned capacity of the queue.
     // However, it is worth mentioning that the memory consumption of the data structure remains as its pre-assigned capacity during its entire life cycle.
 }
-*/
+
+class Design_Circular_Queue_622_II {
+    int[] q;
+    int head, rear, size;
+
+    public Design_Circular_Queue_622_II(int k) {
+        this.q = new int[k];
+        this.head = 0;
+        this.rear = -1;
+    }
+
+    public boolean enQueue(int value) {
+        if (isFull()) return false;
+
+        rear = (rear + 1) % q.length;
+        q[rear] = value;
+        size++;
+        return true;
+    }
+
+    public boolean deQueue() {
+        if (isEmpty()) return false;
+
+        head = (head + 1) % q.length;
+        size--;
+        return true;
+    }
+
+    public int Front() {
+        return isEmpty() ? -1 : q[head];
+    }
+
+    public int Rear() {
+        return isEmpty() ? -1 : q[rear];
+    }
+
+    public boolean isFull() {
+        return size == q.length;
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
+    }
+}

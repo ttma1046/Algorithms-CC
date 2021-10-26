@@ -4,8 +4,6 @@ import java.util.Comparator;
 import java.util.PriorityQueue;
 
 public class FindRunningMedian {
-
-
     public static void addNumber(int number, PriorityQueue<Integer> lowers, PriorityQueue<Integer> highers) {
         if (lowers.size() == 0 || number < lowers.peek()) {
             lowers.add(number);

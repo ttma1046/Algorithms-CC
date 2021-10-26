@@ -1,4 +1,31 @@
 package tree;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+/*
+Given the root of a binary tree, return the zigzag level order traversal of its nodes' values. (i.e., from left to right, then right to left for the next level and alternate between).
+
+Example 1:
+
+Input: root = [3,9,20,null,null,15,7]
+Output: [[3],[20,9],[15,7]]
+
+Example 2:
+
+Input: root = [1]
+Output: [[1]]
+
+Example 3:
+
+Input: root = []
+Output: []
+
+Constraints:
+
+The number of nodes in the tree is in the range [0, 2000].
+-100 <= Node.val <= 100
+*/
 
 /**
  * Definition for a binary tree node.
@@ -56,5 +83,35 @@ class Binary_Tree_Zigzag_Level_Order_Traversal_103 {
 
         dfs(root.left, res, height + 1);
         dfs(root.right, res, height + 1);
+    }
+
+    public List<List<Integer>> zigzagLevelOrderII(TreeNode root) {
+        List <List<Integer>> res = new ArrayList<>();
+        if (root == null) return res;
+        Queue<TreeNode> q = new LinkedList<TreeNode>();
+
+        q.offer(root);
+
+        while(q.size() > 0) {
+            int size = q.size();
+            List<Integer> currentLevel = new ArrayList<>();
+            for (int i = 0; i < size; ++i) {
+                TreeNode node = q.poll();
+                
+                if (res.size() % 2 == 0) currentLevel.add(node.val);
+                else currentLevel.add(0, node.val);
+
+                if (node.left != null) q.offer(node.left);
+                if (node.right != null) q.offer(node.right);
+            }
+
+            res.add(currentLevel);
+        }
+
+        return res;
+    }
+
+    public static void main(String[] args) {
+        Binary_Tree_Zigzag_Level_Order_Traversal_103 obj = new Binary_Tree_Zigzag_Level_Order_Traversal_103();
     }
 }
