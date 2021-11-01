@@ -139,32 +139,49 @@ public class Remove_Zero_Sum_Consecutive_Nodes_from_Linked_List_1171 {
         }
 
         for (int i : sumToFarthestNodeMap.keySet()) {
-            System.out.println(i);
-
             ListNode temp = sumToFarthestNodeMap.get(i);
 
-            while(temp != null) { 
-                System.out.print(temp.val);
-                System.out.print(" ");
-                temp = temp.next;
-            }
-
-            System.out.println();
+            while(temp != null) temp = temp.next;
         }
 
         // Second iteration to re-connect the nodes to the farthest node where the sum stays unchanged
         sum = 0;
         for (ListNode p = preHead; p != null; p = p.next) {
-            System.out.println("p.val:" + p.val);
-
             sum += p.val;
-
-            System.out.println("sum:" + sum);
 
             p.next = sumToFarthestNodeMap.get(sum).next;
         }
 
         // Done, return the head from preHead
+        return preHead.next;
+    }
+
+    public ListNode removeZeroSumSublists(ListNode head) {
+        int preFix = 0;
+
+        ListNode preHead = new ListNode(0);
+
+        preHead.next = head;
+
+        Map<Integer, ListNode> map = new HashMap<Integer, ListNode>();
+
+        map.put(0, preHead);
+
+        ListNode curr = preHead;
+
+        while(curr != null) {
+            preFix += curr.val;
+            map.put(preFix, curr);
+        }
+
+        preFix = 0;
+        curr = preHead;
+
+        while(curr != null) {
+            preFix += curr.val;
+            curr.next = map.get(preFix).next;
+        }
+
         return preHead.next;
     }
 
