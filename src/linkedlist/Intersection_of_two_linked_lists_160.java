@@ -164,7 +164,7 @@ class Intersection_of_two_linked_lists_160 {
 		ListNode pA = headA;
 		ListNode pB = headB;
 
-		while(pA.val != pB.val) {
+		while(pA != pB) {
 			pA = pA == null ? headB : pA.next;
 			pB = pB == null ? headA : pB.next;
 		}
