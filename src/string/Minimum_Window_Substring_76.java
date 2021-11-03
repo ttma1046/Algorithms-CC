@@ -1,4 +1,6 @@
 package string;
+import java.util.Map;
+import java.util.HashMap;
 
 /*
 Given two strings s and t of lengths m and n respectively,
@@ -38,7 +40,7 @@ s and t consist of uppercase and lowercase English letters.
 Follow up: Could you find an algorithm that runs in O(m + n) time?
 */
 
-class Solution {
+class Minimum_Window_Substring_76 {
     public String minWindow(String s, String t) {
         if (s.length() == 0 || s == null || t.length() == 0 || t == null) return "";
 
@@ -46,7 +48,7 @@ class Solution {
         Map<Character, Integer> dictT = new HashMap<Character, Integer>();
 
         for (int i = 0; i < t.length(); i++) {
-            char c = s.charAt(i);
+            char c = t.charAt(i);
             dictT.put(c, dictT.getOrDefault(c, 0) + 1);
         }
 
@@ -95,7 +97,7 @@ class Solution {
                 // `Left` pointer is no longer a part of the window.
                 windowCounts.put(c, windowCounts.get(c) - 1);
                 if (dictT.containsKey(c) && windowCounts.get(c).intValue() < dictT.get(c).intValue()) formed--;
-                
+
 
                 // Move the left pointer ahead, this would help to look for a new window.
                 l++;
@@ -107,4 +109,129 @@ class Solution {
 
         return ans[0] == -1 ? "" : s.substring(ans[1], ans[2] + 1);
     }
+
+
+
+    public String minWindowII(String s, String t) {
+        if (s == null || s.length() == 0 || t == null || t.length() == 0) return "";
+
+        Map<Character, Integer> tMap = new HashMap<>();
+
+        for (int i = 0; i < t.length(); ++i) {
+            char c = t.charAt(i);
+            tMap.put(c, tMap.getOrDefault(c, 0) + 1);
+        }
+
+        int required = tMap.size();
+
+        Map<Character, Integer> sMap = new HashMap<>();
+        int formed = 0;
+        int l = 0, r = 0;
+        int[] res = new int[] {-1, l, r};
+
+        while (r < s.length()) {
+            char c = s.charAt(r);
+            sMap.put(c, sMap.getOrDefault(c, 0) + 1);
+
+            if (tMap.containsKey(c) && sMap.get(c).intValue() == tMap.get(c).intValue()) formed++;
+
+            while(l <= r && formed == required) {
+                if (res[0] == -1 || r - l + 1 < res[0]) {
+                    res[0] = r - l + 1;
+                    res[1] = l;
+                    res[2] = r;
+                }
+
+                c = s.charAt(l);
+                sMap.put(c, sMap.get(c) - 1);
+                if (tMap.containsKey(c) && sMap.get(c).intValue() < tMap.get(c).intValue()) formed--;
+
+                l++;
+            }
+
+            r++;
+        }
+
+
+        return res[0] == -1 ? "" : s.substring(res[1], res[2] + 1);
+    }
+
+    /*
+    Complexity Analysis
+
+    Time Complexity: O(|S| + |T|)O(∣S∣+∣T∣) where |S| and |T| represent the lengths of strings SS and TT. In the worst case we might end up visiting every element of string SS twice, once by left pointer and once by right pointer. |T|∣T∣ represents the length of string TT.
+
+    Space Complexity: O(|S| + |T|)O(∣S∣+∣T∣). |S|∣S∣ when the window size is equal to the entire string SS. |T|∣T∣ when TT has all unique characters.
+    */
+
+    public static void main(String[] args) {
+        Minimum_Window_Substring_76 obj = new Minimum_Window_Substring_76();
+    }
+
+    public String minWindowII(String s, String t) {
+        if (s.length() == 0 || t.length() == 0) return "";
+
+        Map<Character, Integer> dictT = new HashMap<Character, Integer>();
+
+        for (int i = 0; i < t.length(); i++) {
+            char c = t.charAt(i);
+            dictT.put(c, dictT.getOrDefault(c, 0) + 1);
+        }
+
+        int required = dictT.size();
+
+        // Filter all the characters from s into a new list along with their index.
+        // The filtering criteria is that the character should be present in t.
+        List<Pair<Integer, Character>> filteredS = new ArrayList<Pair<Integer, Character>>();
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (dictT.containsKey(c))
+                filteredS.add(new Pair<Integer, Character>(i, c));
+
+        }
+
+
+        int l = 0, r = 0, formed = 0;
+        Map<Character, Integer> windowCounts = new HashMap<Character, Integer>();
+        int[] ans = {-1, 0, 0};
+
+        // Look for the characters only in the filtered list instead of entire s.
+        // This helps to reduce our search.
+        // Hence, we follow the sliding window approach on as small list.
+        while (r < filteredS.size()) {
+            char c = filteredS.get(r).getValue();
+            windowCounts.put(c, windowCounts.getOrDefault(c, 0) + 1);
+
+            if (dictT.containsKey(c) && windowCounts.get(c).intValue() == dictT.get(c).intValue()) formed++;
+
+            // Try and contract the window till the point where it ceases to be 'desirable'.
+            while (l <= r && formed == required) {
+
+                // Save the smallest window until now.
+                int end = filteredS.get(r).getKey();
+                int start = filteredS.get(l).getKey();
+                if (ans[0] == -1 || end - start + 1 < ans[0]) {
+                    ans[0] = end - start + 1;
+                    ans[1] = start;
+                    ans[2] = end;
+                }
+
+                c = filteredS.get(l).getValue();
+                windowCounts.put(c, windowCounts.get(c) - 1);
+                if (dictT.containsKey(c) && windowCounts.get(c).intValue() < dictT.get(c).intValue()) formed--;
+
+                l++;
+            }
+            r++;
+        }
+
+        return ans[0] == -1 ? "" : s.substring(ans[1], ans[2] + 1);
+    }
+
+    /*
+    Complexity Analysis
+
+    Time Complexity : O(|S| + |T|)O(∣S∣+∣T∣) where |S| and |T| represent the lengths of strings SS and TT. The complexity is same as the previous approach. But in certain cases where |filtered\_S|∣filtered_S∣ <<< |S|∣S∣, the complexity would reduce because the number of iterations would be 2*|filtered\_S| + |S| + |T|2∗∣filtered_S∣+∣S∣+∣T∣.
+    Space Complexity : O(|S| + |T|)O(∣S∣+∣T∣).
+    */
 }
