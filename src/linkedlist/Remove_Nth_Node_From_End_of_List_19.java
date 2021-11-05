@@ -28,29 +28,7 @@ The number of nodes in the list is sz.
 Follow up: Could you do this in one pass?
 */
 class Remove_Nth_Node_From_End_of_List_19 {
-
-    public ListNode removeNthFromEnd(ListNode head, int n) {
-        if(head.next == null) return null;
-
-
-        ListNode dummy = new ListNode(-1);
-
-        dummy.next = head;
-
-        ListNode slow = dummy, fast = dummy;
-
-        for(int i = 0; i < n; ++i) fast = fast.next;
-
-        while(fast != null && fast.next != null) {
-            slow = slow.next;
-            fast = fast.next;
-        }
-
-        slow.next = slow.next.next;
-
-        return dummy.next;
-    }
-
+    /*
     public ListNode removeNthFromEnd(ListNode head, int n) {
         if (head == null) return null;
         if (n == 0) return head;
@@ -76,26 +54,6 @@ class Remove_Nth_Node_From_End_of_List_19 {
         return start.next;
     }
 
-    public ListNode removeNthFromEnd(ListNode head, int n) {
-        if(head.next == null) return null;
-
-        ListNode dummy = new ListNode(-1);
-
-        dummy.next = head;
-
-        ListNode slow = dummy, fast = dummy;
-
-        for(int i = 0; i < n + 1; ++i) fast = fast.next;
-
-        while(fast != null) {
-            slow = slow.next;
-            fast = fast.next;
-        }
-
-        slow.next = slow.next.next;
-
-        return dummy.next;
-    }
 
     public ListNode removeNthFromEnd(ListNode head, int n) {
         ListNode dummy = new ListNode(0);
@@ -119,6 +77,50 @@ class Remove_Nth_Node_From_End_of_List_19 {
         first.next = first.next.next;
         return dummy.next;
     }
+    */
+
+    public ListNode removeNthFromEndII(ListNode head, int n) {
+        if(head.next == null) return null;
+
+        ListNode dummy = new ListNode(-1);
+
+        dummy.next = head;
+
+        ListNode slow = dummy, fast = dummy;
+
+        for(int i = 0; i < n; ++i) fast = fast.next;
+
+        while(fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+
+        slow.next = slow.next.next;
+
+        return dummy.next;
+    }
+
+
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        if(head.next == null) return null;
+
+        ListNode dummy = new ListNode(-1);
+
+        dummy.next = head;
+
+        ListNode slow = dummy, fast = dummy;
+
+        for(int i = 0; i <= n; ++i) fast = fast.next;
+
+        while(fast != null) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+
+        slow.next = slow.next.next;
+
+        return dummy.next;
+    }
 
     public static void main(String[] args) {
         ListNode one =
@@ -130,6 +132,6 @@ class Remove_Nth_Node_From_End_of_List_19 {
 
         Remove_Nth_Node_From_End_of_List_19 obj = new Remove_Nth_Node_From_End_of_List_19();
 
-        obj.removeNthFromEnd(one, 2);
+        obj.removeNthFromEndII(one, 2);
     }
 }

@@ -38,18 +38,15 @@ Constraints:
 */
 class Best_Time_to_Buy_and_Sell_Stock_III_123 {
     public int maxProfit(int[] prices) {
-        if (prices.length == 0) return 0;
-
         int length = prices.length;
+        if (length <= 1) return 0;
 
         int leftMin = prices[0];
         int rightMax = prices[length - 1];
 
         int[] leftProfits = new int[length];
-        // pad the right DP array with an additional zero for convenience.
         int[] rightProfits = new int[length + 1];
 
-        // construct the bidirectional DP array
         for (int l = 1; l < length; ++l) {
             leftProfits[l] = Math.max(leftProfits[l - 1], prices[l] - leftMin);
             leftMin = Math.min(leftMin, prices[l]);
@@ -59,26 +56,33 @@ class Best_Time_to_Buy_and_Sell_Stock_III_123 {
             rightMax = Math.max(rightMax, prices[r]);
         }
 
-        int maxProfit = 0;
-        for (int i = 0; i < length; ++i)
-            maxProfit = Math.max(maxProfit, leftProfits[i] + rightProfits[i + 1]);
+        int max = 0;
+        for (int i = 0; i < length; i++) {
+            max = Math.max(max, leftProfits[i] + rightProfits[i + 1]);
+        }
 
-        return maxProfit;
+        return max;
     }
 
-    public int maxProfit(int[] prices) {
+    // Time Complexity: O(N) where NN is the length of the input sequence, since we have two iterations of length NN.
+
+    // Space Complexity: O(N) for the two arrays that we keep in the algorithm.
+
+
+    public int maxProfitI(int[] prices) {
         int t1Cost = Integer.MAX_VALUE;
         int t2Cost = Integer.MAX_VALUE;
-        int t1Profit a= 0;
+        int t1Profit = 0;
         int t2Profit = 0;
 
-        for (int price : prices) {
-            // the maximum profit if only one transaction is allowed
+        for (int price: prices) {
             t1Cost = Math.min(t1Cost, price);
             t1Profit = Math.max(t1Profit, price - t1Cost);
-            // reinvest the gained profit in the second transaction
+
             t2Cost = Math.min(t2Cost, price - t1Profit);
+
             t2Profit = Math.max(t2Profit, price - t2Cost);
+
         }
 
         return t2Profit;
@@ -88,4 +92,8 @@ class Best_Time_to_Buy_and_Sell_Stock_III_123 {
 
     Space Complexity: O(1), only constant memory is required, which is invariant from the input sequence.
     */
+
+    public static void main(String[] args) {
+        Best_Time_to_Buy_and_Sell_Stock_III_123 obj = new Best_Time_to_Buy_and_Sell_Stock_III_123();
+    }
 }

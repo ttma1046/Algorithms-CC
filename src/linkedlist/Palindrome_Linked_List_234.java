@@ -36,10 +36,12 @@ class ListNode {
         this.next = next;
     }
 }
-/**/
+
 class Palindrome_Linked_List_234 {
-    public boolean isPalindrome(ListNode head) {
+    public boolean isPalindromeIII(ListNode head) {
         ListNode firstHalfEnd = endOfFirstHalf(head);
+        System.out.println(firstHalfEnd.next.val);
+
         ListNode secondHalfStart = reverse(firstHalfEnd.next);
 
         ListNode p1 = head;
@@ -94,8 +96,6 @@ class Palindrome_Linked_List_234 {
         // 1-2-3-4-5
         if (fast != null) slow = slow.next;
 
-        System.out.println(slow.val);
-
         ListNode prev = null;
 
         while (slow != null) {
@@ -106,7 +106,27 @@ class Palindrome_Linked_List_234 {
             slow = temp;
         }
 
+        // 1 -> 2 -> 3 -> null
+        // 4 -> 3 -> null
+
         slow = prev;
+
+        ListNode what = slow;
+
+        while(what != null) {
+            System.out.println(what.val);
+            what = what.next;
+        }
+
+        System.out.println("head");
+
+        what = head;
+
+        while(what != null) {
+            System.out.println(what.val);
+            what = what.next;
+        }
+
         while(slow != null) {
             if (head.val != slow.val) return false;
 
@@ -117,8 +137,7 @@ class Palindrome_Linked_List_234 {
         return true;
     }
 
-
-
+    /*
     public boolean isPalindromeII(ListNode head) {
         if (head == null) return true;
 
@@ -164,14 +183,31 @@ class Palindrome_Linked_List_234 {
 
         return slow;
     }
+    */
 
     public static void main(String[] args) {
         Palindrome_Linked_List_234 obj = new Palindrome_Linked_List_234();
 
+        
+        obj.isPalindromeIII(
+            new ListNode(1,
+                         new ListNode(2,
+                                      new ListNode(3,
+                                              new ListNode(4)))));
+        
+
+        
+        obj.isPalindromeIII(
+            new ListNode(1,
+                         new ListNode(2,
+                                      new ListNode(3,
+                                          new ListNode(4, new ListNode(5))))));
+        /*
         obj.isPalindrome(
-        	new ListNode(1, 
-        		new ListNode(2, 
-        			new ListNode(3, 
-        				new ListNode(4)))));
+            new ListNode(1,
+                         new ListNode(3,
+                                      new ListNode(2,
+                                              new ListNode(3, new ListNode(1))))));
+                                              */
     }
 }

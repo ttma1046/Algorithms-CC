@@ -197,6 +197,14 @@ class Convert_Binary_Search_Tree_to_Sorted_Doubly_Linked_List_426 {
     // recursive
     Node last = null, first = null;
 
+    public Node treeToDoublyList(Node root) {
+        if (root == null) return root;
+        inorderTraversal(root);
+        first.left = last;
+        last.right = first;
+        return first;
+    }
+
     private void inorderTraversal(Node curr) {
         if (curr == null) return;
 
@@ -211,20 +219,21 @@ class Convert_Binary_Search_Tree_to_Sorted_Doubly_Linked_List_426 {
         inorderTraversal(curr.right);
     }
 
-    public Node treeToDoublyList(Node root) {
-        if (root == null) return root;
-        inorderTraversal(root);
-        first.left = last;
-        last.right = first;
-        return first;
-    }
-
     Node first = null, last = null;
 
-    public void helper(Node node) {
+    public Node treeToDoublyList(Node root) {
+      if (root == null) return null;
+      inorderTraversal(root);
+      first.left = last;
+      last.right = first;
+
+      return first;
+    }
+
+    public void inorderTraversal(Node node) {
       if (root == null) return;
 
-      helper(node.left);
+      inorderTraversal(node.left);
 
       if (last != null) {
         last.right = node;
@@ -235,16 +244,6 @@ class Convert_Binary_Search_Tree_to_Sorted_Doubly_Linked_List_426 {
 
       last = node;
 
-      helper(node.right);
+      inorderTraversal(node.right);
     }
-
-    public Node treeToDoublyList(Node root) {
-      if (root == null) return null;
-      helper(root);
-      first.left = last;
-      last.right = first;
-
-      return first;
-    }
-
 }
