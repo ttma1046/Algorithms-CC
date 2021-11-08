@@ -17,27 +17,6 @@ Java
         }
         return new ArrayList<>(seen);
     }
-Python 3
-
-    def removeSubfolders(self, folder: List[str]) -> List[str]:
-        folder.sort(key=lambda f: len(f))
-        seen = set()
-        for f in folder:
-            for i in range(2, len(f)):
-                if f[i] == '/' and f[: i] in seen:
-                    break
-            else:
-                seen.add(f)
-        return list(seen)
-A simpler version, learn from @Sarmon:
-
-    def removeSubfolders(self, folder: List[str]) -> List[str]:
-        folder.sort(key=len)
-        seen = set()
-        for f in folder:
-            if not any(f[i] == '/' and f[: i] in seen for i in range(2, len(f))):
-                seen.add(f)
-        return list(seen)
 Analysis
 
 Time: O(n * (logn + m ^ 2)), space: (n * m), where n = folder.length, m = average size of the strings in folder.
@@ -110,29 +89,6 @@ Use index to save each folder index in a trie node; when search the trie, if we 
         }
         return ans;
     }
-class Trie:
-    def __init__(self):
-        self.sub = collections.defaultdict(Trie)
-        self.index = -1
-
-class Solution:
-    def removeSubfolders(self, folder: List[str]) -> List[str]:
-        self.root = Trie()
-        for i in range(len(folder)):
-            cur = self.root
-            for c in folder[i]:
-                cur = cur.sub[c]
-            cur.index = i
-        return self.bfs(self.root, folder)
-    def bfs(self, trie: Trie, folder: List[str]) -> List[str]:
-        q, ans = [trie], []
-        for t in q:
-            if t.index >= 0:
-                ans.append(folder[t.index])
-            for c in t.sub.keys():
-                if '/' != c or t.index < 0:
-                    q.append(t.sub.get(c))
-        return ans
 Analysis:
 
 Time & space: O(n * m), where n = folder.length, m = average size of the strings in folder.
