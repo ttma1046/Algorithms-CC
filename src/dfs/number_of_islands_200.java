@@ -1,5 +1,37 @@
 package dfs;
 
+/*
+Given an m x n 2D binary grid grid which represents a map of '1's (land) and '0's (water), return the number of islands.
+
+An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.
+
+Example 1:
+
+Input: grid = [
+  ["1","1","1","1","0"],
+  ["1","1","0","1","0"],
+  ["1","1","0","0","0"],
+  ["0","0","0","0","0"]
+]
+Output: 1
+
+Example 2:
+
+Input: grid = [
+  ["1","1","0","0","0"],
+  ["1","1","0","0","0"],
+  ["0","0","1","0","0"],
+  ["0","0","0","1","1"]
+]
+Output: 3
+
+Constraints:
+
+m == grid.length
+n == grid[i].length
+1 <= m, n <= 300
+grid[i][j] is '0' or '1'.
+*/
 class number_of_islands_200 {
     public int numIslands(char[][] grid) {
         if (grid == null || grid.length <= 0 || grid[0].length <= 0) {
@@ -126,5 +158,53 @@ class number_of_islands_200 {
         }
 
         return uf.getCount();
+    }
+
+
+    /*
+    class Node {
+        int value;
+        List<Node> children;
+        boolean visited;
+    }
+    */
+    private boolean[][] visited;
+    private int numRow;
+    private int numCol;
+
+    public int numIslands(char[][] grid) {
+        if (grid == null || grid.length < 1 || grid[0].length < 1) {
+            return 0;
+        }
+
+        int total = 0;
+        numRow = grid.length;
+        numCol = grid[0].length;
+
+        visited = new boolean[numRow][numCol];
+
+        for (int i = 0; i < numRow; ++i) {
+            for (int j = 0; j < numCol; ++j) {
+                if (!visited[i][j] && grid[i][j] == '1') {
+                    ++total;
+
+                    dfs(grid, i, j);
+                }
+            }
+        }
+
+        return total;
+    }
+
+    private void dfs(char[][] grid, int i, int j) {
+        if (i < 0 || i >= numRow || j < 0 || j >= numCol || grid[i][j] == '0' || visited[i][j]) {
+            return;
+        }
+
+        visited[i][j] = true;
+        dfs(grid, i + 1, j);
+        dfs(grid, i - 1, j);
+        dfs(grid, i, j + 1);
+        dfs(grid, i, j - 1);
     }
 }
