@@ -47,4 +47,67 @@ class Maximal_Square_221 {
         
         return maxsqlen * maxsqlen;
     }
+
+    public int maximalSquare(char[][] matrix) {
+        int rows = matrix.length, cols = rows > 0 ? matrix[0].length : 0;
+
+        int maxsqlen = 0;
+
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < cols; ++j) {
+                if (matrix[i][j] == '1') {
+                    int sqlen = 1;
+
+                    boolean flag = true;
+
+                    while(i + sqlen < rows && j + sqlen < cols && flag) {
+                        for (int k = j; k <= j + sqlen; ++k) {
+                            if (maxsqlen[i + sqlen][k] == '0') {
+                                flag = false;
+                                break;
+                            }
+                        }
+
+                        for (int k = i; k <= i + sqlen; ++k) {
+                            if (maxsqlen[k][j + sqlen] == '0') {
+                                flag = false;
+                                break;
+                            }
+                        }
+
+                        if (flag) sqlen++;
+                    }
+                }
+
+
+                if (sqlen > maxsqlen) {
+                    maxsqlen = sqlen;
+                }
+            }
+        }
+
+
+        return maxsqlen * maxsqlen;
+    }
+
+    public int maximalSquare(char[][] matrix) {
+
+        int rows = matrix.length, cols = rows > 0 ? matrix[0].length : 0;
+
+        int[][] dp = new int[rows + 1][cols + 1];
+
+        dp[0][0] = 1;
+        int maxsqlen = 0;
+
+        for (int i = 1; i < rows + 1; ++i) {
+            for (int j = 1; j < rows + 1; ++j) {
+                if (matrix[i - 1][j - 1] == '1') {
+                    dp[i][j] = Math.min(Math.min(dp[i - 1][j], dp[i][j - 1]), dp[i - 1][j - 1]) + 1;
+                    if (dp[i][j] > maxsqlen) maxsqlen = dp[i][j];
+                }
+            }            
+        }
+
+        return maxsqlen * maxsqlen;
+    }
 }
