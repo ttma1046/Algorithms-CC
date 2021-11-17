@@ -140,6 +140,26 @@ class Solution {
         return minDistance;
     }
 }
+/*
+Let N and M be the number of rows and columns in grid respectively.
+
+Time Complexity: O(N^2 * M^2)
+
+For each empty land, we will traverse to all other houses.
+
+This will require O(O(number of zeros * number of ones)) time and the number of zeros and ones in the matrix is of order N \cdot MN⋅M.
+
+Consider that when half of the values in grid are 0 and half of the values are 1, the total elements in grid would be (M \cdot N)(M⋅N) so their counts are (M \cdot N)/2(M⋅N)/2 and (M \cdot N)/2(M⋅N)/2 respectively,
+
+thus giving time complexity (M \cdot N)/2 \cdot (M \cdot N)/2(M⋅N)/2⋅(M⋅N)/2, that results in O(N^2 \cdot M^2)
+
+In JavaScript implementation, for simplicity, we have used an array for the queue. Since popping elements from the front of an array is an O(n) operation, which is undesirable, instead of popping from the front of the queue, we will iterate over the queue and record cells to be explored in the next level in next_queue. Once the current queue has been traversed, we simply set queue equal to the next_queue.
+
+Space Complexity: O(N⋅M)
+
+We use an extra matrix to track the visited cells, and the queue will store each matrix element at most once during each BFS call. Hence, O(N⋅M) space is required.
+*/
+
 
 class Solution {
     private void bfs(int[][] grid, int[][][] distances, int row, int col) {
@@ -223,5 +243,68 @@ class Solution {
             return -1;
         }
         return minDistance;
+    }
+};
+
+
+class Solution {
+    public int shortestDistance(int[][] grid) {
+        // Next four directions.
+        int dirs[][] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+
+        int rows = grid.length;
+        int cols = grid[0].length;
+
+        // Total Mtrix to store total distance sum for each empty cell.
+        int[][] total = new int[rows][cols];
+
+        int emptyLandValue = 0;
+        int minDist = Integer.MAX_VALUE;
+
+        for (int row = 0; row < rows; ++row) {
+            for (int col = 0; col < cols; ++col) {
+
+                // Start a BFS from each house.
+                if (grid[row][col] == 1) {
+                    minDist = Integer.MAX_VALUE;
+
+                    // Use a queue to perform a BFS, starting from the cell at (r, c).
+                    Queue<int[]> q = new LinkedList<>();
+                    q.offer(new int[] { row, col });
+
+                    int steps = 0;
+
+                    while (!q.isEmpty()) {
+                        steps++;
+
+                        for (int level = q.size(); level > 0; --level) {
+                            int[] curr = q.poll();
+
+                            for (int[] dir : dirs) {
+                                int nextRow = curr[0] + dir[0];
+                                int nextCol = curr[1] + dir[1];
+
+                                // For each cell with the value equal to empty land value
+                                // add distance and decrement the cell value by 1.
+                                if (nextRow >= 0 && nextRow < rows &&
+                                        nextCol >= 0 && nextCol < cols &&
+                                        grid[nextRow][nextCol] == emptyLandValue) {
+                                    grid[nextRow][nextCol]--;
+                                    total[nextRow][nextCol] += steps;
+
+                                    q.offer(new int[] { nextRow, nextCol });
+                                    minDist = Math.min(minDist, total[nextRow][nextCol]);
+                                }
+                            }
+                        }
+                    }
+
+                    // Decrement empty land value to be searched in next iteration.
+                    emptyLandValue--;
+                }
+            }
+        }
+
+        return minDist == Integer.MAX_VALUE ? -1 : minDist;
     }
 }
