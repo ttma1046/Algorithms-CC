@@ -14,25 +14,23 @@ The total travel distance is the sum of the distances between the houses of the 
 
 The distance is calculated using Manhattan Distance, where distance(p1, p2) = |p2.x - p1.x| + |p2.y - p1.y|.
 
-
-
 Example 1:
-
 
 Input: grid = [[1,0,2,0,1],[0,0,0,0,0],[0,0,1,0,0]]
 Output: 7
 Explanation: Given three buildings at (0,0), (0,4), (2,2), and an obstacle at (0,2).
 The point (1,2) is an ideal empty land to build a house, as the total travel distance of 3+3+1=7 is minimal.
 So return 7.
+
 Example 2:
 
 Input: grid = [[1,0]]
 Output: 1
+
 Example 3:
 
 Input: grid = [[1]]
 Output: -1
-
 
 Constraints:
 
@@ -45,14 +43,75 @@ There will be at least one building in the grid.
 
 class Solution {
     public int shortestDistance(int[][] grid) {
-        int row = grid.length;
-        int col = grid[0].length;
+        int rows = grid.length;
+        int cols = grid[0].length;
 
+        int totalHouses = 0;
 
-        
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < cols; ++j) {
+                if (grid[i][j] == 1) totalHouses++;
+            }
+        }
+
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < cols; ++j) {
+                if (grid[i][j] == 0) minDistance = Math.min(minDistance, bfs(grid, row, col, totalHouses));
+            }
+        }
+
+        if (minDistance == Integer.MAX_VALUE) return -1;
+
+        return 
+    }
+
+    private boolean bfs(int[][] grid, int i, int j, int housesReached) {
+        int[][] dirs = new int[] {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+
+        int rows = grid.length;
+        int cols = grid[0].length;
+
+        int distanceSum = 0;
+        int housesReached = 0;
+
+        Queue queue = new LinkedList();
+
+        queue.add(new int[] {i, j});
+
+        boolean[][] vis = new boolean[rows][cols];
+        vis[row][col] = true;
+
+        int step = 0;
+        while(queue.size() > 0 && housesReached != totalHouses) {
+            for (int t = queue.size(); t > 0; --t) {
+                int[] location = queue.poll();
+                row = location[0];
+                col = location[1];
+
+                // and we go past from this cell.
+                if (grid[row][col] == 1) {
+                    distanceSum += steps;
+                    housesReached++;
+                    continue;
+                }
+
+                for (int k = 0; i < dirs.length; i++) {
+                    int newX = row + dir[i][0];
+                    int newY = col + dir[i][1];
+
+                    if (newX >= 0 && newX < rows && newY >= 0 && newY < cols) {
+                        if (!vis[newX][newY] && grid[newX][newY] != 2) {
+                            vis[newX][newY] = true;
+                            queue.offer(new int[] { newX, newY });
+                        }
+                    }
+                }
+            }
+
+            step++;
+        }
     }
 }
-
 
 class Solution {
     public int shortestDistance(int[][] grid) {
@@ -79,9 +138,7 @@ class Solution {
         }
 
         // If it is impossible to reach all houses from any empty cell, then return -1.
-        if (minDistance == Integer.MAX_VALUE) {
-            return -1;
-        }
+        if (minDistance == Integer.MAX_VALUE) return -1;
 
         return minDistance;
     }
@@ -171,7 +228,6 @@ Space Complexity: O(N⋅M)
 
 We use an extra matrix to track the visited cells, and the queue will store each matrix element at most once during each BFS call. Hence, O(N⋅M) space is required.
 */
-
 class Solution {
     private void bfs(int[][] grid, int[][][] distances, int row, int col) {
         int dirs[][] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
