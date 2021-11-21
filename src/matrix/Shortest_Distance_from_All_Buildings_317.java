@@ -40,9 +40,9 @@ n == grid[i].length
 grid[i][j] is either 0, 1, or 2.
 There will be at least one building in the grid.
 */
-
-class Solution {
+class Shortest_Distance_from_All_Building_317 {
     public int shortestDistance(int[][] grid) {
+<<<<<<< HEAD
         int rows = grid.length;
         int cols = grid[0].length;
 
@@ -119,28 +119,71 @@ class Solution {
         int rows = grid.length;
         int cols = grid[0].length;
         int totalHouses = 0;
+=======
+        if (grid == null || grid[0].length == 0) return 0;
+        final int[] shift = new int[] {0, 1, 0, -1, 0};
+        
+        int row  = grid.length, col = grid[0].length;
+        int[][] distance = new int[row][col];
+        int[][] reach = new int[row][col];
+        int buildingNum = 0;
+        
+        for (int i = 0; i < row; i++) {
+            for (int j =0; j < col; j++) {
+                if (grid[i][j] == 1) {
+                    buildingNum++;
+                    Queue<int[]> myQueue = new LinkedList<int[]>();
+                    myQueue.offer(new int[] {i,j});
+>>>>>>> 2d338295940e4f4a44d426bf6f27959545806df1
 
-        for (int row = 0; row < rows; ++row) {
-            for (int col = 0; col < cols; ++col) {
-                if (grid[row][col] == 1) {
-                    totalHouses++;
+                    boolean[][] isVisited = new boolean[row][col];
+                    int level = 1;
+                    
+                    while (!myQueue.isEmpty()) {
+                        int qSize = myQueue.size();
+                        for (int q = 0; q < qSize; q++) {
+                            int[] curr = myQueue.poll();
+                            
+                            for (int k = 0; k < 4; k++) {
+                                int nextRow = curr[0] + shift[k];
+                                int nextCol = curr[1] + shift[k + 1];
+                                
+                                if (nextRow >= 0 && nextRow < row && nextCol >= 0 && nextCol < col
+                                    && grid[nextRow][nextCol] == 0 && !isVisited[nextRow][nextCol]) {
+                                        //The shortest distance from [nextRow][nextCol] to thic building
+                                        // is 'level'.
+                                        distance[nextRow][nextCol] += level;
+                                        reach[nextRow][nextCol]++;
+                                        
+                                        isVisited[nextRow][nextCol] = true;
+                                        myQueue.offer(new int[] {nextRow, nextCol});
+                                    }
+                            }
+                        }
+                        level++;
+                    }
                 }
             }
         }
-
-        // Find the min distance sum for each empty cell.
-        for (int row = 0; row < rows; ++row) {
-            for (int col = 0; col < cols; ++col) {
-                if (grid[row][col] == 0) {
-                    minDistance = Math.min(minDistance, bfs(grid, row, col, totalHouses));
+        
+        int shortest = Integer.MAX_VALUE;
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                if (grid[i][j] == 0 && reach[i][j] == buildingNum) {
+                    shortest = Math.min(shortest, distance[i][j]);
                 }
             }
         }
+<<<<<<< HEAD
 
         // If it is impossible to reach all houses from any empty cell, then return -1.
         if (minDistance == Integer.MAX_VALUE) return -1;
 
         return minDistance;
+=======
+        
+        return shortest == Integer.MAX_VALUE ? -1 : shortest;    
+>>>>>>> 2d338295940e4f4a44d426bf6f27959545806df1
     }
 
     private int bfs(int[][] grid, int row, int col, int totalHouses) {
