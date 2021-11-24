@@ -120,15 +120,71 @@ class Valid_Number_65 {
     /*
     Time complexity: O(N), where N is the length of s.
 
-    We simply iterate over the input once. 
+    We simply iterate over the input once.
 
-    The number of operations we perform for each character in the input is independent of the length of the string, 
+    The number of operations we perform for each character in the input is independent of the length of the string,
 
     and therefore only requires constant time. This results in N * O(1) = O(N) N * O(1) = O(N).
 
     Space complexity: O(1).
 
     Regardless of the input size, we only store 3 variables, seenDigit, seenExponent, and seenDot.
+    */
+
+
+    // This is the DFA we have designed above
+    private final List<Map<String, Integer>> dfa = List.of(
+                Map.of("digit", 1, "sign", 2, "dot", 3),
+                Map.of("digit", 1, "dot", 4, "exponent", 5),
+                Map.of("digit", 1, "dot", 3),
+                Map.of("digit", 4),
+                Map.of("digit", 4, "exponent", 5),
+                Map.of("sign", 6, "digit", 7),
+                Map.of("digit", 7),
+                Map.of("digit", 7)
+            );
+
+    // These are all of the valid finishing states for our DFA.
+    private final Set<Integer> validFinalStates = Set.of(1, 4, 7);
+
+    public boolean isNumber(String s) {
+        int currentState = 0;
+        String group = "";
+
+        for (int i = 0; i < s.length(); i++) {
+            char curr = s.charAt(i);
+            if (Character.isDigit(curr)) {
+                group = "digit";
+            } else if (curr == '+' || curr == '-') {
+                group = "sign";
+            } else if (curr == 'e' || curr == 'E') {
+                group = "exponent";
+            } else if (curr == '.') {
+                group = "dot";
+            } else {
+                return false;
+            }
+
+            if (!dfa.get(currentState).containsKey(group)) {
+                return false;
+            }
+
+            currentState = dfa.get(currentState).get(group);
+        }
+
+        return validFinalStates.contains(currentState);
+    }
+
+    /*
+    Time complexity: O(N), where N is the length of s.
+
+    We simply iterate through the input once. 
+
+    The number of operations we perform for each character in the input is independent of the length of the string, and therefore each operation requires constant time. So we get N * O(1) = O(N).
+
+    Space complexity: O(1).
+
+    We will construct the same DFA regardless of the input size.
     */
 
     public static void main(String[] args) {
