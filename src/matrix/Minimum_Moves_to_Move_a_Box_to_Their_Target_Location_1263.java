@@ -1,4 +1,6 @@
 package matrix;
+import java.util.Queue;
+import java.util.LinkedList;
 /*
 A storekeeper is a game in which the player pushes boxes around in a warehouse trying to get them to target locations.
 
@@ -62,7 +64,109 @@ There is only one character 'S', 'B', and 'T' in the grid.
 */
 
 class Minimum_Moves_to_Move_a_Box_to_Their_Target_Location_1263 {
+    int[] dx = {-1, 1, 0, 0};
+    int[] dy = {0, 0, -1, 1};
+
+    public static void main(String[] args) {
+        Minimum_Moves_to_Move_a_Box_to_Their_Target_Location_1263 obj = new Minimum_Moves_to_Move_a_Box_to_Their_Target_Location_1263();
+    }
+
+
     public int minPushBox(char[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        int step = 0;
+        boolean[][][] visited = new boolean[m][n][4];
+
+        Queue<Pair[]> queue = new LinkedList<>();
+        Pair box = new Pair(-1, -1);
+        Pair target = new Pair(-1, -1);
+        Pair player = new Pair(-1, -1);
         
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 'B') box = new Pair(i, j);
+                if (grid[i][j] == 'T') target = new Pair(i, j);
+                if (grid[i][j] == 'S') player = new Pair(i, j);
+            }
+        }
+
+        queue.offer(new Pair[] {box, player});
+
+        while (!queue.isEmpty()) {
+            for (int i = 0, l = queue.size(); i < l; i++) {
+                Pair[] curr = queue.poll();
+                Pair currBox = curr[0];
+
+                if (currBox.row == target.row && currBox.col == target.col) return step; // check if box is on the target location
+                
+                for (int j = 0; j < 4; j++) {
+                    if (visited[currBox.row][currBox.col][j]) continue;
+
+                    int rPlayer = currBox.row + dx[j];
+                    int cPlayer = currBox.col + dy[j];  // where pl stands, have room to push;
+                    if (rPlayer < 0 || rPlayer >= m || cPlayer < 0 || cPlayer >= n || grid[rPlayer][cPlayer] == '#') continue;
+                    
+
+                    int rNextBox = currBox.row - dx[j];
+                    int cNextBox = currBox.col - dy[j];  // box next spots;
+                    if (rNextBox < 0 || rNextBox >= m || cNextBox < 0 || cNextBox >= n || grid[rNextBox][cNextBox] == '#') continue;
+
+                    if (!reachable(grid, rPlayer, cPlayer, curr)) continue; // player reachable?
+                        
+                    visited[currBox.row][currBox.col][j] = true;
+
+                    Pair boxNext = new Pair(rNextBox, cNextBox);
+                    Pair playerNext = new Pair(currBox.row, currBox.col);
+
+                    queue.offer(new Pair[] { boxNext, playerNext });
+                }
+            }
+
+            step++;
+        }
+
+        return -1;
+    }
+
+    private boolean reachable(char[][] grid, int rPlayer, int cPlayer, Pair[] curr) {
+        int m = grid.length;
+        int n = grid[0].length;
+
+        Pair box = curr[0];
+        Pair player = curr[1];
+
+        Queue<Pair> queue = new LinkedList<>();
+        queue.offer(player);
+        
+        boolean[][] visited = new boolean[m][n];
+        visited[box.row][box.col] = true;
+
+        while (!queue.isEmpty()) {
+            Pair playerCur = queue.poll();
+            if (playerCur.row == rPlayer && playerCur.col == cPlayer) return true;
+
+            for (int k = 0; k < 4; k++) {
+                int playerNextRow = playerCur.row - dx[k];
+                int playerNextCol = playerCur.col - dy[k];  // player next spots;
+
+                if (playerNextRow < 0 || playerNextRow >= m || playerNextCol < 0 || playerNextCol >= n || visited[playerNextRow][playerNextCol] || grid[playerNextRow][playerNextCol] == '#') continue;
+                
+                visited[playerNextRow][playerNextCol] = true;
+                
+                queue.offer(new Pair(playerNextRow, playerNextCol));
+            }
+        }
+
+        return false;
+    }
+}
+
+class Pair {
+    int row;
+    int col;
+    public Pair(int x, int y) {
+        this.row = x;
+        this.col = y;
     }
 }
