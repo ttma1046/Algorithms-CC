@@ -10,7 +10,7 @@ Follow up:
 
 If you have figured out the O(n) solution, try coding another solution using the divide and conquer approach, which is more subtle.
 */
-class Maximum_Subarray {
+class Maximum_Subarray_53 {
     public int maxSubArray(int[] nums) {
         int n = nums.length;
         int[] dp = new int[n];//dp[i] means the maximum subarray ending with A[i];
