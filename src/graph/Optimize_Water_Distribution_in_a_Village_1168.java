@@ -1,3 +1,4 @@
+
 package graph;
 import java.util.Map;
 import java.util.HashMap;
@@ -18,7 +19,7 @@ Example 1:
 
 Input: n = 3, wells = [1,2,2], pipes = [[1,2,1],[2,3,1]]
 Output: 3
-Explanation: 
+Explanation:
 The image shows the costs of connecting houses using pipes.
 The best strategy is to build a well in the first house with cost 1 and connect the other houses to it with cost 2 so the total cost is 3.
 
@@ -42,15 +43,15 @@ class Optimize_Water_Distribution_in_a_Village_1168 {
     public int minCostToSupplyWater(int n, int[] wells, int[][] pipes) {
         Map<Integer, Map<Integer, Integer>> graph = new HashMap<>();
         for (int i = 1; i <= n; i++)
-        	graph.computeIfAbsent(0, value -> new HashMap<>()).put(i, wells[i - 1]);
+            graph.computeIfAbsent(0, value -> new HashMap<>()).put(i, wells[i - 1]);
 
-        for (int i = 0; i < pipes.length; ++i){
-        	int[] edge = pipes[i];
-        	int minFrom0To1 = graph.computeIfAbsent(edge[0], value -> new HashMap<>()).getOrDefault(edge[1], Integer.MAX_VALUE);
-        	int minFrom1To0 = graph.computeIfAbsent(edge[1], value -> new HashMap<>()).getOrDefault(edge[0], Integer.MAX_VALUE);
+        for (int i = 0; i < pipes.length; ++i) {
+            int[] edge = pipes[i];
+            int minFrom0To1 = graph.computeIfAbsent(edge[0], value -> new HashMap<>()).getOrDefault(edge[1], Integer.MAX_VALUE);
+            int minFrom1To0 = graph.computeIfAbsent(edge[1], value -> new HashMap<>()).getOrDefault(edge[0], Integer.MAX_VALUE);
 
-      		graph.get(edge[0]).put(edge[1], Math.min(edge[2], minFrom0To1));
-      		graph.get(edge[1]).put(edge[0], Math.min(edge[2], minFrom1To0));
+            graph.get(edge[0]).put(edge[1], Math.min(edge[2], minFrom0To1));
+            graph.get(edge[1]).put(edge[0], Math.min(edge[2], minFrom1To0));
         }
 
         int res = 0;
@@ -61,25 +62,92 @@ class Optimize_Water_Distribution_in_a_Village_1168 {
 
         pq.offer(new int[] {0, 0});
 
-
         while (!pq.isEmpty()) {
-        	int[] cur = pq.poll();
+            int[] cur = pq.poll();
 
-        	int currLoc = cur[0], distance = cur[1];
+            int currLoc = cur[0], distance = cur[1];
 
-        	if (!visited.add(currLoc)) continue;
+            if (!visited.add(currLoc)) continue;
 
-        	res += distance;
+            res += distance;
 
-        	for (int nei: graph.getOrDefault(currLoc, new HashMap<>()).keySet())
-				if (!visited.contains(nei))
-					pq.offer(new int[] {nei, graph.get(currLoc).get(nei)});
+            for (int nei : graph.getOrDefault(currLoc, new HashMap<>()).keySet())
+                if (!visited.contains(nei))
+                    pq.offer(new int[] {nei, graph.get(currLoc).get(nei)});
         }
 
         return res;
     }
 
     public static void main(String[] args) {
-    	Optimize_Water_Distribution_in_a_Village_1168 obj = new Optimize_Water_Distribution_in_a_Village_1168();
+        Optimize_Water_Distribution_in_a_Village_1168 obj = new Optimize_Water_Distribution_in_a_Village_1168();
+        int n = 3;
+        int[] wells = {1, 2, 2};
+        int[][] pipes = {{1, 2, 1}, {2, 3, 1}};
+
+        System.out.println(obj.minCostToSupplyWaterII(n, wells, pipes));
+    }
+
+    public int minCostToSupplyWaterIII(int n, int[] wells, int[][] pipes) {
+        DSU dsu = new DSU(n + 1);
+        List<int[]> edges = new ArrayList<>();
+
+        for (int i = 0; i < n; i++) edges.add(new int[] {0, i + 1, wells[i]});
+
+        for (int[] pipe : pipes) edges.add(pipe);
+
+        Collections.sort(edges, (a, b) -> a[2] - b[2]);
+
+        int res = 0;
+        for (int[] edge : edges) {
+            int x = edge[0], y = edge[1];
+            if (dsu.find(x) == dsu.find(y)) continue;
+            ds.union(x, y);
+            res += edge[2];
+        }
+        return es;
+    }
+}
+
+public int minCostToSupplyWaterIII(int n, int[] wells, int[][] pipes) {
+    DSU dsu = new DSU(n + 1);
+
+    List<int[]> edges = new ArrayList<>();
+
+    for (int i = 1; i <= n; ++i) 
+        edges.add(new int[] {0, i, wells[i - 1]});
+
+    for (int[] pipe: pipes)
+        edges.add(pipe);
+
+    Collections.sort(edges, (a, b) -> a[2] - b[2]);
+
+    int res = 0;
+    for (int[] edge: edges) {
+        int start = edge[0], end = edge[1], cost = edge[2];
+        if (dsu.find(start) != dsu.find(end)) {
+            res += cost;
+            dsu.union(start, end);
+            n--;
+        }
+    }
+
+    return n == 0 ? res : -1;
+}
+
+class DSU {
+    int[] parent;
+    public DSU(int N) {
+        parent = new int[N];
+        for (int i = 0; i < N; i++) parent[i] = i;
+    }
+
+    public int find(int x) {
+        if (parent[x] != x) parent[x] = find(parent[x]);
+        return parent[x];
+    }
+
+    public void union(int x, int y) {
+        parent[find(x)] = find(y);
     }
 }
