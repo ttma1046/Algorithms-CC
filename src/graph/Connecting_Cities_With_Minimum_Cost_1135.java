@@ -70,6 +70,42 @@ class Connecting_Cities_With_Minimum_Cost_1135 {
         return visited.size() == n ? costs : -1;
     }
 
+    public int minimumCostII(int n, int[][] connections) {
+        Map<Integer, Map<Integer, Integer>> map = new HashMap<>();
+        Set<Integer> visited = new HashSet<>();
+
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[1] - b[1]);
+
+        int costs = 0;
+
+        for (int[] conn : connections) {
+            int start = conn[0], end = conn[1], cost = conn[2];
+
+            int minFrom0To1 = map.computeIfAbsent(start, value -> new HashMap<>()).getOrDefault(end, Integer.MAX_VALUE);
+            int minFrom1To0 = map.computeIfAbsent(end, value -> new HashMap<>()).getOrDefault(start, Integer.MAX_VALUE);
+
+            map.get(start).put(end, Math.min(cost, minFrom0To1));
+            map.get(end).put(start, Math.min(cost, minFrom1To0));
+        }
+
+        pq.offer(new int [] { 1, 0 });
+
+        while(pq.size() > 0) {
+            int[] curr = pq.poll();
+
+            int end = curr[0], cost = curr[1];
+
+            if (!visited.add(end)) continue;
+            costs += cost;
+
+            for (Map.Entry<Integer, Integer> neigh : map.getOrDefault(end, new HashMap<>()).entrySet())
+                if (!visited.contains(neigh.getKey()))
+                    pq.offer(new int[] { neigh.getKey(), neigh.getValue() });
+        }
+
+        return visited.size() == n ? costs : -1;
+    }
+
     /*
     int[] root;
     public int minimumCost(int n, int[][] con) {
@@ -104,6 +140,23 @@ class Connecting_Cities_With_Minimum_Cost_1135 {
         int n = 3;
 
         System.out.println(obj.minimumCost(connections.length, connections));
+    }
+
+    public int minimumCost(int N, int[][] connections) {
+        Arrays.sort(connections, (a, b) -> a[2] - b[2]);
+
+        DSU dsu = new DSU(N + 1);
+        int res = 0;
+        for (int[] c : connections) {
+            int x = dsu.find(c[0]), y = dsu.find(c[1]);
+            if (x != y) {
+                dsu.union(c[0], c[1]);
+                res += c[2];
+                N--;
+            }
+        }
+
+        return N == 1 ? res : -1;
     }
     /*
     // Prim's algorithm
@@ -158,4 +211,42 @@ class Vertex implements Comparable<Vertex> {
     public int compareTo(Vertex vertex) {
         return cost - vertex.cost;
     }
+}
+
+class DSU {
+    int[] parents;
+    public DSU(int n) {
+        parents = new int[n];
+        for (int i = 0; i < n; ++i) parents[i] = i;
+    }
+
+    public int find(int x) {
+        if (parent[x] != x) {
+            parent[x] = find(parent[x]);
+        }
+        return parent[x];
+    }
+
+    public void union(int x, int y) {
+        parent[find(x)] = find(y);
+    }
+}
+
+public int minimumCost(int n, int[][] connections) {
+    Arrays.sort(connections, (a, b) -> a[2] - b[2]);
+    int res = 0;
+
+    DSU dsu = new DSU(n + 1);
+
+    for (int[] connection : connections) {
+        int start = connection[0], end = connection[1];
+
+        if (dsu.find(start) != dsu.find(end)) {
+            dsu.union(start, end);
+            res += connection[2];
+            N--;
+        }
+    }
+
+    return N == 0 ? res : -1;
 }

@@ -334,5 +334,29 @@ class Course_Schedule_II_210 {
         return true;
     }
     */
+
+    Map<Integer, List<Integer>> graph = new HashMap<>();
+    int[] visited;
+    boolean isValid = true;
+    int[] res;
+    int index;
+    public int[] findOrder(int numCourses, int[][] edges) {
+        int N = numCourses, res = new int[N], visited = new int[N];
+        for (int[] edge: edges)
+            graph.computeIfAbsent(edge[0], x -> new ArrayList<>()).add(edge[1]);
+        for (int i = 0; i < N; i++)
+            if (visited[i] == 0) dfs(i);
+        return isValid ? res : new int[0];
+    }
+
+    public void dfs(int node) {
+        visited[node] = 1;
+        for (int nei: graph.getOrDefault(node, new ArrayList<>()))
+            if (visited[nei] == 0) dfs(nei);
+            else if (visited[nei] == 1) isValid = false;
+
+        res[index++] = node;
+        visited[node] = 2;
+    }
 }
 

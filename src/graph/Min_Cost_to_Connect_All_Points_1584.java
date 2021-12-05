@@ -43,9 +43,12 @@ Constraints:
 All pairs (xi, yi) are distinct.
 */
 class Min_Cost_to_Connect_All_Points_1584 {
+    // int[][] points = new int[][] {{0, 0}, {2, 2}, {3, 10}, {5, 2}, {7,0}};
     public int minCostConnectPoints(int[][] points) {
         int n = points.length;
+
         int[][] matrix = new int[n][n];
+
         for (int i = 0; i < n; ++i)
         	for (int j = 0; j < n; ++j)
         		matrix[i][j] = Math.abs(points[i][0] - points[j][0]) + Math.abs(points[i][1] - points[j][1]);
@@ -59,13 +62,24 @@ class Min_Cost_to_Connect_All_Points_1584 {
 
         for (int i = 0; i < n; ++i) {
         	int nextClose = -1;
-        	for (int j = 0; j < n; ++j)
-        		if (!visited[j] && (nextClose == -1 || distance[j] < distance[nextClose])) nextClose = j;
+        	for (int j = 0; j < n; ++j) {
+        		if (!visited[j] && (nextClose == -1 || distance[j] < distance[nextClose])) {
+                    System.out.println("nextClose:" + nextClose);
+                    nextClose = j;
+                    System.out.println("j:" + j);
+                }
+            }
 
         	visited[nextClose] = true;
 
-        	for (int y = 0; y < n; y++)
-        		if (!visited[y]) distance[y] = Math.min(distance[y], matrix[nextClose][y]);
+        	for (int unvisited = 0; unvisited < n; unvisited++) {
+        		if (!visited[unvisited]) { 
+                    // distance[y] = Math.min(distance[y], matrix[nextClose][y]); 
+                    if (matrix[nextClose][unvisited] < distance[unvisited]) {
+                        distance[unvisited] = matrix[nextClose][unvisited];
+                    }
+                }
+            }
         }
 
         return Arrays.stream(distance).sum();
@@ -73,5 +87,9 @@ class Min_Cost_to_Connect_All_Points_1584 {
 
     public static void main(String[] args) {
     	Min_Cost_to_Connect_All_Points_1584 obj = new Min_Cost_to_Connect_All_Points_1584();
+
+        int[][] points = new int[][] {{0, 0}, {2, 2}, {3, 10}, {5, 2}, {7,0}};
+
+        obj.minCostConnectPoints(points);
     }
 }

@@ -88,42 +88,66 @@ class Optimize_Water_Distribution_in_a_Village_1168 {
         System.out.println(obj.minCostToSupplyWaterII(n, wells, pipes));
     }
 
-    public int minCostToSupplyWaterII(int n, int[] wells, int[][] pipes) {
-        Map<Integer, Map<Integer, Integer>> map = new HashMap<>();
-        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[1] - b[1]);
-        Set<Integer> visited = new HashSet<>();
+    public int minCostToSupplyWaterIII(int n, int[] wells, int[][] pipes) {
+        DSU dsu = new DSU(n + 1);
+        List<int[]> edges = new ArrayList<>();
 
-        int costs = 0;
+        for (int i = 0; i < n; i++) edges.add(new int[] {0, i + 1, wells[i]});
 
-        for (int i = 1; i <= n; ++i)
-            map.computeIfAbsent(0, value -> new HashMap<>()).put(i, wells[i - 1]);
+        for (int[] pipe : pipes) edges.add(pipe);
 
-        for (int[] pipe : pipes) {
-            int start = pipe[0], end = pipe[1], distance = pipe[2];
+        Collections.sort(edges, (a, b) -> a[2] - b[2]);
 
-            int minZeroToOne = map.computeIfAbsent(start, value -> new HashMap<>()).getOrDefault(end, Integer.MAX_VALUE);
-            int minOneToZero = map.computeIfAbsent(end, value -> new HashMap<>()).getOrDefault(start, Integer.MAX_VALUE);
-
-            map.get(start).put(end, Math.min(minZeroToOne, distance));
-            map.get(end).put(start, Math.min(minOneToZero, distance));
+        int res = 0;
+        for (int[] edge : edges) {
+            int x = edge[0], y = edge[1];
+            if (dsu.find(x) == dsu.find(y)) continue;
+            ds.union(x, y);
+            res += edge[2];
         }
+        return es;
+    }
+}
 
-        pq.offer(new int[] {0, 0});
+public int minCostToSupplyWaterIII(int n, int[] wells, int[][] pipes) {
+    DSU dsu = new DSU(n + 1);
 
-        while(pq.size() > 0) {
-            int[] curr = pq.poll();
+    List<int[]> edges = new ArrayList<>();
 
-            int end = curr[0], distance = curr[1];
+    for (int i = 1; i <= n; ++i) 
+        edges.add(new int[] {0, i, wells[i - 1]});
 
-            if (!visited.add(end)) continue;
+    for (int[] pipe: pipes)
+        edges.add(pipe);
 
-            costs += distance;
+    Collections.sort(edges, (a, b) -> a[2] - b[2]);
 
-            for (int neigh : map.getOrDefault(end, new HashMap<>()).keySet())
-                if (!visited.contains(neigh))
-                    pq.offer(new int[] {neigh, map.get(end).get(neigh)});
+    int res = 0;
+    for (int[] edge: edges) {
+        int start = edge[0], end = edge[1], cost = edge[2];
+        if (dsu.find(start) != dsu.find(end)) {
+            res += cost;
+            dsu.union(start, end);
+            n--;
         }
+    }
 
-        return visited.size() == n + 1 ? costs : -1;
+    return n == 0 ? res : -1;
+}
+
+class DSU {
+    int[] parent;
+    public DSU(int N) {
+        parent = new int[N];
+        for (int i = 0; i < N; i++) parent[i] = i;
+    }
+
+    public int find(int x) {
+        if (parent[x] != x) parent[x] = find(parent[x]);
+        return parent[x];
+    }
+
+    public void union(int x, int y) {
+        parent[find(x)] = find(y);
     }
 }
