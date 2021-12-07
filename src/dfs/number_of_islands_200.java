@@ -1,5 +1,7 @@
 package dfs;
-
+import java.util.Queue;
+import java.util.LinkedList;
+import java.util.Stack;
 /*
 Given an m x n 2D binary grid grid which represents a map of '1's (land) and '0's (water), return the number of islands.
 
@@ -32,11 +34,165 @@ n == grid[i].length
 1 <= m, n <= 300
 grid[i][j] is '0' or '1'.
 */
-class number_of_islands_200 {
-    public int numIslands(char[][] grid) {
-        if (grid == null || grid.length <= 0 || grid[0].length <= 0) {
-            return 0;
+class Number_of_Islands_200 {
+    public int numIslandsBFS(char[][] grid) {
+        if (grid == null || grid.length == 0 || grid[0].length == 0) return 0;
+
+        int rows = grid.length;
+        int cols = grid[0].length;
+
+        int res = 0;
+
+        for (int i = 0; i < rows; ++i)
+            for (int j = 0; j < cols; ++j)
+                if (grid[i][j] == '1') {
+                    res++;
+                    bfs(grid, i, j);
+                }
+
+        return res;
+    }
+
+    private void bfs(char[][] grid, int i, int j) {
+        Queue<int[]> queue = new LinkedList<>();
+
+        queue.offer(new int[] { i, j });
+
+        while(queue.size() > 0) {
+            int[] cur = queue.poll();
+
+            int x = cur[0];
+            int y = cur[1];
+
+            if (x < 0 || y < 0 || x >= grid.length || y >= grid[0].length || grid[x][y] == '0') continue;
+
+            grid[x][y] = '0';
+
+            queue.offer(new int[] {x + 1, y});
+            queue.offer(new int[] {x - 1, y});
+            queue.offer(new int[] {x, y + 1});
+            queue.offer(new int[] {x, y - 1});
         }
+    }
+
+    public int mynumIslands(char[][] grid) {
+        if (grid == null || grid.length == 0 || grid[0].length == 0) return 0;
+
+        int rows = grid.length;
+        int cols = grid[0].length;
+
+        int res = 0;
+
+        for (int i = 0; i < rows; ++i)
+            for (int j = 0; j < cols; ++j)
+                if (grid[i][j] == '1') {
+                    res++;
+                    dfsIter(grid, i, j);
+                }
+
+        return res;
+    }
+
+    private void dfsIter(char[][] grid, int i, int j) {
+        Stack<int[]> stack = new Stack<>();
+
+        stack.push(new int[] {i, j});
+
+        while(stack.size() > 0) {
+            int[] cur = stack.pop();
+
+            int x = cur[0];
+            int y = cur[1];
+
+            if (x < 0 || y < 0 || x >= grid.length || y >= grid[0].length || grid[x][y] == '0') continue;
+
+            grid[x][y] = '0';
+
+            stack.push(new int[] {x + 1, y});
+            stack.push(new int[] {x - 1, y});
+            stack.push(new int[] {x, y + 1});
+            stack.push(new int[] {x, y - 1});
+        }
+    }
+
+    public int numIslandsIIIII(char[][] grid) {
+        if (grid == null || grid.length == 0 || grid[0].length == 0) return 0;
+        int res = 0;
+        for (int i = 0; i < grid.length; ++i) {
+            for (int j = 0; j < grid[i].length; ++j) {
+                if (grid[i][j] == '1') {
+                    res++;
+                    setAdjacent(i, j, grid);
+                }
+            }
+        }
+        return res;
+    }
+
+    private void setAdjacent(int row, int col, char[][] grid) {
+        if (row < 0 || row >= grid.length || col < 0 || col >= grid[row].length || grid[row][col] == '0')  return;
+        
+        grid[row][col] = '0';
+
+        for (int i = row - 1; i <= row + 1; i++) 
+            if (i != row) setAdjacent(i, col, grid);
+
+        for (int j = col - 1; j <= col + 1; j++) 
+            if (j != col) setAdjacent(row, j, grid);
+    }
+
+    public int numIslandsIIII(char[][] grid) {
+        if (grid == null || grid.length == 0 || grid[0].length == 0) return 0;
+
+        int rows = grid.length;
+        int cols = grid[0].length;
+
+        boolean[][] visited = new boolean[rows][cols];
+
+        int res = 0;
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < cols; ++j) {
+                if (grid[i][j] == '1' && !visited[i][j]) {
+                    res += 1;
+                    dfs(grid, i, j, rows, cols, visited);
+                }
+            }
+        }
+
+        return res;
+    }
+
+    private void dfs(char[][] grid, int i, int j, int rows, int cols, boolean[][] visited) {
+        if (i < 0 || i >= rows || j < 0 || j >= cols || visited[i][j] || grid[i][j] == '0') return;
+
+        visited[i][j] = true;
+        dfs(grid, i + 1, j, rows, cols, visited);
+        dfs(grid, i, j + 1, rows, cols, visited);
+        dfs(grid, i - 1, j, rows, cols, visited);
+        dfs(grid, i, j - 1, rows, cols, visited);
+    }
+
+    public static void main(String[] args) {
+        Number_of_Islands_200 obj = new Number_of_Islands_200();
+        char[][] ocean = new char[][] { 
+            { '1', '1', '1', '1', '0' }, 
+            { '1', '1', '0', '1', '0' },
+            { '1', '1', '0', '0', '0' }, 
+            { '0', '0', '0', '0', '0' }
+        };
+        System.out.println(obj.mynumIslands(ocean));
+        ocean = new char[][] { 
+            { '1', '1', '0', '0', '0' }, 
+            { '1', '1', '0', '0', '0' }, 
+            { '0', '0', '1', '0', '0' },
+            { '0', '0', '0', '1', '1' }
+        };
+        System.out.println(obj.mynumIslands(ocean));
+    }
+
+    public int numIslands(char[][] grid) {
+        if (grid == null || grid.length <= 0 || grid[0].length <= 0) return 0;
+
 
         int rowLength = grid.length;
         int columnLength = grid[0].length;
@@ -56,9 +212,8 @@ class number_of_islands_200 {
     }
 
     private void countIslands(char[][] grid, int i, int j, int rowLength, int columnLength, boolean[][] visited) {
-        if (i > rowLength - 1 || j > columnLength - 1 || i < 0 || j < 0) {
-            return;
-        }
+        if (i > rowLength - 1 || j > columnLength - 1 || i < 0 || j < 0) return;
+
 
         if (grid[i][j] == '1' && visited[i][j] == false) {
             visited[i][j] = true;
@@ -67,17 +222,6 @@ class number_of_islands_200 {
             countIslands(grid, i - 1, j, rowLength, columnLength, visited);
             countIslands(grid, i, j - 1, rowLength, columnLength, visited);
         }
-    }
-
-    public static void main(String[] args) {
-        char[][] ocean = new char[][] { { '1', '1', '1', '1', '0' }, { '1', '1', '0', '1', '0' },
-            { '1', '1', '0', '0', '0' }, { '0', '0', '0', '0', '0' }
-        };
-        System.out.println(new number_of_islands_200().numIslands(ocean));
-        ocean = new char[][] { { '1', '1', '0', '0', '0' }, { '1', '1', '0', '0', '0' }, { '0', '0', '1', '0', '0' },
-            { '0', '0', '0', '1', '1' }
-        };
-        System.out.println(new number_of_islands_200().numIslands(ocean));
     }
 
     class UnionFind {
@@ -128,7 +272,7 @@ class number_of_islands_200 {
         }
     }
 
-    public int numIslands(char[][] grid) {
+    public int numIslandsII(char[][] grid) {
         if (grid == null || grid.length == 0) {
             return 0;
         }
@@ -172,7 +316,7 @@ class number_of_islands_200 {
     private int numRow;
     private int numCol;
 
-    public int numIslands(char[][] grid) {
+    public int numIslandsIII(char[][] grid) {
         if (grid == null || grid.length < 1 || grid[0].length < 1) {
             return 0;
         }
@@ -197,14 +341,58 @@ class number_of_islands_200 {
     }
 
     private void dfs(char[][] grid, int i, int j) {
-        if (i < 0 || i >= numRow || j < 0 || j >= numCol || grid[i][j] == '0' || visited[i][j]) {
-            return;
-        }
+        if (i < 0 || i >= numRow || j < 0 || j >= numCol || grid[i][j] == '0' || visited[i][j]) return;
+
 
         visited[i][j] = true;
         dfs(grid, i + 1, j);
         dfs(grid, i - 1, j);
         dfs(grid, i, j + 1);
         dfs(grid, i, j - 1);
+    }
+
+    int[][] dirs = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+    public int numIslands(char[][] grid) {
+        int rows = grid.length;
+        int cols = grid[0].length;
+        int res = 0;
+
+        DSU dsu = new DSU(rows * cols);
+
+        for (int i = 0; i < rows; ++i)
+            for (int j = 0; j < cols; ++j)
+                if (grid[i][j] == '1') {
+                    res++;
+
+                    for (int[] dir: dirs) {
+                        int x = i + dir[0]; 
+                        int y = j + dir[1];
+
+                        if (x >= 0 && y >= 0 && x < rows && y < cols && grid[x][y] == '1') {
+                            if (dsu.find(x * rows + y) != dsu.find(i * cols + j)) res--;
+                            dsu.union(x * rows + y, i * cols + j);
+                        }
+                    }
+                }
+
+        return res;
+    }
+}
+
+class DSU {
+    int[] parent;
+
+    public DSU(int n) {
+        parent = new int[n];
+        for (int i = 0; i < n; ++i) parent[i] = i;
+    }
+
+    public int find(int x) {
+        if (parent[x] != x) parent[x] = find(parent[x]);
+        return parent[x];
+    }
+
+    public void union(int x, int y) {
+        parent[find(x)] = find(y);
     }
 }

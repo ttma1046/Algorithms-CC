@@ -36,7 +36,7 @@ positions[i].length == 2
 Follow up: Could you solve it in time complexity O(k log(mn)), where k == positions.length?
 */
 
-class Solution {
+class Number_of_Islands_II_305 {
     class UnionFind {
         int count; // # of connected components
         int[] parent;

@@ -1,4 +1,5 @@
 package dfs;
+import java.util.Stack;
 /*
 You are given an m x n binary matrix grid. An island is a group of 1's (representing land) connected 4-directionally (horizontal or vertical.) You may assume all four edges of the grid are surrounded by water.
 
@@ -9,15 +10,15 @@ Return the maximum area of an island in grid. If there is no island, return 0.
 Example 1:
 
 Input: grid = [
-	[0,0,1,0,0,0,0,1,0,0,0,0,0],
-	[0,0,0,0,0,0,0,1,1,1,0,0,0],
-	[0,1,1,0,1,0,0,0,0,0,0,0,0],
-	[0,1,0,0,1,1,0,0,1,0,1,0,0],
-	[0,1,0,0,1,1,0,0,1,1,1,0,0],
-	[0,0,0,0,0,0,0,0,0,0,1,0,0],
-	[0,0,0,0,0,0,0,1,1,1,0,0,0],
-	[0,0,0,0,0,0,0,1,1,0,0,0,0]
-	]
+    [0,0,1,0,0,0,0,1,0,0,0,0,0],
+    [0,0,0,0,0,0,0,1,1,1,0,0,0],
+    [0,1,1,0,1,0,0,0,0,0,0,0,0],
+    [0,1,0,0,1,1,0,0,1,0,1,0,0],
+    [0,1,0,0,1,1,0,0,1,1,1,0,0],
+    [0,0,0,0,0,0,0,0,0,0,1,0,0],
+    [0,0,0,0,0,0,0,1,1,1,0,0,0],
+    [0,0,0,0,0,0,0,1,1,0,0,0,0]
+    ]
 Output: 6
 Explanation: The answer is not 11, because the island must be connected 4-directionally.
 
@@ -34,13 +35,40 @@ n == grid[i].length
 grid[i][j] is either 0 or 1.
 */
 class Max_Area_of_Island_695 {
+
+    public int maxAreaOfIslandII(int[][] grid) {
+        int res = 0;
+        int[] area = new int[1];
+
+        for (int i = 0; i < grid.length; ++i)
+            for (int j = 0; j < grid[0].length; ++j)
+                if (grid[i][j] == 1) {
+                    area[0] = 0;
+                    dfsII(grid, i, j, area);
+                    res = Math.max(area[0], res);
+                }
+
+        return res;
+    }
+
+    private void dfsII(int[][] grid, int i, int j, int[] area) {
+        if (i < 0 || i >= grid.length || j < 0 || j >= grid[i].length || grid[i][j] == 0) return;
+
+        grid[i][j] = 0;
+        area[0]++;
+        dfsII(grid, i + 1, j, area);
+        dfsII(grid, i - 1, j, area);
+        dfsII(grid, i, j + 1, area);
+        dfsII(grid, i, j - 1, area);
+    }
+
     public int maxAreaOfIsland(int[][] grid) {
         boolean[][] visited = new boolean[grid.length][grid[0].length];
 
         int res = 0;
         for (int i = 0; i < grid.length; ++i)
             for (int j = 0; j < grid[0].length; ++j)
-                res = Math.max(res, dfs(i, j, grid, visited));
+                if (grid[i][j] == 1) res = Math.max(res, dfs(i, j, grid, visited));
 
         return res;
     }
@@ -60,16 +88,17 @@ class Max_Area_of_Island_695 {
     Space complexity: O(R*C)O(R∗C), the space used by seen to keep track of visited squares, and the space used by the call stack during our recursion.
     */
 
-    public maxAreaOfIslandII(int[][] grid) {
+    public int maxAreaOfIslandIII(int[][] grid) {
         boolean[][] visited = new boolean[grid.length][grid[0].length];
-        int[][] directions = new int[gird.length][grid[0].length];
-
+        int[][] directions = new int[grid.length][grid[0].length];
+        int ans = 0;
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
+                int area = 0;
                 if (grid[i][j] == 1 && !visited[i][j]) {
                     visited[i][j] = true;
 
-                    int area = 0;
+
                     Stack<int[]> stack = new Stack<>();
                     stack.push(new int[] {i, j});
 
@@ -96,6 +125,6 @@ class Max_Area_of_Island_695 {
     }
 
     public static void main(String[] args) {
-    	Max_Area_of_Island_695 obj = new Max_Area_of_Island_695();
+        Max_Area_of_Island_695 obj = new Max_Area_of_Island_695();
     }
 }
