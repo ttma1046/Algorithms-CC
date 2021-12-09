@@ -131,13 +131,13 @@ class Number_of_Islands_200 {
 
     private void setAdjacent(int row, int col, char[][] grid) {
         if (row < 0 || row >= grid.length || col < 0 || col >= grid[row].length || grid[row][col] == '0')  return;
-        
+
         grid[row][col] = '0';
 
-        for (int i = row - 1; i <= row + 1; i++) 
+        for (int i = row - 1; i <= row + 1; i++)
             if (i != row) setAdjacent(i, col, grid);
 
-        for (int j = col - 1; j <= col + 1; j++) 
+        for (int j = col - 1; j <= col + 1; j++)
             if (j != col) setAdjacent(row, j, grid);
     }
 
@@ -174,16 +174,16 @@ class Number_of_Islands_200 {
 
     public static void main(String[] args) {
         Number_of_Islands_200 obj = new Number_of_Islands_200();
-        char[][] ocean = new char[][] { 
-            { '1', '1', '1', '1', '0' }, 
+        char[][] ocean = new char[][] {
+            { '1', '1', '1', '1', '0' },
             { '1', '1', '0', '1', '0' },
-            { '1', '1', '0', '0', '0' }, 
+            { '1', '1', '0', '0', '0' },
             { '0', '0', '0', '0', '0' }
         };
         System.out.println(obj.mynumIslands(ocean));
-        ocean = new char[][] { 
-            { '1', '1', '0', '0', '0' }, 
-            { '1', '1', '0', '0', '0' }, 
+        ocean = new char[][] {
+            { '1', '1', '0', '0', '0' },
+            { '1', '1', '0', '0', '0' },
             { '0', '0', '1', '0', '0' },
             { '0', '0', '0', '1', '1' }
         };
@@ -352,25 +352,25 @@ class Number_of_Islands_200 {
     }
 
     int[][] dirs = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+
     public int numIslands(char[][] grid) {
         int rows = grid.length;
         int cols = grid[0].length;
+
         int res = 0;
 
         DSU dsu = new DSU(rows * cols);
-
-        for (int i = 0; i < rows; ++i)
-            for (int j = 0; j < cols; ++j)
+        for (int i = 0; i < rows; ++i) 
+            for (int j = 0; j < cols; ++j) 
                 if (grid[i][j] == '1') {
                     res++;
 
                     for (int[] dir: dirs) {
-                        int x = i + dir[0]; 
-                        int y = j + dir[1];
+                        int newI = i + dir[0], newJ = j + dir[1];
 
-                        if (x >= 0 && y >= 0 && x < rows && y < cols && grid[x][y] == '1') {
-                            if (dsu.find(x * rows + y) != dsu.find(i * cols + j)) res--;
-                            dsu.union(x * rows + y, i * cols + j);
+                        if (newI >= 0 && newI < rows && newJ >= 0 && newJ < cols && grid[newI][newJ] == '1') {
+                            if (dsu.find(newI * cols + newJ) != dsu.find(i * cols + j)) res--;
+                            dsu.union(newI * cols + newJ, i * cols + j);
                         }
                     }
                 }

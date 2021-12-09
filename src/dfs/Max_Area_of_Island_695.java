@@ -35,6 +35,36 @@ n == grid[i].length
 grid[i][j] is either 0 or 1.
 */
 class Max_Area_of_Island_695 {
+    public int maxAreaOfIsland(int[][] grid) {
+        int res = 0;
+        int[] area = new int[1];
+
+        int rows = grid.length;
+        int cols = grid[0].length;
+
+        for (int i = 0; i < rows; ++i)
+            for (int j = 0; j < cols; ++j)
+                if (grid[i][j] == 1) {
+                    area[0] = 0;
+
+                    dfs(i, j, grid, area);
+
+                    if (area[0] > res) res = area[0];
+                }
+
+        return res;
+    }
+
+    private void dfs(int i, int j, int[][] grid, int[] area) {
+        if (i >= 0 && j >= 0 && i < grid.length && j < grid[i].length && grid[i][j] == 1) {
+            grid[i][j] = 0;
+            area[0]++;
+            dfs(i + 1, j, grid, area);
+            dfs(i - 1, j, grid, area);
+            dfs(i, j + 1, grid, area);
+            dfs(i, j - 1, grid, area);
+        }
+    }
 
     public int maxAreaOfIslandII(int[][] grid) {
         int res = 0;
@@ -45,7 +75,7 @@ class Max_Area_of_Island_695 {
                 if (grid[i][j] == 1) {
                     area[0] = 0;
                     dfsII(grid, i, j, area);
-                    res = Math.max(area[0], res);
+                    if (area[0] > res) res = area[0];
                 }
 
         return res;
@@ -63,22 +93,20 @@ class Max_Area_of_Island_695 {
     }
 
     public int maxAreaOfIsland(int[][] grid) {
-        boolean[][] visited = new boolean[grid.length][grid[0].length];
-
         int res = 0;
         for (int i = 0; i < grid.length; ++i)
             for (int j = 0; j < grid[0].length; ++j)
-                if (grid[i][j] == 1) res = Math.max(res, dfs(i, j, grid, visited));
+                if (grid[i][j] == 1) res = Math.max(res, dfs(i, j, grid));
 
         return res;
     }
 
-    private int dfs(int i, int j, int[][] grid, boolean[][] visited) {
-        if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || visited[i][j] || grid[i][j] == 0) return 0;
+    private int dfs(int i, int j, int[][] grid) {
+        if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] == 0) return 0;
 
-        visited[i][j] = true;
+        grid[i][j] = 0;
 
-        return 1 + dfs(i + 1, j, grid, visited) + dfs(i - 1, j, grid, visited) + dfs(i, j + 1, grid, visited) + dfs(i, j - 1, grid, visited);
+        return 1 + dfs(i + 1, j, grid) + dfs(i - 1, j, grid) + dfs(i, j + 1, grid) + dfs(i, j - 1, grid);
     }
 
     /*
