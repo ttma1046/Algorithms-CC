@@ -1,4 +1,6 @@
-
+package dfs;
+import java.util.List;
+import java.util.ArrayList;
 /*
 You are given an m x n binary matrix grid. An island is a group of 1's (representing land) connected 4-directionally (horizontal or vertical.) You may assume all four edges of the grid are surrounded by water.
 
@@ -24,14 +26,15 @@ n == grid[i].length
 grid[i][j] is either 0 or 1.
 */
 class Number_of_Distinct_Islands_694 {
+    /*
     private List<List<int[]>> uniqueIslands = new ArrayList<>(); // All known unique islands.
     private List<int[]> currentIsland = new ArrayList<>(); // Current Island
 
     private boolean[][] seen; // Cells that have been explored.
 
     public int numDistinctIslands(int[][] grid) {
-    	int rows = grid.length;
-    	int cols = grid[0].length;
+        int rows = grid.length;
+        int cols = grid[0].length;
 
         this.seen = new boolean[rows][cols];
         for (int row = 0; row < rows; row++) {
@@ -44,7 +47,7 @@ class Number_of_Distinct_Islands_694 {
 
                 for (int i = 0; i < currentIsland.size(); i++)
                     minCol = Math.min(minCol, currentIsland.get(i)[1]);
-                
+
                 for (int[] cell : currentIsland) {
                     cell[0] -= row;
                     cell[1] -= minCol;
@@ -52,7 +55,7 @@ class Number_of_Distinct_Islands_694 {
 
                 // If this island is unique, add it to the list.
                 if (currentIslandUnique()) uniqueIslands.add(currentIsland);
-                
+
                 currentIsland = new ArrayList<>();
             }
         }
@@ -62,9 +65,9 @@ class Number_of_Distinct_Islands_694 {
 
     private void dfs(int row, int col, int[][] grid) {
         if (row < 0 || col < 0 || row >= grid.length || col >= grid[0].length || this.seen[row][col] || grid[row][col] == 0) return;
-
+    6com
         this.seen[row][col] = true;
-        currentIsland.add(new int[] {row, col});
+        this.currentIsland.add(new int[] {row, col});
         dfs(row + 1, col, grid);
         dfs(row - 1, col, grid);
         dfs(row, col + 1, grid);
@@ -89,8 +92,139 @@ class Number_of_Distinct_Islands_694 {
         }
         return true;
     }
+    */
 
     public static void main(String[] args) {
+        Number_of_Distinct_Islands_694 obj = new Number_of_Distinct_Islands_694();
+    }
 
+    List<List<int[]>> uniqueIslands = new ArrayList<>();
+    List<int[]> currentIsland = new ArrayList<>();
+    boolean[][] visited;
+
+    public int numDistinctIslands(int[][] grid) {
+        int rows = grid.length;
+        int cols = grid[0].length;
+
+        this.visited = new boolean[rows][cols];
+
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < cols; ++j) {
+                dfs(i, j, grid);
+
+                if (this.currentIsland.size() == 0) continue;
+
+                int minCol = cols - 1;
+
+                for (int t = 0; t < this.currentIsland.size(); ++t)
+                    minCol = Math.min(minCol, this.currentIsland.get(t)[1]);
+
+                for (int[] cell : this.currentIsland) {
+                    cell[0] -= i;
+                    cell[1] -= minCol;
+                }
+
+                if (isIsandUnique()) this.uniqueIslands.add(currentIsland);
+                this.currentIsland = new ArrayList<>();
+            }
+        }
+
+        return this.uniqueIslands.size();
+    }
+
+    private void dfs(int i, int j, int[][] grid) {
+        int rows = grid.length;
+        int cols = grid[0].length;
+        if (i < 0 || j < 0 || i > rows - 1 || j > cols - 1 || grid[i][j] == 0 || this.visited[i][j]) return;
+
+        this.visited[i][j] = true;
+        this.currentIsland.add(new int[] {i, j});
+        dfs(i + 1, j, grid);
+        dfs(i - 1, j, grid);
+        dfs(i, j + 1, grid);
+        dfs(i, j - 1, grid);
+    }
+
+    private boolean isIsandUnique() {
+        for (List<int[]> otherIsland : this.uniqueIslands) {
+            if (otherIsland.size() != this.currentIsland.size()) continue;
+            if (isEqualIsland(this.currentIsland, otherIsland)) return false;
+        }
+
+        return true;
+    }
+
+    private boolean isEqualIsland(List<int[]> currIsland, List<int[]> otherIsland) {
+        for (int i = 0; i < currIsland.size(); ++i)
+            if (currIsland.get(i)[0] != otherIsland.get(i)[0] || currIsland.get(i)[1] != otherIsland.get(i)[1]) return false;
+
+        return true;
+    }
+
+
+    private boolean[][] visited;
+
+    public int numDistinctIslands(int[][] grid) {
+        int rows = grid.length;
+        int cols = grid[0].length;
+
+        this.visited = new boolean[rows][cols];
+
+        Set<Set<Pair<Integer, Integer>>> islands = new HashSet<>();
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                HashSet<Pair<Integer, Integer>> currentIsland = new HashSet<>();
+                dfs(row, col, grid, currentIsland, row, col);
+                if (currentIsland.size() > 0) islands.add(currentIsland);
+            }
+        }
+        return islands.size();
+    }
+
+    private void dfs(int row, int col, int[][] grid, HashSet<Pair<Integer, Integer>> currentIsland, int currRowOrigin, int currColOrigin) {
+        int rows = grid.length;
+        int cols = grid[0].length;
+        if (row < 0 || row > rows - 1 || col < 0 || col > cols - 1 || grid[row][col] == 0 || this.visited[row][col]) return;
+
+        this.visited[row][col] = true;
+
+        currentIsland.add(new Pair<>(row - currRowOrigin, col - currColOrigin));
+        dfs(row + 1, col, grid, currentIsland, currRowOrigin, currColOrigin);
+        dfs(row - 1, col, grid, currentIsland, currRowOrigin, currColOrigin);
+        dfs(row, col + 1, grid, currentIsland, currRowOrigin, currColOrigin);
+        dfs(row, col - 1, grid, currentIsland, currRowOrigin, currColOrigin);
+    }
+
+    private StringBuffer currentIsland;
+
+    public int numDistinctIslands(int[][] grid) {
+        int rows = grid.length;
+        int cols = grid[0].length;
+        boolean[][] visited = new boolean[rows][cols];
+
+        Set<String> islands = new HashSet<>();
+        
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                currentIsland = new StringBuffer();
+                dfs(row, col, '0', grid, visited);
+                if (currentIsland.length() == 0) continue;                
+                islands.add(currentIsland.toString());
+            }
+        }
+
+        return islands.size();
+    }
+
+    private void dfs(int row, int col, char dir, int[][] grid, boolean[][] visited) {
+        if (row < 0 || col < 0 || row >= grid.length || col >= grid[0].length || visited[row][col] || grid[row][col] == 0) return;
+        
+        visited[row][col] = true;
+        currentIsland.append(dir);
+        dfs(row + 1, col, 'D', grid, visited);
+        dfs(row - 1, col, 'U', grid, visited);
+        dfs(row, col + 1, 'R', grid, visited);
+        dfs(row, col - 1, 'L', grid, visited);
+        currentIsland.append('0');
     }
 }
