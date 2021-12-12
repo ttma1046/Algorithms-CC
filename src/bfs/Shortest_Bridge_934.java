@@ -43,9 +43,7 @@ Accepted
 */
 class Shortest_Bridge_934 {
     public int shortestBridgeMy(int[][] A) {
-        if (A == null || A.length == 0) {
-            return 0;
-        }
+        if (A == null || A.length == 0) return 0;        
 
         int rows = A.length, columns = A[0].length;
         boolean[][] visited = new boolean[rows][columns];
@@ -65,7 +63,7 @@ class Shortest_Bridge_934 {
                     foundTheFirstIsland = true;
                     break;
                 }
-            }   
+            }
         }
 
         int result = 0;
@@ -73,8 +71,8 @@ class Shortest_Bridge_934 {
             int queueSize = myQueue.size();
             while(queueSize-- > 0) {
                 int[] cur = myQueue.poll();
-                
-                for(int[] dir: directions) {
+
+                for(int[] dir : directions) {
                     int i = cur[0] + dir[0];
                     int j = cur[1] + dir[1];
 
@@ -86,7 +84,7 @@ class Shortest_Bridge_934 {
                         myQueue.offer(new int[] {i, j});
                         visited[i][j] = true;
                     }
-                }        
+                }
             }
             result++;
         }
@@ -94,15 +92,37 @@ class Shortest_Bridge_934 {
         return -1;
     }
 
+    int[][] dirs = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+    Queue<int[]> q = new LinkedList<>();
+    public int shortestBridge(int[][] A) {
+        int m = A.length, n = A[0].length;
+        boolean[][] visited = new boolean[m][n];
+        boolean found = false;
+
+        for (int i = 0; i < m; ++i) 
+            for (int j = 0; j < n; ++j)
+                if (!found && A[i][j] == 1) {
+                    dfs(A, visited, i, j);
+                    found = true;
+                    break;
+                }
+
+        int step = 0;
+        while (!q.isEmpty()) {
+            int size = q.size();
+            for (int x = 0; x < size; ++x) {
+                int[] curr = q.poll();
+                for (int[] )
+            }
+        }
+    }
+
+
     private void dfs(int i, int j, boolean[][] visited, int[][] A, Queue<int[]> myQueue, int[][] directions) {
-        if (i < 0 || j < 0 || i >= A.length || j >= A[0].length || visited[i][j] || A[i][j] == 0) {
-            return;
-        }
+        if (i < 0 || j < 0 || i >= A.length || j >= A[0].length || visited[i][j] || A[i][j] == 0) return;
         visited[i][j] = true;
-        myQueue.offer(new int[]{i, j});
-        for(int[] dir: directions) {
-            dfs(i + dir[0], j + dir[1], visited, A, myQueue, directions);
-        }
+        myQueue.offer(new int[] {i, j});
+        for(int[] dir : directions) dfs(i + dir[0], j + dir[1], visited, A, myQueue, directions);        
     }
 
     public static void main(String[] args) {
@@ -173,14 +193,5 @@ class Shortest_Bridge_934 {
         return -1;
     }
 
-    private void dfsII(int[][] A, boolean[][] visited, Queue<int[]> q, int i, int j, int[][] dirs) {
-        if (i < 0 || j < 0 || i >= A.length || j >= A[0].length || visited[i][j] || A[i][j] == 0) {
-            return;
-        }
-        visited[i][j] = true;
-        q.offer(new int[] {i, j});
-        for (int[] dir : dirs) {
-            dfsII(A, visited, q, i + dir[0], j + dir[1], dirs);
-        }
-    }
+
 }

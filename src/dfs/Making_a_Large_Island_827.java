@@ -32,66 +32,56 @@ n == grid[i].length
 grid[i][j] is either 0 or 1.
 */
 class Making_a_Large_Island_827 {
-    public int maxAreaOfIsland(int[][] grid) {
-        boolean[][] visited = new boolean[grid.length][grid[0].length];
-
-        int res = 0;
-        for (int i = 0; i < grid.length; ++i)
-            for (int j = 0; j < grid[0].length; ++j)
-                res = Math.max(res, dfs(i, j, grid, visited));
-
-        return res;
-    }
-
-    private int dfs(int i, int j, int[][] grid, boolean[][] visited) {
-        if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || visited[i][j] || grid[i][j] == 0) return 0;
-
-        visited[i][j] = true;
-
-        return 1 + dfs(i + 1, j, grid, visited) + dfs(i - 1, j, grid, visited) + dfs(i, j + 1, grid, visited) + dfs(i, j - 1, grid, visited);
-    }
-
+    // first
     public int largestIsland(int[][] grid) {
-        int max = 0, m = grid.length, n = grid[0].length;
-
-        boolean hasZero = false; //To check if there is any zero in the grid
-        for(int i = 0; i < m; i++) {
-            for(int j = 0; j < n; j++) {
-                if(grid[i][j] == 0) {
-                    grid[i][j] = 1;
-                    max = Math.max(max, dfs(i, j, grid, new boolean[m][n]));
-                    if(max == m * n) return max;
-                    grid[i][j] = 0;
-                    hasZero = true;
+        Map<Integer, Integer> map = new HashMap<>(); //Key: color, Val: size of island painted of that color
+        map.put(0, 0); //We won't paint island 0, hence make its size 0, we will use this value later
+        int n = grid.length;
+        int colorIndex = 2; //0 and 1 is already used in grid, hence we start colorIndex from 2
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 1) {
+                    int size = paint(grid, i, j, colorIndex);
+                    map.put(colorIndex, size);
+                    colorIndex++;
                 }
             }
         }
 
-        return hasZero ? max : m * n;
+        //If there is no island 0 from grid, res should be the size of islands of first color
+        //If there is no island 1 from grid, res should be 0
+        int res = map.getOrDefault(2, 0);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 0) {
+                    //We use a set to avoid repeatly adding islands with the same color
+                    Set<Integer> set = new HashSet<>();
+                    //If current island is at the boundary, we add 0 to the set, whose value is 0 in the map
+                    set.add(i > 0 ? grid[i - 1][j] : 0);
+                    set.add(i < n - 1 ? grid[i + 1][j] : 0);
+                    set.add(j > 0 ? grid[i][j - 1] : 0);
+                    set.add(j < n - 1 ? grid[i][j + 1] : 0);
 
-        /*
-        int max = -1, n = a.length, m = a[0].length;
-        for (int i = 0; i < n; i++)
-            for (int j = 0; j < m; j++)
-                if (a[i][j] == 0) {
-                    a[i][j] = 1;
-                    max = Math.max(max, dfs(i, j, a, new boolean[n][m]));
-                    a[i][j] = 0;
+                    int newSize = 1; //We need to count current island as well, hence we init newSize with 1
+                    for (int color : set) newSize += map.get(color);
+                    res = Math.max(res, newSize);
                 }
-
-        return max == -1 ? n * m : max;
-        */
+            }
+        }
+        return res;
     }
 
-    private int dfs(int i, int j, int[][] grid, boolean[][] visited) {
-        if(i < 0 || i >= grid.length || j < 0  || j >= grid[0].length || grid[i][j] == 0 || visited[i][j]) return 0;
-
-        visited[i][j] = true;
-
-        return 1 + dfs(i - 1, j, grid, visited) + dfs(i + 1, j, grid, visited) + dfs(i, j + 1, grid, visited) + dfs(i, j - 1, grid, visited);
+    //Helper method to paint current island and all its connected neighbors
+    //Return the size of all painted islands at the end
+    private int paint(int[][] grid, int i, int j, int color) {
+        if (i < 0 || j < 0 || i >= grid.length || j >= grid[0].length || grid[i][j] != 1) return 0;
+        grid[i][j] = color;
+        return 1 + paint(grid, i + 1, j, color) + paint(grid, i - 1, j, color) + paint(grid, i, j + 1, color) + paint(grid, i, j - 1, color);
     }
 
-    int cu = 0;
+
+    // second
+    int curr = 0;
     public int largestIsland(int[][] grid) {
         int n = grid.length;
         int[] area = new int[n * n + 2];
@@ -100,10 +90,10 @@ class Making_a_Large_Island_827 {
         for(int i = 0; i < n; i++) {
             for(int j = 0; j < n; j++) {
                 if(grid[i][j] == 1) {
-                    cu = 0;
+                    curr = 0;
                     dfs(i, j, grid, in);
-                    area[in] = cu;
-                    res = Math.max(res, cu);
+                    area[in] = curr;
+                    res = Math.max(res, curr);
                     in++;
                 }
             }
@@ -125,18 +115,61 @@ class Making_a_Large_Island_827 {
                 }
             }
         }
-        
+
         return res;
     }
 
     public void dfs(int i, int j, int[][] grid, int c) {
         if(i < 0 || j < 0 || i >= grid.length || j >= grid.length || grid[i][j] != 1) return;
-        
+
         grid[i][j] = c;
-        cu++;
+        curr++;
         dfs(i - 1, j, grid, c);
         dfs(i, j - 1, grid, c);
         dfs(i + 1, j, grid, c);
         dfs(i, j + 1, grid, c);
+    }
+
+    int[][] dirs = new int[][] {{-1, 0}, {0, -1}, {0, 1}, {1, 0}};
+
+    public int largestIsland(int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        int res = 1;
+
+
+        DSU dsu = new DSU(m * n);
+
+        for (int i = 0; i < m; ++i) 
+            for (int i = 0; i < m; ++i) 
+                if (grid[i][j] == 1)
+                    for (int[] dir: dirs) {
+                        int x = i + dir[0];
+                        int y = j + dir[1];
+
+                        if (x < 0 || y < 0 || x >= m || y >= n || grid[x][y] != 1) continue;
+                        dsu.union(i * n + j, x * n + y);
+                        res = Math.max(res, dsu.size[dsu.find(i * n + j)]);
+                    }
+
+        for (int i = 0; i < m; ++i)
+            for (int j = 0; j < n; ++j)
+                if (grid[i][j] == 0) {
+                    Map<Integer, Integer> map = new HashMap<>();
+
+                    for (int[] dir: dirs) {
+                        int x = i + dir[0];
+                        int y = j + dir[1];
+
+                        if (x < 0 || x >= m || y < 0  || y >= n || grid[x][y] != 1) continue;
+
+                        int parent = dsu.find(x * n + y);
+                        map.put(parent, dsu.size[parent]);
+                    }
+
+                    res = Math.max(res, map.values().stream().mapToInt(x -> x).sum() + 1);
+                }
+
+        return res;
     }
 }
