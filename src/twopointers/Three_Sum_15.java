@@ -61,7 +61,6 @@ class Three_Sum_15 {
         Three_Sum_15 obj = new Three_Sum_15();
     }
 
-
     public List<List<Integer>> threeSum(int[] nums) {
         Arrays.sort(nums);
 
@@ -69,24 +68,28 @@ class Three_Sum_15 {
 
         int n = nums.length;
 
-        for (int i = 0; i < n; ++i) {
+        for (int i = 0; i < n - 2; i++) {
             if (i == 0 || (i > 0 && nums[i - 1] != nums[i])) {
                 int low = i + 1, high = n - 1, sum = 0 - nums[i];
+
                 while(low < high) {
-                	if (num[low] + num[high] == sum) {
-                		res.add(new ArrayList(num[low], num[high], sum));
+                    if (nums[low] + nums[high] == sum) {
+                        res.add(ArrayList.asList(num[i], nums[low], nums[high]));
 
-                		while(low < high && nums[low] == nums[low + 1]) low++;
-                		while(low < high && nums[high] == nums[high - 1]) high--;
+                        while(low < high && low[i] == low[i + 1]) low++;
+                        while(low < high && high[i] == high[i - 1]) high--;
 
-                		low++;
-                		high--;
-                	} else if (nums[low] + nums[high] < sum) low++;
-                	else high--;
+                        low++;
+                        high--;
+                    } else if (nums[low] + nums[high] < sum)
+                        low++;
+                    else
+                        high--;
                 }
             }
         }
 
         return res;
     }
+
 }
