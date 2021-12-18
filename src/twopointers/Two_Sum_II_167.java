@@ -54,4 +54,28 @@ class Two_Sum_II_167 {
 
         return indice;
     }
+
+
+    public int[] twoSumII(int[] numbers, int target) {
+        if (numbers.length < 2 || numbers == null) return new int[] {-1, -1};
+
+        int left = 0, right = numbers.length - 1;
+
+        while (left < right) {
+            int v = numbers[left] + numbers[right];
+
+            if (v == target)
+                return new int[] {left + 1, right + 1};
+            else if (v > target)
+                right--;
+            else
+                left++;
+        }
+
+        return new int[] {-1, -1};
+    }
+
+    public static void main(String[] args) {
+        Two_Sum_II_167 obj = new Two_Sum_II_167();
+    }
 }

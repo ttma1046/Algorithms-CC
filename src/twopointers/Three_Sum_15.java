@@ -30,30 +30,63 @@ Constraints:
 */
 
 class Three_Sum_15 {
-	public List<List<Integer>> threeSum(int[] nums) {
-		Arrays.sort(nums);
+    public List<List<Integer>> threeSum(int[] nums) {
+        Arrays.sort(nums);
 
-		List<List<Integer>> res = new LinkedList<>();
+        List<List<Integer>> res = new LinkedList<>();
 
-		int n = nums.length;
-		for(int i = 0; i < n - 2; ++i) {
-			if ((i == 0) || (i > 0 && nums[i - 1] != nums[i])) {
-				int low = i + 1, high = n - 1, sum = 0 - nums[i];
-				while (low < high) {
-					if (nums[low] + nums[high] == sum) {
-						res.add(Arrays.asList(nums[i], nums[low], nums[high]));
+        int n = nums.length;
+        for(int i = 0; i < n - 2; ++i) {
+            if ((i == 0) || (i > 0 && nums[i - 1] != nums[i])) {
+                int low = i + 1, high = n - 1, sum = 0 - nums[i];
+                while (low < high) {
+                    if (nums[low] + nums[high] == sum) {
+                        res.add(Arrays.asList(nums[i], nums[low], nums[high]));
 
-						while(low < high && nums[low] == nums[low + 1]) ++low;
-						while(low < high && nums[high] == nums[high - 1]) --high;
+                        while(low < high && nums[low] == nums[low + 1]) ++low;
+                        while(low < high && nums[high] == nums[high - 1]) --high;
 
-						++low;
-						--high;
-					} else if (nums[low] + nums[high] < sum) ++low;
-					else --high;
-				}
-			}
-		}
+                        ++low;
+                        --high;
+                    } else if (nums[low] + nums[high] < sum) ++low;
+                    else --high;
+                }
+            }
+        }
 
-		return res;
-	}
+        return res;
+    }
+
+    public static void main(String[] args) {
+        Three_Sum_15 obj = new Three_Sum_15();
+    }
+
+
+    public List<List<Integer>> threeSum(int[] nums) {
+        Arrays.sort(nums);
+
+        List<List<Integer>> res = new ArrayList<>();
+
+        int n = nums.length;
+
+        for (int i = 0; i < n; ++i) {
+            if (i == 0 || (i > 0 && nums[i - 1] != nums[i])) {
+                int low = i + 1, high = n - 1, sum = 0 - nums[i];
+                while(low < high) {
+                	if (num[low] + num[high] == sum) {
+                		res.add(new ArrayList(num[low], num[high], sum));
+
+                		while(low < high && nums[low] == nums[low + 1]) low++;
+                		while(low < high && nums[high] == nums[high - 1]) high--;
+
+                		low++;
+                		high--;
+                	} else if (nums[low] + nums[high] < sum) low++;
+                	else high--;
+                }
+            }
+        }
+
+        return res;
+    }
 }
