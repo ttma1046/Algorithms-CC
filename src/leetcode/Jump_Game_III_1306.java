@@ -43,4 +43,35 @@ class Jump_Game_III_1306 {
         }
         return false;
     }
+
+    public boolean canReach(int[] arr, int st) {
+        int n = arr.length;
+        Queue<Integer> q = new LinkedList<>();
+        q.add(start);
+        while(!q.isEmpty()) {
+            int node = q.poll();
+
+            if (arr[node] == 0) return true;
+
+            if (arr[node] < 0) continue;
+
+            if (node + arr[node] < n) q.add(node + arr[node]);
+            if (node - arr[node] >= 0) q.add(node - arr[node]);
+
+            arr[node] = -arr[node];
+        }
+        return false;
+    }
+
+    // jump game III dfs
+    public boolean canReach(int[] arr, int start) {
+        if (start < 0 || start >= arr.length || arr[start] < 0) return false;
+        if (arr[start] == 0) return true;
+        arr[start] *= -1;
+        return canReach(arr, start + arr[start]) || canReach(arr, start - arr[start]);
+    }
+
+    public static void main(String[] args) {
+        Jump_Game_III_1306 obj = new Jump_Game_III_1306();
+    }
 }

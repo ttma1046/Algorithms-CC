@@ -26,24 +26,20 @@ Constraints:
 
 */
 
-
 class Jump_Game_55 {
     public boolean canJumpBackTracking(int[] nums) {
         return canJumpFromPosition(0, nums);
     }
 
     private boolean canJumpFromPosition(int position, int[] nums) {
-        if (position == nums.length - 1) {
+        if (position == nums.length - 1)
             return true;
-        }
 
         int furthestJump = Math.min(position + nums[position], nums.length - 1);
 
-        for (int i = furthestJump; i > position; i--) {
-            if (canJumpFromPosition(i, nums)) {
+        for (int i = furthestJump; i > position; i--)
+            if (canJumpFromPosition(i, nums))
                 return true;
-            }
-        }
 
         return false;
     }
@@ -59,9 +55,8 @@ class Jump_Game_55 {
     public boolean canJumpwithMemo(int[] nums) {
         memo = new Index[nums.length];
 
-        for (int i = 0; i < memo.length; i++) {
+        for (int i = 0; i < memo.length; i++)
             memo[i] = Index.Unknown;
-        }
 
         memo[nums.length - 1] = Index.Good;
 
@@ -69,9 +64,8 @@ class Jump_Game_55 {
     }
 
     private boolean canJumpFromPositionwithMemo(int position, int[] nums) {
-        if (memo[position] != Index.Unknown) {
+        if (memo[position] != Index.Unknown)
             return memo[position] == Index.Good ? true : false;
-        }
 
         int furthestJump = Math.min(position + nums[position], nums.length - 1);
 
@@ -88,9 +82,9 @@ class Jump_Game_55 {
 
     public boolean canJumpDpBottomTop(int[] nums) {
         Index[] memo = new Index[nums.length];
-        for (int i = 0; i < memo.length; i++) {
+        for (int i = 0; i < memo.length; i++)
             memo[i] = Index.Unknown;
-        }
+
         memo[memo.length - 1] = Index.Good;
 
         for (int i = nums.length - 2; i >= 0; i--) {
@@ -106,60 +100,60 @@ class Jump_Game_55 {
         return memo[0] == Index.Good;
     }
 
+    Integer[] memo;
+
+    public boolean canJumpwithMemo(int[] nums) {
+        memo = new Integer[nums.length];
+        memo[memo.length - 1] = 1;
+        return canJumpFromPosition(0, nums) == 1;
+    }
+
+    private int canJumpFromPosition(int pos, int[] nums) {
+        if (memo[pos] != null)
+            return memo[pos];
+        int furthest = Math.min(pos + nums[pos], num.length - 1);
+        for (int next = pos + 1; next <= furthest; next++)
+            if (canJumpFromPosition(next, nums) == 1) {
+                memo[pos] = 1;
+                return memo[pos];
+            }
+
+        memo[pos] = -1;
+        return memo[pos];
+    }
+
     public static void main(String[] args) {
-        System.out.println(new Jump_Game_55().canJumpEasy(new int[] {3, 2, 1, 0, 4}));
-        System.out.println(new Jump_Game_55().canJumpEasy(new int[] {2, 3, 1, 1, 4}));
+        System.out.println(new Jump_Game_55().canJumpEasy(new int[] { 3, 2, 1, 0, 4 }));
+        System.out.println(new Jump_Game_55().canJumpEasy(new int[] { 2, 3, 1, 1, 4 }));
     }
 
     private boolean canJumpGreedy(int nums[]) {
-        if (nums == null || nums.length <= 0) {
+        if (nums == null || nums.length <= 0)
             return false;
-        }
 
         int lastPos = nums.length - 1;
 
-        for (int i = nums.length - 1; i >= 0; i--) {
-            if (i + nums[i] >= lastPos) {
+        for (int i = nums.length - 1; i >= 0; i--)
+            if (i + nums[i] >= lastPos)
                 lastPos = i;
-            }
-        }
 
         return lastPos == 0;
     }
 
-    private boolean canJumpFromBottomtoTop(int[] nums) {
-        if (nums == null || nums.length <= 0) {
-            return false;
-        }
+    public boolean canJumpEasy(int[] nums) {
+        int max = 0;
+        for (int i = 0; i < nums.length - 1; i++)
+            if (i <= max)
+                max = Math.max(i + nums[i], max);
 
-        memo = new Index[nums.length];
-
-        for (int i = 0; i < nums.length; i++) {
-            memo[i] = Index.Unknown;
-        }
-
-        memo[nums.length - 1] = Index.Good;
-
-        for (int i = nums.length - 2; i >= 0; i--) {
-            int furthestJump = Math.min(i + nums[i], nums.length - 1);
-            for (int j = i + 1; j <= furthestJump; j++) {
-                if (memo[j] == Index.Good) {
-                    memo[i] = Index.Good;
-                    break;
-                }
-            }
-        }
-
-        return memo[0] == Index.Good;
+        return max >= nums.length - 1;
     }
 
-    public boolean canJumpEasy(int[] nums)  {
+    public boolean canJump(int[] nums) {
         int i = 0;
-        for (int reach = 0; i < nums.length && i <= reach; i++) {
-            reach = Math.max(i + nums[i], reach);
-        }
+        for (int reach = 0; i < nums.length && i <= reach; ++i)
+            reach = Math.max(reach, i + nums[i]);
 
         return i == nums.length;
     }
-
 }

@@ -1,4 +1,4 @@
-package greedy;
+ package greedy;
 /*
 Given an array of non-negative integers, you are initially positioned at the first index of the array.
 
@@ -18,6 +18,18 @@ You can assume that you can always reach the last index.
 */
 
 class Jump_Game_II_45 {
+    pulbic int jump(int[] nums) {
+        int[] dp = new int[nums.length];
+        Arrays.fill(dp, Integer.MAX_VALUE);
+        dp[0] = 0;
+
+        for (int i = 1; i < nums.length; i++) 
+            for (int j = 0; j < i; j++) 
+                if (dp[j] != Integer.MAX_VALUE && j + nums[j] >= i && dp[j] + 1 < dp[i]) dp[i] = dp[j] + 1;            
+        
+        return dp[nums.length - 1];
+    }
+
     public int jump(int[] nums) {
         int n = nums.length;
 
@@ -50,14 +62,18 @@ class Jump_Game_II_45 {
     }
 
     public int jump(int[] nums) {
-        int jumps = 0, fastest = 0, currentJumpEnd = 0;
+        int jumps = 0;
+        int farest = 0;
+        int currentJumpEnd = 0;
 
         for (int i = 0; i < nums.length - 1; ++i) {
-            fastest = Math.max(fastest, i + nums[i]);
+            if (i + nums[i] > farest) farest = i + nums[i];
+
+            // fastest = Math.max(fastest, i + nums[i]);
 
             if (i == currentJumpEnd) {
                 jumps++;
-                fastest = currentJumpEnd;
+                currentJumpEnd = farest;
             }
         }
 

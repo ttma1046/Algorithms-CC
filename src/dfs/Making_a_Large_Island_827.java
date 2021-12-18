@@ -173,3 +173,34 @@ class Making_a_Large_Island_827 {
         return res;
     }
 }
+
+class DSU {
+    int[] parent;
+    int[] size;
+
+    public DSU (int n) {
+        this.parent = new int[n];
+        this.size = new int[n];
+        Arrays.fill(this.size, 1);
+        for (int i = 0; i < n; i++) this.parent[i] = i;
+    }
+
+    public int find(int x) {
+        if (this.parent[x] != x) this.parent[x] = find(this.parent[x]);
+        return this.parent[x];
+    }
+
+    public void union(int x, int y) {
+        int rootx = find(x);
+        int rooty = find(y);
+        if (rootx == rooty) return;
+
+        if (this.size[rootx] < this.size[rooty]) {
+            parent[rootx] = rooty;
+            this.size[rooty] += this.size[rootx];
+        } else {
+            parent[rooty] = rootx;
+            this.size[rootx] += this.size[rooty];
+        }
+    }
+}
