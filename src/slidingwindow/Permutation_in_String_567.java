@@ -39,14 +39,19 @@ class Permutation_in_String_567 {
             s2map[s2.charAt(i + s1.length()) - 'a']++;
             s2map[s2.charAt(i) - 'a']--;
         }
+
         return matches(s1map, s2map);
     }
 
     public boolean matches(int[] s1map, int[] s2map) {
-        for (int i = 0; i < 26; i++) {
+        for (int i = 0; i < 26; i++) 
             if (s1map[i] != s2map[i])
                 return false;
-        }
+        
         return true;
+    }
+
+    public static void main(String[] args) {
+
     }
 }

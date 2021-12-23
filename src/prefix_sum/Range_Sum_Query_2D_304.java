@@ -56,10 +56,11 @@ class NumMatrix {
     // Assume that m and n represents the number of rows and columns respectively,
     // each sumRegion query can go through at most m × n elements.
 
-	// Space complexity : O(1). Note that data is a reference to matrix and is not a copy of it.
+    // Space complexity : O(1). Note that data is a reference to matrix and is not a copy of it.
 }
 */
 
+/*
 class NumMatrix {
     private int[][] dp;
 
@@ -77,10 +78,45 @@ class NumMatrix {
         return dp[row2 + 1][col2 + 1] - dp[row1][col2 + 1] - dp[row2 + 1][col1] + dp[row1][col1];
     }
 }
+*/
 
 class NumMatrix {
-    int [][]matrix;
+    int [][] matrix;
+    int [][] prefix_sum;
+
     public NumMatrix(int[][] matrix) {
+        this.matrix = matrix;
+        this.prefix_sum = new int[matrix.length][matrix[0].length];
+        this.prefix_sum[0][0] = this.matrix[0][0];
+
+        for (int i = 0; i < this.matrix.length; ++i) {
+            this.prefix_sum[i][0] = this.matrix[i][0];
+            for (int j = 1; j < this.matrix[i].length; ++j) {
+                this.prefix_sum[i][j] = this.prefix_sum[i][j - 1] + this.matrix[i][j];
+            }
+        }
+
+        for (int i = 0; i < this.prefix_sum[0].length; ++i) 
+            for (int j = 1; j < this.prefix_sum.length; ++j) 
+                this.prefix_sum[j][i] += this.prefix_sum[j - 1][i];
+    }
+
+    public int sumRegion(int row1, int col1, int row2, int col2) {
+        int sum = this.prefix_sum[row2][col2];
+
+        if (col1 - 1 >= 0) sum -= this.prefix_sum[row2][col1 - 1];
+
+        if (row1 - 1 >= 0) sum -= this.prefix_sum[row1 - 1][col2];
+
+        if (col1 - 1 >= 0 && row1 - 1 >= 0) sum += this.prefix_sum[row1 - 1][col1 - 1];
+
+        return sum;
+    }
+}
+
+class NumMatrixII {
+    int[][] matrix;
+    public NumMatrixII(int[][] matrix) {
         this.matrix = matrix;
 
         for (int i = 0; i < matrix.length; i++) {
@@ -91,6 +127,15 @@ class NumMatrix {
             }
         }
 
+        for (int i = 0; i < this.matrix.length; i++) {
+            for (int j = 0; j < this.matrix[i].length; j++) {
+                System.out.print(this.matrix[i][j]);
+                System.out.print(" ");
+            }
+
+            System.out.println();
+        }
+
         for (int j = 0; j < matrix[0].length; j++) {
             int sum = matrix[0][j];
             for (int i = 1; i < matrix.length; i++) {
@@ -98,20 +143,30 @@ class NumMatrix {
                 matrix[i][j] = sum;
             }
         }
+
+        for (int i = 0; i < this.matrix.length; i++) {
+            for (int j = 0; j < this.matrix[i].length; j++) {
+                System.out.print(this.matrix[i][j]);
+                System.out.print(" ");
+            }
+
+            System.out.println();
+        }
     }
 
     public int sumRegion(int row1, int col1, int row2, int col2) {
         int sum = matrix[row2][col2];
 
         if (row1 - 1 >= 0) sum -= matrix[row1 - 1][col2];
-        
+
         if (col1 - 1 >= 0) sum -= matrix[row2][col1 - 1];
-        
+
         if (row1 - 1 >= 0 && col1 - 1 >= 0) sum += matrix[row1 - 1][col1 - 1];
 
         return sum;
     }
 }
+
 class Range_Sum_Query_2D_304 {
     public static void main(String[] args) {
         int[][] numMatrix = new int[][] {
@@ -141,6 +196,14 @@ class Range_Sum_Query_2D_304 {
         System.out.println(obj.sumRegion(2, 1, 4, 3));
         System.out.println(obj.sumRegion(1, 1, 2, 2));
         System.out.println(obj.sumRegion(1, 2, 2, 4));
+
+        NumMatrixII objtwo = new NumMatrixII(numMatrix);
+
+
+
+        System.out.println(objtwo.sumRegion(2, 1, 4, 3));
+        System.out.println(objtwo.sumRegion(1, 1, 2, 2));
+        System.out.println(objtwo.sumRegion(1, 2, 2, 4));
     }
 }
 

@@ -25,6 +25,7 @@ Constraints:
 // sliding window
 class Longest_Substring_with_At_Most_K_Distinct_Characters_340 {
     public int lengthOfLongestSubstringKDistinct(String s, int k) {
+        
         int n = s.length(), i = 0, j = 0, res = 0;
         int[] map = new int[94];
 
