@@ -1,4 +1,7 @@
 package slidingwindow;
+import java.util.HashMap;
+import java.util.Map;
+
 
 /*
 Given two strings s1 and s2, return true if s2 contains a permutation of s1, or false otherwise.
@@ -22,7 +25,7 @@ Constraints:
 s1 and s2 consist of lowercase English letters.
 */
 class Permutation_in_String_567 {
-    
+    /*
     public boolean checkInclusion(String s1, String s2) {
         if (s1.length() > s2.length()) return false;
 
@@ -52,41 +55,43 @@ class Permutation_in_String_567 {
 
         return true;
     }
+    */
 
     /*
     Time complexity: O(l1 + 26 * (l2 - l1)), where l1 is the length of string l1 and l2 is the length of string l2.
     Space complexity: O(1). Constant space is used.
     */
 
+    /*
     public boolean checkInclusion(String s1, String s2) {
         if (s1.length() > s2.length()) return false;
 
         int[] s1map = new int[26];
         int[] s2map = new int[26];
-        
+
         for (int i = 0; i < s1.length(); i++) {
             s1map[s1.charAt(i) - 'a']++;
             s2map[s2.charAt(i) - 'a']++;
         }
-        
+
         int count = 0;
 
         for (int i = 0; i < 26; i++)
             if (s1map[i] == s2map[i])
                 count++;
-                
+
         for (int i = 0; i < s2.length() - s1.length(); i++) {
-        
+
             if (count == 26) return true;
 
-            int r = s2.charAt(i + s1.length()) - 'a', 
-            int l = s2.charAt(i) - 'a';
+            int r = s2.charAt(i + s1.length()) - 'a',
+                int l = s2.charAt(i) - 'a';
 
             s2map[r]++;
 
-            if (s2map[r] == s1map[r]) 
+            if (s2map[r] == s1map[r])
                 count++;
-            else if (s2map[r] == s1map[r] + 1) 
+            else if (s2map[r] == s1map[r] + 1)
                 count--;
 
             s2map[l]--;
@@ -129,6 +134,7 @@ class Permutation_in_String_567 {
             }
         }
     }
+    */
 
     /*
     Time complexity: O(n!).
@@ -138,6 +144,7 @@ class Permutation_in_String_567 {
     The depth of the recursion tree is n(n refers to the length of the short string s1). Every node of the recursion tree contains a string of max. length n.
     */
 
+    /*
     public boolean checkInclusion(String s1, String s2) {
         s1 = sort(s1);
         for (int i = 0; i <= s2.length() - s1.length(); i++) {
@@ -152,6 +159,7 @@ class Permutation_in_String_567 {
         Arrays.sort(t);
         return new String(t);
     }
+    */
 
     /*
     Time complexity: O(l1log(l1) + (l2 - l1)l1log(l1)). where l1 is the length of string l1 and l2 is the length of string l22.
@@ -164,10 +172,17 @@ class Permutation_in_String_567 {
     public static void main(String[] args) {
         Permutation_in_String_567 obj = new Permutation_in_String_567();
 
-        System.out.println(obj.checkInclusion("ab", "eidbaooo"));
-        System.out.println(obj.checkInclusion("ab", "eidboaoo"));
+        System.out.println(obj.checkInclusionII("ab", "eidbaooo"));
+
+        System.out.println(obj.checkInclusionII("aab", "eidooobaa"));
+
+        System.out.println(obj.checkInclusionII("ab", "eidboaoo"));
+
+
+        System.out.println(obj.checkInclusionII("trinitrophenylmethylnitramine", "dinitrophenylhydrazinetrinitrophenylmethylnitramine"));
     }
 
+    /*
     public boolean checkInclusion(String s1, String s2) {
         if (s1.length() > s2.length()) return false;
 
@@ -195,6 +210,7 @@ class Permutation_in_String_567 {
 
         return true;
     }
+    */
 
     /*
     Time complexity: O(l1 + 26 ∗ l1 ∗ (l2 − l1)). hashmap contains atmost 26 keys. where l1 is the length of string l1 and l2 is the length of string l2.
@@ -202,6 +218,7 @@ class Permutation_in_String_567 {
     Space complexity: O(1). Hashmap contains at most 26 key-value pairs.
     */
 
+    /*
     public boolean checkInclusion(String s1, String s2) {
         if (s1.length() > s2.length()) return false;
 
@@ -223,12 +240,81 @@ class Permutation_in_String_567 {
         for (int i = 0; i < 26; i++)
             if (s1map[i] != s2map[i])
                 return false;
-        
+
         return true;
     }
+    */
 
     /*
     Time complexity: O(l1 + 26 ∗ l1 * (l2 − l1)),  where l1 is the length of string l1 and l2 is the length of string l2.
     Space complexity: O(1). s1map and s2map of size 26 is used.
     */
+
+    public boolean checkInclusionII(String s1, String s2) {
+
+        if (s1.length() > s2.length())
+            return false;
+
+        Map<Character, Integer> map = new HashMap<>();
+
+        for(char c : s1.toCharArray())
+            map.put(c, map.getOrDefault(c, 0) + 1);
+
+        int counter = map.size();
+        int begin = 0, end = 0;
+
+        while(end < s2.length()) {
+            char c = s2.charAt(end);
+
+            if(map.containsKey(c)) {
+                map.put(c, map.get(c) - 1);
+                if(map.get(c) == 0) counter--;
+            }
+
+            if (counter == 0) return true;
+
+            end++;
+
+            if (end - begin == s1.length()) {
+                char tempCharacter = s2.charAt(begin);
+
+                if(map.containsKey(tempCharacter)) {
+                    map.put(tempCharacter, map.get(tempCharacter) + 1);
+                    if(map.get(tempCharacter) > 0) counter++;
+                }
+
+                begin++;
+            }
+        }
+
+        System.out.println(counter);
+        if (counter == 0) return true;
+
+        return false;
+    }
+
+    public boolean checkInclusion(String p, String s) { // renamed s1 to p, s2 to s
+        int[] cnt = new int[128];
+        for (char c : p.toCharArray()) {
+            cnt[c]++;
+        }
+
+        int nChars = p.length();
+        for (int r = 0, l = 0; r < s.length(); ++r) {
+            char c = s.charAt(r);
+
+            cnt[c]--;
+            nChars--;
+            while (cnt[c] < 0) { // If number of characters `c` is more than our expectation
+                cnt[s.charAt(l)]++;  // Slide left until cnt[c] == 0
+                l++;
+                nChars++;
+            }
+
+            if (nChars == 0) { // If we already filled enough `p.length()` chars
+                return true;
+            }
+        }
+        return false;
+    }
 }
