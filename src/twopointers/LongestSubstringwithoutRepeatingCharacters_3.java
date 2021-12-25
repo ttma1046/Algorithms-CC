@@ -169,13 +169,15 @@ class LongestSubstringwithoutRepeatingCharacters_3 {
         Map<Character, Integer> map = new HashMap<Character, Integer>();
 
         int max = 0;
+
         for (int i = 0, j = 0; j < n; ++j) {
-            if (map.containsKey(s.charAt(j))) {
+            if (map.containsKey(s.charAt(j)))
                 i = Math.max(i, map.get(s.charAt(j)) + 1);
-            }
+
             max = Math.max(max, j - i + 1);
             map.put(s.charAt(j), j);
         }
+
         return max;
     }
 
@@ -185,9 +187,7 @@ class LongestSubstringwithoutRepeatingCharacters_3 {
         int n = s.length();
         int[] index = new int[128];
 
-        for (int i = 0; i < index.length; i++) {
-            index[i] = -1;
-        }
+        for (int i = 0; i < index.length; i++) index[i] = -1;
 
         int ans = 0;
         for (int i = 0, j = 0; j < n; ++j) {
@@ -198,6 +198,52 @@ class LongestSubstringwithoutRepeatingCharacters_3 {
             index[s.charAt(j) - ' '] = j;
         }
         return ans;
+    }
+
+    public int lengthOfLongestSubstring(String s) {
+        Integer[] chars = new Integer[128];
+
+        int left = 0;
+        int right = 0;
+
+        int res = 0;
+        while (right < s.length()) {
+            char r = s.charAt(right);
+
+            Integer index = chars[r];
+            if (index != null && index >= left && index < right) left = index + 1;
+
+            res = Math.max(res, right - left + 1);
+
+            chars[r] = right;
+            right++;
+        }
+
+        return res;
+    }
+
+    public int lengthOfLongestSubstring(String s) {
+        int[] chars = new int[128];
+
+        int left = 0;
+        int right = 0;
+
+        int res = 0;
+        while (right < s.length()) {
+            char r = s.charAt(right);
+            chars[r]++;
+
+            while (chars[r] > 1) {
+                char l = s.charAt(left);
+                chars[l]--;
+                left++;
+            }
+
+            res = Math.max(res, right - left + 1);
+
+            right++;
+        }
+        return res;
     }
 
     public static void main(String[] args) {

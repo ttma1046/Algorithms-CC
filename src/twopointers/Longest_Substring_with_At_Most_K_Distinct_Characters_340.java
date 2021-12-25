@@ -3,8 +3,6 @@ package twopointers;
 /*
 Given a string s and an integer k, return the length of the longest substring of s that contains at most k distinct characters.
 
-
-
 Example 1:
 
 Input: s = "eceba", k = 2
@@ -16,7 +14,6 @@ Input: s = "aa", k = 1
 Output: 2
 Explanation: The substring is "aa" with length 2.
 
-
 Constraints:
 
 1 <= s.length <= 5 * 104
@@ -26,7 +23,10 @@ Constraints:
 class Longest_Substring_with_At_Most_K_Distinct_Characters_340 {
     public int lengthOfLongestSubstringKDistinct(String s, int k) {
         
-        int n = s.length(), i = 0, j = 0, res = 0;
+        int n = s.length(), 
+        int i = 0, 
+        int j = 0, 
+        int res = 0;
         int[] map = new int[94];
 
         for (j = 0; j < n; ++j) {
