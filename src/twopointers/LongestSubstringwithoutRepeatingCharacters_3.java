@@ -246,6 +246,62 @@ class LongestSubstringwithoutRepeatingCharacters_3 {
         return res;
     }
 
+    public int lengthOfLongestSubstring(String s) {
+        Map<Character, Integer> map = new HashMap<>();
+
+        int begin = 0, end = 0, count = 0, res = 0;
+
+        while(end < s.length()) {
+            char endC = s.charAt(end);
+
+            map.put(endC, map.getOrDefault(endC, 0) + 1);
+            if (map.get(endC) > 1) count++;
+
+
+            while(count > 0) {
+                char beginC = s.charAt(begin);
+                if (map.get(beginC) > 1) count--;
+                map.put(beginC, map.get(beginC) - 1);
+
+                begin++;
+            }
+
+            res = Math.max(res, end - begin + 1);
+
+            end++;
+        }
+
+        return res;
+    }
+
+    public int lengthOfLongestSubstring(String s) {
+        Map<Character, Integer> map = new HashMap<>();
+
+        int begin = 0, end = 0, count = 0, res = 0;
+
+        while(end < s.length()) {
+            char endC = s.charAt(end);
+
+            map.put(endC, map.getOrDefault(endC, 0) + 1);
+            if (map.get(endC) > 1) count++;
+
+
+            while(count > 0) {
+                char beginC = s.charAt(begin);
+                map.put(beginC, map.get(beginC) - 1);
+                if (map.get(beginC) == 1) count--;
+
+                begin++;
+            }
+
+            res = Math.max(res, end - begin + 1);
+
+            end++;
+        }
+
+        return res;
+    }
+
     public static void main(String[] args) {
         System.out.println(new LongestSubstringwithoutRepeatingCharacters_3().lengthOfLongestSubstring("pwwkew"));
         System.out.println(new LongestSubstringwithoutRepeatingCharacters_3().lengthOfLongestSubstring("bbbbb"));
