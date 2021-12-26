@@ -37,32 +37,29 @@ The substring with start index = 1 is "ba", which is an anagram of "ab".
 The substring with start index = 2 is "ab", which is an anagram of "ab".
 */
 class Find_All_Anagrams_in_a_String_438 {
-	/*
-    public List<Integer> findAnagrams(String s, String p) {
-        int sLength = s.length(), pLength = p.length();
-        if (sLength < pLength) return new ArrayList<Integer>();
+    public List<Integer> findAnagramsII(String s, String p) {
+        List<Integer> res = new ArrayList<>();
+        int sLength = s.length();
+        int pLength = p.length();
+        if (pLength > sLength) return res;
 
-        int[] sHash = new int [26];
-        int[] pHash = new int [26];
+        int[] sHash = new int[26];
+        int[] pHash = new int[26];
 
-        for (Character ch : p.toCharArray()) {
-            pHash[ch - 'a']++;
-        }
-
-        List<Integer> result = new ArrayList<Integer>();
-
-        for (int i = 0; i < sLength; i++) {
-            char c = s.charAt(i);
-            sHash[c - 'a']++;
+        for (char c: p.toCharArray()) pHash[c - 'a']++;
+        
+        for (int i = 0; i < s.length(); ++i) {
+            sHash[s.charAt(i) - 'a']++;
 
             if (i - pLength >= 0) sHash[s.charAt(i - pLength) - 'a']--;
 
-            if (Arrays.equals(sHash, pHash)) result.add(i - pLength + 1);            
+            if (Arrays.equals(pHash, sHash)) res.add(i - pLength + 1);
         }
 
-        return result;
+        return res;
     }
 
+    /*
     public List<Integer> findAnagrams(String s, String p) {
         int lengthS = s.length(), lengthP = p.length();
 
@@ -99,47 +96,47 @@ class Find_All_Anagrams_in_a_String_438 {
     }
     */
 
-    public List<Integer> findAnagrams(String s, String t) {
-        List<Integer> result = new ArrayList<>();
+    public List<Integer> findAnagrams(String s, String p) {
+        List<Integer> res = new ArrayList<>();
 
-        if(t.length() > s.length()) return result;
+        if (p.length() > s.length()) return res;
 
         Map<Character, Integer> map = new HashMap<>();
 
-        for(char c : t.toCharArray())
-            map.put(c, map.getOrDefault(c, 0) + 1);
+        for (char c : p.toCharArray()) map.put(c, map.getOrDefault(c, 0) + 1);
 
-        int counter = map.size();
-        int begin = 0, end = 0;
+        int start = 0, end = 0, count = map.size();
 
         while(end < s.length()) {
-            char c = s.charAt(end);
+            char endC = s.charAt(end);
 
-            if( map.containsKey(c) ) {
-                map.put(c, map.get(c) - 1);
-                if(map.get(c) == 0) counter--;
+            if (map.containsKey(endC)) {
+                map.put(endC, map.get(endC) - 1);
+                if (map.get(endC) == 0) count--;
             }
-            end++;
 
-            while(counter == 0) {
-                char tempCharacter = s.charAt(begin);
-                if(map.containsKey(tempCharacter)) {
-                    map.put(tempCharacter, map.get(tempCharacter) + 1);
-                    if(map.get(tempCharacter) > 0) counter++;
+            while(count == 0) {
+                if (end - start + 1 == p.length()) res.add(start);
+
+                char startC = s.charAt(start);
+
+                if (map.containsKey(startC)) {
+                    map.put(startC, map.get(startC) + 1);
+                    if (map.get(startC) > 0) count++;
                 }
 
-                if(end - begin == t.length()) result.add(begin);                
-
-                begin++;
+                start++;
             }
+
+            end++;
         }
 
-        return result;
+        return res;
     }
 
     public static void main(String[] args) {
-    	Find_All_Anagrams_in_a_String_438 obj = new Find_All_Anagrams_in_a_String_438();
-        List<Integer> result = obj.findAnagrams("cbaebabacd", "abc");
+        Find_All_Anagrams_in_a_String_438 obj = new Find_All_Anagrams_in_a_String_438();
+        List<Integer> result = obj.findAnagramsII("cbaebabacd", "abc");
 
         for (int item : result) {
             System.out.print(item);
@@ -147,7 +144,7 @@ class Find_All_Anagrams_in_a_String_438 {
 
         System.out.println();
 
-        result = obj.findAnagrams("abab", "ab");
+        result = obj.findAnagramsII("abab", "ab");
 
         for (int item : result) {
             System.out.print(item);
