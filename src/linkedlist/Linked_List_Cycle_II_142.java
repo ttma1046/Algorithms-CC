@@ -2,10 +2,19 @@
 package linkedlist;
 import java.util.HashSet;
 import java.util.Set;
+
+class ListNode {
+    int val;
+    ListNode next;
+    ListNode(int x) {
+        val = x;
+        next = null;
+    }
+}
 /*
 Given a linked list, return the node where the cycle begins. If there is no cycle, return null.
 
-There is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the next pointer. 
+There is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the next pointer.
 
 Internally, pos is used to denote the index of the node that tail's next pointer is connected to. Note that pos is not passed as a parameter.
 
@@ -38,49 +47,64 @@ pos is -1 or a valid index in the linked-list.
 Follow up: Can you solve it using O(1) (i.e. constant) memory?
 */
 public class Linked_List_Cycle_II_142 {
-	public ListNode detectCycleHashSet(ListNode head) {
-		Set<ListNode> set = new HashSet<ListNode>();
-		ListNode curr = head;
-		while (curr != null) {
-			if (set.contains(curr)) {
-				return curr;
-			}
+    public ListNode detectCycleHashSet(ListNode head) {
+        Set<ListNode> set = new HashSet<ListNode>();
+        ListNode curr = head;
+        while (curr != null) {
+            if (set.contains(curr)) {
+                return curr;
+            }
 
-			set.add(curr);
-			curr = curr.next;
-		}
+            set.add(curr);
+            curr = curr.next;
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	// Time Complexity: O(N)
-	// Space Complexity: O(N)
-	public ListNode detectCycleTwopointers(ListNode head) {
-		if (head == null) return null;
-		ListNode fast = head;
-		ListNode slow = head;
-		while (fast != null && fast.next != null ) {
-			fast = fast.next.next;
-			slow = slow.next;
+    // Time Complexity: O(N)
+    // Space Complexity: O(N)
+    public ListNode detectCycleTwopointers(ListNode head) {
+        if (head == null) return null;
+        ListNode fast = head, slow = head;
 
-			if (fast == slow) {
-				slow = head;
+        while (fast != null && fast.next != null ) {
+            fast = fast.next.next;
+            slow = slow.next;
 
-				while (slow != fast) {
-					slow = slow.next;
-					fast = fast.next;
-				}
+            if (fast == slow) {
+                slow = head;
 
-				return slow;
-			}
-		}
+                while (slow != fast) {
+                    slow = slow.next;
+                    fast = fast.next;
+                }
 
-		return null;
-	}
+                return slow;
+            }
+        }
 
-	public static void main(String[] args) {
-		new Linked_List_Cycle_II_142().detectCycleHashSet();
-	}
+        return null;
+    }
+
+    public static void main(String[] args) {
+        Linked_List_Cycle_II_142 obj = new Linked_List_Cycle_II_142();
+
+        ListNode three = new ListNode(3);
+        ListNode two = new ListNode(2);
+        ListNode zero = new ListNode(0);
+        ListNode four = new ListNode(-4);
+
+        three.next = two;
+        two.next = zero;
+        zero.next = four;
+
+        four.next = two;
+
+        ListNode res = obj.detectCycle(three);
+
+        System.out.println(res.val);
+    }
 }
 
 /*
