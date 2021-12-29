@@ -1,7 +1,5 @@
 package dp;
-
 /*
-
 Given a string, your task is to count how many palindromic substrings in this string.
 
 The substrings with different start indexes or end indexes are counted as different substrings even they consist of same characters.
@@ -12,13 +10,11 @@ Input: "abc"
 Output: 3
 Explanation: Three palindromic strings: "a", "b", "c".
 
-
 Example 2:
 
 Input: "aaa"
 Output: 6
 Explanation: Six palindromic strings: "a", "a", "a", "aa", "aa", "aaa".
-
 
 Note:
 
@@ -195,28 +191,26 @@ class Palindromic_Substrings_647 {
         int ans = 0;
 
         for (int i = 0; i < s.length(); ++i) {
-            ans += whatever(s, i, i);
-            ans += whatever(s, i, i + 1);
+            ans += countPalindromesAroundCenter(s, i, i);
+            ans += countPalindromesAroundCenter(s, i, i + 1);
         }
 
         return ans;
     }
 
-    private int whatever(String s, int i, int j) {
+    private int countPalindromesAroundCenter(String s, int i, int j) {
         int ans = 0;
-        while (i >= 0 && j < s.length()) {
-            if (s.charAt(i) != s.charAt(j))
-                break;
+        while (i >= 0 && j < s.length() && s.charAt(i) == s.charAt(j)) {
+            ans++;
             i--;
             j++;
-            ans++;
         }
 
         return ans;
     }
 
     /*
-    Time Complexity: O(N^2) for input string of length NN. The total time taken in this approach is dictated by two variables:
+    Time Complexity: O(N^2) for input string of length N. The total time taken in this approach is dictated by two variables:
 
     The number of possible palindromic centers we process.
     How much time we spend processing each center.
