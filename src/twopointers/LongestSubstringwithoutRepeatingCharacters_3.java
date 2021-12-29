@@ -277,14 +277,15 @@ class LongestSubstringwithoutRepeatingCharacters_3 {
     public int lengthOfLongestSubstring(String s) {
         Map<Character, Integer> map = new HashMap<>();
 
-        int begin = 0, end = 0, count = 0, res = 0;
+        int begin = 0;
+        int end = 0;
+        int count = 0;
 
         while(end < s.length()) {
             char endC = s.charAt(end);
 
             map.put(endC, map.getOrDefault(endC, 0) + 1);
             if (map.get(endC) > 1) count++;
-
 
             while(count > 0) {
                 char beginC = s.charAt(begin);
@@ -294,12 +295,13 @@ class LongestSubstringwithoutRepeatingCharacters_3 {
                 begin++;
             }
 
-            res = Math.max(res, end - begin + 1);
+            if (end - begin + 1 > res) res = end - begin + 1;
 
-            end++;
+            end++;    
         }
 
         return res;
+
     }
 
     public static void main(String[] args) {
@@ -308,21 +310,19 @@ class LongestSubstringwithoutRepeatingCharacters_3 {
         System.out.println(new LongestSubstringwithoutRepeatingCharacters_3().lengthOfLongestSubstring("abcabcbb"));
         System.out.println(new LongestSubstringwithoutRepeatingCharacters_3().lengthOfLongestSubstring("a"));
         System.out.println(new LongestSubstringwithoutRepeatingCharacters_3().lengthOfLongestSubstring("abbbeda"));
-
         System.out.println(new LongestSubstringwithoutRepeatingCharacters_3().lengthOfLongestSubstring("au"));
         System.out.println(new LongestSubstringwithoutRepeatingCharacters_3().lengthOfLongestSubstring(" "));
         System.out.println(new LongestSubstringwithoutRepeatingCharacters_3().lengthOfLongestSubstring("        "));
-        System.out.println("       ");
+        System.out.println();
 
         System.out.println(new LongestSubstringwithoutRepeatingCharacters_3().lengthOfLongestSubstringNoMap("pwwkew"));
         System.out.println(new LongestSubstringwithoutRepeatingCharacters_3().lengthOfLongestSubstringNoMap("bbbbb"));
         System.out.println(new LongestSubstringwithoutRepeatingCharacters_3().lengthOfLongestSubstringNoMap("abcabcbb"));
         System.out.println(new LongestSubstringwithoutRepeatingCharacters_3().lengthOfLongestSubstringNoMap("a"));
         System.out.println(new LongestSubstringwithoutRepeatingCharacters_3().lengthOfLongestSubstringNoMap("abbbeda"));
-
         System.out.println(new LongestSubstringwithoutRepeatingCharacters_3().lengthOfLongestSubstringNoMap("au"));
         System.out.println(new LongestSubstringwithoutRepeatingCharacters_3().lengthOfLongestSubstringNoMap(" "));
         System.out.println(new LongestSubstringwithoutRepeatingCharacters_3().lengthOfLongestSubstringNoMap("        "));
-        System.out.println("       ");
+        System.out.println();
     }
 }

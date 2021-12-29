@@ -1,6 +1,8 @@
 package string;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
 
 /*
 Given two strings s and t of lengths m and n respectively,
@@ -112,7 +114,7 @@ class Minimum_Window_Substring_76 {
 
 
 
-    public String minWindowII(String s, String t) {
+    public String minWindowIV(String s, String t) {
         if (s == null || s.length() == 0 || t == null || t.length() == 0) return "";
 
         Map<Character, Integer> tMap = new HashMap<>();
@@ -168,6 +170,7 @@ class Minimum_Window_Substring_76 {
         Minimum_Window_Substring_76 obj = new Minimum_Window_Substring_76();
     }
 
+    /*
     public String minWindowII(String s, String t) {
         if (s.length() == 0 || t.length() == 0) return "";
 
@@ -187,9 +190,7 @@ class Minimum_Window_Substring_76 {
             char c = s.charAt(i);
             if (dictT.containsKey(c))
                 filteredS.add(new Pair<Integer, Character>(i, c));
-
         }
-
 
         int l = 0, r = 0, formed = 0;
         Map<Character, Integer> windowCounts = new HashMap<Character, Integer>();
@@ -227,6 +228,7 @@ class Minimum_Window_Substring_76 {
 
         return ans[0] == -1 ? "" : s.substring(ans[1], ans[2] + 1);
     }
+    */
 
     /*
     Complexity Analysis
@@ -234,4 +236,88 @@ class Minimum_Window_Substring_76 {
     Time Complexity : O(|S| + |T|)O(∣S∣+∣T∣) where |S| and |T| represent the lengths of strings SS and TT. The complexity is same as the previous approach. But in certain cases where |filtered\_S|∣filtered_S∣ <<< |S|∣S∣, the complexity would reduce because the number of iterations would be 2*|filtered\_S| + |S| + |T|2∗∣filtered_S∣+∣S∣+∣T∣.
     Space Complexity : O(|S| + |T|)O(∣S∣+∣T∣).
     */
+
+    public String minWindowIII(String s, String t) {
+        if (t.length() > s.length()) return "";
+        Map<Character, Integer> map = new HashMap<>();
+
+        for (char c : t.toCharArray()) map.put(c, map.getOrDefault(c, 0) + 1);
+
+        int counter = map.size();
+
+        int begin = 0;
+        int end = 0;
+        int head = 0;
+        int length = Integer.MAX_VALUE;
+
+        while(end < s.length()) {
+            char endC = s.charAt(end);
+            if (map.containsKey(endC)) {
+                map.put(endC, map.get(endC) - 1);
+
+                if (map.get(endC) == 0) counter--;
+            }
+
+            while(counter == 0) {
+                if (end - begin + 1 < length) {
+                    length = end - begin + 1;
+                    head = begin;
+                }
+
+                char beginC = s.charAt(begin);
+                if (map.containsKey(beginC)) {
+                    map.put(beginC, map.get(beginC) + 1);
+                    if (map.get(beginC) > 0) counter++;
+                }
+
+                begin++;
+            }
+
+            end++;
+        }
+
+        return length == Integer.MAX_VALUE ? "" : s.substring(head, head + length);
+    }
+
+    public String minWindow(String s, String t) {
+        int left = 0, right = 0;
+        int[] need = new int[58];
+        
+        int size = 0;
+
+        for(char ch : t.toCharArray()) {
+            if(need[ch - 'A'] == 0) size++;
+            need[ch - 'A']++;
+        }
+
+        int len = s.length() + 1;
+        int start = 0;
+        int end = 0;
+        int[] cur = new int[58];
+        int curSize = 0;
+        
+        while(right < s.length()) {
+            char ch = s.charAt(right);
+            cur[ch - 'A']++;
+            if(need[ch - 'A'] > 0 && cur[ch - 'A'] == need[ch - 'A']) curSize++;
+        
+            while(size == curSize) {
+                char lch = s.charAt(left);
+                cur[lch - 'A']--;
+                if(need[lch - 'A'] > 0 && cur[lch - 'A'] < need[lch - 'A']) {
+                    if(right - left + 1 < len) {
+                        start = left;
+                        end = right + 1;
+                        len = right - left + 1;
+                    }
+                    curSize--;
+                }
+                left++;
+            }
+
+            right++;
+        }
+        
+        return len == s.length() + 1 ? "" : s.substring(start, end);
+    }
 }

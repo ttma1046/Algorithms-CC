@@ -112,7 +112,7 @@ public class RepeatedSubstringPattern_459 {
         return false;
     }
 
-    public boolean repeatedSubstringPattern(String s) {
+    public boolean repeatedSubstringPattern5(String s) {
         if(s.length() < 2) {
             return false;
         }
