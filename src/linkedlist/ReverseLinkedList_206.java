@@ -44,6 +44,22 @@ public class ReverseLinkedList_206 {
         return prev;
     }
 
+    public ListNode reverseList(ListNode head) {
+        ListNode prev = null;
+        ListNode curr = head;
+        ListNode temp = null;
+
+
+        while(curr != null) {
+            temp = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = temp;
+        }
+
+        return prev;
+    }
+
     public ListNode reverseListII(ListNode current) {
         if (current == null || current.next == null) return current;
         ListNode p = reverseListII(current.next);

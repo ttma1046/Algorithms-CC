@@ -3,8 +3,7 @@ package linkedlist;
 /**
  * Definition for singly-linked list.
  */
-
-
+/*
 You are given two non-empty linked lists representing two non-negative integers. 
 
 The most significant digit comes first and each of their nodes contains a single digit. 
@@ -35,7 +34,7 @@ The number of nodes in each linked list is in the range [1, 100].
 It is guaranteed that the list represents a number that does not have leading zeros.
 
 Follow up: Could you solve it without reversing the input lists?
-
+*/
 
 public class ListNode {
     int val;

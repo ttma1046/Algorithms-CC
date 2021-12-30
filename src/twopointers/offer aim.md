@@ -21,3 +21,9 @@ Linked List:
 21 19 Remove Nth Node From End of List https://leetcode.com/problems/remove-nth-node-from-end-of-list/
 
 22 142 Linked List Cycle II https://leetcode.com/problems/linked-list-cycle-ii/
+
+23 160 Intersection of Two Linked Lists https://leetcode.com/problems/intersection-of-two-linked-lists/
+
+24 206 Reverse Linked List https://leetcode.com/problems/reverse-linked-list/
+
+25 445 Add Two Numbers II https://leetcode.com/problems/add-two-numbers-ii/
