@@ -4,9 +4,9 @@ package linkedlist;
  * Definition for singly-linked list.
  */
 /*
-You are given two non-empty linked lists representing two non-negative integers. 
+You are given two non-empty linked lists representing two non-negative integers.
 
-The most significant digit comes first and each of their nodes contains a single digit. 
+The most significant digit comes first and each of their nodes contains a single digit.
 
 Add the two numbers and return the sum as a linked list.
 
@@ -83,10 +83,124 @@ class Add_Two_Numbers_II_445 {
         return res;
     }
 
+    public ListNode reverseList(ListNode head) {
+        ListNode last = null;
+        while (head != null) {
+            // keep the next node
+            ListNode tmp = head.next;
+            // reverse the link
+            head.next = last;
+            // update the last node and the current node
+            last = head;
+            head = tmp;
+        }
+        return last;
+    }
+
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        // reverse lists
+        l1 = reverseList(l1);
+        l2 = reverseList(l2);
+
+        ListNode head = null;
+        int carry = 0;
+        while (l1 != null || l2 != null) {
+            // get the current values
+            int x1 = l1 != null ? l1.val : 0;
+            int x2 = l2 != null ? l2.val : 0;
+
+            // current sum and carry
+            int val = (carry + x1 + x2) % 10;
+            carry = (carry + x1 + x2) / 10;
+
+            // update the result: add to front
+            ListNode curr = new ListNode(val);
+            curr.next = head;
+            head = curr;
+
+            // move to the next elements in the lists
+            l1 = l1 != null ? l1.next : null;
+            l2 = l2 != null ? l2.next : null;
+        }
+
+        if (carry != 0) {
+            ListNode curr = new ListNode(carry);
+            curr.next = head;
+            head = curr;
+        }
+
+        return head;
+    }
 
     public static void main(String[] args) {
         Add_Two_Numbers_II_445 obj = new Add_Two_Numbers_II_445();
 
         obj.addTwoNumbers();
     }
+
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        int n1 = 0, n2 = 0;
+        ListNode curr1 = l1, curr2 = l2;
+
+        while(curr1 != null) {
+            curr1 = curr1.next;
+            n1++;
+        }
+
+        while(curr2 != null) {
+            curr2 = curr2.next;
+            n2++;
+        }
+
+        curr1 = l1;
+        curr2 = l2;
+        ListNode head = null;
+
+        while(n1 > 0 && n2 > 0) {
+            int val = 0;
+            if (n1 >= n2) {
+                val += curr1.val;
+                curr1 = curr1.next;
+                --n1;
+            }
+
+            if (n1 < n2) {
+                val += curr2.val;
+                curr2 = curr2.next;
+                --n2;
+            }
+
+            ListNode curr = new ListNode(val);
+            curr.next = head;
+            head = curr;
+        }
+
+        curr1 = head;
+        head = null;
+        int carry = 0;
+        while(curr1 != null) {
+            int val = (carry + curr1.val) % 10;
+            carry = (carry + curr1.val) / 10;
+
+            ListNode curr = new ListNode(val);
+            curr.next = head;
+            head = curr;
+
+            curr1 = curr1.next;
+        }
+
+        if (carry != 0) {
+            ListNode curr = new ListNode(carry);
+            curr.next =  head;
+            head = curr;
+        }
+
+        return head;
+    }
+
+    /*
+    Time complexity: \mathcal{O}(N_1 + N_2), where N_1 + N_2 is a number of elements in both lists.
+
+    Space complexity: \mathcal{O}(1) space complexity without taking the output list into account, and \mathcal{O}(\max(N_1, N_2)) to store the output list.
+    */
 }
