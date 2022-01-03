@@ -1,44 +1,61 @@
-class Solution {
+package linkedlist;
+
+/*
+You are given the head of a singly linked-list. The list can be represented as:
+
+L0 → L1 → … → Ln - 1 → Ln
+Reorder the list to be on the following form:
+
+L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
+You may not modify the values in the list's nodes. Only nodes themselves may be changed.
+
+Example 1:
+
+Input: head = [1,2,3,4]
+Output: [1,4,2,3]
+
+Example 2:
+
+Input: head = [1,2,3,4,5]
+Output: [1,5,2,4,3]
+
+Constraints:
+
+The number of nodes in the list is in the range [1, 5 * 104].
+1 <= Node.val <= 1000
+*/
+class Reorder_List_143 {
   public void reorderList(ListNode head) {
     if (head == null) return;
 
-    // find the middle of linked list [Problem 876]
-    // in 1->2->3->4->5->6 find 4 
     ListNode slow = head, fast = head;
     while (fast != null && fast.next != null) {
       slow = slow.next;
       fast = fast.next.next;
     }
 
-    // reverse the second part of the list [Problem 206]
-    // convert 1->2->3->4->5->6 into 1->2->3->4 and 6->5->4
-    // reverse the second half in-place
-    ListNode prev = null, curr = slow, tmp;
+    ListNode prev = null, curr = slow, tmp = null;
     while (curr != null) {
       tmp = curr.next;
-
       curr.next = prev;
       prev = curr;
       curr = tmp;
     }
 
-    // merge two sorted linked lists [Problem 21]
-    // merge 1->2->3->4 and 6->5->4 into 1->6->2->5->3->4
-    ListNode first = head, second = prev;
-    while (second.next != null) {
-      tmp = first.next;
-      first.next = second;
-      first = tmp;
+    // 1->2->3->4 6->5->4
+    ListNode list1 = head, list2 = prev;
+    while(list2.next != null) {
+      tmp = list1.next;
+      list1.next = list2;
+      list1 = tmp;
 
-      tmp = second.next;
-      second.next = first;
-      second = tmp;
+      tmp = list2.next;
+      list2.next = list1;
+      list2 = tmp;
     }
   }
 
-
-  public void reorderList(ListNode head) {
-
+  public void reorderListII(ListNode head) {
   	if(head == null) return;
 
   	ListNode slow = head, fast = head;
@@ -66,13 +83,13 @@ class Solution {
 
   		first = tmp;
 
-
   		tmp = second.next;
   		second.next = first;
-  		second = tmp;
-  		
+  		second = tmp;	
   	}
+  }
 
-
+  public static void main(String[] args) {
+    Reorder_List_143 obj = new Reorder_List_143();
   }
 }

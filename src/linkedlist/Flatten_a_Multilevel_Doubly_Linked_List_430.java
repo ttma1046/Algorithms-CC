@@ -107,9 +107,9 @@ class Flatten_a_Multilevel_Doubly_Linked_List_430 {
     /*
     Time Complexity: \mathcal{O}(N)O(N) where NN is the number of nodes in the list. The DFS algorithm traverses each node once and only once.
 
-    Space Complexity: \mathcal{O}(N)O(N) where NN is the number of nodes in the list. 
-    In the worst case, the binary tree might be extremely unbalanced (i.e. the tree leans to the left), 
-    which corresponds to the case where nodes are chained with each other only with the child pointers. 
+    Space Complexity: \mathcal{O}(N)O(N) where NN is the number of nodes in the list.
+    In the worst case, the binary tree might be extremely unbalanced (i.e. the tree leans to the left),
+    which corresponds to the case where nodes are chained with each other only with the child pointers.
     In this case, the recursive calls would pile up, and it would take NN space in the function call stack.
     */
     public Node flattenII(Node head) {
@@ -136,5 +136,40 @@ class Flatten_a_Multilevel_Doubly_Linked_List_430 {
 
         prevHead.next.prev = null;
         return prevHead.next;
+    }
+
+    public static void main(String[] args) {
+        Flatten_a_Multilevel_Doubly_Linked_List_430 obj
+            = new Flatten_a_Multilevel_Doubly_Linked_List_430();
+    }
+
+    public Node flatten(Node head) {
+        if (head == null) return head;
+
+        Node dummy = new Node(0, nulll, head, null);
+
+        Node prev = dummy;
+        Node curr;
+
+        Deque<Node> stack = new ArrayDeque<>();
+        stack.push(head);
+
+        while(stack.size() > 0) {
+            curr = stack.pop();
+            prev.next = curr;
+            curr.prev = prev;
+
+            if (curr.next != null) stack.push(curr.next);
+
+            if (curr.child != null) {
+                stack.push(curr.child);
+                curr.child = null;
+            }
+
+            prev = curr;
+        }
+
+        dummy.next.prev = null;
+        return dummy.next;
     }
 }

@@ -27,3 +27,16 @@ Linked List:
 24 206 Reverse Linked List https://leetcode.com/problems/reverse-linked-list/
 
 25 445 Add Two Numbers II https://leetcode.com/problems/add-two-numbers-ii/
+
+26 143 Reorder List https://leetcode.com/problems/reorder-list/
+
+27 234 Palindrome Linked List https://leetcode.com/problems/palindrome-linked-list/
+
+28 430 Flatten a Multilevel Doubly Linked List https://leetcode.com/problems/flatten-a-multilevel-doubly-linked-list/
+
+29 708 Insert into a Sorted Circular Linked List https://leetcode.com/problems/insert-into-a-sorted-circular-linked-list/
+
+30 380 Insert Delete GetRandom O(1) https://leetcode.com/problems/insert-delete-getrandom-o1/
+
+31 146 LRU Cache https://leetcode.com/problems/lru-cache/ 
+

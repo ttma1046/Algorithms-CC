@@ -44,59 +44,55 @@ Constraints:
 */
 
 class Node {
-	public int val;
-	public Node next;
+    public int val;
+    public Node next;
 
-	public Node() {}
+    public Node() {}
 
-	public Node(int _val) {
-		val = _val;
-	}
+    public Node(int _val) {
+        val = _val;
+    }
 
-	public Node(int _val, Node _next) {
-		val = _val;
-		next = _next;
-	}
+    public Node(int _val, Node _next) {
+        val = _val;
+        next = _next;
+    }
 };
 
 class Insert_into_a_Sorted_Circular_Linked_List_708 {
-	Node curr;
-	Node prev;
+    public Node insert(Node head, int insertVal) {
+        if (head == null) {
+            Node newNode = new Node(insertVal, null);
+            newNode.next = newNode;
+            return newNode;
+        }
 
-	public Node insert(Node head, int insertVal) {
-		if (head == null) {
-			Node newNode = new Node(insertVal, null);
-			newNode.next = newNode;
-			return newNode;
-		}
+        Node prev = head;
+        Node curr = head.next;
 
-		Node prev = head;
-		Node curr = head.next;
-		do {
-			// Case
-			if ((prev.val <= insertVal && insertVal <= curr.val) 
-				|| (prev.val > curr.val && insertVal >= prev.val) 
-				|| (prev.val > curr.val && insertVal <= curr.val)) {
-				break;
-			}
+        do {
+            if ((prev.val <= insertVal && insertVal <= curr.val) || (
+                        prev.val > curr.val && (insertVal >= prev.val  || insertVal <= curr.val)
+                    ) 
+            	break;
 
-			prev = curr;
-			curr = curr.next;
-		} while (prev != head);
+            prev = curr;
+            curr = curr.next;
+        } while(prev != curr);
 
-		prev.next = new Node(insertVal, curr);
-		return head;
-	}
+        prev.next = new Node(insertVal, curr);
+        return head;
+    }
 
-	public static void main(String[] args) {
-		Node head = new Node(1);
-		head.next = head;
+    public static void main(String[] args) {
+        Node head = new Node(1);
+        head.next = head;
 
-		Node list = new Insert_into_a_Sorted_Circular_Linked_List_708().insert(head, 0);
-		Node curr = list;
-		do {
-			System.out.println(list.val);
-			list = list.next;
-		} while (list != curr);
-	}
+        Node list = new Insert_into_a_Sorted_Circular_Linked_List_708().insert(head, 0);
+        Node curr = list;
+        do {
+            System.out.println(list.val);
+            list = list.next;
+        } while (list != curr);
+    }
 }
