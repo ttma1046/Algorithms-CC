@@ -72,7 +72,7 @@ class Insert_into_a_Sorted_Circular_Linked_List_708 {
 
         do {
             if ((prev.val <= insertVal && insertVal <= curr.val) || (
-                        prev.val > curr.val && (insertVal >= prev.val  || insertVal <= curr.val)
+                        prev.val > curr.val && (insertVal >= prev.val || insertVal <= curr.val)
                     ) 
             	break;
 
