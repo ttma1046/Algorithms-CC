@@ -68,7 +68,16 @@ Monotonic stack
 
 41 346 Moving average from data stream https://leetcode.com/problems/moving-average-from-data-stream/
 
+Sliding Window (Queue)
 
+42 933 Number of Recent Calls https://leetcode.com/problems/number-of-recent-calls/
 
+43 919 Complete Binary Tree Inserter https://leetcode.com/problems/complete-binary-tree-inserter/
 
+44 515 Find Largest Value in Each Tree Row  https://leetcode.com/problems/find-largest-value-in-each-tree-row/
 
+45 513 https://leetcode-cn.com/problems/find-bottom-left-tree-value/
+
+46 199 https://leetcode-cn.com/problems/binary-tree-right-side-view/
+
+47 814 https://leetcode-cn.com/problems/binary-tree-pruning/
