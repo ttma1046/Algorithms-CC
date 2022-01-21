@@ -141,7 +141,7 @@ class Making_a_Large_Island_827 {
         DSU dsu = new DSU(m * n);
 
         for (int i = 0; i < m; ++i) 
-            for (int i = 0; i < m; ++i) 
+            for (int i = 0; i < n; ++i) 
                 if (grid[i][j] == 1)
                     for (int[] dir: dirs) {
                         int x = i + dir[0];

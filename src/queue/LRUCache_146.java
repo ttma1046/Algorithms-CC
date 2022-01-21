@@ -60,9 +60,7 @@ public class LRUCache_146 {
     }
 
     public int get(int key) {
-        if (!cache.containsKey(key)) {
-            return -1;
-        }
+        if (!cache.containsKey(key)) return -1;        
 
         DlinkedNode node = cache.get(key);
         moveToHead(node);
