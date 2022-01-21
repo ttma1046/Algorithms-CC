@@ -34,88 +34,64 @@ Explanation:
 */
 
 class Evaluate_Reverse_Polish_Notation_150 {
-	public int evalRPN(String[] tokens) {
-		Stack<Integer> stack = new Stack<Integer>();
+    public int evalRPN(String[] tokens) {
+      Stack<Integer> stack = new Stack<Integer>();
 
-		for (String token : tokens) {
-			switch (token) {
-			case "+":
-				int a = stack.pop();
-				int b = stack.pop();
-				stack.push(b + a);
-				break;
-			case "-":
-				int c = stack.pop();
-				int d = stack.pop();
-				stack.push(d - c);
-				break;
-			case "*":
-				int e = stack.pop();
-				int f = stack.pop();
-				stack.push(f * e);
-				break;
-			case "/":
-				int g = stack.pop();
-				int h = stack.pop();
-				stack.push(h / g);
-				break;
-			default:
-				stack.push(Integer.parseInt(token));
-				break;
-			}
-		}
+      for (String token : tokens) {
+        switch (token) {
+          case "+":
+            int a = stack.pop();
+            int b = stack.pop();
+            stack.push(b + a);
+            break;
+          case "-":
+            int c = stack.pop();
+            int d = stack.pop();
+            stack.push(d - c);
+            break;
+          case "*":
+            int e = stack.pop();
+            int f = stack.pop();
+            stack.push(f * e);
+            break;
+          case "/":
+            int g = stack.pop();
+            int h = stack.pop();
+            stack.push(h / g);
+            break;
+          default:
+            stack.push(Integer.parseInt(token));
+            break;
+        }
+      }
 
-		return stack.peek();
-	}
+      return stack.peek();
+    }
 
-	public static int evalRPN(String[] tokens) {
-		int[] numStack = new int[tokens.length / 2 + 1];
-		int index = 0;
-		for (String s : tokens) {
-			if (s.equals("+")) {
-				numStack[index - 2] += numStack[--index];
-			} else if (s.equals("-")) {
-				numStack[index - 2] -= numStack[--index];
-			} else if (s.equals("*")) {
-				numStack[index - 2] *= numStack[--index];
-			} else if (s.equals("/")) {
-				numStack[index - 2] /= numStack[--index];
-			} else {
-				numStack[index++] = Integer.parseInt(s);
-			}
-		}
-		return numStack[0];
-	}
+    public static int evalRPN(String[] tokens) {
+    	int[] stack = new int[tokens.length / 2 + 1];
 
-	public static void main(String[] args) {
-		System.out.println(new Evaluate_Reverse_Polish_Notation_150().evalRPN(new String[] { "2", "1", "+", "3", "*" }));
-		System.out.println(new Evaluate_Reverse_Polish_Notation_150().evalRPN(new String[] { "4", "13", "5", "/", "+" }));
+    	int index = 0;
 
-		System.out.println(new Evaluate_Reverse_Polish_Notation_150().evalRPN(new String[] { "10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+" }));
-	}
+    	for (String token: tokens) {
+    		if (token.equals("+")) 
+    			stack[index - 2] += stack[--index];
+    		else if (token.equals("-"))
+    			stack[index - 2] -= stack[--index];
+    		else if (token.equals("*"))
+    			stack[index - 2] *= stack[--index];
+    		else if (token.equals("/"))
+    			stack[index - 2] /= stack[--index];
+    		else
+    			stack[index++] = Integer.parseInt(token);
+    	}
 
+    	return stack[0];
+    }
 
-	public static int evalRPN(String[] tokens) {
-		int[] stack = new int[tokens.length / 2 + 1];
-
-		int index = 0;
-
-		for(String s: tokens) {
-			if (s.equals("+")) {
-				stack[index - 2] += stack[--index];
-			} else if (s.equals("-")) {
-				stack[index - 2] -= stack[--index];
-			} else if (s.equals("*")) {
-				stack[index - 2] *= stack[--index];
-			} else if (s.equals("/")) {
-				stack[index - 2] /= stack[--index];
-			} esle {
-				stack[index++] = Integer.parseInt(s);
-			}
-		}
-
-		return stack[0];
-
-	}
-
+    public static void main(String[] args) {
+        System.out.println(new Evaluate_Reverse_Polish_Notation_150().evalRPN(new String[] { "2", "1", "+", "3", "*" }));
+        System.out.println(new Evaluate_Reverse_Polish_Notation_150().evalRPN(new String[] { "4", "13", "5", "/", "+" }));
+        System.out.println(new Evaluate_Reverse_Polish_Notation_150().evalRPN(new String[] { "10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+" }));
+    }
 }

@@ -38,5 +38,37 @@ Linked List:
 
 30 380 Insert Delete GetRandom O(1) https://leetcode.com/problems/insert-delete-getrandom-o1/
 
-31 146 LRU Cache https://leetcode.com/problems/lru-cache/ 
+31 146 LRU Cache https://leetcode.com/problems/lru-cache/
+
+Map
+
+32 242 Valid Anagram https://leetcode.com/problems/valid-anagram/
+
+33 49 Group Anagrams https://leetcode.com/problems/group-anagrams
+
+Array
+
+34 953 Verifying na Alien Dictionary https://leetcode.com/problems/verifying-an-alien-dictionary/
+
+35 539 Minimum time difference https://leetcode.com/problems/minimum-time-difference
+
+Stack
+
+36 150 Evaluate Reverse Polish Notation https://leetcode.com/problems/evaluate-reverse-polish-notation/
+
+37 735 Asteroid Collision https://leetcode.com/problems/asteroid-collision/
+
+Monotonic stack
+
+38 739 Daliy Temperatures https://leetcode.com/problems/daily-temperatures/
+
+39 84 Largest Rectangle in Histogram https://leetcode.com/problems/largest-rectangle-in-histogram/
+
+40 85 Maximal Rectangle  https://leetcode.com/problems/maximal-rectangle/
+
+41 346 Moving average from data stream https://leetcode.com/problems/moving-average-from-data-stream/
+
+
+
+
 

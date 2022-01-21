@@ -93,70 +93,64 @@ Space complexity : O(n). Space required for Segment Tree.
 */
 
 class Largest_Rectangle_in_Histogram_84 {
-
     public int largestRectangleAreaBFI(int[] heights) {
-        int maxarea = 0;
-        for (int i = 0; i < heights.length; i++) {
-            for (int j = i; j < heights.length; j++) {
+        int maxArea = 0;
+        int n = heights.length;
+        for (int i = 0; i < n; ++i) {
+            for (int j = i; j < n; ++j) {
+                int minHeight = Integer.MAX_VALUE;
+                for (int k = i; k <= j; k++)
+                    minHeight = Math.min(minHeight, heights[k]);
 
-                int minheight = Integer.MAX_VALUE;
-
-                for (int k = i; k <= j; k++) {
-                    minheight = Math.min(minheight, heights[k]);
-                }
-
-                maxarea = Math.max(maxarea, minheight * (j - i + 1));
+                maxArea = Math.max(maxArea, minHeight * (j - i + 1));
             }
         }
-        return maxarea;
-    }
 
+        return maxArea;
+    }
     /*
     Complexity Analysis
 
     Time complexity : O(n^3). We have to find the minimum height bar O(n) lying between every pair O(n^2).
 
     Space complexity : O(1). Constant space is used.
-
     */
 
     public int largestRectangleAreaBFII(int[] heights) {
-        int max = 0;
-        for (int i = 0; i < heights.length; ++i) {
-            int height = Integer.MAX_VALUE;
-            for (int j = i; j < heights.length; ++j) {
-                height = Math.min(height, heights[j]);
-                max = Math.max(height * (j + 1 - i), max);
+        int maxArea = 0;
+        int n = heights.length;
+
+        for (int i = 0; i < n; ++i) {
+            int minHeight = Math.MAX_VALUE;
+            for (int j = i; j < n; ++j) {
+                minHeight = Math.min(minHeight, heights[j]);
+                maxArea = Math.max(maxArea, minHeight * (j - i + 1));
             }
         }
 
-        return max;
+        return maxArea;
     }
-
     /*
     Time complexity : O(n^2). Every possible pair is considered
 
     Space complexity : O(1). No extra space is used.
     */
 
-    private int calculateArea(int[] heights, int start, int end) {
+    private int calculate(int[] heights, int start, int end) {
         if (start > end) return 0;
 
-        int index = start;
+        int minIndex = start;
 
-        for (int i = start; i <= end; i++)  {
-            if (heights[index] > heights[i]) {
-                index = i;
-            }
-        }
+        for (int i = start; i <= end; ++i)
+            if (heights[i] < heights[minIndex])
+                minIndex = i;
 
-        return Math.max(
-                   heights[index] * (end - start + 1),
-                   Math.max(calculateArea(heights, start, index - 1), calculateArea(heights, index + 1, end)));
+        return Math.max(heights[minIndex] * (end - start + 1),
+                        Math.max(calculate(heights, start, minIndex - 1), calculate(heights, minIndex + 1, end)));
     }
 
-    public int largestRectangleAreaDivideAndConquer(int[] heights) {
-        return calculateArea(heights, 0, heights.length - 1);
+    public int largestRectangleAreaBFII(int[] heights) {
+        return calculate(heights, 0, heights.length - 1);
     }
 
     /*
@@ -202,20 +196,20 @@ class Largest_Rectangle_in_Histogram_84 {
     */
 
     public int largestRectangleAreaStack(int[] heights) {
-        Stack<Integer> stack = new Stack<>();
+        Deque<Integer> stack = new ArrayDeque<>();
         stack.push(-1);
-        int n = heights.length;
+
+        int height = heights.length;
         int max = 0;
 
-        for (int i = 0; i < n; ++i) {
+        for (int i = 0; i < height; ++i) {
             while (stack.peek() != -1 && heights[i] <= heights[stack.peek()]) {
                 int currentHeight = heights[stack.pop()];
 
                 int currentWidth = i - stack.peek() - 1;
 
-                if (currentHeight * currentWidth > max) {
+                if (currentHeight * currentWidth > max)
                     max = currentHeight * currentWidth;
-                }
             }
 
             stack.push(i);
@@ -223,38 +217,43 @@ class Largest_Rectangle_in_Histogram_84 {
 
         while (stack.peek() != -1) {
             int currentHeight = heights[stack.pop()];
-            int currentWidth = n - stack.peek() - 1;
+            int currentWidth = height - stack.peek() - 1;
 
-            if (currentHeight * currentWidth > max) {
+            if (currentHeight * currentWidth > max)
                 max = currentHeight * currentWidth;
-            }
         }
 
         return max;
     }
 
+    /*
+    Complexity Analysis
+
+    Time complexity : O(n)O(n). nn numbers are pushed and popped.
+
+    Space complexity : O(n)O(n). Stack is used.
+    */
 
     public int largestRectangleAreaStackII(int[] heights) {
-        int n = heights.length, i = 0, max = 0;
+        int height = heights.length, i = 0, max = 0;
 
-        Stack<Integer> s = new Stack<>();
+        Deque<Integer> s = new ArrayDeque<>();
 
-        while (i < n) {
+        while (i < height) {
             // as long as the current bar is shorter than the last one in the stack
             // we keep popping out the stack and calculate the area based on
             // the popped bar
-            while (!s.isEmpty() && heights[i] < heights[s.peek()]) {
+            while (s.size() > 0 && heights[i] < heights[s.peek()])
                 // tricky part is how to handle the index of the left bound
                 max = Math.max(max, heights[s.pop()] * (i - (s.isEmpty() ? 0 : s.peek() + 1)));
-            }
+
             // put current bar's index to the stack
             s.push(i++);
         }
 
         // finally pop out any bar left in the stack and calculate the area based on it
-        while (!s.isEmpty()) {
-            max = Math.max(max, heights[s.pop()] * (n - (s.isEmpty() ? 0 : s.peek() + 1)));
-        }
+        while (!s.isEmpty())
+            max = Math.max(max, heights[s.pop()] * (height - (s.isEmpty() ? 0 : s.peek() + 1)));
 
         return max;
     }
@@ -262,9 +261,7 @@ class Largest_Rectangle_in_Histogram_84 {
     public int largestRectangleArea(int[] heights) {
         int n = heights.length;
 
-        if (n == 0) {
-            return 0;
-        }
+        if (n == 0) return 0;
 
         int[] lessFromLeft = new int[n]; // idx of the first bar in the left that is lower than current
         int[] lessFromRight = new int[n]; // idx of the first bar the right that is lower than current
@@ -275,9 +272,8 @@ class Largest_Rectangle_in_Histogram_84 {
         for (int i = 1; i < n; i++) {
             int p = i - 1;
 
-            while (p >= 0 && heights[p] >= heights[i]) {
+            while (p >= 0 && heights[p] >= heights[i])
                 p = lessFromLeft[p];
-            }
 
             lessFromLeft[i] = p;
         }
@@ -285,19 +281,17 @@ class Largest_Rectangle_in_Histogram_84 {
         for (int i = n - 2; i >= 0; i--) {
             int p = i + 1;
 
-            while (p < n && heights[p] >= heights[i]) {
+            while (p < n && heights[p] >= heights[i])
                 p = lessFromRight[p];
-            }
 
             lessFromRight[i] = p;
         }
 
         int maxArea = 0;
 
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++)
             maxArea = Math.max(maxArea, heights[i] * (lessFromRight[i] - lessFromLeft[i] - 1));
-        }
-
+        
         return maxArea;
     }
 

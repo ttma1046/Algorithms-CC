@@ -146,7 +146,7 @@ class Flatten_a_Multilevel_Doubly_Linked_List_430 {
     public Node flatten(Node head) {
         if (head == null) return head;
 
-        Node dummy = new Node(0, nulll, head, null);
+        Node dummy = new Node(0, null, head, null);
 
         Node prev = dummy;
         Node curr;

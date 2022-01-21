@@ -1,6 +1,7 @@
 package monotonicstack;
 import java.util.Stack;
-
+import java.util.Deque;
+import java.util.ArrayDeque;
 /*
 Given an array of integers temperatures represents the daily temperatures,
 
@@ -32,15 +33,33 @@ Constraints:
 // 小变种， instead of stack里面直接储存value, 我们现在储存index，因为要算距离
 class Daliy_temperatures_739 {
     public int[] dailyTemperatures(int[] temperatures) {
+        Deque<Integer> stack = new ArrayDeque<>();
+
         int n = temperatures.length;
         int[] res = new int[n];
 
-        Stack<Integer> stack = new Stack<>();
-
         for (int i = n - 1; i >= 0; --i) {
-            while(stack.size() > 0 && temperatures[stack.peek()] <= temperatures[i]) stack.pop();
-            if (stack.size() > 0) {
-                res[i] = stack.peek() - i;
+            while (stack.size() > 0 && temperatures[stack.peek()] <= temperatures[i])
+                stack.pop();
+
+            if (stack.size() > 0) res[i] = stack.peek() - i;
+
+            stack.push(i);
+        }
+
+        return res;
+    }
+
+    public int[] dailyTemperaturesII(int[] temperatures) {
+        Deque<Integer> stack = new ArrayDeque<>();
+
+        int n = temperatures.length;
+        int[] res = new int[n];
+
+        for (int i = 0; i < temperatures.length; ++i) {
+            while(stack.size() > 0 && temperatures[stack.peek()] < temperatures[i]) {
+                int value = stack.pop();
+                res[value] = i - value;
             }
             stack.push(i);
         }
@@ -48,21 +67,7 @@ class Daliy_temperatures_739 {
         return res;
     }
 
-    public int[] dailyTemperatures(int[] temperatures) {
-        Stack<Integer> stack = new Stack<>();
-        int [] result = new int[temperatures.length];
-
-        for(int i = 0; i < temperatures.length; i++) {
-            while(!stack.empty() && temperatures[stack.peek()] < temperatures[i]) {
-                int value = stack.pop();
-                result[value] = i - value;
-            }
-            stack.push(i);
-        }
-        return result;
-    }
-
     public static void main(String[] args) {
-
+        Daliy_temperatures_739 obj = new Daliy_temperatures_739();
     }
 }
