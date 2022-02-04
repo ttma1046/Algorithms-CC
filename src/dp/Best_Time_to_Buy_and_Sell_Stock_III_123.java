@@ -80,9 +80,7 @@ class Best_Time_to_Buy_and_Sell_Stock_III_123 {
             t1Profit = Math.max(t1Profit, price - t1Cost);
 
             t2Cost = Math.min(t2Cost, price - t1Profit);
-
             t2Profit = Math.max(t2Profit, price - t2Cost);
-
         }
 
         return t2Profit;

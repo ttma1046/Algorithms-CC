@@ -7,7 +7,7 @@ You want to maximize your profit by choosing a single day to buy one stock and c
 
 Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.
 
- 
+
 
 Example 1:
 
@@ -20,7 +20,7 @@ Example 2:
 Input: prices = [7,6,4,3,1]
 Output: 0
 Explanation: In this case, no transactions are done and the max profit = 0.
- 
+
 
 Constraints:
 
@@ -30,18 +30,14 @@ Constraints:
 
 class BestTimetoBuyandSellStock_121 {
     public int maxProfit(int[] prices) {
-        if (prices == null || prices.length <=0) {
+        if (prices == null || prices.length <= 0)
             return 0;
-        }
 
         int maxProfit = 0;
-        for (int i = prices.length - 1; i >= 1; i--) {
-            for (int j = i - 1; j >= 0; j--) {
-                if (prices[i] > prices[j] && prices[i] - prices[j] > maxProfit) {
+        for (int i = prices.length - 1; i >= 1; i--)
+            for (int j = i - 1; j >= 0; j--)
+                if (prices[i] > prices[j] && prices[i] - prices[j] > maxProfit)
                     maxProfit = prices[i] - prices[j];
-                }
-            }
-        }
 
         return maxProfit;
     }
@@ -64,7 +60,7 @@ class BestTimetoBuyandSellStock_121 {
         */
 
         int min = Integer.MAX_VALUE, max = 0;
-        for (int price: prices) {
+        for (int price : prices) {
             min = Math.min(min, price);
             max = Math.max(price - min, max);
         }

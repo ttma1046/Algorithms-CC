@@ -1,7 +1,7 @@
 package recursion;
 
 /* this is a joke question */
-class BestTimetoBuyandSellStockII_day5 {
+class BestTimetoBuyandSellStockII_122 {
     public int maxProfit(int[] prices) {
         if (prices.length == 0) return 0;
 
