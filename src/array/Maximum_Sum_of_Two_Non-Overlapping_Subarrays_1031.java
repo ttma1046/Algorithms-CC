@@ -6,24 +6,23 @@ The array with length firstLen could occur before or after the array with length
 
 A subarray is a contiguous part of an array.
 
-
-
 Example 1:
 
 Input: nums = [0,6,5,2,2,5,1,9,4], firstLen = 1, secondLen = 2
 Output: 20
 Explanation: One choice of subarrays is [9] with length 1, and [6,5] with length 2.
+
 Example 2:
 
 Input: nums = [3,8,1,3,2,1,8,9,0], firstLen = 3, secondLen = 2
 Output: 29
 Explanation: One choice of subarrays is [3,8,1] with length 3, and [8,9] with length 2.
+
 Example 3:
 
 Input: nums = [2,1,5,6,0,9,5,0,3,8], firstLen = 4, secondLen = 3
 Output: 31
 Explanation: One choice of subarrays is [5,6,0,9] with length 4, and [3,8] with length 3.
-
 
 Constraints:
 
@@ -32,14 +31,15 @@ Constraints:
 firstLen + secondLen <= nums.length <= 1000
 0 <= nums[i] <= 1000
 */
-class Solution {
+class Maximum_Sum_of_Two_Non_Overlapping_Subarrays_1031 {
     public int maxSumTwoNoOverlap(int[] nums, int firstLen, int secondLen) {
-        int res = 0, 
+        int res = 0;
         int firstLensum = 0;
         int secondLensum = 0;
 
         int firstLenmax = 0;
         int secondLenmax = 0;
+
         for (int i = 0; i < nums.length; ++i) {
             secondLensum += nums[i];
             if (i - secondLen >= 0) secondLensum -= nums[i - secondLen];
@@ -63,8 +63,11 @@ class Solution {
             secondLenmax = Math.max(secondLenmax, secondLensum);
             res = Math.max(res, secondLenmax + firstLensum);
         }
-        
+
         return res;
     }
-  }
-}	
+
+    public static void main(String[] args) {
+        Maximum_Sum_of_Two_Non_Overlapping_Subarrays_1031 obj = new Maximum_Sum_of_Two_Non_Overlapping_Subarrays_1031();
+    }
+}
