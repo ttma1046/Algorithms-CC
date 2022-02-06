@@ -5,7 +5,11 @@ import java.util.LinkedList;
 import java.util.ArrayList;
 
 /*
-Given a binary tree, imagine yourself standing on the right side of it, return the values of the nodes you can see ordered from top to bottom.
+Given a binary tree,
+
+imagine yourself standing on the right side of it,
+
+return the values of the nodes you can see ordered from top to bottom.
 
 Example:
 
@@ -18,26 +22,66 @@ Explanation:
 2     3         <---
  \     \
   5     4       <---
-*/
 
+Example 2:
+
+Input: root = [1,null,3]
+Output: [1,3]
+
+Example 3:
+
+Input: root = []
+Output: []
+
+Constraints:
+
+The number of nodes in the tree is in the range [0, 100].
+-100 <= Node.val <= 100
+*/
 
 // Definition for a binary tree node.
-/*
-public class TreeNode {
-	int val;
-	TreeNode left;
-	TreeNode right;
-	TreeNode() {}
-	TreeNode(int val) { this.val = val; }
-	TreeNode(int val, TreeNode left, TreeNode right) {
-		this.val = val;
-		this.left = left;
-		this.right = right;
-	}
+
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode() {}
+    TreeNode(int val) {
+        this.val = val;
+    }
+    TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
 }
-*/
 
 public class Binary_Tree_Right_Side_View_199 {
+    public List<Integer> rightSideViewI(TreeNode root) {
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+
+        List<Integer> res = new ArrayList<Integer>();
+
+        if (root != null) {
+            queue.offer(root);
+
+            while (!queue.isEmpty()) {
+                int length = queue.size();
+
+                while (length > 0) {
+                    TreeNode current = queue.poll();
+
+                    if (current.left != null) queue.offer(current.left);
+                    if (current.right != null) queue.offer(current.right);
+                    if (length == 1) res.add(current.val);
+                    length--;
+                }
+            }
+        }
+
+        return res;
+    }
+
     public List<Integer> rightSideViewII(TreeNode root) {
         List<Integer> res = new ArrayList<Integer>();
 
@@ -47,10 +91,10 @@ public class Binary_Tree_Right_Side_View_199 {
 
         queue.offer(root);
 
-        while (queue.size() > 0) {
+        while(queue.size() > 0) {
             int length = queue.size();
 
-            for (int i = 0; i < length; i++) {
+            for (int i = 0; i < length; ++i) {
                 TreeNode current = queue.poll();
                 if (i == length - 1) res.add(current.val);
                 if (current.left != null) queue.offer(current.left);
@@ -78,31 +122,6 @@ public class Binary_Tree_Right_Side_View_199 {
                 if (i == 0) res.add(current.val);
                 if (current.left != null) queue.offer(current.left);
                 if (current.right != null) queue.offer(current.right);
-            }
-        }
-
-        return res;
-    }
-
-    public List<Integer> rightSideViewI(TreeNode root) {
-        Queue<TreeNode> queue = new LinkedList<TreeNode>();
-
-        List<Integer> res = new ArrayList<Integer>();
-
-        if (root != null) {
-            queue.offer(root);
-
-            while (!queue.isEmpty()) {
-                int length = queue.size();
-
-                while (length > 0) {
-                    TreeNode current = queue.poll();
-
-                    if (current.left != null) queue.offer(current.left);
-                    if (current.right != null) queue.offer(current.right);
-                    if (length == 1) res.add(current.val);
-                    length--;
-                }
             }
         }
 
