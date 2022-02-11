@@ -45,25 +45,16 @@ Output: false
 import java.util.LinkedList;
 import java.util.Stack;
 
-
 class Path_Sum_112 {
     public boolean hasPathSumFastest(TreeNode root, int targetSum) {
-        if (root == null) {
-            return false;
-        }
-
-        if (root.val == targetSum && root.left == null && root.right == null) {
-            return true;
-        }
-
+        if (root == null) return false;
+        
+        if (root.val == targetSum && root.left == null && root.right == null) return true;
+        
         return hasPathSumFastest(root.left, targetSum - root.val) || hasPathSumFastest(root.right, targetSum - root.val);
     }
 
     public boolean hasPathSum(final TreeNode root, final int sum) {
-        if (root == null) {
-            return false;
-        }
-
         return myDFS(root, sum, 0);
     }
 
@@ -73,24 +64,16 @@ class Path_Sum_112 {
 
         currentSum += current.val;
 
-        if (current.left == null && current.right == null) {
-            return currentSum == sum;
-        }
-
+        if (current.left == null && current.right == null) return currentSum == sum;
+        
         return myDFS(current.left, sum, currentSum) || myDFS(current.right, sum, currentSum);
     }
 
     public boolean hasPathSumII(TreeNode root, int sum) {
-        if (root == null) {
-            return false;
-        }
-
+        if (root == null) return false;
         sum -= root.val;
-
-        if (root.left == null && root.right == null) {
-            return sum == 0;
-        }
-
+        if (root.left == null && root.right == null) return sum == 0;
+        
         return hasPathSumII(root.left, sum) || hasPathSumII(root.right, sum);
     }
 

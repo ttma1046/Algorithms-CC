@@ -1,4 +1,4 @@
-
+package tree;
 /*
 
 You are given the root of a binary tree containing digits from 0 to 9 only.
@@ -88,5 +88,35 @@ class Sum_Root_to_Leaf_Numbers_129 {
     	current = 10 * current + node.val;
     	if (node.left == null && node.right == null) return current;
     	return dfs(node.left, current) + dfs(node.right, current);
+    }
+
+    public static void main(String[] args) {
+        Sum_Root_to_Leaf_Numbers_129 obj = new Sum_Root_to_Leaf_Numbers_129():
+    }
+
+    // 11/02/2022
+    private int sum = 0;
+    public int sumNumbers(TreeNode root) {
+        if (root == null) return 0;
+        dfs(root, 0);
+        return sum;
+    }
+
+    private void dfs(TreeNode node, int exist) {
+        exist = node.value + exist * 10;
+        if (node.left == null && node.right == null) sum += exist;
+        if (node.left != null) dfs(node.left, exist);
+        if (node.right != null) dfs(node.right, exist);
+    }
+
+    public int sumNumbers(TreeNode root) {
+        return dfs(root, 0);
+    }
+
+    private int dfs(TreeNode node, int currentSum) {
+        if (root == null) return 0;
+        currentSum = currentSum * 10 + node.val;
+        if (node.left == null && node.right == null) return currentSum;
+        return dfs(node.left, currentSum) + dfs(node.right, currentSum);
     }
 }
