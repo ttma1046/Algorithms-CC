@@ -41,7 +41,7 @@ class TreeNode {
     }
 }
 /**/
-public class Path_Sum_III {
+public class Path_Sum_III_437 {
     int count = 0;
     int k;
     HashMap<Integer, Integer> map = new HashMap();
@@ -80,5 +80,4 @@ public class Path_Sum_III {
         preorder(root, 0, sum);
         return count;
     }
-}
 }
