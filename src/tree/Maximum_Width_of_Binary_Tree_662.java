@@ -182,6 +182,26 @@ class Maximum_Width_of_Binary_Tree_662 {
         return this.maxWidth;
     }
 
+
+    public int widthOfBinaryTree(TreeNode root) {
+        if (node == null) return 0;
+
+        return dfs(root, 0, 0, new ArrayList<Integer>());
+    }
+
+    private int dfs(TreeNode node, int depth, int colIndex, List<Integer> list) {
+        if (node == null) return 0;
+
+        if (depth == list.size()) list.add(colIndex);
+
+        int currWidth = colIndex - list.get(depth) + 1;
+
+        int leftWidth = dfs(node.left, depth + 1, colIndex * 2, list);
+        int rightWidth = dfs(node.right, depth + 1, colIndex * 2 + 1, list);
+
+        return Math.max(currWidth, Math.max(leftWidth, rightWidth));
+    }
+
     public static void main(String[] args) {
         TreeNode five = new TreeNode(5);
 
