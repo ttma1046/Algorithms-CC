@@ -1,6 +1,7 @@
 package backtracking;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 /*
 Given an array of distinct integers candidates and a target integer target, return a list of all unique combinations of candidates where the chosen numbers sum to target. You may return the combinations in any order.
 
@@ -59,9 +60,8 @@ class Combination_Sum_39 {
             return;
         }
 
-        if (remain < 0) {
-            return;
-        }
+        if (remain < 0 || start > candidates.length - 1)
+            return;       
 
         for (int i = start; i < candidates.length; ++i) {
             rest.add(candidates[i]);
@@ -70,15 +70,38 @@ class Combination_Sum_39 {
         }
     }
 
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> res = new ArrayList<>();
+
+        Arrays.sort(candidates);
+
+        recursive(candidates, target, res, new ArrayList<Integer>(), 0);
+
+        return res;
+    }
+
+    public void recursive(int[] candidates, int remain, List<List<Integer>> res, List<Integer> rest, int start) {
+        if (remain == 0) {
+            res.add(new ArrayList<Integer>(rest));
+            return;
+        }
+
+        for (int i = start; i < candidates.length && remain >= candidates[i]; ++i) {
+            rest.add(candidates[i]);
+            recursive(candidates, remain - candidates[i], res, rest, i);
+            rest.remove(rest.size() - 1);
+        }
+    }
+
     /*
-    Let NN be the number of candidates, TT be the target value, and MM be the minimal value among the candidates.
+    Let N be the number of candidates, T be the target value, and M be the minimal value among the candidates.
 
     Time Complexity: O(N^{\frac{T}{M}+1})
 
-    * As we illustrated before, the execution of the backtracking is unfolded as a DFS traversal in a n-ary tree. 
+    * As we illustrated before, the execution of the backtracking is unfolded as a DFS traversal in a n-ary tree.
         The total number of steps during the backtracking would be the number of nodes in the tree.
 
-    * At each node, it takes a constant time to process, except the leaf nodes which could take a linear time to make a copy of combination. 
+    * At each node, it takes a constant time to process, except the leaf nodes which could take a linear time to make a copy of combination.
         So we can say that the time complexity is linear to the number of nodes of the execution tree.
 
     * Here we provide a loose upper bound on the number of nodes.
@@ -106,8 +129,8 @@ class Combination_Sum_39 {
 
     public static void main(String[] args) {
         Combination_Sum_39 obj = new Combination_Sum_39();
-        int[] candidates = new int[] {2, 3, 6, 7};
-        int target = 7;
+        int[] candidates = new int[] {3, 2, 5};
+        int target = 8;
         List<List<Integer>> result = obj.combinationSum(candidates, target);
         for (List<Integer> res : result) {
             for (int l : res) {

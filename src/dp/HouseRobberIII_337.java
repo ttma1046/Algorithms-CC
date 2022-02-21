@@ -12,10 +12,10 @@ Input: [3,2,3,null,3,null,1]
      3
     / \
    2   3
-    \   \ 
+    \   \
      3   1
 
-Output: 7 
+Output: 7
 Explanation: Maximum amount of money the thief can rob = 3 + 3 + 1 = 7.
 Example 2:
 
@@ -24,21 +24,23 @@ Input: [3,4,5,1,3,null,1]
      3
     / \
    4   5
-  / \   \ 
+  / \   \
  1   3   1
 
 Output: 9
 Explanation: Maximum amount of money the thief can rob = 4 + 5 = 9.
 */
 
-public class HouseRobberIII_337 {
-    public class TreeNode {
-        public int val;
-        public TreeNode left;
-        public TreeNode right;
-        public TreeNode(int x) { val = x; }
+class TreeNode {
+    public int val;
+    public TreeNode left;
+    public TreeNode right;
+    public TreeNode(int x) {
+        val = x;
     }
+}
 
+public class HouseRobberIII_337 {
 
     public int rob(TreeNode root) {
         int[] res = robSub(root);

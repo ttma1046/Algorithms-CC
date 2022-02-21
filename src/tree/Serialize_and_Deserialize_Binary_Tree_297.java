@@ -159,7 +159,7 @@ class Codec {
     void serializeMy(TreeNode node, StringBuilder sb) {
         if (node == null) sb.append("#").append(",");
         else {
-            sb.append(String.valueOf(node.val)).append(",");
+            sb.append(node.val).append(",");
             serializeMy(node.left, sb);
             serializeMy(node.right, sb);
         }

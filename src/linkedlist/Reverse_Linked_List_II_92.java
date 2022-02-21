@@ -91,7 +91,8 @@ class Reverse_Linked_List_II_92 {
     public ListNode reverseBetween(ListNode head, int left, int right) {
         if (head == null) return null;
 
-        ListNode dummy = new ListNode(0), pre = dummy;
+        ListNode dummy = new ListNode(0);
+        ListNode pre = dummy;
         dummy.next = head;
 
         for (int i = 0; i < left - 1; i++) pre = pre.next;

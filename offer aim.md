@@ -1,7 +1,4 @@
-offer aim.md
-
-
-Sliding window:
+FSliding window:
 15 438. Find All Anagrams in a String
 
 16 3. Longest Substring Without Repeating Characters https://leetcode.com/problems/longest-substring-without-repeating-characters/
@@ -89,3 +86,25 @@ Queue/Deque:
 49 129 Sum Root to Leaf Numbers https://leetcode.com/problems/sum-root-to-leaf-numbers/
 
 50 437 Path Sum III https://leetcode.com/problems/path-sum-iii/
+
+51 124 Binary Tree Maximum Path Sum https://leetcode.com/problems/binary-tree-maximum-path-sum/submissions/ 
+
+52 897 Increasing Order Search Tree https://leetcode.com/problems/increasing-order-search-tree/
+
+53 285 Inorder successor in BST https://leetcode-cn.com/problems/inorder-successor-in-bst/
+
+54
+538 Convert BST to Greater Tree https://leetcode-cn.com/problems/convert-bst-to-greater-tree/
+1038 Binary Search Tree to Greater Sum Tree https://leetcode-cn.com/problems/binary-search-tree-to-greater-sum-tree/
+
+55 173 Binear Search Tree Iterator https://leetcode.com/problems/binary-search-tree-iterator/
+
+56 653 Two Sum IV input is a BST https://leetcode.com/problems/two-sum-iv-input-is-a-bst/
+
+57 220 Contains Duplicate III https://leetcode.com/problems/contains-duplicate-iii/
+
+58 729 My Calendar I https://leetcode.com/problems/my-calendar-i/
+
+60 703 Kth Largest Element in a Stream https://leetcode.com/problems/kth-largest-element-in-a-stream/
+
+61 373 Find K Pairs with Smallest Sums https://leetcode.com/problems/find-k-pairs-with-smallest-sums/

@@ -41,9 +41,6 @@ class Split_Array_Largest_Sum_410 {
 			}
 		}
 
-		System.out.println("l:" + l);
-		System.out.println("r:" + r);
-
 		long ans = r;
 		
 		while (l <= r) {

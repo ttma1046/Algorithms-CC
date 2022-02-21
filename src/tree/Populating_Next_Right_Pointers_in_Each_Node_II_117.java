@@ -14,20 +14,16 @@ Populate each next pointer to point to its next right node. If there is no next 
 
 Initially, all next pointers are set to NULL.
 
-
-
 Follow up:
 
 You may only use constant extra space.
 Recursive approach is fine, you may assume implicit stack space does not count as extra space for this problem.
-
 
 Example 1:
 
 Input: root = [1,2,3,4,5,null,7]
 Output: [1,#,2,3,#,4,5,7,#]
 Explanation: Given the above binary tree (Figure A), your function should populate each next pointer to point to its next right node, just like in Figure B. The serialized output is in level order as connected by the next pointers, with '#' signifying the end of each level.
-
 
 Constraints:
 
@@ -36,19 +32,19 @@ The number of nodes in the given tree is less than 6000.
 */
 
 // Definition for a Node.
-class NextNode {
+class Node {
     public int val;
-    public NextNode left;
-    public NextNode right;
-    public NextNode next;
+    public Node left;
+    public Node right;
+    public Node next;
 
-    public NextNode() {}
+    public Node() {}
 
-    public NextNode(int _val) {
+    public Node(int _val) {
         val = _val;
     }
 
-    public NextNode(int _val, NextNode _left, NextNode _right, NextNode _next) {
+    public Node(int _val, Node _left, Node _right, Node _next) {
         val = _val;
         left = _left;
         right = _right;
@@ -56,8 +52,7 @@ class NextNode {
     }
 };
 
-class Populating_Next_Right_Pointers_in_Each_Node_II_117 {
-
+public class Populating_Next_Right_Pointers_in_Each_Node_II_117 {
     /*
     public NextNode connect(NextNode root) {
     	if (root == null) {
@@ -95,18 +90,16 @@ class Populating_Next_Right_Pointers_in_Each_Node_II_117 {
     Space Complexity: O(1) since we don't make use of any additional data structure 
     for traversing nodes on a particular level like the previous approach does.
     */
-    public NextNode connectIII(NextNode root) {
+    public Node connectIII(Node root) {
         if (root == null) return root;
         
-        NextNode leftMost = root;
-        NextNode curr = null;
-        NextNode prev = null;
+        Node curr = root;
+        Node leftMost = null;
+        Node prev = null;
 
-        while(leftMost != null) {
-            curr = leftMost;
+        while(curr != null) {
             leftMost = null;
             prev = null;
-
             while (curr != null) {
                 if (curr.left != null) {
                     if (prev != null)
@@ -128,6 +121,8 @@ class Populating_Next_Right_Pointers_in_Each_Node_II_117 {
 
                 curr = curr.next;
             }
+
+            curr = leftMost;
         }
 
         return root;
@@ -146,10 +141,7 @@ class Populating_Next_Right_Pointers_in_Each_Node_II_117 {
     So, in this case, the space complexity would be O(N).
     */
     public NextNode connectII(NextNode root) {
-
-        if (root == null) {
-            return root;
-        }
+        if (root == null) return root;
 
         // Initialize a queue data structure which contains
         // just the root of the tree

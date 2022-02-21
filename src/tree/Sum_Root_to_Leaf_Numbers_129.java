@@ -114,7 +114,7 @@ class Sum_Root_to_Leaf_Numbers_129 {
     }
 
     private int dfs(TreeNode node, int currentSum) {
-        if (root == null) return 0;
+        if (node == null) return 0;
         currentSum = currentSum * 10 + node.val;
         if (node.left == null && node.right == null) return currentSum;
         return dfs(node.left, currentSum) + dfs(node.right, currentSum);

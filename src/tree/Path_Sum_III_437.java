@@ -43,32 +43,30 @@ class TreeNode {
 /**/
 public class Path_Sum_III_437 {
     int count = 0;
-    int k;
     HashMap<Integer, Integer> map = new HashMap();
 
-    public void preorder(TreeNode node, int currSum, int sum) {
+    public void preorder(TreeNode node, int currSum, int targetSum) {
         if (node == null) return;
 
         // current prefix sum
         currSum += node.val;
 
         // here is the sum we're looking for
-        if (currSum == k)
-            count++;
+        if (currSum == targetSum) count++;
 
         // number of times the curr_sum − k has occured already,
         // determines the number of times a path with sum k
         // has occured upto the current node
-        count += map.getOrDefault(currSum - k, 0);
+        count += map.getOrDefault(currSum - targetSum, 0);
 
         // add the current sum into hashmap
         // to use it during the child nodes processing
         map.put(currSum, map.getOrDefault(currSum, 0) + 1);
 
         // process left subtree
-        preorder(node.left, currSum, sum);
+        preorder(node.left, currSum, targetSum);
         // process right subtree
-        preorder(node.right, currSum, sum);
+        preorder(node.right, currSum, targetSum);
 
         // remove the current sum from the hashmap
         // in order not to use it during
