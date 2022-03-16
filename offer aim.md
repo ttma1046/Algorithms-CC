@@ -105,6 +105,29 @@ Queue/Deque:
 
 58 729 My Calendar I https://leetcode.com/problems/my-calendar-i/
 
-60 703 Kth Largest Element in a Stream https://leetcode.com/problems/kth-largest-element-in-a-stream/
+Priority Queue:
+59 703 Kth Largest Element in a Stream https://leetcode.com/problems/kth-largest-element-in-a-stream/
+
+60 347 Top K Frequent Elements https://leetcode.com/problems/top-k-frequent-elements/
 
 61 373 Find K Pairs with Smallest Sums https://leetcode.com/problems/find-k-pairs-with-smallest-sums/
+
+Tries:
+62 208 Implement Trie (Prefix Tree)   https://leetcode.com/problems/implement-trie-prefix-tree/
+
+63 648 Replace words https://leetcode.com/problems/replace-words/
+
+64 676 Implement Magic Dictionary https://leetcode.com/problems/implement-magic-dictionary/
+
+65 820 Short encoding of words https://leetcode.com/problems/short-encoding-of-words/
+
+66 677 Map Sum Pairs https://leetcode.com/problems/map-sum-pairs/
+
+67 421 Maximum XOR of Two Numbers in an Array https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/
+
+Binary Search:
+68 35 Search Insert Position https://leetcode.com/problems/search-insert-position/
+
+
+
+

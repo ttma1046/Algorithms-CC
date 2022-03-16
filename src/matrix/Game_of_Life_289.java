@@ -42,95 +42,87 @@ Could you solve it in-place? Remember that the board needs to be updated simulta
 In this question, we represent the board using a 2D array. In principle, the board is infinite, which would cause problems when the active area encroaches upon the border of the array (i.e., live cells reach the border). How would you address these problems?
 */
 class Game_of_Life_289 {
-	public void gameOfLife(int[][] board) {
-		int[] direction = new int[] { -1, 0, 1};
+    public static void main(String[] args) {
+        Game_of_Life_289 obj = new Game_of_Life_289();
+    }
 
-		int rows = board.length;
-		int cols = board[0].length;
+    public void gameOfLife(int[][] board) {
+        int[] direction = new int[] { -1, 0, 1 };
 
-		int[][] copyBoard = new int[row][col];
+        int rows = board.length;
+        int cols = board[0].length;
 
-		for (int row = 0; row < rows; ++row) {
-			for (int col = 0; col < cols; ++col)  copyBoard[row][col] = board[row][col];
-		}
+        int[][] copyBoard = new int[rows][cols];
 
+        for (int row = 0; row < rows; ++row)
+            for (int col = 0; col < cols; ++col)
+                copyBoard[row][col] = board[row][col];
 
-		for (int row = 0; row < rows; ++row) {
-			for (int col = 0; col < cols; ++col) {
-				int liveNeighbors = 0;
-				for (int i = 0; i < 3; ++i) {
-					for (int j = 0; j < 3; ++j) {
-						if (!(direction[i] == 0 && direction[j] == 0)) {
-							int r = row + direction[i];
-							int c = col + direction[j];
+        for (int row = 0; row < rows; ++row) {
+            for (int col = 0; col < cols; ++col) {
+                int liveNeighbors = 0;
+                for (int i = 0; i < 3; ++i) {
+                    for (int j = 0; j < 3; ++j) {
+                        if (!(direction[i] == 0 && direction[j] == 0)) {
+                            int r = row + direction[i];
+                            int c = col + direction[j];
 
-							if (r >= 0 && r < rows && c < cols && c >= 0 && copyBoard[r][c] == 1) {
-								liveNeighbors += 1;
-							}
-						}
-					}
-				}
-			}
-
-			if ((liveNeighbors < 2 || liveNeighbors > 3) && copyBoard[row][col] == 1) {
-				board[row][col] = 0;
-			}
+                            if (r >= 0 && r < rows && c < cols && c >= 0 && copyBoard[r][c] == 1)
+                                liveNeighbors += 1;
+                        }
+                    }
+                }
 
 
-			if (liveNeighbors == 3 && copyBoard[row][col] == 0) {
-				board[row][col] = 1;
-			}
-		}
-	}
+                if ((liveNeighbors < 2 || liveNeighbors > 3) && copyBoard[row][col] == 1)
+                    board[row][col] = 0;
 
-	/*
-	Complexity Analysis
+                if (liveNeighbors == 3 && copyBoard[row][col] == 0)
+                    board[row][col] = 1;
+            }
+        }
+    }
+    /*
+    Complexity Analysis
+    Time Complexity: O(M×N), where M is the number of rows and N is the number of columns of the Board.
 
-	Time Complexity: O(M \times N)O(M×N), where MM is the number of rows and NN is the number of columns of the Board.
+    Space Complexity: O(M×N), where M is the number of rows and N is the number of columns of the Board. This is the space occupied by the copy board we created initially.
+    */
+    public void gameOfLifeII(int[][] board) {
+    	int[] directions = new int[] { -1, 0, 1 };
+    	int rows = board.length;
+    	int cols = board[0].length;
 
-	Space Complexity: O(M \times N)O(M×N), where MM is the number of rows and NN is the number of columns of the Board. This is the space occupied by the copy board we created initially.
-	*/
-	public void gameOfLife(int[][] board) {
-		int[] directions = new int[] { -1, 0, 1 };
+    	for (int i = 0; i < rows; ++i) {
+    		for (int j = 0; j < cols; ++j) {
+    			int liveNeighbors = 0;
 
-		int rows = board.length;
-		int cols = board[0].length;
+    			for (int t = 0; t < 3; ++t) {
+    				for (int s = 0; s < 3; ++s) {
+    					if (!(directions[t] == 0 && directions[s] == 0)) {
+    						int newI = i + directions[t];
+    						int newJ = j + directions[s];
 
-		for (int row = 0; row < rows; ++row) {
-			for (int col = 0; col < cols; ++col) {
-				int liveNeighbors = 0;
+    						if (newI >= 0 && newI < rows && newJ >= 0 && newJ < cols && Math.abs(board[newI][newJ]) == 1) 
+    							liveNeighbors++;
+    					}
+    				}
+    			}
 
-				for (int i = 0; i < 3; ++i) {
-					for (int j = 0; j < 3; ++j) {
-						if (!(directions[i] == 0 && directions[j] == 0)) {
-							int r = row + direction[i];
-							int c = col + direction[j];
+    			if ((liveNeighbors < 2 || liveNeighbors > 3) && board[i][j] == 1)
+    				board[i][j] = -1;
 
-							if (r >= 0 && r < rows && col >= 0 && col < cols && Math.abs(board[r][c]) == 1) liveNeighbors++;
-						}
-					}
-				}
+    			if (liveNeighbors == 3 && board[i][j] == 0)
+    				board[i][j] = 2;
+    		}
+    	}
 
-
-				if (board[row][col] == 1 && (liveNeighbors > 3 || liveNeighbors < 2)) {
-					board[row][col] = -1;
-				}
-
-				if (board[row][col] == 0 && liveNeighbors == 3) {
-					board[row][col] = 2;
-				}
-			}
-		}
-
-		// Get the final representation for the newly updated board.
-		for (int row = 0; row < rows; row++) {
-			for (int col = 0; col < cols; col++) {
-				if (board[row][col] > 0) {
-					board[row][col] = 1;
-				} else {
-					board[row][col] = 0;
-				}
-			}
-		}
-	}
+    	for (int i = 0; i < rows; ++i) {
+    		for (int j = 0; j < cols; ++j) {
+    			if (board[i][j] > 0) 
+    				board[i][j] = 1;
+    			else board[i][j] = 0;
+    		}
+ 		}
+    }
 }

@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.PriorityQueue;
 /*
 Given an integer array nums and an integer k, return the k most frequent elements. You may return the answer in any order.
 
@@ -40,19 +41,19 @@ class Top_K_Frequent_elements_347 {
         for (int i : res) System.out.println(i);
     }
 
-    /*    
+    /*
     int largest(int[] arr) {
          int i;
-           
+
          // Initialize maximum element
          int max = arr[0];
-        
+
          // Traverse array elements from second and
-         // compare every element with current max  
+         // compare every element with current max
          for (i = 1; i < arr.length; i++)
              if (arr[i] > max)
                  max = arr[i];
-        
+
          return max;
     }
 
@@ -91,13 +92,43 @@ class Top_K_Frequent_elements_347 {
     }
     */
 
+    public int[] topKFrequentIV(int[] nums, int k) {
+        if (nums.length == k) return nums;
+
+        Map<Integer, Integer> map = new HashMap<>();
+
+        for (int num : nums)
+            map.put(num, map.getOrDefault(num, 0) + 1);
+
+        PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> map.get(a) - map.get(b));
+
+        for (int n : map.keySet()) {
+            pq.offer(n);
+
+
+            if (pq.size() > k) pq.poll();
+        }
+
+        int[] res = new int[k];
+        for (int i = 0; i < k; ++i)
+            res[i] = pq.poll();
+
+        return res;
+    }
+
+    /*
+    Time complexity : O(Nlogk) if k < N and O(N) in the particular case of N = kN=k. That ensures time complexity to be better than \mathcal{O}(N \log N)O(NlogN).
+
+    Space complexity : O(N+k) to store the hash map with not more NN elements and a heap with kk elements.
+    */
+
     // bucket sort
     public int[] topKFrequent(int[] nums, int k) {
         int n = nums.length;
 
         Map<Integer, Integer> freq = new HashMap<Integer, Integer>();
 
-        for (int i: nums) freq.put(i, freq.getOrDefault(i, 0) + 1);
+        for (int i : nums) freq.put(i, freq.getOrDefault(i, 0) + 1);
 
         List<List<Integer>> bucket = new ArrayList<>();
 
@@ -105,7 +136,7 @@ class Top_K_Frequent_elements_347 {
 
         for (int i = 0; i <= maximumFrequency; ++i) bucket.add(new ArrayList<Integer>());
 
-        for (int key: freq.keySet()) {
+        for (int key : freq.keySet()) {
             int frequency = freq.get(key);
             bucket.get(frequency).add(key);
         }
@@ -126,39 +157,38 @@ class Top_K_Frequent_elements_347 {
     }
 
     // bucket sort (copied)
+    /*
     public int[] topKFrequentII(int[] nums, int k) {
         Map<Integer, Integer> frequencyMap = new HashMap<Integer, Integer>();
 
-        for (int n : nums) {
+        for (int n : nums)
             frequencyMap.put(n, frequencyMap.getOrDefault(n, 0) + 1);
-        }
 
-        List<Integer>[] bucket = new List[nums.length + 1];
+        List<Integer>[] bucket = new ArrayList<Integer>[nums.length + 1];
 
         for (int key : frequencyMap.keySet()) {
             int frequency = frequencyMap.get(key);
-            if (bucket[frequency] == null) {
+            if (bucket[frequency] == null)
                 bucket[frequency] = new ArrayList<>();
-            }
+
             bucket[frequency].add(key);
         }
 
         List<Integer> res = new ArrayList<>();
 
         for (int pos = bucket.length - 1; pos >= 0 && res.size() < k; pos--) {
-            if (bucket[pos] != null) {
+            if (bucket[pos] != null)
                 res.addAll(bucket[pos]);
-            }
         }
 
         int[] rel = new int[res.size()];
 
-        for (int i = 0; i < rel.length; i++) {
+        for (int i = 0; i < rel.length; i++)
             rel[i] = res.get(i).intValue();
-        }
 
         return rel;
     }
+    */
 
     // quick sort
     public int[] topKFrequentIII(int[] nums, int k) {
@@ -176,7 +206,7 @@ class Top_K_Frequent_elements_347 {
         return Arrays.copyOfRange(result, result.length - k, result.length);
     }
 
-    public void quickSort(int[] nums, int k, int start, int end, Map<Integer, Integer> map) {
+    private void quickSort(int[] nums, int k, int start, int end, Map<Integer, Integer> map) {
         int left = start;
         int right = end;
         int pivot = map.get(nums[start]);
@@ -198,6 +228,7 @@ class Top_K_Frequent_elements_347 {
                 nums[left] = temp;
             }
         }
+
         if (left == k) {
             return;
         } else if (left < k) {
@@ -205,5 +236,69 @@ class Top_K_Frequent_elements_347 {
         } else {
             quickSort(nums, k, start, left - 1, map);
         }
+    }
+
+    /*
+    public int[] topKFrequentBucket(int[] nums, int k) {
+        List<Integer>[] bucket = new ArrayList<>[nums.length + 1];
+
+        Map<Integer, Integer> map = new HashMap<>();
+
+        for (int i : nums)
+            map.put(i, map.getOrDefault(i, 0) + 1);
+
+        for (int i : map.keySet()) {
+            int count = map.get(i);
+
+            if (bucket[count] == null)
+                bucket[count] = new ArrayList<>();
+
+            bucket[count].add(i);
+        }
+
+        int t = k - 1;
+
+        int res = new int[k];
+
+        for(int pos = bucket.length - 1; pos >= 0 && t >= 0; --pos) {
+            if (bucket[pos] != null)
+                for (int j : bucket.get(size - 1))
+                    if (t >= 0)
+                        res[t--] = j;
+        }
+
+        return res;
+    }
+    */
+
+    public int[] topKFrequentBucketI(int[] nums, int k) {
+        List<List<Integer>> bucket = new ArrayList<>();
+
+        Map<Integer, Integer> map = new HashMap<>();
+
+        for (int i : nums)
+            map.put(i, map.getOrDefault(i, 0) + 1);
+
+        for (int i : map.keySet()) {
+            int count = map.get(i);
+
+            if (bucket.get(count) == null)
+                bucket.get(count) = new ArrayList<>();
+
+            bucket.get(count).add(i);
+        }
+
+        int t = k - 1;
+
+        int res = new int[k];
+
+        for(int pos = bucket.size() - 1; pos >= 0 && t >= 0; --pos) {
+            if (bucket.get(pos) != null)
+                for (int j : bucket.get(pos))
+                    if (t >= 0)
+                        res[t--] = j;
+        }
+
+        return res;
     }
 }

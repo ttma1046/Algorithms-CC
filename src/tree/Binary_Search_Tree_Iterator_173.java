@@ -50,9 +50,10 @@ You may assume that next() call will always be valid, that is, there will be at 
  *     }
  * }
  */
-class Binary_Search_Tree_Iterator_173 {
+class BSTIterator {
     private Stack<Integer> stack = new Stack<Integer>();
-    public Binary_Search_Tree_Iterator_173(TreeNode root) {
+    
+    public BSTIterator(TreeNode root) {
         if (root != null) res(root);
     }
 
@@ -75,7 +76,7 @@ class Binary_Search_Tree_Iterator_173 {
     }
 
 
-    public Binary_Search_Tree_Iterator_173(TreeNode root) {
+    public BSTIterator(TreeNode root) {
         res(root);
     }
 
@@ -98,7 +99,9 @@ class Binary_Search_Tree_Iterator_173 {
     public boolean hasNext() {
         return stack.size() > 0;
     }
+}
 
+public class Binary_Search_Tree_Iterator_173 {
     public static void main(String[] args) {
         TreeNode three = new TreeNode(3);
         TreeNode nine = new TreeNode(9);
@@ -112,7 +115,7 @@ class Binary_Search_Tree_Iterator_173 {
         seven.left = three;
         seven.right = fifteen;
 
-        Binary_Search_Tree_Iterator_173 iterator = new Binary_Search_Tree_Iterator_173(seven);
+        BSTIterator iterator = new BSTIterator(seven);
 
         System.out.println(iterator.next());    // return 3
         System.out.println(iterator.next());    // return 7

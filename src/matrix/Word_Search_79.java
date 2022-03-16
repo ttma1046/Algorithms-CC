@@ -1,5 +1,4 @@
-package leetcode;
-
+package matrix;
 /*
 Given an m x n grid of characters board and a string word, return true if word exists in the grid.
 
@@ -40,23 +39,23 @@ class Word_Search_79 {
 
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < columns; j++) {
-				if (recur(i, j, 0, board, words, visited, rows, columns)) return true;
+				if (words[0] == board[i][j] && recur(i, j, 0, board, words, visited)) return true;
 			}
 		}
 
 		return false;
 	}
 
-	private boolean recur(int i, int j, int k, char[][] board, char[] words, boolean[][] visited, int rows, int columns) {
-		if (i >= 0 && i < rows && j >= 0 && j < columns && !visited[i][j] && board[i][j] == words[k]) {
+	private boolean recur(int i, int j, int k, char[][] board, char[] words, boolean[][] visited) {
+		if (i >= 0 && i < board.length && j >= 0 && j < board[0].length && !visited[i][j] && board[i][j] == words[k]) {
 			if (k == words.length - 1) return true;
 			visited[i][j] = true;
 			
 			if (
-				recur(i, j + 1, k + 1, board, words, visited, rows, columns) || 
-				recur(i, j - 1, k + 1, board, words, visited, rows, columns) ||
-				recur(i + 1, j, k + 1, board, words, visited, rows, columns) ||
-				recur(i - 1, j, k + 1, board, words, visited, rows, columns)
+				recur(i, j + 1, k + 1, board, words, visited) || 
+				recur(i, j - 1, k + 1, board, words, visited) ||
+				recur(i + 1, j, k + 1, board, words, visited) ||
+				recur(i - 1, j, k + 1, board, words, visited)
 			) return true;
 			
 			visited[i][j] = false;
