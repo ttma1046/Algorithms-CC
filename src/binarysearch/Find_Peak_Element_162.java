@@ -30,6 +30,21 @@ nums[i] != nums[i + 1] for all valid i.
 */
 class Find_Peak_Element_162 {
     public int findPeakElement(int[] nums) {
+        int start = 0, end = nums.length - 1;
+        int mid = 0;
+        while(start < end) {
+            mid = start + (end - start) / 2;
+
+            if (nums[mid] <= nums[mid + 1])
+                start = mid + 1;
+            else
+                end = mid;
+        }
+
+        return start;
+    }
+
+    public int findPeakElement(int[] nums) {
         int low = 0, high = nums.length - 1, mid = 0;
         while (low < high) {
             mid = low + (high - low) / 2;

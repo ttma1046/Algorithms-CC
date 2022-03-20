@@ -68,8 +68,8 @@ public class FirstBadVersion_278 {
         return versionNumber > 3;
     }
 
-    int firstBadVersionV(int versionNumber) {
-        int start = 1, end = versionNumber;
+    int firstBadVersionV(int n) {
+        int start = 1, end = n;
 
         while (start <= end) {
             int mid = start + (end - start) / 2;
@@ -102,7 +102,7 @@ public class FirstBadVersion_278 {
         if (versionNumber == 1) return isBadVersion(versionNumber) ? 1 : -1;
         int start = 1, end = versionNumber;
 
-        while (start + 1< end) {
+        while (start + 1 < end) {
             int mid = start + (end - start) / 2;
 
             if (!isBadVersion(mid))

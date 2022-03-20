@@ -45,9 +45,6 @@ public class BinarySearch {
 
         // End Condition: start > end
         // (end, start)
-
-        System.out.println(start);
-        System.out.println(end);
         return -1;
     }
 

@@ -75,11 +75,11 @@ Queue/Deque:
 
 44 515 Find Largest Value in Each Tree Row  https://leetcode.com/problems/find-largest-value-in-each-tree-row/
 
-45 513 Find Bottom Left Tree Value https://leetcode-cn.com/problems/find-bottom-left-tree-value/
+45 513 Find Bottom Left Tree Value https://leetcode.com/problems/find-bottom-left-tree-value/
 
-46 199 Binary Tree Right Side View https://leetcode-cn.com/problems/binary-tree-right-side-view/
+46 199 Binary Tree Right Side View https://leetcode.com/problems/binary-tree-right-side-view/
 
-47 814 Binary Tree Pruning https://leetcode-cn.com/problems/binary-tree-pruning/
+47 814 Binary Tree Pruning https://leetcode.com/problems/binary-tree-pruning/
 
 48 297 Serialize and Deserialize Binary Tree https://leetcode.com/problems/serialize-and-deserialize-binary-tree/
 
@@ -91,11 +91,11 @@ Queue/Deque:
 
 52 897 Increasing Order Search Tree https://leetcode.com/problems/increasing-order-search-tree/
 
-53 285 Inorder successor in BST https://leetcode-cn.com/problems/inorder-successor-in-bst/
+53 285 Inorder successor in BST https://leetcode.com/problems/inorder-successor-in-bst/
 
 54
-538 Convert BST to Greater Tree https://leetcode-cn.com/problems/convert-bst-to-greater-tree/
-1038 Binary Search Tree to Greater Sum Tree https://leetcode-cn.com/problems/binary-search-tree-to-greater-sum-tree/
+538 Convert BST to Greater Tree https://leetcode.com/problems/convert-bst-to-greater-tree/
+1038 Binary Search Tree to Greater Sum Tree https://leetcode.com/problems/binary-search-tree-to-greater-sum-tree/
 
 55 173 Binear Search Tree Iterator https://leetcode.com/problems/binary-search-tree-iterator/
 
@@ -128,11 +128,13 @@ Tries:
 Binary Search:
 68 35 Search Insert Position https://leetcode.com/problems/search-insert-position/
 
-69 852 Peak Index in a Mountain Array https://leetcode-cn.com/problems/peak-index-in-a-mountain-array/
+69 852 Peak Index in a Mountain Array https://leetcode.com/problems/peak-index-in-a-mountain-array/
 
 70 540 Single Element in a Sorted Array https://leetcode.com/problems/single-element-in-a-sorted-array/
 
 71 528 Random pick with weight  https://leetcode.com/problems/random-pick-with-weight/
 
-72 69 Sqrt x https://leetcode-cn.com/problems/sqrtx/
+72 69 Sqrt x https://leetcode.com/problems/sqrtx/
+
+73 875. Koko Eating Bananas https://leetcode.com/problems/koko-eating-bananas/
 
