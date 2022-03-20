@@ -70,10 +70,10 @@ pickIndex will be called at most 10000 times.
 // S1: tree map
 // Rank: 25.88%
 class Random_Pick_with_Weight_528 {
-	private int[] prefixSums;
-	private int totalSum;
+    private int[] prefixSums;
+    private int totalSum;
 
-	public Solution(int[] w) {
+    public Solution(int[] w) {
         this.prefixSums = new int[w.length];
 
         int prefixSum = 0;
@@ -84,111 +84,108 @@ class Random_Pick_with_Weight_528 {
         this.totalSum = prefixSum;
     }
 
-	public int pickIndex() {
-		double target = this.totalSum * Math.random();
+    public int pickIndex() {
+        double target = this.totalSum * Math.random();
 
-		// run a binary search to find the target zone
-		int low = 0, high = this.prefixSums.length;
-		while (low < high) {
-			// better to avoid the overflow
-			int mid = low + (high - low) / 2;
-			if (target > this.prefixSums[mid])
-				low = mid + 1;
-			else
-				high = mid;
-		}
-		return low;
-	}
-}
+        // run a binary search to find the target zone
+        int low = 0, high = this.prefixSums.length;
+        while (low < high) {
+            // better to avoid the overflow
+            int mid = low + (high - low) / 2;
+            if (target > this.prefixSums[mid])
+                low = mid + 1;
+            else
+                high = mid;
+        }
+        return low;
+    }
 
-class Random_Pick_with_Weight_5281 {
-	int total = 0;
-	Random rand = new Random();
-	TreeMap<Integer, Integer> index = new TreeMap();
+    int total = 0;
+    Random rand = new Random();
+    TreeMap<Integer, Integer> index = new TreeMap();
 
-	public Random_Pick_with_Weight_5281(int[] w) {
-		for (int i = 0; i < w.length; i++) {
-			total += w[i];
-			index.put(total, i);
-		}
-	}
+    public Random_Pick_with_Weight_5281(int[] w) {
+        for (int i = 0; i < w.length; i++) {
+            total += w[i];
+            index.put(total, i);
+        }
+    }
 
-	public int pickIndex() {
-		return index.higherEntry(rand.nextInt(total)).getValue();
-	}
-}
+    public int pickIndex() {
+        return index.higherEntry(rand.nextInt(total)).getValue();
+    }
 
-// S2: binary search
-// Rank: 87.84%
-class Random_Pick_with_Weight_5282 {
-	int[] prefix;
-	Random rand = new Random();
+    // S2: binary search
+    // Rank: 87.84%
+    int[] prefix;
+    Random rand = new Random();
 
-	public Random_Pick_with_Weight_5282(int[] w) {
-		prefix = w;
-		for (int i = 1; i < prefix.length; i++) {
-			prefix[i] += prefix[i - 1];
-		}
-	}
+    public Random_Pick_with_Weight_5282(int[] w) {
+        prefix = w;
+        for (int i = 1; i < prefix.length; i++) {
+            prefix[i] += prefix[i - 1];
+        }
+    }
 
-	// find the first GreatThanOrEqual
-	public int pickIndex() {
-		int n = prefix.length, lo = 0, hi = n - 1, sum = rand.nextInt(prefix[n - 1]) + 1;
-		while (lo < hi) {
-			int mid = lo + (hi - lo) / 2;
-			if (prefix[mid] < sum) {
-				lo = mid + 1;
-			} else {
-				hi = mid;
-			}
-		}
-		return lo;
-	}
+    // find the first GreatThanOrEqual
+    public int pickIndex() {
+        int n = prefix.length, 
+        lo = 0, hi = n - 1, 
+        sum = rand.nextInt(prefix[n - 1]) + 1;
+        while (lo < hi) {
+            int mid = lo + (hi - lo) / 2;
+            if (prefix[mid] < sum) {
+                lo = mid + 1;
+            } else {
+                hi = mid;
+            }
+        }
+        return lo;
+    }
 
-	public int pickIndex1() {
-		int n = prefix.length, lo = 0, hi = n - 1, sum = rand.nextInt(prefix[n - 1]) + 1;
-		while (lo < hi) {
-			int mid = lo + (hi - lo) / 2;
-			if (sum == prefix[mid]) {
-				return mid;
-			} else if (prefix[mid] < sum) {
-				lo = mid + 1;
-			} else {
-				hi = mid;
-			}
-		}
-		return lo;
-	}
-}
+    public int pickIndex1() {
+        int n = prefix.length, lo = 0, hi = n - 1, sum = rand.nextInt(prefix[n - 1]) + 1;
+        while (lo < hi) {
+            int mid = lo + (hi - lo) / 2;
+            if (sum == prefix[mid]) {
+                return mid;
+            } else if (prefix[mid] < sum) {
+                lo = mid + 1;
+            } else {
+                hi = mid;
+            }
+        }
+        return lo;
+    }
 
-// S3:
-// Rank:
-class Random_Pick_with_Weight_528 {
-	int[] indexes = new int[100];
-	int size = 0;
+    // S3:
+    // Rank:
 
-	public Random_Pick_with_Weight_528(int[] w) {
-		int sum = 0;
-		for (int i : w) {
-			sum += i;
-		}
+    int[] indexes = new int[100];
+    int size = 0;
 
-		for (int i = 0; i < w.length; i++) {
-			int weightInPercentage = (int) ((double) w[i] / sum * 100);
-			while (weightInPercentage-- > 0) {
-				indexes[size++] = i;
-			}
-		}
+    public Random_Pick_with_Weight_528(int[] w) {
+        int sum = 0;
+        for (int i : w) {
+            sum += i;
+        }
 
-	}
+        for (int i = 0; i < w.length; i++) {
+            int weightInPercentage = (int) ((double) w[i] / sum * 100);
+            while (weightInPercentage-- > 0) {
+                indexes[size++] = i;
+            }
+        }
 
-	public int pickIndex() {
-		if (size == 0) {
-			return 0;
-		}
-		int rand = (int) (Math.random() * (size));
-		return indexes[rand];
-	}
+    }
+
+    public int pickIndex() {
+        if (size == 0) {
+            return 0;
+        }
+        int rand = (int) (Math.random() * (size));
+        return indexes[rand];
+    }
 }
 
 /**

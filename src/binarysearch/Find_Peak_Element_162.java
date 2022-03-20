@@ -43,10 +43,25 @@ class Find_Peak_Element_162 {
     /*
     Complexity Analysis
 
-    Time complexity : O(log2(n)). We reduce the search space in half at every step. 
-    Thus, the total search space will be consumed in O(log2(n)) steps. 
+    Time complexity : O(log2(n)). We reduce the search space in half at every step.
+    Thus, the total search space will be consumed in O(log2(n)) steps.
     Here, nn refers to the size of numsnums array.
 
     Space complexity : O(1). Constant extra space is used.
     */
+
+
+    public int findPeakElement(int[] nums) {
+        int lo = 0, hi = nums.length - 1, mid = -1;
+
+        while (lo < hi) {
+            int mi = lo + (hi - lo) / 2;
+            if (nums[mi] < nums[mi + 1])
+                lo = mi + 1;
+            else
+                hi = mi;
+        }
+
+        return lo;
+    }
 }

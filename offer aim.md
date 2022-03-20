@@ -128,6 +128,11 @@ Tries:
 Binary Search:
 68 35 Search Insert Position https://leetcode.com/problems/search-insert-position/
 
+69 852 Peak Index in a Mountain Array https://leetcode-cn.com/problems/peak-index-in-a-mountain-array/
 
+70 540 Single Element in a Sorted Array https://leetcode.com/problems/single-element-in-a-sorted-array/
 
+71 528 Random pick with weight  https://leetcode.com/problems/random-pick-with-weight/
+
+72 69 Sqrt x https://leetcode-cn.com/problems/sqrtx/
 
