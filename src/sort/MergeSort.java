@@ -66,6 +66,30 @@ public class MergeSort {
         }
     }
 
+    public void mergeSort(int[] array, int left, int right) {
+        if (left >= right) return;
+
+        int mid = (left + right) >> 1;
+
+        mergeSort(array, left, mid);
+        mergeSort(array, mid + 1, right);
+
+        int k = 0, int i = left, int j = mid + 1;
+        int[] tmp = new int[array.length];
+        while(i <= mid && j <= right) {
+            if (array[i] <= array[j])
+                tmp[k++] = array[i++];
+            else
+                tmp[k++] = array[j++];
+        }
+
+        while(i <= mid) tmp[k++] = array[i++];
+        while(j <= right) tmp[k++] = array[j++];
+
+        for (i = left, j = 0; i <= right; i++, j++)
+            array[i] = tmp[j];
+    }
+
     /*
     public void mergeSort(int[] array) {
         int[] temp = new int[array.length];

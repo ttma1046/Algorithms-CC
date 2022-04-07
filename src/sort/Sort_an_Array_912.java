@@ -23,18 +23,20 @@ class Sort_an_Array_912 {
     public static void main(String[] args) {
         Sort_an_Array_912 obj = new Sort_an_Array_912();
         int[] nums = new int[] { 15, 3, 9, 8, 5, 2, 7, 1, 6 };
+        nums = new int[] {1, 2, 3, 5};
         obj.sortArray(nums);
     }
 
+    /*
     public int[] sortArray(int[] nums) {
-        quickSort(nums, 0, nums.length-1);
+        quickSort(nums, 0, nums.length - 1);
         return nums;
     }
 
     private void quickSort(int[] nums, int start, int end) {
         if(start >= end) return;
         int lo = start, hi = end;
-        int pivot = nums[lo+((hi-lo)>>1)];
+        int pivot = nums[lo + ((hi - lo) >> 1)];
         while(lo <= hi) {
             while(lo <= hi && nums[lo] < pivot) {
                 lo ++;
@@ -52,6 +54,45 @@ class Sort_an_Array_912 {
         }
         quickSort(nums, start, hi);
         quickSort(nums, lo, end);
+    }
+    */
+
+    public int[] sortArray(int[] nums) {
+        int n = nums.length;
+        quick_sort(nums, 0, n - 1);
+        return nums;
+    }
+
+    private void quick_sort(int[] q, int left, int right) {
+        System.out.println("left:" + left);
+        System.out.println("right:" + right);
+        if (left >= right) return;
+
+        int x = q[left], i = left - 1, j = right + 1;
+        while(i < j) {
+            do {
+                i++;
+            } while(q[i] < x);
+
+
+            do {
+                j--;
+            } while(q[j] > x);
+
+            if (i < j) swap(q, i, j);
+        }
+
+        quick_sort(q, left, j);
+        quick_sort(q, j + 1, right);
+    }
+
+    private void swap(int[] q, int i, int j) {
+        System.out.println("i:" + i);
+        System.out.println("j:" + j);
+
+        q[i] = q[i] + q[j];
+        q[j] = q[i] - q[j];
+        q[i] = q[i] - q[j];
     }
 
     /*
@@ -74,9 +115,14 @@ class Sort_an_Array_912 {
     private int partition(int[] nums, int l, int r) {
         int pivot = nums[l];
         while (l < r) {
-            while (l < r && nums[r] >= pivot) r--;
+            while (l < r && nums[r] >= pivot)
+                r--;
+
             nums[l] = nums[r];
-            while (l < r && nums[l] <= pivot) l++;
+
+            while (l < r && nums[l] <= pivot)
+                l++;
+
             nums[r] = nums[l];
         }
         nums[l] = pivot;
@@ -93,11 +139,11 @@ class Sort_an_Array_912 {
         return l;
     }
     */
-    
+
     /*
     15 3 9 8 5 2 7 1 6
 
-    15 
+    15
     15 3 9 8 5 2 7 1 6
     l                r
 

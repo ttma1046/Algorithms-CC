@@ -1,4 +1,13 @@
 package dp;
+
+/*
+N items
+total weigth = V
+
+weight array = v[N]
+
+value array = w[N]
+*/
 class One_Zero_Knapsack_Problem {
 	private int Knapsack(int maxWeight, int [] weightArray, int [] valueArray, int length) {
 		// Base Case
@@ -44,9 +53,9 @@ class One_Zero_Knapsack_Problem {
 			for (w = 0; w <= maxWeight; w++) {
 				if (i == 0 || w == 0)
 					K[i][w] = 0;
-				else if (weightArray[i - 1] <= w)
+				else if (w >= weightArray[i - 1])
 					K[i][w] = Math.max(
-					              valueArray[i - 1] + K[i - 1][w - weightArray[i - 1]],
+					              K[i - 1][w - weightArray[i - 1]] + valueArray[i - 1],
 					              K[i - 1][w]);
 				else
 					K[i][w] = K[i - 1][w];
@@ -64,4 +73,26 @@ class One_Zero_Knapsack_Problem {
 		}
 	}
 
+	public void Knapsack(int[] v, int[] w, int length, int maxWeight) {
+		int[][] f = new int[length][maxWeight];
+		for (int i = 1; i <= length; i++)
+			for (int j = 0; j <= maxWeight; j++)
+				f[i][j] = f[i - 1][j];
+				if (j >= v[i]) f[i][j] = max(f[i][j], f[i - 1][j - v[i]] + w[i])
+
+		return f[length - 1][maxWeight - 1];
+
+		return 0;
+	}
+
+
+	public void Knapsack(int[] v, int[] w, int length, int maxWeight) {
+		int[] f = new int[maxWeight];
+
+		for (int i = 1; i <= length; i++)
+			for (int j = maxWeight; j >= v[i]; j--)
+				f[j] = Math.max(f[j], f[j - v[i]] + w[i]);
+
+		return f[maxWeight];
+	}
 }
