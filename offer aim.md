@@ -138,3 +138,14 @@ Binary Search:
 
 73 875. Koko Eating Bananas https://leetcode.com/problems/koko-eating-bananas/
 
+
+
+74 56 Merge Intervals https://leetcode.com/problems/merge-intervals/
+
+75 1122 Relative sort array https://leetcode.com/problems/relative-sort-array/ 
+
+76 215 Kth largest element in an array https://leetcode.com/problems/kth-largest-element-in-an-array/
+
+77 148 Sort List https://leetcode.com/problems/sort-list/
+
+78 23 Merge K sorted lists https://leetcode.com/problems/merge-k-sorted-lists/

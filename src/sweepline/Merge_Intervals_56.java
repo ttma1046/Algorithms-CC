@@ -39,7 +39,7 @@ class Merge_Intervals_56 {
         int[] curr = intervals[0];
 
         for (int[] next : intervals) {
-            if (curr[1] > next[0]) {
+            if (curr[1] >= next[0]) {
                 curr[1] = Math.max(curr[1], next[1]);
             } else {
                 res.add(curr);
@@ -88,8 +88,8 @@ class Merge_Intervals_56 {
         Merge_Intervals_56 obj = new Merge_Intervals_56();
         int[][] intervals = new int[][] {{ 1, 3 }, { 2, 6 }, { 8, 10 }, { 15, 18 }};
         int[][] res = obj.merge(intervals);
-        for (int[] item: res) { 
-            for (int i: item) System.out.println(i);
+        for (int[] item : res) {
+            for (int i : item) System.out.println(i);
         }
     }
 }
