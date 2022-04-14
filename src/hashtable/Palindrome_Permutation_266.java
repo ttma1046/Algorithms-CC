@@ -3,6 +3,31 @@ package hashtable;
 import java.util.Map;
 import java.util.HashMap;
 
+
+/*
+Given a string s, return true if a permutation of the string could form a palindrome.
+
+Example 1:
+
+Input: s = "code"
+Output: false
+
+Example 2:
+
+Input: s = "aab"
+Output: true
+
+Example 3:
+
+Input: s = "carerac"
+Output: true
+
+Constraints:
+
+1 <= s.length <= 5000
+s consists of only lowercase English letters.
+*/
+
 class Palindrome_Permutation_266 {
 	public boolean canPermutePalindrome(String s) {
 		boolean flag = false;
@@ -78,4 +103,17 @@ class Palindrome_Permutation_266 {
 			return countOdd == 0;
 		}
 	}
+
+    public boolean canPermutePalindrome(String s) {
+        int[] map = new int[128];
+        int count = 0;
+        for (int i = 0; i < s.length(); i++) {
+            map[s.charAt(i)]++;
+            if (map[s.charAt(i)] % 2 == 0)
+                count--;
+            else
+                count++;
+        }
+        return count <= 1;
+    }
 }
