@@ -4,19 +4,17 @@ class DiameterOfBinaryTree_day11 {
     int max = 0;
 
     public int diameterOfBinaryTree(TreeNode root) {
-        if (root == null || (root.left == null && root.right == null)) {
+        if (root == null || (root.left == null && root.right == null))
             return 0;
-        }
-
+        
         travsel(root);
         return max;
     }
 
     private int travsel(TreeNode node) {
-        if (node == null) {
+        if (node == null)
             return 0;
-        }
-
+        
         int leftLength = travsel(node.left);
 
         int rightLength = travsel(node.right);
@@ -36,22 +34,19 @@ class DiameterOfBinaryTree_day11 {
          */
         return 1 + Math.max(height(node.left), height(node.right));
     }
-}
 
-class Solution {
     public int diameterOfBinaryTree(TreeNode root) {
-        if (root == null || (root.left == null && root.right == null)) {
+        if (root == null || (root.left == null && root.right == null))
             return 0;
-        }
+        
         int[] max = new int[1];
         travsel(root, max);
         return max[0];
     }
 
     private int travsel(TreeNode node, int[] max) {
-        if (node == null) {
-            return 0;
-        }
+        if (node == null)
+            return 0;        
 
         int leftLength = travsel(node.left, max);
 
@@ -62,21 +57,16 @@ class Solution {
         return Math.max(leftLength, rightLength) + 1;
     }
 
-}
-
-class solutionII {
     public int diameterOfBinaryTree(TreeNode root) {
-        if (root == null || (root.left == null && root.right == null)) {
-            return 0;
-        }
+        if (root == null || (root.left == null && root.right == null)) 
+            return 0;        
 
         return travsel(root)[0];
     }
 
     private int[] travsel(TreeNode node) {
-        if (node == null) {
+        if (node == null)
             return new int[] { 0, 0 };
-        }
 
         int[] leftHeight = travsel(node.left);
 
@@ -84,5 +74,40 @@ class solutionII {
 
         return new int[] { Math.max(Math.max(leftHeight[0], rightHeight[0]), leftHeight[1] + rightHeight[1]),
                 Math.max(leftHeight[1], rightHeight[1]) + 1 };
+    }
+
+        int max = 0;
+
+    public int diameter(Node root) {
+        if (root == null || (root.children == null))
+            return 0;
+        
+        travsel(root);
+        return max;
+    }
+
+    private int travsel(Node node) {
+        if (node == null)
+            return 0;
+
+        List<Integer> lengths = new ArrayList<>();
+        
+        for (Node curr: node.children)
+            lengths.add(travsel(curr));
+        
+        int result = 0;
+        int biggest = 0;
+        
+        for (int length: lengths) {
+            result += length;
+        
+            if (result > max)
+                max = result;
+            
+            if (length > biggest)
+                biggest = length;
+        }
+
+        return biggest + 1;
     }
 }
