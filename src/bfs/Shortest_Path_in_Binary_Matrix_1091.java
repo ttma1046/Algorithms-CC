@@ -1,4 +1,4 @@
-package matrix;
+package bfs;
 import java.util.Deque;
 import java.util.ArrayDeque;
 /*
@@ -33,7 +33,7 @@ n == grid[i].length
 grid[i][j] is 0 or 1
 */
 public class Shortest_Path_in_Binary_Matrix_1091 {
-    int[][] directions = new int[][] {{0, 1}, {0, -1}, {1, 0}, {-1, 0}, {1, -1}, {-1, 1}, {-1, -1}, {1, 1}};
+    int[][] directions = new int[][] {{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
     int shortest = 0;
 
     public int shortestPathBinaryMatrix(int[][] grid) {
@@ -43,39 +43,40 @@ public class Shortest_Path_in_Binary_Matrix_1091 {
         if (grid[0][0] == 1 || grid[n - 1][m - 1] == 1)
             return -1;
 
+        Deque<int[]> queue = new ArrayDeque<>();
+        queue.offer(new int[] {0, 0});
+
         boolean[][] visited = new boolean[n][m];
         visited[0][0] = true;
-        Deque<int[]> queue = new ArrayDeque<>();
-        q.offer(new int[] {0, 0});
 
-        int ans = 0;
-        while(q.size() > 0) {
+        while(queue.size() > 0) {
             int size = queue.size();
-
-            for (int i = 0; i < size; i++) {
+            for (int i = 0; i < size; ++i) {
                 int[] curr = queue.poll();
 
                 if (curr[0] == n - 1 && curr[1] == m - 1)
-                    return ans + 1;
+                    return shortest + 1;
 
                 for (int j = 0; j < directions.length; j++) {
                     int newI = directions[j][0] + curr[0];
-                    int newJ = directions[j][0] + curr[1];
+                    int newJ = directions[j][1] + curr[1];
 
-                    if (newI >= 0 && newJ >= 0 && newI < n && newJ < m && !visited[newI][newJ] && grid[newI][newJ] == 0) {
-                        queue.add(new int[] { newI, newJ });
+                    if (newI >= 0 && newI < n && newJ >= 0 && newJ < m && !visited[newI][newJ] && grid[newI][newJ] == 0) {
+                        queue.offer(new int[] {newI, newJ});
                         visited[newI][newJ] = true;
                     }
                 }
             }
 
-            ans++;
+            shortest++;
         }
 
         return -1;
     }
 
     public static void main(String[] args) {
-    	Shortest_Path_in_Binary_Matrix_1091 obj = new Shortest_Path_in_Binary_Matrix_1091();
+        Shortest_Path_in_Binary_Matrix_1091 obj = new Shortest_Path_in_Binary_Matrix_1091();
+        int[][] grid = new int[][] {{0, 1}, {1, 0}};
+        obj.shortestPathBinaryMatrix(grid);
     }
 }

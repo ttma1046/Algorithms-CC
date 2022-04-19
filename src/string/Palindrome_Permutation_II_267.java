@@ -47,9 +47,9 @@ public class Palindrome_Permutation_II_267 {
             */
 
             if (map[i] % 2 == 1)
-                ch = (char) i;
+                ch = (char)i;
             for (int j = 0; j < map[i] / 2; j++)
-                d[k++] = (char) i;
+                d[k++] = (char)i;
         }
 
         premute(d, 0, ch);
@@ -101,7 +101,6 @@ public class Palindrome_Permutation_II_267 {
 
     Space complexity: O(n). The depth of recursion tree can go upto n/2 in the worst case.
     */
-
     public static void main(String[] args) {
         Palindrome_Permutation_II_267 obj = new Palindrome_Permutation_II_267();
         List<String> res = obj.generatePalindromes("aabb");
