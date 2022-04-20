@@ -58,7 +58,7 @@ class Node {
 };
 */
 
-class Solution {
+class Diameter_of_N-Ary_Tree_1522 {
     int max = 0;
 
     public int diameter(Node root) {

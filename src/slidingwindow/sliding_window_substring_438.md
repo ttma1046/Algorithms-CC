@@ -1,4 +1,3 @@
-
 ```java
 public class Solution {
     public List<Integer> slidingWindowTemplateByHarryChaoyangHe(String s, String t) {
@@ -23,7 +22,7 @@ public class Solution {
         
         //loop at the begining of the source string
         while(end < s.length()){
-            
+        
             char c = s.charAt(end);//get a character
             
             if( map.containsKey(c) ){
@@ -117,7 +116,8 @@ public class Solution {
 **2) the similar questions are:**
 
 https://leetcode.com/problems/minimum-window-substring/
-https://leetcode.com/problems/longest-substring-without-repeating-characters/\\u2028https://leetcode.com/problems/substring-with-concatenation-of-all-words/
+https://leetcode.com/problems/longest-substring-without-repeating-characters/
+https://leetcode.com/problems/substring-with-concatenation-of-all-words/
 https://leetcode.com/problems/longest-substring-with-at-most-two-distinct-characters/
 https://leetcode.com/problems/find-all-anagrams-in-a-string/
 
