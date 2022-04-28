@@ -39,27 +39,6 @@ Constraints:
 */
 class Diagonal_Traverse_II_1424 {
     public int[] findDiagonalOrder(List<List<Integer>> nums) {
-        int n = nums.size();
-
-        Map<Integer, LinkedList<Integer>> map = new HashMap<>();
-
-        for (int i = 0; i < n; ++i) {
-            List<Integer> numList = nums.get(i);
-
-            for (int j = 0; j < numList.size(); j++) {
-                int index = i + j;
-
-                LinkedList<Integer> list = map.get(index);
-
-                if(list == null)
-                    list = new LinkedList<>();
-
-                list.addFirst(numList.get(j));
-
-                map.put(index, list);
-            }
-        }
-
         /*
         [1,2,3,4,5],
         [6,7],
@@ -94,19 +73,55 @@ class Diagonal_Traverse_II_1424 {
         8 -> [16]
         */
 
-        int maxLen = Collections.max(map.keySet());
+        Map<Integer, LinkedList<Integer>> map = new HashMap<>();
 
-        List<Integer> resultList = new ArrayList<Integer>();
+        for (int i = 0; i < nums.size(); ++i) {
+            List<Integer> list = nums.get(i);
 
-        for(int i = 0; i <= maxLen; i++) {
-            List<Integer> diagValue = map.get(i);
-            resultList.addAll(diagValue);
+            for (int j = 0; j < list.size(); ++j) {
+                int index = i + j;
+
+                if (!map.containsKey(index))
+                    map.put(index, new LinkedList<Integer>());
+
+                LinkedList<Integer> k = map.get(index);
+
+                k.addFirst(list.get(j));
+
+                map.put(index, k);
+            }
         }
 
-        int[] res = new int[resultList.size()];
+        int maxLen = Collections.max(map.keySet());
+        List<Integer> resList = new ArrayList<>();
+        for (int i = 0; i < maxLen; i++)
+            resList.addAll(map.get(i));
 
-        for(int i = 0; i < res.length; i++)
-            res[i] = resultList.get(i);
+        int[] res = new int[resList.size()];
+        for (int i = 0; i < resList.size(); i++)
+            res[i] = resList.get(i);
+
+        return res;
+    }
+
+    public int[] findDiagonalOrder(List<List<Integer>> nums) {
+        Map<Integer, LinkedList<Integer>> map = new HashMap<>();
+        int count = 0;
+        int maxKey = 0;
+
+        for(int i = 0; i < nums.size(); i++)
+            for(int j = 0; j < nums.get(i).size(); j++) {
+                map.computeIfAbsent(i + j, x -> new LinkedList<>()).addFirst(nums.get(i).get(j));//add at starting
+                count++;
+                maxKey = Math.max(maxKey, i + j);//store max key
+            }
+
+        int[] res = new int[count];
+        count = 0;
+
+        for(int i = 0; i <= maxKey; i++)
+            for(int e : map.get(i))
+                res[count++] = e;//populate the result array
 
         return res;
     }
