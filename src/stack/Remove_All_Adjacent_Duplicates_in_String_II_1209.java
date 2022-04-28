@@ -1,4 +1,5 @@
 package stack;
+import java.util.Stack;
 /*
 You are given a string s and an integer k,
 
@@ -55,11 +56,35 @@ class Remove_All_Adjacent_Duplicates_in_String_II_1209 {
             if (count[i] == k)
                 i -= k;
         }
-
+        System.out.println(i);
         return new String(stack, 0, i);
     }
 
-    public String removeDuplicates(String s, int k) {
+    public String removeDuplicatesIII(String s, int k) {
+        Stack<Integer> counts = new Stack<>();
+        char[] sa = s.toCharArray();
+
+        int j = 0;
+
+        for (int i = 0; j < s.length(); ++i, ++j) {
+            sa[j] = sa[i];
+
+            if (j == 0 || sa[i] != sa[j - 1]) {
+                counts.push(1);
+            } else {
+                int incremented = counts.pop() + 1;
+
+                if (incremented == k)
+                    j -= k;
+                else
+                    counts.push(incremented);
+            }
+        }
+
+        return new String(sa, 0, j);
+    }
+
+    public String removeDuplicatesII(String s, int k) {
         int[] count = new int[s.length()];
         StringBuilder sb = new StringBuilder();
 
@@ -82,7 +107,8 @@ class Remove_All_Adjacent_Duplicates_in_String_II_1209 {
 
     public static void main(String[] args) {
         Remove_All_Adjacent_Duplicates_in_String_II_1209 obj = new Remove_All_Adjacent_Duplicates_in_String_II_1209();
-        obj.removeDuplicates("deeedbbcccbdaa", 3);
+        // obj.removeDuplicates("deeedbbcccbdaa", 3);
+        obj.removeDuplicates("pbbcggttciiippooaais", 2);
     }
 }
 

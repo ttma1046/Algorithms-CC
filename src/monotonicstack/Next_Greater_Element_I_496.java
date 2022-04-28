@@ -41,7 +41,7 @@ All the integers of nums1 also appear in nums2.
 
 Follow up: Could you find an O(nums1.length + nums2.length) solution?
 */
-class Next_Greater_Element_I {
+class Next_Greater_Element_I_496 {
     public int[] nextGreaterElement(int[] nums1, int[] nums2) {
         int[] res = new int[nums1.length];
 

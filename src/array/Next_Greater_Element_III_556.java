@@ -1,14 +1,10 @@
 package array;
 /*
-Given a positive integer n, find the smallest integer 
-
-which has exactly the same digits existing in the integer n and is greater in value than n. 
+Given a positive integer n, find the smallest integer which has exactly the same digits existing in the integer n and is greater in value than n.
 
 If no such positive integer exists, return -1.
 
-Note that the returned integer should fit in 32-bit integer, 
-
-if there is a valid answer but it does not fit in 32-bit integer, return -1.
+Note that the returned integer should fit in 32-bit integer, if there is a valid answer but it does not fit in 32-bit integer, return -1.
 
 Example 1:
 
@@ -24,57 +20,51 @@ Constraints:
 
 1 <= n <= 231 - 1
 */
-public class Next_Greater_Element_III_556 {
+class Next_Greater_Element_III_556 {
     public int nextGreaterElement(int n) {
-        String s = String.valueOf(n);
+        char[] a = ("" + n).toCharArray();
 
-        char[] cs = s.toCharArray();
+        int i = a.length - 2;
 
-        int last = cs[cs.length - 1];
+        while (i >= 0 && a[i + 1] <= a[i])
+            i--;       
 
-        int index = 0;
-
-        for(int i = cs.length - 1; i > 0; --i) {
-            if(cs[i - 1] < cs[i]) {
-                index = i;
-                break;
-            }
-        }
-
-        if(index == 0)
+        if (i < 0)
             return -1;
 
-        for(int i = cs.length - 1; i >= index; i--) {
-            if(cs[i] > cs[index - 1]) {
-                swap(cs, i, index - 1);
-                break;
-            }
-        }
+        int j = a.length - 1;
 
-        reverse(cs, index, cs.length - 1);
-        
-        s = String.valueOf(cs);
-        
-        long res = Long.valueOf(s);
-        
-        if(res > Integer.MAX_VALUE)
+        while (j >= 0 && a[j] <= a[i])
+            j--;
+
+        swap(a, i, j);
+
+        reverse(a, i + 1);
+
+        try {
+            return Integer.parseInt(new String(a));
+        } catch (Exception e) {
             return -1;
-
-        return (int)res;
+        }
     }
 
-    private void swap(char[] cs, int i, int j) {
-        char temp = cs[i];
-        cs[i] = cs[j];
-        cs[j] = temp;
+    private void reverse(char[] a, int start) {
+        int i = start, j = a.length - 1;
+        while (i < j) {
+            swap(a, i, j);
+            i++;
+            j--;
+        }
     }
 
-    private void reverse(char[] cs, int i, int j) {
-        while(i < j)
-        	swap(cs, i++, j--);
+    private void swap(char[] a, int i, int j) {
+        char temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
     }
 
     public static void main(String[] args) {
-    	Next_Greater_Element_III_556 obj = new Next_Greater_Element_III_556();
+        Next_Greater_Element_III_556 obj = new Next_Greater_Element_III_556();
+        System.out.println(obj.nextGreaterElement(32051));
     }
 }
