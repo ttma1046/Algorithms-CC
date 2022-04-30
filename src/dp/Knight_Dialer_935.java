@@ -38,11 +38,10 @@ class Knight_Dialer_935 {
     public int knightDialer(int n) {
         long s = 0;
         //do n hops from every i, j index (the very requirement of the problem)
-        for(int i = 0; i < 4; i++) {
-            for(int j = 0; j < 3; j++) {
+        for(int i = 0; i < 4; i++)
+            for(int j = 0; j < 3; j++)
                 s = paths(i, j, n));
-            }
-        }
+        
         return (int) s;
     }
 
@@ -62,5 +61,38 @@ class Knight_Dialer_935 {
                  paths(i + 2, j - 1, n - 1) % max + // jump to g
                  paths(i + 1, j - 2, n - 1) % max; // jump to h
         return s;
+    }
+
+    public static final int max = (int)Math.pow(10, 9) + 7;
+
+    public int knightDialer(int n) {
+        long temp[][][] = new long[n + 1][4][3];
+
+        long s = 0;
+
+        for(int i = 0; i < 4; i++)
+            for (int j = 0; j < 3; j++) 
+                s = (s + paths(temp, i, j, n)) % max;
+        
+        return (int)s;
+    }
+
+    private long paths(long[][][] temp, int i, int j, int n) {
+        if (i < 0 || j < 0 || i > 3 || j > 2 || (i == 3 && j != 1)) return 0;
+
+        if (n == 1) return 1;
+
+        if (temp[n][i][j] > 0) return temp[n][i][j];
+
+        temp[n][i][j] = paths(temp, i - 1, j - 2, n - 1) % max +
+                        paths(temp, i - 1, j + 2, n - 1) % max +
+                        paths(temp, i + 1, j - 2, n - 1) % max +
+                        paths(temp, i + 1, j + 2, n - 1) % max +
+                        paths(temp, i - 2, j + 1, n - 1) % max +
+                        paths(temp, i - 2, j - 1, n - 1) % max +
+                        paths(temp, i + 2, j + 1, n - 1) % max +
+                        paths(temp, i + 2, j - 1, n - 1) % max;
+
+        return temp[n][i][j];
     }
 }
