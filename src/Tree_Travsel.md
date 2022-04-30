@@ -1,5 +1,5 @@
 ## Tree Travsel
 
-(a) Inorder (Left, Root, Right)
-(b) Preorder (Root, Left, Right)
+(a) Preorder (Root, Left, Right)
+(b) Inorder (Left, Root, Right)
 (c) Postorder (Left, Right, Root)
