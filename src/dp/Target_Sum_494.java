@@ -1,4 +1,5 @@
 package dp;
+import java.util.Arrays;
 /*
 You are given an integer array nums and an integer target.
 
@@ -33,6 +34,27 @@ Constraints:
 
 class Target_Sum_494 {
     public int findTargetSumWays(int[] nums, int target) {
-        dp
+        int total = Arrays.stream(nums).sum();
+        int[][] dp = new int[nums.length][2 * total + 1];
+        dp[0][nums[0] + total] = 1;
+        dp[0][-nums[0] + total] += 1;
+
+        for (int i = 0; i < nums.length; ++i) {
+            for (int sum = -total; sum <= total; ++sum) {
+                if (dp[i - 1][sum + total] > 0)
+                dp[i][sum + nums[i] + total] += dp[i - 1][sum + total];
+                dp[i][sum - nums[i] + total] += dp[i - 1][sum + total];
+            }
+        }
+
+        return Math.abs(target) > total ? 0 : dp[nums.length - 1][target + total];
+    }
+
+    public static void main(String[] args) {
+        Target_Sum_494 obj = new Target_Sum_494();
+
+        int[] nums = new int[] {1, 1, 1, 1, 1};
+        int target = 3;
+        obj.findTargetSumWays(nums, target);
     }
 }
