@@ -37,43 +37,55 @@ chars[i] is a lowercase English letter, uppercase English letter, digit, or symb
 */
 class String_Compression_443 {
     public int compress(char[] chars) {
-        int n = chars.length;
-        int count = 1;
+        int index = 0;
         int i = 0;
-        int temp  = 0;
-        for (int j = 0; j < n - 1; ++j) {
-            if (chars[j] == chars[j + 1])
+
+        while (i < chars.length) {
+            char c = chars[i];
+            int count = 0;
+
+            while (i < chars.length && chars[i] == c) {
+                i++;
                 count++;
-            else {
-                if (count > 1) {
-                    i = temp;
-                    chars[++i] = (char)('0' + count);
-                    count = 1;
-                } else {
-                    i++;
-                }
-
-                temp = j + 1;
             }
+
+            chars[index++] = c;
+
+            if (count > 1)
+                for(char b : Integer.toString(count).toCharArray())
+                    chars[index++] = b;
         }
 
-        if (count > 0)
-            chars[i++] = (char)('0' + count);
-
-        for (char t: chars) {
-            System.out.print(t);
-            System.out.print(",");
-        }
-
-        return i + 1;
+        return index;
     }
 
     public static void main(String[] args) {
         String_Compression_443 obj = new String_Compression_443();
 
-        char[] chars = new char[] { 'a','a','b','b','c','c','c' };
+        char[] chars = new char[] { 'a', 'a', 'b', 'b', 'c', 'c', 'c' };
 
         System.out.println(obj.compress(chars));
+    }
 
+
+    public int compress(char[] chars) {
+        int len = 0; // also a pointer to modify array in-place
+        int i = 0;
+        while(i < chars.length) {
+            chars[len] = chars[i];
+            int j = i + 1;
+
+            while (j < chars.length && chars[j] == chars[i])
+                j++;
+
+            if (j - i > 1) { // need compression
+                String freq = j - i + "";
+                for (char c : freq.toCharArray())
+                    chars[++len] = c;
+            }
+            len++;
+            i = j;
+        }
+        return len;
     }
 }
