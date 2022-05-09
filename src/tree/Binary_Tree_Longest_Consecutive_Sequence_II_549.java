@@ -57,35 +57,13 @@ class Pair {
     }
 }
 
-class Solution {
-    int maxValue;
+public class Binary_Tree_Longest_Consecutive_Sequence_II_549 {
+
 
     public int longestConsecutive(TreeNode root) {
-        dfs(root);
-
-        return maxValue;
+        dfsII(root);
     }
 
     private Pair dfs(TreeNode curr) {
-        if (curr == null) return new Pair(0, 0);
-
-        int inR = 1, deR = 1;
-
-        if (curr.left != null) {
-            Pair leftSide = dfs(curr.left);
-            if (curr.val == curr.left.val + 1) deR = leftSide.deR + 1;
-            else if (curr.val == curr.left.val - 1) inR = leftSide.inR + 1;
-        }
-
-        if (curr.right != null) {
-            Pair rightSide = dfs(curr.right);
-
-            if (curr.val == curr.right.val + 1) deR = Math.max(deR, rightSide.deR + 1);
-            else if (curr.val == curr.right.val - 1) inR = Math.max(inR, rightSide.inR + 1);
-        }
-
-        maxValue = Math.max(maxValue, deR + inR - 1);
-
-        return new Pair(inR, deR);
     }
 }
