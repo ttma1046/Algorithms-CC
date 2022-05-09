@@ -67,7 +67,6 @@ class String_Compression_443 {
         System.out.println(obj.compress(chars));
     }
 
-
     public int compress(char[] chars) {
         int len = 0; // also a pointer to modify array in-place
         int i = 0;
