@@ -1,4 +1,10 @@
 package tree;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 /*
 A tree is an undirected graph in which any two vertices are connected by exactly one path. In other words, any connected graph without simple cycles is a tree.
 
@@ -30,55 +36,52 @@ The given input is guaranteed to be a tree and there will be no repeated edges.
 */
 class Minimum_Height_Trees_310 {
     public List<Integer> findMinHeightTrees(int n, int[][] edges) {
-                // edge cases
         if (n < 2) {
-            ArrayList<Integer> centroids = new ArrayList<>();
-            for (int i = 0; i < n; i++)
-                centroids.add(i);
-            return centroids;
+            List<Integer> res = new ArrayList<>();
+
+            for(int i = 0; i < n; ++i)
+                res.add(i);
+            
+            return res;
         }
 
-        // Build the graph with the adjacency list
         Map<Integer, Set<Integer>> neighbors = new HashMap<>();
-        for (int i = 0; i < n; i++)
-            neighbors.put(i, new HashSet<Integer>());
 
-        for (int[] edge : edges) {
-            Integer start = edge[0], end = edge[1];
-            neighbors.get(start).add(end);
-            neighbors.get(end).add(start);
+        for (int i = 0; i < n; i++)
+            neighbors.put(i, new HashSet<>());
+
+        for (int[] edge: edges) {
+            neighbors.get(edge[0]).add(edge[1]);
+            neighbors.get(edge[1]).add(edge[0]);
         }
 
-        // Initialize the first layer of leaves
-        ArrayList<Integer> leaves = new ArrayList<>();
-        for (int i = 0; i < n; i++)
+        List<Integer> leaves = new ArrayList<>();
+
+        for (int i = 0; i < n; ++i)
             if (neighbors.get(i).size() == 1)
                 leaves.add(i);
+        
+        int remaining = n;
 
-        // Trim the leaves until reaching the centroids
-        int remainingNodes = n;
-        while (remainingNodes > 2) {
-            remainingNodes -= leaves.size();
-            ArrayList<Integer> newLeaves = new ArrayList<>();
+        while(remaining > 2) {
+            remaining -= leaves.size();
 
-            // remove the current leaves along with the edges
-            for (Integer leaf : leaves) {
-                // the only neighbor left for the leaf node
+            List<Integer> newLeaves = new ArrayList<>();
+
+            for (Integer leaf: leaves) {
                 Integer neighbor = neighbors.get(leaf).iterator().next();
-                // remove the edge along with the leaf node
                 neighbors.get(neighbor).remove(leaf);
+
                 if (neighbors.get(neighbor).size() == 1)
                     newLeaves.add(neighbor);
             }
 
-            // prepare for the next round
             leaves = newLeaves;
         }
 
-        // The remaining nodes are the centroids of the graph
         return leaves;
     }
-
+    
     public static void main(String[] args) {
         Minimum_Height_Trees_310 obj = new Minimum_Height_Trees_310();
     }
