@@ -58,47 +58,45 @@ n == grid[i].length
 grid consists only of lowercase English letters.
 */
 class Detect_Cycles_in_2D_Grid_1559 {
+    int[][] directions = new int[][] {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+
     public boolean containsCycle(char[][] grid) {
-        int[][] directions = new int[][] {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+        int n = grid.length;
+        int m = grid[0].length;
 
-        boolean[][] visited = new boolean[grid.length][grid[0].length];
-
-        int m = grid.length;
-        int n = grid[0].length;
-
+        boolean[][] visited = new boolean[n][m];
         boolean hasCycle = false;
 
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[0].length; j++) {
+        for (int i = 0; i < n; ++i)
+            for (int j = 0; j < m; ++j)
                 if (!visited[i][j])
-                    hasCycle |= dfs(i, j, -1, -1, m, n, visited, grid, grid[i][j]);
-            }
+                    hasCycle |= dfs(i, j, -1, -1, n, m, visited, grid, grid[i][j]);
+
+        return hasCycle;
+    }
+
+
+    private boolean dfs(int i, int j, int oldI, int oldJ, int n, int m, boolean[][] visited, char[][] grid, char startChar) {
+        visited[i][j] = true;
+        boolean hasCycle = false;
+
+        for (int z = 0; z < 4; ++z) {
+            int newI = i + directions[z][0];
+            int newJ = j + directions[z][1];
+
+            if (newI >= 0 && newI < n && newJ >= 0 && newJ < m)
+                if (newI != oldI || newJ != oldJ)
+                    if (grid[newI][newJ] == startChar)
+                        if (visited[newI][newJ])
+                            return true;
+                        else
+                            hasCycle |= dfs(newI, newJ, i, j, n, m, visited, grid, startChar);
         }
 
         return hasCycle;
     }
 
-    private boolean dfs(int i, int j, int oldI, int oldJ, int m, int n, boolean[][] visited, char[][] grid, char startChar) {
-        visited[i][j] = true;
-        boolean hasCycle = false;
-
-        for (int d = 0; d < 4; ++d) {
-            int newI = i + direction[d][0];
-            int newJ = j + direction[d][0];
-
-            if (newI >= 0 && newI < m && newJ >= 0 && newJ < n) {
-                if (!(newI == lastI && newJ == lastJ)) {
-                    if (grid[newI][newJ] == startChar) {
-                        if (visited[newI][newJ]) {
-                            return true;
-                        } else {
-                            hasCycle |= dfs(newI, newJ, i, j, m, n, visited, grid, startChar);
-                        }
-                    }
-                }
-            }
-        }
-
-        return hasCycle;
+    public static void main(String[] args) {
+        Detect_Cycles_in_2D_Grid_1559 obj = new Detect_Cycles_in_2D_Grid_1559();
     }
 }
