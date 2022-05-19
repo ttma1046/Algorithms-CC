@@ -56,7 +56,7 @@ Constraints:
 s1 and s2 consist of digits 1-9 (inclusive), and lowercase English letters only.
 The number of consecutive digits in s1 and s2 does not exceed 3.
 */
-class Chec_if_an_Original_String_Exists_Given_Two_Encoded_Strings_2060 {
+class Check_if_an_Original_String_Exists_Given_Two_Encoded_Strings_2060 {
     public boolean possiblyEquals(String s1, String s2) {
         String s1;
         String s2;
