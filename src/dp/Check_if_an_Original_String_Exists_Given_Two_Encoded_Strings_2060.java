@@ -57,67 +57,64 @@ s1 and s2 consist of digits 1-9 (inclusive), and lowercase English letters only.
 The number of consecutive digits in s1 and s2 does not exceed 3.
 */
 class Check_if_an_Original_String_Exists_Given_Two_Encoded_Strings_2060 {
+    String s1;
+    String s2;
+    Boolean[][][] memo;
     public boolean possiblyEquals(String s1, String s2) {
-        String s1;
-        String s2;
-        Boolean[][][] memo = new Boolean[41][41][2000];
-        public boolean possiblyEquals(String s1, String s2) {
-            this.s1 = s1;
-            this.s2 = s2;
-            int n = s1.length();
-            int m = s2.length();
-            return dfs(0, 0, 0, n, m); //s1 pointer, s1 pointer, digit difference
-        }
+        this.s1 = s1;
+        this.s2 = s2;
 
-        private boolean dfs(int i, int j, int diff, int n, int m) {
-            if (i >= n && j >= m && diff == 0) 
-            	return true;
+        int n = s1.length();
+        int m = s2.length();
+        memo = new Boolean[n][m][2000];
 
-            /*
-            if (memo[i][j][diff + 1000] != null) 
-            	return memo[i][j][diff + 1000];
-            */
+        return dfs(0, 0, 0, n, m);
+    }
 
-            boolean res = false;
-            
-            if (i < n) {
-                if (Character.isDigit(s1.charAt(i))) {
-                    int count = 0;
-                    int value = 0; //be careful we can not change i cause s2 will use i again
+    private boolean dfs(int i, int j, int diff, int n, int m) {
+        if (i >= n && j >= m && diff == 0)
+            return true;
 
-                    while (i + count < n && count < 3 && Character.isDigit(s1.charAt(i + count))) {
-                        value = value * 10 + (s1.charAt(i + count) - '0');
-                        count++;
-                        if (dfs(i + count, j, diff - value, n, m)) 
-                        	res = true;
-                    }
-                } else {
-                    if (diff > 0) {
-                        if (dfs(i + 1, j, diff - 1, n, m)) 
-                        	res = true;
-                    } else if (diff == 0 && j < m && s1.charAt(i) == s2.charAt(j)) {
-                        if (dfs(i + 1, j + 1, diff, n, m)) 
-                        	res = true;
-                    }
+        boolean res = false;
+
+        if (memo[i][j][diff + 1000] != null)
+            return memo[i][j][diff + 1000];
+
+        if (i < n) {
+            if (Character.isDigit(s1.charAt(i))) {
+            int count = 0;
+            int value = 0;
+            while (i + count < n && count < 3 && Character.isDigit(s1.charAt(i + count))) {
+                    value = value * 10 + (s1.charAt(i + count) - '0');
+                    count++;
+                    if (dfs(i + count, j, diff - value, n, m))
+                        res = true;
                 }
+            } else {
+                if (diff > 0)
+                    if (dfs(i + 1, j, diff - 1, n, m))
+                        res = true;
+                    else if (diff == 0 & j < m && s1.charAt(i) == s2.charAt(j))
+                        if (dfs(i + 1, j + 1, diff, n, m))
+                            res = true;
             }
-
-            if (j < m) {
-                if (Character.isDigit(s2.charAt(j))) {
-                    int count = 0;
-                    int value = 0;
-
-                    while (j + count < m && count < 3 && Character.isDigit(s2.charAt(j + count))) {
-                        value = value * 10 + (s2.charAt(j + count) - '0');
-                        count++;
-                        if (dfs(i, j + count, diff + value, n, m)) 
-                        	res = true;
-                    }
-                } else if (diff < 0 && dfs(i, j + 1, diff + 1, n, m)) 
-                	res = true;
-            }
-
-            return res; //memo[i][j][diff + 1000] = res;
         }
+
+        if (j < m) {
+            if (Character.isDigit(s2.charAt(j))) {
+                int count = 0;
+                int value = 0;
+                while (j + count < m && count < 3 && Character.isDigit(s2.charAt(j + count))) {
+                    value = value * 10 + (s2.charAt(j + count) - '0');
+                    count++;
+                    if (dfs(i, j + count, diff + value, n, m))
+                        res = true;
+                }
+            } else if (diff < 0 && dfs(i, j + 1, diff + 1, n, m))
+                res = true;
+        }
+
+        memo[i][j][diff + 1000] = res;
+        return res;
     }
 }
