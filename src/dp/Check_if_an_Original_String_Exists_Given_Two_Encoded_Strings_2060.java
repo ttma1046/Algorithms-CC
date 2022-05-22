@@ -82,21 +82,22 @@ class Check_if_an_Original_String_Exists_Given_Two_Encoded_Strings_2060 {
 
         if (i < n) {
             if (Character.isDigit(s1.charAt(i))) {
-            int count = 0;
-            int value = 0;
-            while (i + count < n && count < 3 && Character.isDigit(s1.charAt(i + count))) {
+                int count = 0;
+                int value = 0;
+                while (i + count < n && count < 3 && Character.isDigit(s1.charAt(i + count))) {
                     value = value * 10 + (s1.charAt(i + count) - '0');
                     count++;
                     if (dfs(i + count, j, diff - value, n, m))
                         res = true;
                 }
             } else {
-                if (diff > 0)
+                if (diff > 0) {
                     if (dfs(i + 1, j, diff - 1, n, m))
                         res = true;
-                    else if (diff == 0 & j < m && s1.charAt(i) == s2.charAt(j))
-                        if (dfs(i + 1, j + 1, diff, n, m))
-                            res = true;
+                } else if (diff == 0 & j < m && s1.charAt(i) == s2.charAt(j)) {
+                    if (dfs(i + 1, j + 1, diff, n, m))
+                        res = true;
+                }
             }
         }
 
@@ -116,5 +117,14 @@ class Check_if_an_Original_String_Exists_Given_Two_Encoded_Strings_2060 {
 
         memo[i][j][diff + 1000] = res;
         return res;
+    }
+
+    public static void main(String[] args) {
+        Check_if_an_Original_String_Exists_Given_Two_Encoded_Strings_2060 Obj
+            = new Check_if_an_Original_String_Exists_Given_Two_Encoded_Strings_2060();
+
+        boolean res = obj.possiblyEquals("internationalization", "i18n");
+
+        System.out.println(res);
     }
 }
