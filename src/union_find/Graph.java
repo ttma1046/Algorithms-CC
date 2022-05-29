@@ -9,16 +9,15 @@ public class Graph {
         V = v;
         E = e;
         edges = new Edge[E];
-        for (int i = 0; i < e; ++i) {
+        for (int i = 0; i < e; ++i)
             edges[i] = new Edge(links[i][0], links[i][1]);
-        }
     }
 
     // A utility function to find the subset of an element i
     int find(int parent[], int i) {
-        if (parent[i] == -1) {
+        if (parent[i] == -1)
             return i;
-        }
+
         return find(parent, parent[i]);
     }
 

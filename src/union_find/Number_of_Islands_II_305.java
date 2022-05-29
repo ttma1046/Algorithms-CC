@@ -229,7 +229,7 @@ class DSUbySize {
         if (rootx == rooty) return;
         if (size[rootx] <= size[rootY]) {
             parent[rootx] = rooty;
-            size[rooty] += size[rootx];            
+            size[rooty] += size[rootx];
         } else if (size[rootx] > size[rooty]) {
             parent[rooty] = rootx;
             size[rootx] += size[rooty];

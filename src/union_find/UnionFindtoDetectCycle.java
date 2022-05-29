@@ -22,7 +22,7 @@ public class UnionFindtoDetectCycle {
         // there is cycle in graph.
 
         for (int i = 0; i < graph.E; ++i) {
-            int x = graph.find(parent, graph.edges[i].src); 
+            int x = graph.find(parent, graph.edges[i].src);
             int y = graph.find(parent, graph.edges[i].dest);
 
             if (x == y) {

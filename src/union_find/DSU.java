@@ -8,7 +8,8 @@ class DSU {
     }
 
     public int find(int x) {
-        if (parent[x] != x) parent[x] = find(parent[x]);
+        if (parent[x] != x) 
+            parent[x] = find(parent[x]);
         return parent[x];
     }
 
@@ -24,12 +25,14 @@ class DSU {
     public DSU(int N) {
         parent = new int[N];
         size = new int[N];
-        for (int i = 0; i < N; i++)	 parent[i] = i;
+        for (int i = 0; i < N; i++)  
+            parent[i] = i;
         Arrays.fill(size, 1);
     }
 
     public int find(int x) {
-        if (parent[x] != x) parent[x] = find(parent[x]);
+        if (parent[x] != x)
+            parent[x] = find(parent[x]);
         return parent[x];
     }
 
@@ -52,8 +55,8 @@ class DSU {
         } else if (rank[rootX] > rank[rootY]) {
             parent[rootY] = rootX;
         } else {
-        	parent[rootX] = rootY;
-        	rank[rootY]++;
+            parent[rootX] = rootY;
+            rank[rootY]++;
         }
     }
 }

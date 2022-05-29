@@ -5,7 +5,7 @@ public class UnionFindByRank {
     // A utility function to find
     // set of an element i (uses
     // path compression technique)
-    int find(Subset [] subsets , int i) {
+    int find(Subset [] subsets, int i) {
         if (subsets[i].parent != i)
             subsets[i].parent = find(subsets,
                                      subsets[i].parent);
@@ -16,7 +16,7 @@ public class UnionFindByRank {
     // of two sets of x and y
     // (uses union by rank)
     void Union(Subset [] subsets,
-               int x , int y ) {
+               int x, int y ) {
         int xroot = find(subsets, x);
         int yroot = find(subsets, y);
 

@@ -186,7 +186,8 @@ class DSU {
     }
 
     public int find(int x) {
-        if (this.parent[x] != x) this.parent[x] = find(this.parent[x]);
+        if (this.parent[x] != x) 
+            this.parent[x] = find(this.parent[x]);
         return this.parent[x];
     }
 
