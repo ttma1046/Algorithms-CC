@@ -1,7 +1,6 @@
 package greedy;
 
 import java.util.*;
-import java.lang.*;
 import java.io.*;
 
 class Job_Sequencing {
