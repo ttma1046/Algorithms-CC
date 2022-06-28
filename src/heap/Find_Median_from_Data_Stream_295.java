@@ -54,8 +54,8 @@ public class Find_Median_from_Data_Stream_295 {
     }
 }
 
-/*
-class MedianFinder {
+
+class MedianFinderSort {
     List<Integer> temp;
     public MedianFinder() {
         temp = new ArrayList<>();
@@ -66,10 +66,10 @@ class MedianFinder {
     }
 
     public double findMedian() {
-    	Collections.sort(temp);
+        Collections.sort(temp);
 
         int size = temp.size();
-       int mid = size / 2;
+        int mid = size / 2;
 
         int index = 0;
         int sum = 0;
@@ -91,20 +91,15 @@ class MedianFinder {
         return 0;
     }
 
-    public void addNum(int num) {
-        temp.add(num);
-    }
-
     // Returns the median of current data stream
     public double findMedian() {
-    	Collections.sort(temp);
+        Collections.sort(temp);
 
         int n = temp.size();
-        System.out.println(n);
-        return (n & 1) == 1 ? temp.get(n / 2) : ((double) temp.get(n / 2 - 1) + temp.get(n / 2)) * 0.5;
+        return (n & 1) == 1 ? 
+            temp.get(n / 2) : ((double) temp.get(n / 2 - 1) + temp.get(n / 2)) * 0.5;
     }
 }
-*/
 
 class MedianFinder {
     PriorityQueue<Integer> lo = new PriorityQueue<>((a1, a2) -> a2 - a1);
