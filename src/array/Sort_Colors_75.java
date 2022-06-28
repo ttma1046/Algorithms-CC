@@ -57,6 +57,41 @@ class Sort_Colors_75 {
 		}
 	}
 
+	public void sortColors(int[] nums) {
+		int count0 = 0;
+		int count1 = 0;
+		int count2 = 0;
+
+		for (int i = 0; i < nums.length; ++i) {
+			if (nums[i] == 0) count0++;
+			if (nums[i] == 1) count1++;
+			if (nums[i] == 2) count2++;
+		}
+
+		for (int i = 0; i < nums.lenght; ++i) {
+			if (i < count0) nums[i] = 0;
+			else if (i < count0 + count1) nums[i] = 1;
+			else nums[i] = 2;
+		}
+	}
+
+	public void sortColors(int[] nums) {
+		int left = 0, right = nums.length - 1;
+
+		for (int i = 0; i <= right; i++) {
+			if (nums[i] == 0 && i > left)
+				swap(nums, i--, left++);
+			else if (nums[i] == 2 && i < right)
+				swap(nums, i--, right--);
+		}
+	}
+
+	public void swap(int[] nums, int i, int j) {
+		int temp = nums[i];
+		nums[i] = nums[j];
+		nums[j] = temp;
+	}
+
 	public static void main(String[] args) {
 		int[] aka = new int [] {2, 0, 2, 1, 1, 0};
 
@@ -81,8 +116,6 @@ class Sort_Colors_75 {
 		       l  r  
 		       i       
 		*/
-
-
 		new Sort_Colors_75().sortColors(new int [] {2, 0, 2, 1, 1, 0});
 	}
 }

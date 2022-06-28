@@ -96,9 +96,9 @@ class Sort_Characters_By_Frequency_451 {
     public String frequencySortI(String s) {
         // Count up the occurances.
         Map<Character, Integer> counts = new HashMap<>();
-        for (char c : s.toCharArray()) {
+        for (char c : s.toCharArray())
             counts.put(c, counts.getOrDefault(c, 0) + 1);
-        }
+
 
         // Make a list of the keys, sorted by frequency.
         List<Character> characters = new ArrayList<>(counts.keySet());
@@ -214,8 +214,68 @@ class Sort_Characters_By_Frequency_451 {
         }
         return sb.toString();
     }
+
+    public String frequencySortIV(String s) {
+        if (s == null || s.isEmpty()) return s;
+
+        // Count up the occurances.
+        Map<Character, Integer> counts = new HashMap<>();
+        for (char c : s.toCharArray())
+            counts.put(c, counts.getOrDefault(c, 0) + 1);
+
+        // Make the list of buckets and apply bucket sort.
+        List<List<Character>> buckets = new ArrayList<>();
+
+        for (Character key : counts.keySet()) {
+            int freq = counts.get(key);
+            buckets.get(freq).add(key);
+        }
+
+        // Build up the string.
+        StringBuilder sb = new StringBuilder();
+        for (int i = buckets.size() - 1; i >= 1; i--) {
+            for (Character c : buckets.get(i)) {
+                for (int j = 0; j < i; j++) {
+                    sb.append(c);
+                }
+            }
+        }
+
+        return sb.toString();
+    }
+
+    public String frequencySort(String s) {
+        if (s == null || s.isEmpty()) return s;
+
+        // Count up the occurances.
+        Map<Character, Integer> counts = new HashMap<>();
+        for (char c : s.toCharArray())
+            counts.put(c, counts.getOrDefault(c, 0) + 1);
+
+        // Make the list of buckets and apply bucket sort.
+        List<Character>[] buckets = new List[s.length() + 1];
+
+        for (Character key : counts.keySet()) {
+            int freq = counts.get(key);
+            if (buckets[freq] == null)
+                buckets[freq] = new ArrayList<>();
+
+            buckets[freq].add(key);
+        }
+
+        // Build up the string.
+        StringBuilder sb = new StringBuilder();
+        for (int i = buckets.length - 1; i >= 1; i--)
+            if (buckets[i] != null)
+                for (Character c : buckets[i])
+                    for (int j = 0; j < i; j++)
+                        sb.append(c);
+
+        return sb.toString();
+    }
+
     /*
-    Let n be the length of the input String. 
+    Let n be the length of the input String.
 
     The k (number of unique characters in the input String that we considered for the last approach makes no difference this time).
 
@@ -233,14 +293,14 @@ class Sort_Characters_By_Frequency_451 {
 
     Space Complexity : O(n).
 
-    Same as above. The bucket Array also uses O(n) space, because its length is at most n, 
+    Same as above. The bucket Array also uses O(n) space, because its length is at most n,
 
     and there are k items across all the buckets.
     */
 
     public static void main(String[] args) {
         Sort_Characters_By_Frequency_451 obj = new Sort_Characters_By_Frequency_451();
-        System.out.println(obj.frequencySort("cccaaa"));
+        System.out.println(obj.frequencySortIV("cccaaa"));
     }
 
     public String frequencySort(String s) {
