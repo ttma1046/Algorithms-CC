@@ -1,11 +1,8 @@
 package sort;
 
 public class BubbleSort {
-    /*
-    public static void bubbleSort(int[] array) {
-        if (array == null) {
-            return;
-        }
+    void bubbleSortII(int[] array) {
+        if (array == null) return;
 
         boolean isSorted = false;
 
@@ -24,15 +21,7 @@ public class BubbleSort {
         }
     }
 
-    private static void swap(int[] array, int i, int j) {
-        int temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
-    }
-    */
-
-    /*
-    public static void bubblesort(int[] array) {
+    void bubblesortIII(int[] array) {
         int unSortedlength = array.length - 1;
         boolean isSorted = false;
 
@@ -51,8 +40,6 @@ public class BubbleSort {
             }
         }
 
-        return array;
-
         int l = array.length;
         for(int i = 0; i < l; ++i) {
             for (int j = 0; j < l - 1 - i; ++j) {
@@ -63,11 +50,9 @@ public class BubbleSort {
                 }
             }
         }
-
     }
-    */
 
-    public void bubbleSort(int[] array) {
+    void bubbleSortIIII(int[] array) {
         boolean isSorted = false;
         int isUnsortedArrayLength = array.length - 1;
 
@@ -88,6 +73,19 @@ public class BubbleSort {
         }
     }
 
+    void bubbleSort(int arr[]) {
+        for (int i = 0; i < arr.length; i++)
+            for (int j = 0; j < arr.length - 1 - i; j++) 
+                if (arr[j] > arr[j + 1])
+                    swap(arr, j, j + 1);
+    }
+
+    private void swap(int[] array, int i, int j) {
+        int temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+
     public static void main(String[] args) {
         int[] array = new int[] { 4, 2, 7, 10, 8};
         new BubbleSort().bubbleSort(array);
@@ -96,4 +94,7 @@ public class BubbleSort {
             System.out.println(i);
         }
     }
+
+    // time complexity: O(n^2)
+    // space complexity: constant O(1)
 }
