@@ -73,11 +73,13 @@ public class BubbleSort {
         }
     }
 
-    void bubbleSort(int arr[]) {
+    int[] bubbleSort(int arr[]) {
         for (int i = 0; i < arr.length; i++)
             for (int j = 0; j < arr.length - 1 - i; j++) 
                 if (arr[j] > arr[j + 1])
                     swap(arr, j, j + 1);
+
+        return arr;
     }
 
     private void swap(int[] array, int i, int j) {
@@ -88,9 +90,10 @@ public class BubbleSort {
 
     public static void main(String[] args) {
         int[] array = new int[] { 4, 2, 7, 10, 8};
-        new BubbleSort().bubbleSort(array);
+        BubbleSort obj = new BubbleSort();
+        int[] res = obj.bubbleSort(array);
 
-        for (int i : array) {
+        for (int i : res) {
             System.out.println(i);
         }
     }
