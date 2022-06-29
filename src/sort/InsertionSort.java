@@ -1,32 +1,42 @@
 package sort;
 
 public class InsertionSort {
-	public static void sort(int[] array) {
-		// Sort a[] into increasing order.
-		int N = array.length;
+	int[] insertionSortI(int[] nums) {
+		int N = nums.length;
+
 		for (int i = 1; i < N; i++) {
-			// Insert a[i] among a[i-1], a[i-2], a[i-3]... ..
-			for (int j = i; j > 0 && array[j] < array[j - 1]; j--) {
-				int temp = array[j];
-				array[j] = array[j - 1];
-				array[j - 1] = temp;
+			for (int j = i; j > 0 && nums[j - 1] > nums[j]; j--)
+				swap(nums, j, j - 1);
+		}
 
-				/*
-				for (int k : array) {
-					System.out.print(k);
-					System.out.print(",");
+		return nums;
+	}
 
-				}
-				System.out.println();
-				*/
+	void swap(int[] arr, int i, int j) {
+		int temp = arr[i];
+		arr[i] = arr[j];
+		arr[j] = temp;
+	}
+
+	void insertionSort(int[] nums) {
+		int N = nums.length;
+
+		for (int i = 0; i < N; i++) {
+			int temp = nums[i];	
+			int j = i;
+			while(j > 0 && nums[j - 1] > temp) {
+				nums[j] = nums[j - 1];
+				j--;
 			}
+
+			nums[j] = temp;
 		}
 	}
 
 	public static void main(String[] args) {
 		int[] array = new int[] {38, 27, 43, 3, 9, 82, 10};
 
-		new InsertionSort().sort(array);
+		new InsertionSort().insertionSortI(array);
 
 		for (int i : array) {
 			System.out.println(i);
