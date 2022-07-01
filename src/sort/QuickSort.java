@@ -10,9 +10,8 @@ public class QuickSort {
     }
 
     public void quicksortII(int[] array, int left , int right) {
-        if (left >= right) {
-            return;
-        }
+        if (left >= right) 
+            return;        
 
         int pivot = array[left + (right - left) / 2];
 
@@ -24,9 +23,6 @@ public class QuickSort {
     }
 
     public int partitionII(int[] array, int left, int right, int pivot) {
-        System.out.println("pivot:" + pivot);
-        System.out.println("left:" + left);
-        System.out.println("right:" + right);
         while (left <= right) {
             while (array[left] < pivot) {
                 left++;
@@ -37,25 +33,7 @@ public class QuickSort {
             }
 
             if (left <= right) {
-                System.out.println("left index:" + left + ":value:" + array[left]);
-                System.out.println("right index:" + right + ":value:" + array[right]);
-
-                System.out.println("before swap:");
-                for (int i: array) {
-                    System.out.print(i);
-                    System.out.print(",");
-                }
-                System.out.println();
-
-
                 swap(array, left, right);
-
-                System.out.println("after swap:");
-                for (int i: array) {
-                    System.out.print(i);
-                    System.out.print(",");
-                }
-                System.out.println();
 
                 left++;
                 right--;
@@ -72,25 +50,9 @@ public class QuickSort {
     }
 
     public static void main(String[] args) {
-        /*
-        int[] result = new int[] {15, 3, 9, 8, 5, 2, 7, 1, 6};
-        new QuickSort().sort(result);
-
-        for (int i : result) {
-            System.out.print(i);
-            System.out.print(",");
-        }
-
-        System.out.println();
-        */
         int[] result = new int[] {7, 1, 2, 3, 4, 5};
 
         new QuickSort().sort(result);
-
-        for (int i : result) {
-            System.out.print(i);
-            System.out.print(",");
-        }
     }
 
     public void sort(int[] a) {
@@ -104,9 +66,7 @@ public class QuickSort {
         // if (hi <= lo + M) { Insertion.sort(a, lo, hi); return; }
          
         int j = partition(a, lo, hi); // Partition (see page 291).
-        System.out.println("sort(a, " + lo + ", " + (j - 1) + ")");
         sort(a, lo, j - 1); // Sort left part a[lo .. j-1].
-        System.out.println("sort(a, " + (j + 1) + ", " + hi + ")");
         sort(a, j + 1, hi); // Sort right part a[j+1 .. hi].
     }
 
@@ -136,12 +96,7 @@ public class QuickSort {
         }
 
         exchange(a, lo, j); // Put pivot = a[j] into position
-        for (int k : a) {
-            System.out.print(k);
-            System.out.print(",");
-        }
-        System.out.println();
-        System.out.println("j: " + j);
+
         return j; // with a[lo..j-1] <= a[j] <= a[j+1..hi].
     }
 
@@ -206,5 +161,83 @@ public class QuickSort {
     1 3 2 5 8 9 7 15 6
           R L
     */
+
+    public int[] quickSort(int[] array) {
+        helper(array, 0, array.length - 1);
+        return array;
+    }
+
+    public void helper(int[] array, int left, int right) {
+        if (left >= right)
+            return;
+
+        int pivot = partition(array, left, right);
+        helper(array, left, pivot - 1);
+        helper(array, pivot + 1, right);
+    }
+
+    public int partition(int[] array, int left, int right) {
+        int pivot = array[right];
+
+        int start = left, end = right - 1;
+
+        while (start <= end) {
+            if (array[start] <= pivot)
+                start++;
+            else if (array[end] > pivot)
+                end--;
+            else swap(array, start++, end--);
+        }
+
+        swap(array, start, right);
+        return start;
+    }
+     /*
+       {7, 1, 2, 3, 4, 5}
+        |              |
+        w              r
+        |
+        l
+
+        povit = 5
+
+        1 7 2 3 4 5
+          w
+
+        1 2 7 3 4 5
+            w
+
+        1 2 3 7 4 5
+              w
+
+        1 2 3 4 7 5
+                w
+
+
+        {38, 27, 43, 3, 9, 82, 10};
+         w                     P
+         l                     r
+         i   i   i   i
+        {3 , 27, 43, 38, 9, 82, 10};
+             w           
+        {3 , 9, 43, 38, 27, 82, 10};
+                w           i
+
+        3  9 10 38 27 82 43
+    */
+
+    private int partition2(int[] array, int left, int right) {
+        int pivot = array[right], wall = left;
+
+        for (int i = left; i < right; i++) {
+            if (array[i] < pivot) {
+                swap(array, i, wall);
+                wall++;
+            }
+        }
+
+        swap(array, wall, right);
+        return wall;
+    }
 }
 
