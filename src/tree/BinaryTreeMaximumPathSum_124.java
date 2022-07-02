@@ -43,13 +43,15 @@ public class BinaryTreeMaximumPathSum_124 {
     private int dfs(TreeNode node) {
         if (node == null) return 0;
 
-        int left = 0; 
+        int left = 0;
         int dfsLeft = dfs(node.left);
-        if (dfsLeft > 0) left = dfsLeft;
-        
+        if (dfsLeft > 0)
+            left = dfsLeft;
+
         int right = 0;
         int dfsRight = dfs(node.right);
-        if (dfsRight > 0) right = dfsRight;
+        if (dfsRight > 0)
+            right = dfsRight;
 
         maxValue = Math.max(maxValue, node.val + right + left);
 
@@ -57,7 +59,8 @@ public class BinaryTreeMaximumPathSum_124 {
     }
 
     public int dfsTwo(TreeNode node) {
-        if (node == null) return 0;
+        if (node == null)
+            return 0;
         int left = Math.max(0, dfsTwo(node.left));
         int right = Math.max(0, dfsTwo(node.right));
 
@@ -66,7 +69,8 @@ public class BinaryTreeMaximumPathSum_124 {
     }
 
     public int maxPathSumII(TreeNode root) {
-        if (root == null) return 0;
+        if (root == null)
+            return 0;
         return postorderTraversalII(root)[0];
     }
 
@@ -76,16 +80,28 @@ public class BinaryTreeMaximumPathSum_124 {
         int[] left = postorderTraversalII(node.left);
         int[] right = postorderTraversalII(node.right);
 
-        int leftbig = 0;
-        if (left[1] > 0) leftbig = left[1];
+        int leftbig = left[1] > 0 ? left[1] : 0;
+        int rightbig = right[1] > 0 ? right[1] : 0;
 
-        int rightbig = 0;
-        if (right[1] > 0) rightbig = right[1];
-
-        int result = Math.max(left[0], right[0]);
-        result = Math.max(result, rightbig + leftbig + node.val);
+        int result = Math.max(Math.max(left[0], right[0]), leftbig + rightbig + node.val);
 
         return new int[] { result, node.val + Math.max(leftbig, rightbig) };
+    }
+
+    public int maxPathSumIII(TreeNode root) {
+        if (root == null)
+            return 0;
+
+        postorderTraversalIII(root);
+        return result;
+    }
+
+    private int postorderTraversalIII(TreeNode node) {
+        if (node == null) return 0;
+        int leftSum = postorderTraversalIII(node.left);
+        int rightSum = postorderTraversalIII(node.right);
+        result = Math.max(result, node.val + leftSum + rightSum);
+        return Math.max(0, node.val + Math.max(leftSum, rightSum));
     }
 
     public static void main(String[] args) {

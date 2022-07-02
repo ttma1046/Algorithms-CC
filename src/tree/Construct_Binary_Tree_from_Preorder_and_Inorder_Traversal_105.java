@@ -1,13 +1,11 @@
 package tree;
 import java.util.Arrays;
-
 /*
 Given two integer arrays preorder and inorder where preorder is the preorder traversal of a binary tree and inorder is the inorder traversal of the same tree,
 
 construct and return the binary tree.
 
 Example 1:
-
 
 Input: preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]
 Output: [3,9,20,null,null,15,7]
@@ -16,7 +14,6 @@ Example 2:
 
 Input: preorder = [-1], inorder = [-1]
 Output: [-1]\
-
 
 Constraints:
 
@@ -37,7 +34,6 @@ class Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105 {
     9   3   15 20 7
     */
 
-
     /*
     public TreeNode buildTree(int[] preorder, int[] inorder) {
         if (preorder.length != inorder.length) return null;
@@ -50,9 +46,9 @@ class Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105 {
 
         int inorderRoot = inLow;
         for (int i = inLow; i <= inHigh; i++) {
-            if (inorder[i] == root.val) { 
-                inorderRoot = i; 
-                break; 
+            if (inorder[i] == root.val) {
+                inorderRoot = i;
+                break;
             }
         }
 
@@ -63,7 +59,7 @@ class Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105 {
     }
     */
 
-    
+
     private int pre = 0;
     private int in = 0;
 
@@ -73,10 +69,12 @@ class Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105 {
 
     private TreeNode build(int[] preorder, int[] inorder, int stop) {
         if (pre >= preorder.length) return null;
+
         if (inorder[in] == stop) {
             in++;
             return null;
         }
+
         TreeNode node = new TreeNode(preorder[pre++]);
         node.left = build(preorder, inorder, node.val);
         node.right = build(preorder, inorder, stop);
@@ -97,16 +95,21 @@ class Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105 {
         return root;
         */
 
-        if (preorder == null) return null;
+        if (preorder == null) 
+            return null;
 
         int n = preorder.length;
         if (n == 0) return null;
 
         TreeNode root = new TreeNode(preorder[0]);
-        if (n == 1) return root;
+
+        if (n == 1) 
+            return root;
 
         int L =  0;
-        for (int i = 0; i < n; ++i) if (inorder[i] == preorder[0]) L = i;
+        for (int i = 0; i < n; ++i) 
+            if (inorder[i] == preorder[0]) 
+                L = i;
 
         root.left = buildTree(Arrays.copyOfRange(preorder, 1, L + 1), Arrays.copyOfRange(inorder, 0, L));
         root.right = buildTree(Arrays.copyOfRange(preorder, L + 1, n), Arrays.copyOfRange(inorder, L + 1, n));
@@ -117,11 +120,11 @@ class Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105 {
     // O(n) Time Complexcity
     // O(n) Space Complexity
     public static void main(String[] args) {
-        // TreeNode res = new Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105().buildTree(new int[] {3, 9, 20, 15, 7},  new int[] {9, 3, 15, 20, 7});
-        // TreeNode binaryTree = new Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105().buildBinarySearchTree(new int[] {3, 9, 20, 15, 7});
+        Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105 obj = new Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105();
 
-
-        TreeNode binaryTree = new Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105().buildTreeNice(new int[] {3, 9, 20, 15, 7},  new int[] {9, 3, 15, 20, 7});
+        TreeNode res = obj.buildTree(new int[] {3, 9, 20, 15, 7},  new int[] {9, 3, 15, 20, 7});
+        TreeNode binaryTree = obj.buildBinarySearchTree(new int[] {3, 9, 20, 15, 7});
+        TreeNode binaryTree = obj.buildTreeNice(new int[] {3, 9, 20, 15, 7},  new int[] {9, 3, 15, 20, 7});
     }
 
     public TreeNode buildBinarySearchTree(int[] preorder) {
@@ -135,7 +138,8 @@ class Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105 {
         Arrays.sort(preorder);
 
         for (int i = 0; i < preorder.length; i++) {
-            if (temp[i] != preorder[i]) System.out.println("not same");
+            if (temp[i] != preorder[i]) 
+                System.out.println("not same");
         }
 
         return buildTree(preorder, temp);
@@ -147,26 +151,19 @@ class Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105 {
     }
 
     public TreeNode buildTreeNode(int[] preorder, int prelow, int prehigh, int[] inorder, int inlow, int inhigh) {
-        if (prelow > prehigh || inlow > inhigh) return null;
+        if (prelow > prehigh || inlow > inhigh) 
+            return null;
 
         TreeNode current = new TreeNode(preorder[prelow]);
 
         int inorderRootIndex = inlow;
         for (int i = inlow; i <= inhigh; i++) {
             if (inorder[i] == current.val) {
-                inorderRootIndex = i; 
+                inorderRootIndex = i;
                 break;
             }
         }
-
-        // preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]
-
-        /*
-        3   9   20 15 7
-
-        9   3   15 20 7
-        */
-
+        
         int length = inorderRootIndex - inlow;
 
         current.left = buildTreeNode(preorder, prelow + 1, prelow + length, inorder, inlow, inorderRootIndex - 1);
@@ -188,12 +185,13 @@ class Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105 {
         this.preOrderIndex = 0;
         int length = preOrder.length;
 
-        for (int i = 0; i < length; i++) map.put(inOrder[i], i);
+        for (int i = 0; i < length; i++) 
+            map.put(inOrder[i], i);
         return helperbuilder(0, length - 1);
     }
 
     /*
-    [ 
+    [
        { 1, 0 },
        { 9, 1 },
        { 2, 2 },

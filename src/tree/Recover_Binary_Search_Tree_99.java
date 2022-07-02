@@ -1,5 +1,5 @@
 package tree;
-
+import java.util.Stack;
 /*
 You are given the root of a binary search tree (BST),
 
@@ -25,6 +25,25 @@ The number of nodes in the tree is in the range [2, 1000].
 Follow up: A solution using O(n) space is pretty straight-forward. Could you devise a constant O(1) space solution?
 */
 
+/**
+ * Definition for a binary tree node.
+ */ 
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode() {}
+    TreeNode(int val) {
+        this.val = val;
+    }
+    TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+}
+/**/
+
 class Recover_Binary_Search_Tree_99 {
     TreeNode prev = new TreeNode(Integer.MIN_VALUE);
 
@@ -35,7 +54,8 @@ class Recover_Binary_Search_Tree_99 {
         if (root == null) return;
 
         dfs(root);
-        if (first == null || second == null) return;
+        if (first == null || second == null) 
+            return;
 
         int temp = first.val;
         first.val = second.val;
@@ -45,27 +65,28 @@ class Recover_Binary_Search_Tree_99 {
     void dfs(TreeNode node) {
         if (node == null) return;
 
-        if (node.left != null) dfs(node.left);
+        if (node.left != null) 
+            dfs(node.left);
 
         if (prev.val > node.val) {
             if (first == null) {
                 first = prev;
                 second = node;
-            } else second = node;
+            } else {
+                second = node;
+            }
         }
 
         prev = node;
-        if (node.right != null) dfs(node.right);
+
+        if (node.right != null) 
+            dfs(node.right);
     }
 
-    TreeNode prev = new TreeNode(Integer.MIN_VALUE);
-
-    TreeNode first = null;
-    TreeNode second = null;
-
-    public void recoverTree(TreeNode root) {
+    public void recoverTreeII(TreeNode root) {
         TreeNode prev = new TreeNode(Integer.MIN_VALUE);
-        TreeNode first = null, second = null;
+        TreeNode first = null;
+        TreeNode second = null;
 
         Stack<TreeNode> stack = new Stack<>();
         TreeNode curr = root;
@@ -90,10 +111,15 @@ class Recover_Binary_Search_Tree_99 {
             curr = curr.right;
         }
 
-        if (first == null || second == null) return;
+        if (first == null || second == null) 
+            return;
 
         int temp = first.val;
         first.val = second.val;
         second.val = temp;
+    }
+
+    public static void main(String[] args) {
+        Recover_Binary_Search_Tree_99 obj = new Recover_Binary_Search_Tree_99();
     }
 }
