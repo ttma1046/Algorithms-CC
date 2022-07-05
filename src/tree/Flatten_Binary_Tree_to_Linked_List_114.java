@@ -29,7 +29,7 @@ The number of nodes in the tree is in the range [0, 2000].
 Follow up: Can you flatten the tree in-place (with O(1) extra space)?
 */
 /*
-	Definition for a binary tree node.
+    Definition for a binary tree node.
 */
 public class TreeNode {
     int val;
@@ -47,14 +47,20 @@ public class TreeNode {
 }
 /**/
 class Flatten_Binary_Tree_to_Linked_List_144 {
+    public static void main(String[] args) {
+        Flatten_Binary_Tree_to_Linked_List_144 obj = new Flatten_Binary_Tree_to_Linked_List_144();
+    }
+
     public void flatten(TreeNode root) {
         flattenTree(root);
     }
 
     private TreeNode flattenTree(TreeNode node) {
-        if (node == null) return null;
+        if (node == null)
+            return null;
 
-        if (node.left == null && node.right == null) return node;
+        if (node.left == null && node.right == null)
+            return node;
 
         TreeNode leftTail = flattenTree(node.left);
 
@@ -69,20 +75,18 @@ class Flatten_Binary_Tree_to_Linked_List_144 {
         return rightTail == null ? leftTail : rightTail;
     }
 
-    public void flatten(TreeNode root) {
+    /*
+    public void flattenII(TreeNode root) {
 
         // Handle the null scenario
-        if (root == null) {
+        if (root == null)
             return;
-        }
 
         TreeNode node = root;
 
         while (node != null) {
-
             // If the node has a left child
             if (node.left != null) {
-
                 // Find the rightmost node
                 TreeNode rightmost = node.left;
                 while (rightmost.right != null) {
@@ -97,6 +101,29 @@ class Flatten_Binary_Tree_to_Linked_List_144 {
 
             // move on to the right side of the tree
             node = node.right;
+        }
+    }
+    */
+
+    public void flattenII(TreeNode root) {
+        if (root == null)
+            return;
+
+        TreeNode curr = root;
+
+        while(curr != null) {
+            if (curr.left != null) {
+                TreeNode rightMost = curr.left;
+
+                while(rightMost.right != null)
+                    rightMost = rightMost.right;
+
+                rightMost.right = curr.right;
+                curr.right = curr.left;
+                curr.left = null;
+            }
+
+            curr = curr.right;
         }
     }
 }

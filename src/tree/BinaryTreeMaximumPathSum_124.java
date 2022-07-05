@@ -88,20 +88,24 @@ public class BinaryTreeMaximumPathSum_124 {
         return new int[] { result, node.val + Math.max(leftbig, rightbig) };
     }
 
-    public int maxPathSumIII(TreeNode root) {
+    public int maxPathSum(TreeNode root) {
         if (root == null)
             return 0;
 
-        postorderTraversalIII(root);
-        return result;
+        postOrder(root);
+        return maxValue;
     }
 
-    private int postorderTraversalIII(TreeNode node) {
-        if (node == null) return 0;
-        int leftSum = postorderTraversalIII(node.left);
-        int rightSum = postorderTraversalIII(node.right);
-        result = Math.max(result, node.val + leftSum + rightSum);
-        return Math.max(0, node.val + Math.max(leftSum, rightSum));
+    public int postOrder(TreeNode node) {
+        if (node == null)
+            return 0;
+
+        int left = postOrder(node.left);
+        int right = postOrder(node.right);
+        
+        maxValue = Math.max(maxValue, node.val + left + right);
+
+        return Math.max(0, node.val + Math.max(left, right));
     }
 
     public static void main(String[] args) {

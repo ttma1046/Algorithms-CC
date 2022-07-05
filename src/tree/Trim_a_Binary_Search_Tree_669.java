@@ -1,4 +1,4 @@
-packge tree;
+package tree;
 /*
 Given the root of a binary search tree and the lowest and highest boundaries as low and high, 
 
@@ -47,16 +47,21 @@ root is guaranteed to be a valid binary search tree.
 class Trim_a_Binary_Search_Tree_669 {
     public TreeNode trimBST(TreeNode root, int low, int high) {
         if (root == null) 
-        	return null;
-        
-        if (root.val > high) 
-        	return trimBST(root.left, low, high);
+            return null;
 
-        if (root.val < low) 
-        	return trimBST(root.right, low, high);
+        if (root.val > high) 
+            return trimBST(root.left, low, high);
+
+        if (root.val < low)
+            return trimBST(root.right, low, high);
 
         root.left = trimBST(root.left, low, high);
         root.right = trimBST(root.right, low, high);
-        return root;       
+
+        return root;
+    }
+
+    public static void main(String[] args) {
+        Trim_a_Binary_Search_Tree_669 obj = new Trim_a_Binary_Search_Tree_669();
     }
 }

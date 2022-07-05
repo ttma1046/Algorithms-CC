@@ -18,8 +18,10 @@ public class BinaryTreePostorderTraversal_145 {
     }
 
     private void postorderTraversal(TreeNode current, List<Integer> result) {
-        if (current.left != null) postorderTraversal(current.left, result);
-        if (current.right != null) postorderTraversal(current.right, result);
+        if (current.left != null)
+            postorderTraversal(current.left, result);
+        if (current.right != null)
+            postorderTraversal(current.right, result);
         result.add(current.val);
     }
 
@@ -62,8 +64,10 @@ public class BinaryTreePostorderTraversal_145 {
         while (!stack.isEmpty()) {
             root = stack.pop();
             result.addFirst(root.val);
-            if (root.left != null) stack.push(root.left);
-            if (root.right != null) stack.push(root.right);
+            if (root.left != null)
+                stack.push(root.left);
+            if (root.right != null)
+                stack.push(root.right);
         }
 
         return result;
@@ -81,7 +85,7 @@ public class BinaryTreePostorderTraversal_145 {
                 }
                 stack.push(root);
                 root = root.left;
-            }  
+            }
 
             root = stack.pop();
 
@@ -104,7 +108,8 @@ public class BinaryTreePostorderTraversal_145 {
         Stack<TreeNode> stack = new Stack<>();
         Stack<TreeNode> resStack = new Stack<>();
 
-        if (root != null) stack.push(root);
+        if (root != null)
+            stack.push(root);
         TreeNode curr = root;
         while(curr != null || stack.size() > 0) {
             if (curr != null) {
@@ -117,8 +122,37 @@ public class BinaryTreePostorderTraversal_145 {
             }
         }
 
+        TreeNode left = resStack.pop();
+        TreeNode right = resStack.pop();
+
+        node.right = left;
+        node.left = right;
+
         List<Integer> res = new ArrayList<>();
-        while(resStack.size() > 0) res.add(resStack.pop().val);
+        while(resStack.size() > 0) 
+            res.add(resStack.pop().val);
+        return res;
+    }
+
+    public List<Integer> postorderTraversal(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<>();
+        Stack<TreeNode> resStack = new Stack<>();
+
+        TreeNode curr = root;
+        while(curr != null || stack.size() > 0) {
+            while (curr != null) {
+                resStack.push(curr);
+                stack.push(curr);
+                curr = curr.right;
+            }
+
+            curr = stack.pop();
+            curr = curr.left;
+        }
+
+        List<Integer> res = new ArrayList<>();
+        while(resStack.size() > 0) 
+            res.add(resStack.pop().val);
         return res;
     }
 }

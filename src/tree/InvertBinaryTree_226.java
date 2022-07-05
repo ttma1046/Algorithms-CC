@@ -14,9 +14,8 @@ import java.util.Queue;
 
 public class InvertBinaryTree_226 {
     public TreeNode invertTree(TreeNode root) {
-        if (root == null) {
+        if (root == null)
             return null;
-        }
 
         invertTreePrivate(root);
 
@@ -38,9 +37,9 @@ public class InvertBinaryTree_226 {
     }
 
     public TreeNode invertTreeII(TreeNode node) {
-        if (node == null) {
+        if (node == null)
             return null;
-        }
+
         TreeNode left = invertTreeII(node.left);
         TreeNode right = invertTreeII(node.right);
         node.left = right;
@@ -50,9 +49,9 @@ public class InvertBinaryTree_226 {
     }
 
     public TreeNode invertTreeIII(TreeNode root) {
-        if (root == null) {
+        if (root == null)
             return null;
-        }
+
         Queue<TreeNode> queue = new LinkedList<TreeNode>();
         queue.add(root);
         while (!queue.isEmpty()) {

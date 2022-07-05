@@ -83,7 +83,8 @@ class Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105 {
 
     public TreeNode buildTree(int[] preorder, int[] inorder) {
         /*
-        if (preorder == null) return null;
+        if (preorder == null) 
+          return null;
 
         ListNode root = new TreeNode(preorder[0]);
 
@@ -99,7 +100,8 @@ class Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105 {
             return null;
 
         int n = preorder.length;
-        if (n == 0) return null;
+        if (n == 0) 
+            return null;
 
         TreeNode root = new TreeNode(preorder[0]);
 
@@ -116,6 +118,31 @@ class Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105 {
 
         return root;
     }
+
+    // Input: preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]
+
+    TreeNode buildTree(int[] pre, int[] in) {
+        return buildTree(pre, 0, n, in, 0, n);
+    }
+
+    TreeNode buildTree(int[] pre, int preStart, int preEnd, int[] in, int inStart, int inEnd) {
+        if (pre == null || pre.length == 0)
+            return null;
+        int n = pre.length;
+        TreeNode node = new TreeNode(pre[preStart]);
+        int index = 0;
+        for (int i = 0; i < in.length; i++)
+            if (in[i] == pre[preStart])
+                index = i;
+
+        node.left = buildTree(pre, preStart + 1, preStart + index, in, inStart, index - 1);
+        node.right = buildTree(pre, preStart + index + 1, n - 1, in, index + 1, n - 1);
+
+        return node;
+
+    }
+
+
 
     // O(n) Time Complexcity
     // O(n) Space Complexity
