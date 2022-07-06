@@ -59,5 +59,4 @@ class Diameter_of_Binary_Tree_543 {
     public static void main(String[] args) {
         Diameter_of_Binary_Tree_543 obj = new Diameter_of_Binary_Tree_543();
     }
-
 }

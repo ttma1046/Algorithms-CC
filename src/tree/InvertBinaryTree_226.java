@@ -17,23 +17,39 @@ public class InvertBinaryTree_226 {
         if (root == null)
             return null;
 
-        invertTreePrivate(root);
-
+        TreeNode temp = root.left;
+        root.left = root.right;
+        root.right = temp;
+        
+        invertTree(root.left);
+        invertTree(root.right);
+        
         return root;
     }
 
-    private void invertTreePrivate(TreeNode currentNode) {
-        TreeNode temp = currentNode.left;
-        currentNode.left = currentNode.right;
-        currentNode.right = temp;
+    TreeNode invertTree(TreeNode root) {
+        // 遍历二叉树，交换每个节点的子节点
+        traverse(root);
+        return root;
+    }
 
-        if (currentNode.left != null) {
-            invertTreePrivate(currentNode.left);
-        }
+    // 二叉树遍历函数
+    void traverse(TreeNode root) {
+        if (root == null)
+            return;
 
-        if (currentNode.right != null) {
-            invertTreePrivate(currentNode.right);
-        }
+        // 遍历框架，去遍历左右子树的节点
+        traverse(root.left);
+        /**** 前序位置 ****/
+        // 每一个节点需要做的事就是交换它的左右子节点
+
+        TreeNode rightSide = root.right;
+
+        TreeNode tmp = root.left;
+        root.left = root.right;
+        root.right = tmp;
+
+        traverse(rightSide);
     }
 
     public TreeNode invertTreeII(TreeNode node) {
@@ -92,5 +108,18 @@ public class InvertBinaryTree_226 {
             preOrderTraversalPrint(result.left);
             preOrderTraversalPrint(result.right);
         }
+    }
+
+    public TreeNode invertTreeII(TreeNode node) {
+        if (node == null)
+            return null;
+
+        TreeNode left = invertTreeII(node.left);
+        TreeNode right = invertTreeII(node.right);
+
+        node.left = right;
+        node.right = left;
+
+        return node;
     }
 }

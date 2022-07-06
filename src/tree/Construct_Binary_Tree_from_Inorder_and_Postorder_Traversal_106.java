@@ -101,7 +101,6 @@ class Construct_Binary_Tree_from_Inorder_and_Postorder_Traversal_106 {
 
         current.left = buildTreeNode(inorder, inlow, inorderRootIndex - 1, postorder, postlow, postlow + length - 1);
         current.right = buildTreeNode(inorder, inorderRootIndex + 1, inhigh, postorder, postlow + length, posthigh - 1);
-
         return current;
     }
 

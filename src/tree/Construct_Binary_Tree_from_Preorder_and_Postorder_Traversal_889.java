@@ -1,5 +1,7 @@
 package tree;
 import java.util.Arrays;
+import java.util.Map;
+import java.util.HashMap;
 /*
 Return any binary tree that matches the given preorder and postorder traversals.
 
@@ -35,35 +37,41 @@ class Construct_Binary_Tree_from_Preorder_and_Postorder_Traversal_889 {
         return root;
     }
     */
-    public TreeNode constructFromPrePost(int[] pre, int[] post) {
-        if (pre == null) return null;
+    public TreeNode constructFromPrePostI(int[] preorder, int[] postorder) {
+        if (preorder == null || preorder.length == 0) 
+            return null;
 
-        int n = pre.length;
-        if (n == 0) return null;
+        if (postorder == null || postorder.length == 0) 
+            return null;
 
-        TreeNode root = new TreeNode(pre[0]);
-        if (n == 1) return root;
+        int n = preorder.length;
+        
+        TreeNode root = new TreeNode(preorder[0]);
+        if (n == 1) 
+            return root;
 
-        int L =  0;
-        for (int i = 0; i < n; ++i) if (post[i] == pre[1]) L = i;
+        int index =  0;
+        for (int i = 0; i < n; ++i) 
+            if (post[i] == preorder[1]) 
+                index = i;
 
-        root.left = constructFromPrePost(Arrays.copyOfRange(pre, 1, L + 2), Arrays.copyOfRange(post, 0, L + 1));
-        root.right = constructFromPrePost(Arrays.copyOfRange(pre, L + 2, n), Arrays.copyOfRange(post, L + 1, n - 1));
+        root.left = constructFromPrePostI(Arrays.copyOfRange(preorder, 1, index + 2), Arrays.copyOfRange(post, 0, index + 1));
+        root.right = constructFromPrePostI(Arrays.copyOfRange(preorder, index + 2, n), Arrays.copyOfRange(post, index + 1, n - 1));
 
         return root;
     }
 
     public static void main(String[] args) {
-        TreeNode res = new Construct_Binary_Tree_from_Preorder_and_Postorder_Traversal_889().constructFromPrePost(new int[] {1, 2, 4, 5, 3, 6, 7},  new int[] {4, 5, 2, 6, 7, 3, 1});
+        TreeNode res = new Construct_Binary_Tree_from_Preorder_and_Postorder_Traversal_889().constructFromPrePostI(new int[] {1, 2, 4, 5, 3, 6, 7},  new int[] {4, 5, 2, 6, 7, 3, 1});
         res = new Construct_Binary_Tree_from_Preorder_and_Postorder_Traversal_889().constructFromPrePostII(new int[] {1, 2, 4, 5, 3, 6, 7},  new int[] {4, 5, 2, 6, 7, 3, 1});
     }
 
-    public TreeNode constructFromPrePost(int[] pre, int[] post) {
+    public TreeNode constructFromPrePostII(int[] pre, int[] post) {
         if (pre.length != post.length) return null;
-        return constructFromPrePost(pre, 0, pre.length - 1, post, 0, post.length - 1);
+        return constructFromPrePostII(pre, 0, pre.length - 1, post, 0, post.length - 1);
     }
 
-    public TreeNode constructFromPrePost(int[] pre, int prelow, int prehigh, int[] post, int postlow, int posthigh) {
+    public TreeNode constructFromPrePostII(int[] pre, int prelow, int prehigh, int[] post, int postlow, int posthigh) {
         if (prelow > prehigh || postlow > posthigh) return null;
 
         // Input: pre = [1,2,4,5,3,6,7], post = [4,5,2,6,7,3,1]
@@ -83,117 +91,82 @@ class Construct_Binary_Tree_from_Preorder_and_Postorder_Traversal_889 {
 
         int length = postOrderNextIndex - postlow;
 
-        curr.left = constructFromPrePost(pre, prelow + 1, prelow + 1 + length, post, postlow, postOrderNextIndex);
-        curr.right = constructFromPrePost(pre, prelow + 2 + length, prehigh, post, postOrderNextIndex + 1, posthigh - 1);
+        curr.left = constructFromPrePostII(pre, prelow + 1, prelow + 1 + length, post, postlow, postOrderNextIndex);
+        curr.right = constructFromPrePostII(pre, prelow + 2 + length, prehigh, post, postOrderNextIndex + 1, posthigh - 1);
 
+        /*
+        int length = postOrderNextIndex - postlow + 1;
+        
+        node.left = constructFromPrePost(pre, postlow + 1, postlow + length, post, postlow, postOrderNextIndex);
+        node.right = constructFromPrePost(pre, postlow + length + 1, prehigh, post, postOrderNextIndex + 1, posthigh - 1);
+        */
         return curr;
     }
 
+    
     Map<Integer, Integer> postMap = new HashMap<>();
     int[] pre;
     int[] post;
     int preStart = 0;
     int length;
-
-    public TreeNode constructFromPrePost(int[] pre, int[] post) {
+    public TreeNode constructFromPrePostIII(int[] pre, int[] post) {
         this.length = pre.length;
         this.pre = pre;
         this.post = post;
 
-        for (int i = 0; i < post.length; i++) postMap.put(post[i], i);
+        for (int i = 0; i < post.length; i++) 
+            postMap.put(post[i], i);
 
         return constructFromPrePostHelper(0, post.length - 1);
     }
 
     private TreeNode constructFromPrePostHelper(int postStart, int postEnd) {
-        if (preStart >= this.length || postStart > postEnd) return null;
+        if (preStart >= this.length || postStart > postEnd) 
+            return null;
 
         TreeNode node = new TreeNode(pre[preStart++]);
 
-        if (preStart == this.length || postStart == postEnd) return node;
+        if (preStart == this.length || postStart == postEnd) 
+            return node;
 
         int postIndex = postMap.get(pre[preStart]);
 
         node.left = constructFromPrePostHelper(postStart, postIndex);
-
         node.right = constructFromPrePostHelper(postIndex + 1, postEnd - 1);
 
         return node;
     }
-
-
-
+    
     // pre  [1, 2, 4, 5, 3, 6, 7]
-
     // post  [4, 5, 2, 6, 7, 3, 1]
-
-    int[] preorder;
-    int[] postorder;
-
-    int length = 0;
-    int preStart = 0;
-    Map<Integer, Integer> map = new HashMap<>();
-
-
-
-    public TreeNode constructFromPrePost(int[] preorder, int[] postorder) {
-        this.preorder = preorder;
-        this.postorder = postorder;
-        this.length = preorder.length;
-        for (int i = 0; i < this.length; ++i) map.put(postorder[i], i);
-
-        return helper(0, preorder.length - 1);
-    }
-
-    private TreeNode helper(int postStart, int postEnd) {
-        if (preStart >= N || postStart > postEnd) return null;
-
-        TreeNode node = new TreeNode(this.preorder[preStart++]);
-
-        if (preStart == N || postStart == postEnd) return node;
-
-        int postIndex = map.get(this.preorder[preStart])
-
-                        node.left = helper(postStart, postIndex);
-
-        node.right = helper(postIndex + 1, postEnd - 1);
-
-        return node;
-
-    }
-
     Map<Integer, Integer> postMap = new HashMap<>();
+    public TreeNode constructFromPrePostIV(int[] preorder, int[] postorder) {
+        if (preorder.length != postorder.length || preorder.length == 0 || postorder.length == 0)
+            return null;
 
-    int[] pre;
-    int[] post;
+        int n = preorder.length; 
 
-    int length;
+        for (int i = 0; i < n; i++)
+            postMap.put(postorder[i], i);
 
-    public TreeNleode constructFromPrePost(int[] preorder, int[] postorder) {
-        this.length = preorder.length;
-
-        this.pre = preorder;
-        this.post = postorder;
-
-        for (int i = 0; i < this.length; i++) postMap.put(post[i], i);
-
-
-        return build(0, this.length - 1, 0, this.length - 1);
+        return build(preorder, 0, n - 1, postorder, 0, n - 1);
     }
 
-    private TreeNode build(int preleft, int preRight, int postLeft, int postRight) {
-        if (preLeft > preRight || postLeft > postRight) return null;
+    private TreeNode build(int[] pre, int preStart, int preEnd, int[] post, int postStart, int postEnd) {
+        if (preStart > preEnd || postStart > postEnd)
+            return null;
 
-        TreeNode node = new TreeNode(pre[preLeft]);
-        if (preLeft == preRight) return node;
+        TreeNode node = new TreeNode(pre[preStart]);
 
-        int index = postMap.get(pre[preLeft + 1]);
+        if (preStart == preEnd)
+            return node;
 
-        int leftTreeSize = index - postLeft;
+        int index = postMap.get(pre[preStart + 1]);
 
-        node.left = build(preLeft + 1, preLeft + 1 + leftTreeSize, postLeft, postLeft + leftTreeSize);
+        int length = index - postStart;
 
-        node.right = build(preLeft + leftTreeSize + 2, preRight, postLeft + leftTreeSize + 1, postRight - 1);
+        node.left = build(pre, preStart + 1, preStart + 1 + length, post, postStart, index);
+        node.right = build(pre, preStart + 2 + length, preEnd, post, index + 1, postEnd - 1);
 
         return node;
     }

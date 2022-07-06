@@ -1,5 +1,7 @@
 package tree;
 import java.util.Arrays;
+import java.util.Map;
+import java.util.HashMap;
 /*
 Given two integer arrays preorder and inorder where preorder is the preorder traversal of a binary tree and inorder is the inorder traversal of the same tree,
 
@@ -68,7 +70,8 @@ class Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105 {
     }
 
     private TreeNode build(int[] preorder, int[] inorder, int stop) {
-        if (pre >= preorder.length) return null;
+        if (pre >= preorder.length)
+            return null;
 
         if (inorder[in] == stop) {
             in++;
@@ -83,8 +86,8 @@ class Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105 {
 
     public TreeNode buildTree(int[] preorder, int[] inorder) {
         /*
-        if (preorder == null) 
-          return null;
+        if (preorder == null)
+          return null;()
 
         ListNode root = new TreeNode(preorder[0]);
 
@@ -96,21 +99,21 @@ class Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105 {
         return root;
         */
 
-        if (preorder == null) 
+        if (preorder == null)
             return null;
 
         int n = preorder.length;
-        if (n == 0) 
+        if (n == 0)
             return null;
 
         TreeNode root = new TreeNode(preorder[0]);
 
-        if (n == 1) 
+        if (n == 1)
             return root;
 
         int L =  0;
-        for (int i = 0; i < n; ++i) 
-            if (inorder[i] == preorder[0]) 
+        for (int i = 0; i < n; ++i)
+            if (inorder[i] == preorder[0])
                 L = i;
 
         root.left = buildTree(Arrays.copyOfRange(preorder, 1, L + 1), Arrays.copyOfRange(inorder, 0, L));
@@ -120,38 +123,43 @@ class Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105 {
     }
 
     // Input: preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        if (preorder.length != inorder.length)
+            return null;
 
-    TreeNode buildTree(int[] pre, int[] in) {
-        return buildTree(pre, 0, n, in, 0, n);
+        int n = preorder.length;
+        return buildTreeRes(preorder, 0, n - 1, inorder, 0, n - 1);
     }
 
-    TreeNode buildTree(int[] pre, int preStart, int preEnd, int[] in, int inStart, int inEnd) {
+    TreeNode buildTreeRes(
+        int[] pre, int preStart, int preEnd,
+        int[] in, int inStart, int inEnd
+    ) {
         if (pre == null || pre.length == 0)
             return null;
-        int n = pre.length;
-        TreeNode node = new TreeNode(pre[preStart]);
-        int index = 0;
-        for (int i = 0; i < in.length; i++)
-            if (in[i] == pre[preStart])
-                index = i;
 
-        node.left = buildTree(pre, preStart + 1, preStart + index, in, inStart, index - 1);
-        node.right = buildTree(pre, preStart + index + 1, n - 1, in, index + 1, n - 1);
+        if (in == null || in.length == 0)
+            return null;
+
+        if (preStart > preEnd || inStart > inEnd)
+            return null;
+
+        TreeNode node = new TreeNode(pre[preStart]);
+
+        int index = 0;
+        for (int i = inStart; i <= inEnd; i++) {
+            if (in[i] == node.val) {
+                index = i;
+                break;
+            }
+        }
+
+        int length = index - inStart;
+
+        node.left = buildTreeRes(pre, preStart + 1, preStart + length, in, inStart, index - 1);
+        node.right = buildTreeRes(pre, preStart + length + 1, preEnd, in, index + 1, inEnd);
 
         return node;
-
-    }
-
-
-
-    // O(n) Time Complexcity
-    // O(n) Space Complexity
-    public static void main(String[] args) {
-        Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105 obj = new Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105();
-
-        TreeNode res = obj.buildTree(new int[] {3, 9, 20, 15, 7},  new int[] {9, 3, 15, 20, 7});
-        TreeNode binaryTree = obj.buildBinarySearchTree(new int[] {3, 9, 20, 15, 7});
-        TreeNode binaryTree = obj.buildTreeNice(new int[] {3, 9, 20, 15, 7},  new int[] {9, 3, 15, 20, 7});
     }
 
     public TreeNode buildBinarySearchTree(int[] preorder) {
@@ -165,7 +173,7 @@ class Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105 {
         Arrays.sort(preorder);
 
         for (int i = 0; i < preorder.length; i++) {
-            if (temp[i] != preorder[i]) 
+            if (temp[i] != preorder[i])
                 System.out.println("not same");
         }
 
@@ -173,12 +181,13 @@ class Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105 {
     }
 
     public TreeNode buildTreeNice(int[] preorder, int[] inorder) {
-        if (preorder.length != inorder.length) return null;
+        if (preorder.length != inorder.length)
+            return null;
         return buildTreeNode(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1);
     }
 
     public TreeNode buildTreeNode(int[] preorder, int prelow, int prehigh, int[] inorder, int inlow, int inhigh) {
-        if (prelow > prehigh || inlow > inhigh) 
+        if (prelow > prehigh || inlow > inhigh)
             return null;
 
         TreeNode current = new TreeNode(preorder[prelow]);
@@ -190,7 +199,7 @@ class Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105 {
                 break;
             }
         }
-        
+
         int length = inorderRootIndex - inlow;
 
         current.left = buildTreeNode(preorder, prelow + 1, prelow + length, inorder, inlow, inorderRootIndex - 1);
@@ -205,14 +214,14 @@ class Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105 {
     int preOrderIndex;
     Map<Integer, Integer> map = new HashMap<>();
 
-    public TreeNode buildTree(int[] preOrder, int[] inOrder) {
+    public TreeNode buildTreeIV(int[] preOrder, int[] inOrder) {
         this.preOrder = preOrder;
         this.inOrder = inOrder;
 
         this.preOrderIndex = 0;
         int length = preOrder.length;
 
-        for (int i = 0; i < length; i++) 
+        for (int i = 0; i < length; i++)
             map.put(inOrder[i], i);
         return helperbuilder(0, length - 1);
     }
@@ -238,5 +247,15 @@ class Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105 {
         root.left = helperbuilder(inStart, index - 1);
         root.right = helperbuilder(index + 1, inEnd);
         return root;
+    }
+
+    // O(n) Time Complexcity
+    // O(n) Space Complexity
+    public static void main(String[] args) {
+        Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105 obj = new Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105();
+
+        TreeNode res = obj.buildTree(new int[] {3, 9, 20, 15, 7},  new int[] {9, 3, 15, 20, 7});
+        TreeNode binaryTree = obj.buildBinarySearchTree(new int[] {3, 9, 20, 15, 7});
+        binaryTree = obj.buildTreeNice(new int[] {3, 9, 20, 15, 7},  new int[] {9, 3, 15, 20, 7});
     }
 }
