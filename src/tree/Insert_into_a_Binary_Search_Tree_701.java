@@ -68,78 +68,83 @@ It's guaranteed that val does not exist in the original BST.
  * }
  */
 class Insert_into_a_Binary_Search_Tree_701 {
-  public TreeNode insertIntoBST(TreeNode root, int val) {
-    TreeNode curr = root;
+    public TreeNode insertIntoBST(TreeNode root, int val) {
+        TreeNode curr = root;
 
+        if (root == null && val >= 0)
+            return new TreeNode(val);
 
-    if (root == null && val >= 0) {
-      return new TreeNode(val);
-    }
-
-
-    while (curr != null) {
-      if (val > curr.val) {
-        if (curr.right != null) {
-          curr = curr.right;
-        } else {
-          curr.right = new TreeNode(val);
-          break;
+        while (curr != null) {
+            if (val > curr.val) {
+                if (curr.right != null) {
+                    curr = curr.right;
+                } else {
+                    curr.right = new TreeNode(val);
+                    break;
+                }
+            } else {
+                if (curr.left != null) {
+                    curr = curr.left;
+                } else {
+                    curr.left = new TreeNode(val);
+                    break;
+                }
+            }
         }
-      } else {
-        if (curr.left != null) {
-          curr = curr.left;
-        } else {
-          curr.left = new TreeNode(val);
-          break;
-        }
-      }
+
+        return root;
     }
 
-    return root;
-  }
+    public TreeNode insertIntoBST(TreeNode root, int val) {
+        if (root == null)
+            return new TreeNode(val);
 
-  public static void main(String[] args) {
-    TreeNode one = new TreeNode(1);
-    TreeNode three = new TreeNode(3);
-    TreeNode two = new TreeNode(2);
+        if (root.val > val)
+            root.left = insertIntoBST(root.left, val);
+        if (root.val < val)
+            root.right = insertIntoBST(root.right, val);
 
-    two.left = one;
-    two.right = three;
-
-    TreeNode four = new TreeNode(4);
-    four.left = two;
-
-    TreeNode seven = new TreeNode(7);
-    four.right = seven;
-
-
-    // TreeNode five = new TreeNode(5);
-    // TreeNode six = new TreeNode(6);
-
-    // two.left = one;
-    // three.left = two;
-    // three.right = four;
-
-    // five.left = three;
-    // five.right = six;
-
-    TreeNode result = new Insert_into_a_Binary_Search_Tree_701().insertIntoBST(four, 5);
-
-    TreeNode curr = result;
-    new Insert_into_a_Binary_Search_Tree_701().inorderTraversal(curr);
-  }
-
-  private void inorderTraversal(TreeNode current) {
-    if (current == null) return;
-    
-    if (current.left != null) {
-      inorderTraversal(current.left);
+        return root;
     }
 
-    System.out.println(current.val);
+    public static void main(String[] args) {
+        TreeNode one = new TreeNode(1);
+        TreeNode three = new TreeNode(3);
+        TreeNode two = new TreeNode(2);
 
-    if (current.right != null) {
-      inorderTraversal(current.right);
+        two.left = one;
+        two.right = three;
+
+        TreeNode four = new TreeNode(4);
+        four.left = two;
+
+        TreeNode seven = new TreeNode(7);
+        four.right = seven;
+
+        // TreeNode five = new TreeNode(5);
+        // TreeNode six = new TreeNode(6);
+
+        // two.left = one;
+        // three.left = two;
+        // three.right = four;
+
+        // five.left = three;
+        // five.right = six;
+
+        TreeNode result = new Insert_into_a_Binary_Search_Tree_701().insertIntoBST(four, 5);
+
+        TreeNode curr = result;
+        new Insert_into_a_Binary_Search_Tree_701().inorderTraversal(curr);
     }
-  }
+
+    private void inorderTraversal(TreeNode current) {
+        if (current == null)
+            return;
+
+        if (current.left != null)
+            inorderTraversal(current.left);
+
+        if (current.right != null)
+            inorderTraversal(current.right);
+    }
 }

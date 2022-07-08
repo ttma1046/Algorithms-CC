@@ -101,17 +101,21 @@ class Delete_Node_in_a_BST_450 {
 
     private int Predecessor(TreeNode node) {
         node = node.left;
-        while (node.right != null) node = node.right;
+        while (node.right != null) 
+            node = node.right;
         return node.val;
     }
 
     public TreeNode deleteNodeI(TreeNode root, int key) {
-        if (root == null) return null;
+        if (root == null) 
+            return null;
 
         // delete from the right subtree
-        if (key > root.val) root.right = deleteNode(root.right, key);
+        if (key > root.val) 
+            root.right = deleteNode(root.right, key);
         // delete from the left subtree
-        else if (key < root.val) root.left = deleteNode(root.left, key);
+        else if (key < root.val) 
+            root.left = deleteNode(root.left, key);
         // delete the current node
         else {
             // the node is a leaf
@@ -173,14 +177,19 @@ class Delete_Node_in_a_BST_450 {
     public TreeNode deleteNode(TreeNode root, int key) {
         if (root == null) return null;
 
-        if (root.val < key) root.right = deleteNode(root.right, key);
-        else if (root.val > key) root.left = deleteNode(root.left, key);
-        else if (root.right == null) return root.left;
-        else if (root.left == null) return root.right;
+        if (root.val < key) 
+            root.right = deleteNode(root.right, key);
+        else if (root.val > key) 
+            root.left = deleteNode(root.left, key);
+        else if (root.right == null) 
+            return root.left;
+        else if (root.left == null) 
+            return root.right;
         else {
             root.val = findMin(root.right);
             root.right = deleteNode(root.right, root.val);
         }
+        
         return root;
     }
 

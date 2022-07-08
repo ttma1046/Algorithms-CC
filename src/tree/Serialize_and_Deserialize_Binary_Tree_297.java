@@ -1,4 +1,4 @@
-zpackage tree;
+package tree;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Arrays;
@@ -42,7 +42,7 @@ class TreeNode {
 
 class Serialize_and_Deserialize_Binary_Tree_297 {
     public static void main(String[] args) {
-        Codec test = new Codec();
+        Serialize_and_Deserialize_Binary_Tree_297 test = new Serialize_and_Deserialize_Binary_Tree_297();
 
         TreeNode four = new TreeNode(4);
         TreeNode five = new TreeNode(5);
@@ -59,9 +59,11 @@ class Serialize_and_Deserialize_Binary_Tree_297 {
 
         TreeNode node = test.deserializeMy(res);
     }
-}
-
-class Codec {
+   /*
+    1
+   2  3
+     4 5  
+   */
     // Encodes a tree to a single string.
     public String serializeII(TreeNode root) {
         StringBuilder sb = new StringBuilder();
@@ -93,71 +95,17 @@ class Codec {
         return String.valueOf(root.val) + "," + serialize(root.left) + "," + serialize(root.right);
     }
 
-    // Decodes your encoded data to tree.
-    public TreeNode deserializeI(String data) {
-        Queue<String> q = new LinkedList<>(Arrays.asList(data.split(",")));
-        return helper(q);
-    }
-
-    private TreeNode helper(Queue<String> q) {
-        String s = q.poll();
-        System.out.println(s);
-
-        if (s.equals("#")) return null;
-        TreeNode root = new TreeNode(Integer.valueOf(s));
-        root.left = helper(q);
-        root.right = helper(q);
-        return root;
-    }
-
-    public String serialize(TreeNode root) {
-        StringBuilder sb = new StringBuilder();
-        serialize(root, sb);
-        return sb.toString();
-    }
-
-    private void serialize(TreeNode root, StringBuilder sb) {
-        if (root == null)  {
-            sb.append("#").append(",");
-        } else {
-            sb.append(root.val).append(",");
-
-            serialize(root.left, sb);
-            serialize(root.right, sb);
-        }
-    }
-
-    public TreeNode deserialize(String data) {
-        if (data == null || data.length() == 0) return null;
-
-        Queue<String> queue = new LinkedList<>(Arrays.asList(data.split(",")));
-
-        return deserialize(queue);
-    }
-
-    private TreeNode deserialize(Queue<String> queue) {
-        if (queue.size() == 0) return null;
-
-        String curr = queue.poll();
-
-        if (curr.equals("#")) return null;
-
-        TreeNode node = new TreeNode(Integer.parseInt(curr));
-
-        node.left = deserialize(queue);
-        node.right = deserialize(queue);
-        return node;
-    }
-
     String serializeMy(TreeNode root) {
-        if (root == null) return "";
+        if (root == null) 
+            return "";
         StringBuilder sb = new StringBuilder();
         serializeMy(root, sb);
         return sb.toString();
     }
 
     void serializeMy(TreeNode node, StringBuilder sb) {
-        if (node == null) sb.append("#").append(",");
+        if (node == null) 
+            sb.append("#").append(",");
         else {
             sb.append(node.val).append(",");
             serializeMy(node.left, sb);
@@ -172,15 +120,29 @@ class Codec {
     }
 
     TreeNode deserializeMy(Queue<String> q) {
-        if (q.size() == 0) return null;
+        if (q.size() == 0) 
+            return null;
+
         String curr = q.poll();
-        if (curr.equals("#")) return null;
+        if (curr.equals("#")) 
+            return null;
+        
         TreeNode node = new TreeNode(Integer.parseInt(curr));
         node.left = deserializeMy(q);
         node.right = deserializeMy(q);
         return node;
     }
 }
+
+
+
+/*
+    1
+   2  3
+     4 5  
+
+     (1,2,#,#,3,4,5,#,#,#,#)
+     */
 
 
 // Your Codec object will be instantiated and called as such:

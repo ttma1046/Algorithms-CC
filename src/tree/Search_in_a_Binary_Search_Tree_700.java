@@ -47,90 +47,84 @@ Note that an empty tree is represented by NULL, therefore you would see the expe
  * }
  */
 class Search_in_a_Binary_Search_Tree_700 {
-  public TreeNode searchBST(TreeNode root, int val) {
-    if (root == null) {
-      return null;
+    public TreeNode searchBST(TreeNode root, int val) {
+        if (root == null)
+            return null;
+        
+        TreeNode curr = root;
+
+        while (curr != null) {
+            if (val == curr.val)
+                return curr;
+            else if (val > curr.val)
+                curr = curr.right;
+            else
+                curr = curr.left;
+        }
+
+        return null;
     }
 
-    TreeNode curr = root;
+    public static void main (String[] args) {
+        TreeNode three = new TreeNode(3);
+        TreeNode one = new TreeNode(1);
+        TreeNode two = new TreeNode(2);
+        two.left = one;
+        two.right = three;
 
-    while (curr != null) {
-      if (val == curr.val) {
-        return curr;
-      } else if (val > curr.val) {
-        curr = curr.right;
-      } else {
-        curr = curr.left;
-      }
+        TreeNode seven = new TreeNode(7);
+        TreeNode four = new TreeNode(4);
+        four.left = two;
+        four.right =  seven;
+        TreeNode result = new Search_in_a_Binary_Search_Tree_700().searchBST(four, 2);
+
+        new Search_in_a_Binary_Search_Tree_700().preorderTraversal(result);
+        new Search_in_a_Binary_Search_Tree_700().preorderTraversal(four);
+        new Search_in_a_Binary_Search_Tree_700().preorder(four);
+        new Search_in_a_Binary_Search_Tree_700().preorderTraversalEasy(four);
     }
 
-    return null;
-  }
+    private void preorderTraversal(TreeNode current) {
+        if (current == null) return;
 
-  public static void main (String[] args) {
-    TreeNode three = new TreeNode(3);
-    TreeNode one = new TreeNode(1);
-    TreeNode two = new TreeNode(2);
-    two.left = one;
-    two.right = three;
-
-    TreeNode seven = new TreeNode(7);
-    TreeNode four = new TreeNode(4);
-    four.left = two;
-    four.right =  seven;
-    TreeNode result = new Search_in_a_Binary_Search_Tree_700().searchBST(four, 2);
-
-    new Search_in_a_Binary_Search_Tree_700().preorderTraversal(result);
-    new Search_in_a_Binary_Search_Tree_700().preorderTraversal(four);
-    new Search_in_a_Binary_Search_Tree_700().preorder(four);
-    new Search_in_a_Binary_Search_Tree_700().preorderTraversalEasy(four);
-  }
-
-  private void preorderTraversal(TreeNode current) {
-    if (current == null) return;
-
-    System.out.println(current.val);
-
-    if (current.left != null) {
-      preorderTraversal(current.left);
-    }
-
-    if (current.right != null) {
-      preorderTraversal(current.right);
-    }
-  }
-
-  private void preorder(TreeNode current) {
-    Stack<TreeNode> stack = new Stack<TreeNode>();
-
-    // preorder traversal : left -> node -> right
-    while (!stack.isEmpty() || current != null) {
-      while (current != null) {
         System.out.println(current.val);
 
-        stack.push(current);
-        current = current.left;
-      }
+        if (current.left != null) {
+            preorderTraversal(current.left);
+        }
 
-      current = stack.pop();
-
-      current = current.right;
+        if (current.right != null) {
+            preorderTraversal(current.right);
+        }
     }
-  }
 
-  private void preorderTraversalEasy(TreeNode node) {
-    Stack<TreeNode> rights = new Stack<TreeNode>();
-    while (node != null) {
-      System.out.println(node.val);
-      
-      if (node.right != null) {
-        rights.push(node.right);
-      }
+    private void preorder(TreeNode current) {
+        Stack<TreeNode> stack = new Stack<TreeNode>();
 
-      node = node.left;
-      if (node == null && !rights.isEmpty()) {
-        node = rights.pop();
-      }
+        // preorder traversal : left -> node -> right
+        while (!stack.isEmpty() || current != null) {
+            while (current != null) {
+                System.out.println(current.val);
+
+                stack.push(current);
+                current = current.left;
+            }
+
+            current = stack.pop();
+
+            current = current.right;
+        }
     }
-  }
+
+    private void preorderTraversalEasy(TreeNode node) {
+        Stack<TreeNode> rights = new Stack<TreeNode>();
+        while (node != null) {
+            if (node.right != null)
+                rights.push(node.right);
+
+            node = node.left;
+            if (node == null && !rights.isEmpty())
+                node = rights.pop();
+        }
+    }
 }

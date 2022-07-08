@@ -55,32 +55,54 @@ import java.util.List;
 import java.util.Stack;
 
 class KthSmallestElementinaBST_230 {
-    public int kthSmallestI(TreeNode root, int k) {
-        if (root == null) {
-            return 0;
+    int res = 0;
+    int point = 0;
+    public int kthSmallest(TreeNode root, int k) {
+        int[] kindex = new int[] { k };
+        // kindex[0] = k;
+        inorder(root, k);
+        return res;
+    }
+
+    public void inorder(TreeNode node, int k) {
+        if (node == null)
+            return;
+
+        inorder(node.left, k);
+        point++;
+        if (k == point) {
+            res = node.val;
+            return;
         }
 
-        ArrayList<Integer> arrayList = InOrderlist(root, new ArrayList<Integer>());
+        inorder(node.right, k);
+    }
 
-        return arrayList.get(k - 1);
+    public int kthSmallestI(TreeNode root, int k) {
+        if (root == null)
+            return 0;
+
+        List<Integer> res = new ArrayList<>()
+
+        InOrderlist(root, res);
+
+        return res.get(k - 1);
     }
 
     private ArrayList<Integer> InOrderlist(TreeNode root, ArrayList<Integer> arrayList) {
-        if (root == null) return arrayList;
+        if (root == null)
+            return arrayList;
 
         InOrderlist(root.left, arrayList);
 
         arrayList.add(root.val);
 
         InOrderlist(root.right, arrayList);
-
-        return arrayList;
     }
 
     public int kthSmallest(TreeNode root, int k) {
-        if (root == null) {
+        if (root == null)
             return 0;
-        }
 
         Stack<TreeNode> myStack = new Stack<TreeNode>();
 
@@ -93,9 +115,8 @@ class KthSmallestElementinaBST_230 {
             }
 
             curr = myStack.pop();
-            if (--k == 0) {
+            if (--k == 0)
                 return curr.val;
-            }
 
             curr = curr.right;
         }

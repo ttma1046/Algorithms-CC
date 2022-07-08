@@ -47,10 +47,31 @@ class Convert_BST_to_Greater_Tree_538 {
     int pre = 0;
     public TreeNode convertBST(TreeNode root) {
         if (root == null) return root;
-
         if (root.right != null) convertBST(root.right);
         pre = root.val = pre + root.val;
         if (root.left != null) convertBST(root.left);
         return root;
+    }
+
+    TreeNode convertBST(TreeNode root) {
+        traverse(root);
+        return root;
+    }
+
+    // 记录累加和
+    int sum = 0;
+    void traverse(TreeNode root) {
+        if (root == null)
+            return;
+
+        traverse(root.right);
+        // 维护累加和
+        root.val = sum += root.val;
+        // 将 BST 转化成累加树
+        traverse(root.left);
+    }
+
+    public static void main(String[] args) {
+        Convert_BST_to_Greater_Tree_538 obj = new Convert_BST_to_Greater_Tree_538();
     }
 }
