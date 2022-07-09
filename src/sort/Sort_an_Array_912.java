@@ -20,6 +20,7 @@ Constraints:
 -5 * 104 <= nums[i] <= 5 * 104
 */
 class Sort_an_Array_912 {
+    private static int[] temp;
     public static void main(String[] args) {
         Sort_an_Array_912 obj = new Sort_an_Array_912();
         int[] nums = new int[] { 15, 3, 9, 8, 5, 2, 7, 1, 6 };
@@ -27,6 +28,45 @@ class Sort_an_Array_912 {
         obj.sortArray(nums);
     }
 
+    public int[] sortArray(int[] nums) {
+        int n = nums.length;
+
+        sortArray(nums, 0, n - 1);
+
+        return nums;
+    }
+
+    private void sortArray(int[] nums, int low, int high) {
+        if (low >= high)
+            return;
+
+        int mid = low + (high - low) / 2;
+
+        sortArray(nums, low, mid);
+        sortArray(nums, mid + 1, high);
+
+        merge(nums, low, mid, high);
+    }
+
+    private void merge(int[] nums, int low, int mid, int high) {
+        for (int i = lo; i <= hi; i++)
+            temp[i] = nums[i];
+
+        int i = low, 
+            j = mid + 1;
+
+        for (int p = low; p <= high; ++p) {
+            if (temp[i] > temp[j]) {
+                nums[p] = temp[j++];
+            } else if (temp[i] < temp[j]) {
+                nums[p] = temp[i++];
+            } else if (i == mid + 1) {
+                nums[p] = temp[j++];
+            } else if (j == hi + 1) {
+                nums[p] = temp[i++];
+            }
+        }
+    }
     /*
     public int[] sortArray(int[] nums) {
         quickSort(nums, 0, nums.length - 1);

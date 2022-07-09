@@ -1,5 +1,6 @@
 package tree;
-
+import java.util.List;
+import java.util.ArrayList;
 /*
 Given an integer n, return all the structurally unique BST's (binary search trees),
 
@@ -19,31 +20,91 @@ Constraints:
 
 1 <= n <= 8
 */
+
+/**
+  * Definition for a binary tree node.
+  */
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode() {}
+    TreeNode(int val) {
+        this.val = val;
+    }
+    TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+}
+/**/
+
 class Unique_Binary_Search_Trees_II_95 {
+    public List<TreeNode> generateTreesII(int n) {
+        if (n == 0)
+            return new ArrayList<TreeNode>();
+
+        return recursive(1, n);
+    }
+
+    private List<TreeNode> recursive(int low, int high) {
+        List<TreeNode> res = new ArrayList<TreeNode>();
+        if (low > high) {
+            res.add(null);
+            return res;
+        }
+
+        for (int i = low; i <= high; i++) {
+            List<TreeNode> left = recursive(low, i - 1);
+            List<TreeNode> right = recursive(i + 1, high);
+
+            for (TreeNode l: left) {
+                for (TreeNode r: right) {
+                    TreeNode node = new TreeNode(i);
+                    node.left = l;
+                    node.right = r;
+
+                    res.add(node);
+                }
+            }
+        }
+
+        return res;
+    }
+
     public List<TreeNode> generateTrees(int n) {
-        if (n == 0) return new ArrayList<TreeNode>();
+        if (n == 0) 
+            return new ArrayList<TreeNode>();
         return helper(1, n);
     }
 
     public List<TreeNode> helper(int start, int end) {
         List<TreeNode> res = new ArrayList<>();
 
-        if (start > end) res.add(null);
+        if (start > end) {
+            res.add(null);
+            return res;
+        }
 
         for (int i = start; i <= end; i++) {
             List<TreeNode> leftList = helper(start, i - 1);
             List<TreeNode> rightList = helper(i + 1, end);
 
-            for (TreeNode left : leftList)
+            for (TreeNode left : leftList) {
                 for (TreeNode right : rightList) {
                     TreeNode root = new TreeNode(i);
                     root.left = left;
                     root.right = right;
                     res.add(root);
                 }
+            }
         }
 
         return res;
     }
 
+    public static void main(String[] args) {
+        Unique_Binary_Search_Trees_II_95 obj = new Unique_Binary_Search_Trees_II_95();
+    }
 }

@@ -83,11 +83,57 @@ public class MergeSort {
                 tmp[k++] = array[j++];
         }
 
-        while(i <= mid) tmp[k++] = array[i++];
-        while(j <= right) tmp[k++] = array[j++];
+        while(i <= mid) 
+            tmp[k++] = array[i++];
+        while(j <= right) 
+            tmp[k++] = array[j++];
 
         for (i = left, j = 0; i <= right; i++, j++)
             array[i] = tmp[j];
+    }
+
+    private static int[] temp;
+    public int[] sortArray(int[] nums) {
+        int n = nums.length;
+        temp = new int[n];
+
+        sortArray(nums, 0, n - 1);
+
+        return nums;
+    }
+
+    private void sortArray(int[] nums, int low, int high) {
+        if (low >= high)
+            return;
+
+        int mid = low + (high - low) / 2;
+
+        sortArray(nums, low, mid);
+        sortArray(nums, mid + 1, high);
+
+        merge(nums, low, mid, high);
+    }
+
+    private void merge(int[] nums, int low, int mid, int high) {
+        for (int i = low; i <= high; i++)
+            temp[i] = nums[i];
+
+        int i = low,
+            j = mid + 1;
+
+        for (int p = low; p <= high; ++p) {
+            if (i == mid + 1) {
+                // 左半边数组已全部被合并
+                nums[p] = temp[j++];
+            } else if (j == high + 1) {
+                // 右半边数组已全部被合并
+                nums[p] = temp[i++];
+            } else if (temp[i] > temp[j]) {
+                nums[p] = temp[j++];
+            } else {
+                nums[p] = temp[i++];
+            }
+        }
     }
 
     /*
@@ -101,9 +147,9 @@ public class MergeSort {
     }
 
     private void mergeSort(int[] array, int[] temp, int left, int right) {
-        if (left >= right) {
+        if (left >= right)
             return;
-        }
+
 
         int middle = (left + right) / 2;
         mergeSort(array, temp, left, middle);
@@ -148,6 +194,8 @@ public class MergeSort {
         System.arraycopy(temp, leftStart, array, leftStart, size);
     }
     */
+
+
 }
 
 /*

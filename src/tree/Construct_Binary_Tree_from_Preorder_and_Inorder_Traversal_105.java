@@ -258,4 +258,41 @@ class Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal_105 {
         TreeNode binaryTree = obj.buildBinarySearchTree(new int[] {3, 9, 20, 15, 7});
         binaryTree = obj.buildTreeNice(new int[] {3, 9, 20, 15, 7},  new int[] {9, 3, 15, 20, 7});
     }
+
+    // My Map
+
+    private Map<Integer, Integer> map = new HashMap<>();
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        if (preorder.length != inorder.length || preorder.length == 0 || inorder.length == 0)
+            return null;
+        
+        int n = preorder.length;
+        
+        for (int i = 0; i < n; i++) 
+            map.put(inorder[i], i);
+        
+        return buildTree(preorder, 0, n - 1, inorder, 0, n - 1);
+    }
+    
+    private TreeNode buildTree(
+        int[] pre,
+        int preStart,
+        int preEnd,
+        int[] in,
+        int inStart,
+        int inEnd    
+    ) {
+        if (preStart > preEnd || inStart > inEnd)
+            return null;
+        
+        TreeNode node = new TreeNode(pre[preStart]);
+        
+        int index = map.get(pre[preStart]);
+        
+        int length = index - inStart;
+        
+        node.left = buildTree(pre, preStart + 1, preStart + length, in, inStart, index - 1);
+        node.right = buildTree(pre, preStart + length + 1, preEnd, in, index + 1, inEnd);
+        return node;      
+    }
 }
