@@ -52,17 +52,19 @@ class Sort_an_Array_912 {
         for (int i = lo; i <= hi; i++)
             temp[i] = nums[i];
 
-        int i = low, 
+        int i = low,
             j = mid + 1;
 
         for (int p = low; p <= high; ++p) {
-            if (temp[i] > temp[j]) {
+            if (i == mid + 1) {
+                // 左半边数组已全部被合并
                 nums[p] = temp[j++];
-            } else if (temp[i] < temp[j]) {
+            } else if (j == high + 1) {
+                // 右半边数组已全部被合并
                 nums[p] = temp[i++];
-            } else if (i == mid + 1) {
+            } else if (temp[i] > temp[j]) {
                 nums[p] = temp[j++];
-            } else if (j == hi + 1) {
+            } else {
                 nums[p] = temp[i++];
             }
         }
