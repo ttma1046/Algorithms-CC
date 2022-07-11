@@ -114,7 +114,9 @@ class Serialize_and_Deserialize_Binary_Tree_297 {
     }
 
     TreeNode deserializeMy(String data) {
-        if (data.length() == 0 || data == null) return null;
+        if (data.length() == 0 || data == null) 
+            return null;
+        
         Queue<String> q = new LinkedList<>(Arrays.asList(data.split(",")));
         return deserializeMy(q);
     }

@@ -86,15 +86,21 @@ class Lowest_Common_Ancestor_of_a_Binary_Tree_236 {
     public TreeNode lowestCommonAncestorTree(TreeNode root, TreeNode p, TreeNode q) {
         if (root == null) return null;
 
-        if (root == q || root == p) return root;
+        if (root == q || root == p) 
+            return root;
 
         TreeNode x = lowestCommonAncestorTree(root.left, p, q);
         TreeNode y = lowestCommonAncestorTree(root.right, p, q);
 
-        if (x != null && y != null) return root;
+        if (x != null && y != null) 
+            return root;
 
-        if (x != null) return x;
-        if (y != null) return y;
+        if (x != null) 
+            return x;
+
+        
+        if (y != null) 
+            return y;
 
         return null;
     }
@@ -111,6 +117,7 @@ class Lowest_Common_Ancestor_of_a_Binary_Tree_236 {
                 parent.put(node.left, node);
                 stack.push(node.left);
             }
+
             if (node.right != null) {
                 parent.put(node.right, node);
                 stack.push(node.right);

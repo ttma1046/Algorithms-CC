@@ -82,8 +82,10 @@ class Codec {
 
         sb.append(String.valueOf(root.val)).append(",");
 
-        if (root.left != null) serialize(root.left, sb);
-        if (root.right != null) serialize(root.right, sb);
+        if (root.left != null) 
+            serialize(root.left, sb);
+        if (root.right != null) 
+            serialize(root.right, sb);
     }
 
     // Decodes your encoded data to tree.

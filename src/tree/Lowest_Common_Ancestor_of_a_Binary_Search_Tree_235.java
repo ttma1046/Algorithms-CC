@@ -61,13 +61,16 @@ class Lowest_Common_Ancestor_of_a_Binary_Search_Tree_235 {
     // O(N), where N is the number of nodes in the BST. In the worst case we might be visiting all the nodes of the BST.
 
     // O(N), This is because the maximum amount of space utilized by the recursion stack would be N since the height of a skewedd BST could be N.
-    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        if (p.val < root.val && q.val < root.val) return lowestCommonAncestor(root.left, p, q);
-        if (p.val > root.val && q.val > root.val) return lowestCommonAncestor(root.right, p, q);
+    public TreeNode lowestCommonAncestorI(TreeNode root, TreeNode p, TreeNode q) {
+        if (p.val < root.val && q.val < root.val) 
+            return lowestCommonAncestorI(root.left, p, q);
+
+        if (p.val > root.val && q.val > root.val) 
+            return lowestCommonAncestorI(root.right, p, q);
         return root;
     }
 
-    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+    public TreeNode lowestCommonAncestorII(TreeNode root, TreeNode p, TreeNode q) {
         while(true) {
             if (root.val > p.val && root.val > q.val) root = root.left;
             else if (root.val < p.val && root.val < q.val) root = root.right;
@@ -75,19 +78,27 @@ class Lowest_Common_Ancestor_of_a_Binary_Search_Tree_235 {
         }
     }
 
-    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+    public TreeNode lowestCommonAncestorIII(TreeNode root, TreeNode p, TreeNode q) {
         if(root == null) return root;
 
-        if(root.val == p.val || root.val == q.val) return root;
+        if(root.val == p.val || root.val == q.val) 
+            return root;
 
-        if((p.val < root.val && q.val > root.val) || (p.val > root.val && q.val < root.val)) return root;
+        if(
+            (p.val < root.val && q.val > root.val) 
+            || (p.val > root.val && q.val < root.val)) 
+            return root;
 
         if(root.val < p.val && root.val < q.val) {
-            TreeNode A = lowestCommonAncestor(root.right, p, q);
-            return A;
+            TreeNode node = lowestCommonAncestorIII(root.right, p, q);
+            return node;
         } else {
-            TreeNode A = lowestCommonAncestor(root.left, p, q);
-            return A;
+            TreeNode node = lowestCommonAncestorIII(root.left, p, q);
+            return node;
         }
+    } 
+
+    public static void main(String[] args) {
+        Lowest_Common_Ancestor_of_a_Binary_Search_Tree_235 obj = new Lowest_Common_Ancestor_of_a_Binary_Search_Tree_235();
     }
 }
