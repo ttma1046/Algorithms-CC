@@ -59,7 +59,8 @@ class TreeNode {
 
 class Convert_Sorted_List_to_Binary_Search_Tree_109 {
     ListNode findMiddle(ListNode node) {
-        if (node == null) return node;
+        if (node == null) 
+            return node;
 
         ListNode prev = null;
         ListNode slow = node;
@@ -78,7 +79,8 @@ class Convert_Sorted_List_to_Binary_Search_Tree_109 {
     }
 
     TreeNode sortedListToBST(ListNode head) {
-        if (head == null) return null;
+        if (head == null) 
+            return null;
 
         ListNode mid = findMiddle(head);
 
@@ -93,8 +95,27 @@ class Convert_Sorted_List_to_Binary_Search_Tree_109 {
     }
 
     public static void main(String[] args) {
+        ListNode nine = new ListNode(9);
+
+        ListNode five = new ListNode(5);
+
+        ListNode zero = new ListNode(0);
+
+        ListNode minusthree = new ListNode(-3);
+
+        ListNode minusten = new ListNode(-10);
+
+        minusten.next = minusthree;
+        minusthree.next = zero;
+        zero.next = five;
+        // five.next = nine;
+
         Convert_Sorted_List_to_Binary_Search_Tree_109 obj
             = new Convert_Sorted_List_to_Binary_Search_Tree_109();
+
+        ListNode mid = obj.findMid(minusten);
+
+        System.out.println(mid.val);
     }
 
     /*
@@ -144,7 +165,8 @@ class Convert_Sorted_List_to_Binary_Search_Tree_109 {
     public List<Integer> list = new ArrayList<Integer>();
 
     public TreeNode sortedListToBSTII(ListNode head) {
-        if (head == null) return null;
+        if (head == null) 
+            return null;
 
         convertLinkedListtoList(head);
 
@@ -213,11 +235,11 @@ class Convert_Sorted_List_to_Binary_Search_Tree_109 {
         if (left > right)
             return null;
 
-        int mid = (left + right) / 2;
+        int mid = left + (right - left) / 2;
 
         // First step of simulated inorder traversal. Recursively form
         // the left half
-        TreeNode leftNode = this.convertListToBST(left, mid - 1);
+        TreeNode leftNode = convertListToBST(left, mid - 1);
 
         // Once left half is traversed, process the current node
         TreeNode node = new TreeNode(this.head.val);
@@ -226,14 +248,32 @@ class Convert_Sorted_List_to_Binary_Search_Tree_109 {
             node.left = leftNode;
 
         // Maintain the invariance mentioned in the algorithm
-        this.head = this.head.next;
+        head = head.next;
 
         // Recurse on the right hand side and form BST out of them
-        TreeNode rightNode = this.convertListToBST(mid + 1, right);
-        if (leftNode != null)
+        TreeNode rightNode = convertListToBST(mid + 1, right);
+        if (rightNode != null)
             node.right = rightNode;
 
         return node;
+    }
+
+
+    private TreeNode convertListToBST(int left, int end) {
+        if(left > end)
+            return null;
+        
+        int mid = left + (end - left) / 2;
+        TreeNode left = convertListToBST(left, mid - 1);
+    
+        TreeNode treenode = new TreeNode(head.val);
+        treenode.left = left;
+        head = head.next;
+
+        TreeNode right = convertListToBST(mid + 1, end);
+        treenode.right = right;
+    
+        return treenode;  
     }
 
     /*

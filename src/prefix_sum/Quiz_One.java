@@ -6,9 +6,9 @@ class Quiz_One {
 
 		result[0] = a[0];
 
-		for (int i = 1; i < a.length; i++) {
+		for (int i = 1; i < a.length; i++)
 			result[i] = result[i - 1] + a[i];
-		}
+		
 
 		return result;
 	}

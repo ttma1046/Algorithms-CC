@@ -55,14 +55,15 @@ class Largest_BST_Subtree_333 {
     }
 
     private int[] recursive(TreeNode node) {
-        if (node == null) return new int [] { Integer.MIN_VALUE, Integer.MAX_VALUE, 0 };
+        if (node == null) 
+            return new int [] { Integer.MIN_VALUE, Integer.MAX_VALUE, 0 };
 
         int[] left = recursive(node.left);
         int[] right = recursive(node.right);
 
-        if (node.val > left[0] && node.val < right[1]) {
+        if (node.val > left[0] && node.val < right[1])
             return new int [] { Math.max(right[0], node.val), Math.min(left[1], node.val), left[2] + right[2] + 1 };
-        }
+        
         return new int [] { Integer.MAX_VALUE, Integer.MIN_VALUE, Math.max(left[2], right[2]) };
     }
 

@@ -1,11 +1,9 @@
-package array;
+package prefix_sum;
 
 import java.util.HashMap;
 
 /*
 Given an array of integers nums and an integer k, return the total number of continuous subarrays whose sum equals to k.
-
-
 
 Example 1:
 
@@ -26,17 +24,20 @@ Constraints:
 
 class Subarray_Sum_Equals_K_560 {
     public int subarraySumIII(int[] nums, int k) {
-        if (nums == null || nums.length == 0) return 0;
+        if (nums == null || nums.length == 0) 
+            return 0;
 
         int result = 0;
 
         for(int i = 0; i < nums.length; i++) {
             int sum = nums[i];
 
-            if (sum == k) result++;
+            if (sum == k) 
+                result++;
 
             for (int j = i + 1; j < nums.length; j++) {
-                if (sum + nums[j] == k) result++;
+                if (sum + nums[j] == k) 
+                    result++;
 
                 sum += nums[j];
             }
@@ -76,7 +77,8 @@ class Subarray_Sum_Equals_K_560 {
             // situation 1:
             // continuous subarray starts
             // from the beginning of the array
-            if (currSum == k) result++;
+            if (currSum == k) 
+                result++;
 
             // situation 2:
             // number of times the curr_sum − k has occured already,

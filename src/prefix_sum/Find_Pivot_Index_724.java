@@ -47,7 +47,8 @@ class Find_Pivot_Index_724 {
         for (int i : nums) sum += i;
 
         for(int i = 0; i < nums.length; i++) {
-            if (leftSum == sum - leftSum - nums[i]) return i;
+            if (leftSum == sum - leftSum - nums[i]) 
+                return i;
 
             leftSum += nums[i];
         }

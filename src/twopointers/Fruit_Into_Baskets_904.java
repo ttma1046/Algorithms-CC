@@ -45,17 +45,17 @@ Note:
 */
 
 class Fruit_Into_Baskets_904 {
-	public static void main(String[] args) {
-		System.out.println(new Fruit_Into_Baskets_904().totalFruit(new int[] {3, 3, 3, 1, 2, 1, 1, 2, 3, 3, 4}));
-		System.out.println(new Fruit_Into_Baskets_904().totalFruit(new int[] {1, 2, 3, 2, 2}));
-		System.out.println(new Fruit_Into_Baskets_904().totalFruit(new int[] {1, 2, 1}));
-		System.out.println(new Fruit_Into_Baskets_904().totalFruit(new int[] {0, 1, 2, 2}));
-		System.out.println(new Fruit_Into_Baskets_904().totalFruit(new int[] {0,1,6,6,4,4,6}));
+    public static void main(String[] args) {
+        System.out.println(new Fruit_Into_Baskets_904().totalFruit(new int[] {3, 3, 3, 1, 2, 1, 1, 2, 3, 3, 4}));
+        System.out.println(new Fruit_Into_Baskets_904().totalFruit(new int[] {1, 2, 3, 2, 2}));
+        System.out.println(new Fruit_Into_Baskets_904().totalFruit(new int[] {1, 2, 1}));
+        System.out.println(new Fruit_Into_Baskets_904().totalFruit(new int[] {0, 1, 2, 2}));
+        System.out.println(new Fruit_Into_Baskets_904().totalFruit(new int[] {0, 1, 6, 6, 4, 4, 6}));
 
 
-		System.out.println(new Fruit_Into_Baskets_904().totalFruit(new int[] {1, 0, 2, 2}));
-		System.out.println(new Fruit_Into_Baskets_904().totalFruit(new int[] {0}));
-	}
+        System.out.println(new Fruit_Into_Baskets_904().totalFruit(new int[] {1, 0, 2, 2}));
+        System.out.println(new Fruit_Into_Baskets_904().totalFruit(new int[] {0}));
+    }
 
     public int totalFruit2(int[] tree) {
         Map<Integer, Integer> count = new HashMap<Integer, Integer>();
@@ -71,30 +71,48 @@ class Fruit_Into_Baskets_904 {
         }
         return res;
     }
-    
-
-	public int totalFruit(int[] tree) {
-		int a = 0, b = 0, ans = 0, current = 0, currentLastFruit = 0;
-
-		for (int x: tree) {
-			if (a == x || b == x) {
-				++current;
-			} else {
-				current = currentLastFruit + 1;
-			}
-
-			if (b == x) {
-				++currentLastFruit;
-			} else {
-				currentLastFruit = 1;
-				a = b;
-				b = x;
-			}
-
-			ans = Math.max(ans, current);
-		}
 
 
-		return ans;
-	}
+    public int totalFruit(int[] tree) {
+        int a = 0, b = 0, ans = 0, current = 0, currentLastFruit = 0;
+
+        for (int x : tree) {
+            if (a == x || b == x)
+                ++current;
+            else
+                current = currentLastFruit + 1;
+
+
+            if (b == x)
+                ++currentLastFruit;
+            else {
+                currentLastFruit = 1;
+                a = b;
+                b = x;
+            }
+
+            ans = Math.max(ans, current);
+        }
+
+
+        return ans;
+    }
+
+    public int totalFruit(int[] tree) {
+        int res = 0, cur = 0, count_b = 0, a = 0, b = 0;
+        for (int c :  tree) {
+            cur = c == a || c == b ? cur + 1 : count_b + 1;
+
+            count_b = c == b ? count_b + 1 : 1;
+
+            if (b != c) {
+                a = b;
+                b = c;
+            }
+
+            res = Math.max(res, cur);
+        }
+
+        return res;
+    }
 }
