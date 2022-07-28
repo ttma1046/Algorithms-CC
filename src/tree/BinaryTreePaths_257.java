@@ -58,6 +58,21 @@ class MyPair {
     }
 }
 
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode() {}
+    TreeNode(int val) {
+        this.val = val;
+    }
+    TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+}
+
 class BinaryTreePaths_257 {
 
     /*
@@ -302,5 +317,66 @@ class BinaryTreePaths_257 {
         one.right = three;
 
         List<String> result = new BinaryTreePaths_257().binaryTreePathsII(one);
+    }
+
+
+
+    /**
+     * Definition for a binary tree node.
+     * public class TreeNode {
+     *     int val;
+     *     TreeNode left;
+     *     TreeNode right;
+     *     TreeNode() {}
+     *     TreeNode(int val) { this.val = val; }
+     *     TreeNode(int val, TreeNode left, TreeNode right) {
+     *         this.val = val;
+     *         this.left = left;
+     *         this.right = right;
+     *     }
+     * }
+     */
+    public List<String> binaryTreePaths(TreeNode root) {
+        List<String> result = new ArrayList<>();
+        if (root == null) 
+            return result;
+
+        List<TreeNode> current = new ArrayList<>();
+        backTracking(root, result, current, 0);
+        return result;
+    }
+
+    private void backTracking(TreeNode root, List<String> result, List<TreeNode> current, int level) {
+        if (root == null) 
+            return;
+        
+        current.add(root); // 进backTracking先吃，root一定是一个解 -> 对应退出这个函数的吐
+
+        // 什么是一个解？root到leaf就是一个解。左右都没孩子就是leaf
+        // 哪里收集解？leaf 收集解-> 加入result
+        if (root.left == null && root.right == null) {
+            result.add(stringify(current));
+            current.remove(current.size() - 1); // return到上一层 有吃必有吐
+            return; // return
+        }
+
+        // 每层是什么？加一个node。
+        // 分支是什么？左和右
+        if (root.left != null)
+            backTracking(root.left, result, current, level + 1);
+
+        if (root.right != null)
+            backTracking(root.right, result, current, level + 1);
+
+        current.remove(current.size() - 1); // return到上一层有吃必有吐-> 对应刚进函数的吃
+    }
+
+    private String stringify(List<TreeNode> current) {
+        StringBuilder sb = new StringBuilder();
+        for (TreeNode node : current) {
+            sb.append(node.val);
+            sb.append("->");
+        }
+        return sb.substring(0, sb.length() - 2);
     }
 }

@@ -81,22 +81,26 @@ public class ValidateBinarySearchTree_98 {
     }
 
     public boolean isValidBSTI(TreeNode root) {
+        if (root == null)
+            return true;
+
         Stack<TreeNode> stack = new Stack<>();
+        TreeNode curr = root;
         TreeNode prev = null;
-        while(root != null || stack.size() > 0) {
-            while(root != null) {
-                stack.push(root);
-                root = root.left;
+        while(curr != null || stack.size() > 0) {
+            while(curr != null) {
+                stack.push(curr);
+                curr = curr.left;
             }
 
-            root = stack.pop();
+            curr = stack.pop();
 
-            if (prev != null && prev.val >= root.val) 
+            if (prev != null && prev.val >= curr.val) 
                 return false;
 
-            prev = root;
+            prev = curr;
 
-            root = root.right;
+            curr = curr.right;
         }
 
         return true;

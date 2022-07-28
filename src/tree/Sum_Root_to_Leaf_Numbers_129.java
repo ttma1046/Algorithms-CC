@@ -84,9 +84,11 @@ class Sum_Root_to_Leaf_Numbers_129 {
     }
 
     public int dfs(TreeNode node, int current) {
-    	if (node == null) return 0;
+    	if (node == null) 
+            return 0;
     	current = 10 * current + node.val;
-    	if (node.left == null && node.right == null) return current;
+    	if (node.left == null && node.right == null) 
+            return current;
     	return dfs(node.left, current) + dfs(node.right, current);
     }
 
@@ -104,9 +106,12 @@ class Sum_Root_to_Leaf_Numbers_129 {
 
     private void dfs(TreeNode node, int exist) {
         exist = node.value + exist * 10;
-        if (node.left == null && node.right == null) sum += exist;
-        if (node.left != null) dfs(node.left, exist);
-        if (node.right != null) dfs(node.right, exist);
+        if (node.left == null && node.right == null) 
+            sum += exist;
+        if (node.left != null) 
+            dfs(node.left, exist);
+        if (node.right != null) 
+            dfs(node.right, exist);
     }
 
     public int sumNumbers(TreeNode root) {
