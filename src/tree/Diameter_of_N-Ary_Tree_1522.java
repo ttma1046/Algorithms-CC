@@ -6,11 +6,7 @@ The diameter of an N-ary tree is the length of the longest path between any two 
 
 (Nary-Tree input serialization is represented in their level order traversal, each group of children is separated by the null value.)
 
- 
-
 Example 1:
-
-
 
 Input: root = [1,null,3,2,4,null,5,6]
 Output: 3
@@ -62,23 +58,23 @@ class Diameter_of_N-Ary_Tree_1522 {
     int max = 0;
 
     public int diameter(Node root) {
-        if (root == null || root.children == null || root.children.size() == 0)
-            return 0;
-        
         travsel(root);
         return max;
     }
 
     private int travsel(Node node) {
-        if (node == null || node.children == null || node.children.size() == 0)
+        if (node == null)
             return 0;
+        
+        if (node != null && (node.children == null || node.children.size() == 0))
+            return 1;
 
-        int max1 = -1;
-        int max2 = -1;	
+        int max1 = 0;
+        int max2 = 0;	
 
         for (Node curr: node.children) {
         	int child = travsel(curr);
-
+            
         	if (child > max1) {
         		max2 = max1; 
         		max1 = child;
@@ -87,7 +83,7 @@ class Diameter_of_N-Ary_Tree_1522 {
         	}
         }
 
-		max = Math.max(max, max1 + max2 + 2);
+		max = Math.max(max, max1 + max2);
         return max1 + 1;
     }
 }

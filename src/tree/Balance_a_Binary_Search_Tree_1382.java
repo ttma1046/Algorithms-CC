@@ -24,19 +24,24 @@ The number of nodes in the tree is between 1 and 10^4.
 The tree nodes will have distinct values between 1 and 10^5.
 */
 class Balance_a_Binary_Search_Tree_1382 {
-    public TreeNode balanceBSTIII(TreeNode root) {
-        if (root == null) return null;
+    public TreeNode balanceBSTI(TreeNode root) {
+        if (root == null) 
+            return null;
+
         List<Integer> res = new ArrayList<Integer>();
         inorder(res, root);
         return balanceit(res, 0, res.size() - 1);
     }
 
     private void inorder(List<Integer> res, TreeNode node) {
-        if (node.left != null) inorder(res, node.left);
+        if (node == null)
+            return;
+
+        inorder(res, node.left);
 
         res.add(node.val);
 
-        if (node.right != null) inorder(res, node.right);
+        inorder(res, node.right);
     }
 
     private TreeNode balanceit(List<Integer> nums, int start, int end) {
@@ -52,29 +57,6 @@ class Balance_a_Binary_Search_Tree_1382 {
         return node;
     }
 
-    public TreeNode balanceBST(TreeNode root) {
-        List<TreeNode> list = new ArrayList<>();
-        inorderSort(root, list);
-        int n = list.size();
-        return balance(list, 0, n - 1);
-    }
-
-    private void inorderSort(TreeNode curr, List<TreeNode> list) {
-        if (curr == null) return;
-        inorderSort(curr.left, list);
-        list.add(curr);
-        inorderSort(curr.right, list);
-    }
-
-    private TreeNode balance(List<TreeNode> list, int start, int end) {
-        if (start > end) return null;
-        int mid = start + (end - start) / 2;
-        TreeNode node = list.get(mid);
-        node.left = balance(list, start, mid - 1);
-        node.right = balance(list, mid + 1, end);
-        return node;
-    }
-
     public static void main(String[] args) {
         TreeNode fifteen = new TreeNode(15);
         fifteen.left = new TreeNode(9);
@@ -86,7 +68,7 @@ class Balance_a_Binary_Search_Tree_1382 {
 
         Balance_a_Binary_Search_Tree_1382 obj = new Balance_a_Binary_Search_Tree_1382();
 
-        TreeNode node = obj.balanceBSTIII(root);
+        TreeNode node = obj.balanceBSTI(root);
     }
 }
 
