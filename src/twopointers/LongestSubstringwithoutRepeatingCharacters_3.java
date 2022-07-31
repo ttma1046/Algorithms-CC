@@ -63,7 +63,8 @@ class LongestSubstringwithoutRepeatingCharacters_3 {
         for (int k = i; k <= j; k++) {
             char c = s.charAt(k);
             index[c - ' ']++;
-            if (index[c - ' '] > 1) return false;
+            if (index[c - ' '] > 1)
+                return false;
         }
 
         return true;
@@ -182,21 +183,26 @@ class LongestSubstringwithoutRepeatingCharacters_3 {
     }
 
     public int lengthOfLongestSubstringNoMap(String s) {
-        if (s.length() == 0) return 0;
+        if (s.length() == 0)
+            return 0;
 
         int n = s.length();
         int[] index = new int[128];
 
-        for (int i = 0; i < index.length; i++) index[i] = -1;
+        for (int i = 0; i < index.length; i++)
+            index[i] = -1;
 
         int ans = 0;
-        for (int i = 0, j = 0; j < n; ++j) {
-            if (index[s.charAt(j) - ' '] > -1) {
-                i = Math.max(i, index[s.charAt(j) - ' '] + 1);
-            }
-            ans = Math.max(ans, j - i + 1);
-            index[s.charAt(j) - ' '] = j;
+        for (int i = 0, j = 0; i < n; ++i) {
+            if (index[s.charAt(i) - ' '] > -1)
+                j = Math.max(j, index[s.charAt(i) - ' '] + 1);
+
+            if (i - j + 1 > ans) 
+                ans = i - j + 1;
+
+            index[s.charAt(i) - ' '] = i;
         }
+
         return ans;
     }
 
@@ -211,7 +217,8 @@ class LongestSubstringwithoutRepeatingCharacters_3 {
             char r = s.charAt(right);
 
             Integer index = chars[r];
-            if (index != null && index >= left && index < right) left = index + 1;
+            if (index != null && index >= left && index < right)
+                left = index + 1;
 
             res = Math.max(res, right - left + 1);
 
@@ -295,13 +302,34 @@ class LongestSubstringwithoutRepeatingCharacters_3 {
                 begin++;
             }
 
-            if (end - begin + 1 > res) res = end - begin + 1;
+            if (end - begin + 1 > res) 
+                res = end - begin + 1;
 
-            end++;    
+            end++;
         }
 
         return res;
+    }
 
+    public int lengthOfLongestSubstring(String s) {
+        int[] t = new int[128];
+
+        int n = s.length();
+
+        int max = 0;
+        for (int i = 0, j = 0; i < n; i++) {
+            t[s.charAt(i) - ' ']++;
+
+            while(t[s.charAt(i) - ' '] > 1) {
+                t[s.charAt(j) - ' ']--;
+                j++;
+            }
+
+            if (i - j + 1 > max)
+                max = i - j + 1;
+        }
+
+        return max;
     }
 
     public static void main(String[] args) {
