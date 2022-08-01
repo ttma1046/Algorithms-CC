@@ -14,17 +14,11 @@ Example 2:
 
 Input: "cbbd"
 Output: "bb"
-*/
 
-/*
 How can we reuse a previously computed palindrome to compute a larger palindrome?
-*/
 
-/*
 If “aba” is a palindrome, is “xabax” and palindrome? Similarly is “xabay” a palindrome?
-*/
 
-/*
 Complexity based hint:
 If we use brute-force and check whether for every start and end position a substring is a palindrome
 we have O(n^2) start - end pairs and O(n) palindromic checks.
@@ -86,6 +80,10 @@ class Longest_Palindromic_Substring_5 {
         }
         return R - L - 1;
     }
+    /*
+    Time complexity : O(n^2). Since expanding a palindrome around its center could take O(n) time, the overall complexity is O(n^2).
+    Space complexity : O(1).
+    */
 
     public String longestPalindromeIII(String s) {
         Deque<Character> mydeque = new ArrayDeque<Character>();

@@ -1,4 +1,4 @@
-package twopointers;
+wpackage twopointers;
 
 /*
 Given an array of integers numbers that is already sorted in non-decreasing order, find two numbers such that they add up to a specific target number.
@@ -54,7 +54,6 @@ class Two_Sum_II_167 {
 
         return indice;
     }
-
 
     public int[] twoSumII(int[] numbers, int target) {
         if (numbers.length < 2 || numbers == null) return new int[] {-1, -1};
