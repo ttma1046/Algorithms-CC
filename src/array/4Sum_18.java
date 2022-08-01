@@ -8,8 +8,6 @@ a, b, c, and d are distinct.
 nums[a] + nums[b] + nums[c] + nums[d] == target
 You may return the answer in any order.
 
-
-
 Example 1:
 
 Input: nums = [1,0,-1,0,-2,2], target = 0
@@ -68,9 +66,7 @@ class 4Sum_18 {
 
         return res;
     }
-}
 
-class Solution {
     public List<List<Integer>> fourSum(int[] nums, int target) {
         Arrays.sort(nums);
         return kSum(nums, target, 0, 4);

@@ -47,10 +47,13 @@ class ThreeSum_Closest_16 {
             while (low < high) {
                 int sum = nums[i] + nums[low] + nums[high];
 
-                if (Math.abs(target - sum) < Math.abs(diff)) diff = target - sum;
+                if (Math.abs(target - sum) < Math.abs(diff)) 
+                    diff = target - sum;
 
-                if (sum < target) ++low;
-                else --high;
+                if (sum < target) 
+                    ++low;
+                else 
+                    --high;
             }
         }
 
@@ -89,13 +92,13 @@ class ThreeSum_Closest_16 {
         Arrays.sort(nums);
 
         for (int i = 0; i < n - 2; i++) {
-            for (int j = i + 1; j < sz - 1; ++j) {
+            for (int j = i + 1; j < n - 1; ++j) {
                 int complement = target - nums[i] - nums[j];
 
-                int idx = Arrays.binarySearch(nums, j + 1, sz - 1, complement);
+                int idx = Arrays.binarySearch(nums, j + 1, n - 1, complement);
 
-                int hi = idx >= 0 ? idx : ~idx, lo = hi - 1;
-                if (hi < sz && Math.abs(complement - nums[hi]) < Math.abs(diff))
+                int hi = idx >= 0 ? idx : -idx, lo = hi - 1;
+                if (hi < n && Math.abs(complement - nums[hi]) < Math.abs(diff))
                     diff = complement - nums[hi];
                 if (lo > j && Math.abs(complement - nums[lo]) < Math.abs(diff))
                     diff = complement - nums[lo];
@@ -109,26 +112,5 @@ class ThreeSum_Closest_16 {
         TreeSum_Closest_16 kk = new ThreeSum_Closest_16();
 
         kk.threeSumClosest(new int[] { -1, 2, 1, -4}, 1);
-    }
-
-    public int threeSumClosest(int[] nums, int target) {
-        Arrays.sort(nums);
-
-        int diff = Integer.MAX_VALUE;
-        int n = nums.length;
-
-        for (int i = 0; i < n && diff != 0; ++i) {
-            int low = i + 1, high = n - 1;
-            while(low < high) {
-                int sum = nums[i] + nums[low] + nums[high];
-
-                if (Math.abs(sum - target) < Math.abs(diff)) diff = target - sum;
-
-                if (sum < target) ++low;
-                else --high;
-            }
-        }
-
-        return target - diff;
     }
 }
