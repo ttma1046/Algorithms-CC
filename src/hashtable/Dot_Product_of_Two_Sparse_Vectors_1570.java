@@ -1,4 +1,4 @@
-package leetcode;
+package hashtable;
 /*
 Given two sparse vectors, compute their dot product.
 
@@ -37,145 +37,163 @@ n == nums1.length == nums2.length
 */
 
 class Dot_Product_of_Two_Sparse_Vectors_1570 {
-	public static void main(String[] args) {
-		int[] nums1 = new int[] {1, 0, 0, 2, 3};
-		int[] nums2 = new int[] {0, 3, 0, 4, 0};
-		SparseVector v1 = new SparseVector(nums1);
-		SparseVector v2 = new SparseVector(nums2);
-		int ans = v1.dotProduct(v2);
-		System.out.println(ans);
+    public static void main(String[] args) {
+        int[] nums1 = new int[] {1, 0, 0, 2, 3};
+        int[] nums2 = new int[] {0, 3, 0, 4, 0};
+        SparseVector v1 = new SparseVector(nums1);
+        SparseVector v2 = new SparseVector(nums2);
+        int ans = v1.dotProduct(v2);
+        System.out.println(ans);
 
-		nums1 = new int[] {0, 1, 0, 0, 0};
-		nums2 = new int[] {0, 0, 0, 0, 2};
-		v1 = new SparseVector(nums1);
-		v2 = new SparseVector(nums2);
-		ans = v1.dotProduct(v2);
-		System.out.println(ans);
+        nums1 = new int[] {0, 1, 0, 0, 0};
+        nums2 = new int[] {0, 0, 0, 0, 2};
+        v1 = new SparseVector(nums1);
+        v2 = new SparseVector(nums2);
+        ans = v1.dotProduct(v2);
+        System.out.println(ans);
 
 
-		nums1 = new int[] {0, 1, 0, 0, 2, 0, 0};
-		nums2 = new int[] {1, 0, 0, 0, 3, 0, 4};
-		v1 = new SparseVector(nums1);
-		v2 = new SparseVector(nums2);
-		ans = v1.dotProduct(v2);
-		System.out.println(ans);
+        nums1 = new int[] {0, 1, 0, 0, 2, 0, 0};
+        nums2 = new int[] {1, 0, 0, 0, 3, 0, 4};
+        v1 = new SparseVector(nums1);
+        v2 = new SparseVector(nums2);
+        ans = v1.dotProduct(v2);
+        System.out.println(ans);
 
-	}
+    }
 }
 
-class SparseVector {
-	public int[] origin;
+class SparseVectorI {
+    public int[] origin;
 
-	SparseVector(int[] nums) {
-		origin = nums;
-	}
+    SparseVector(int[] nums) {
+        origin = nums;
+    }
 
-	// Return the dotProduct of two sparse vectors
-	public int dotProduct(SparseVector vec) {
-		int result = 0;
+    // Return the dotProduct of two sparse vectors
+    public int dotProduct(SparseVector vec) {
+        int result = 0;
 
-		for (int i = 0; i < origin.length; i++) {
-			result += vec.origin[i] * origin[i];
-		}
+        for (int i = 0; i < origin.length; i++)
+            result += vec.origin[i] * origin[i];
 
-		return result;
-	}
+        return result;
+    }
 }
 
-class SparseVector {
+class SparseVectorII {
 
-	// Map the index to value for all non-zero values in the vector
-	Map<Integer, Integer> mapping;
+    // Map the index to value for all non-zero values in the vector
+    Map<Integer, Integer> mapping;
 
-	SparseVector(int[] nums) {
-		mapping = new HashMap<>();
-		for (int i = 0; i < nums.length; ++i) {
-			if (nums[i] != 0) {
-				mapping.put(i, nums[i]);
-			}
-		}
-	}
+    SparseVector(int[] nums) {
+        mapping = new HashMap<>();
+        for (int i = 0; i < nums.length; ++i)
+            if (nums[i] != 0)
+                mapping.put(i, nums[i]);
+    }
 
-		/*
-			0:1
-			3:2
-			4:3
-		*/
+    /*
+    	0:1
+    	3:2
+    	4:3
+    */
 
-		/*
-			1:3
-			3:4
-		*/
+    /*
+    	1:3
+    	3:4
+    */
 
 
-	public int dotProduct(SparseVector vec) {
-		int result = 0;
+    public int dotProduct(SparseVector vec) {
+        int result = 0;
 
-		// iterate through each non-zero element in this sparse vector
-		// update the dot product if the corresponding index has a non-zero value in the other vector
-		for (Integer i : this.mapping.keySet()) {
-			if (vec.mapping.containsKey(i)) {
-				result += this.mapping.get(i) * vec.mapping.get(i);
-			}
-		}
-		return result;
-	}
+        // iterate through each non-zero element in this sparse vector
+        // update the dot product if the corresponding index has a non-zero value in the other vector
+        for (Integer i : this.mapping.keySet())
+            if (vec.mapping.containsKey(i))
+                result += this.mapping.get(i) * vec.mapping.get(i);
+
+        return result;
+    }
 }
 
 
-class SparseVector {
-	public int[] origin;
+class SparseVectorIII {
+    public int[] origin;
 
-	SparseVector(int[] nums) {
-		origin = nums;
-	}
+    SparseVector(int[] nums) {
+        origin = nums;
+    }
 
-	// Return the dotProduct of two sparse vectors
-	public int dotProduct(SparseVector vec) {
-		int result = 0;
+    // Return the dotProduct of two sparse vectors
+    public int dotProduct(SparseVector vec) {
+        int result = 0;
 
-		for (int i = 0; i < origin.length; i++) {
+        for (int i = 0; i < origin.length; i++) {
             if (vec.origin[i] != 0 && origin[i] != 0)
-			result += vec.origin[i] * origin[i];
-		}
+                result += vec.origin[i] * origin[i];
+        }
 
-		return result;
-	}
+        return result;
+    }
+}
+
+class SparseVectorIV {
+    Map<Integer, Integer> map = new HashMap<>();
+
+    SparseVector(int[] nums) {
+        for (int i = 0; i < nums.length; i++)
+            if (nums[i] != 0)
+                this.map.put(i, nums[i]);
+    }
+
+    // Return the dotProduct of two sparse vectors
+    public int dotProduct(SparseVector vec) {
+        if (this.map.size() == 0 || vec.map.size() == 0)
+            return 0;
+
+        if (this.map.size() > vec.map.size())
+            vec.dotProduct(this);
+
+        int productSum = 0;
+
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            int index = entry.getKey();
+            if (vec.map.containsKey(index)) {
+                int vecValue = vec.map.get(index);
+                productSum += entry.getValue() * vecValue;
+            }
+        }
+
+        return productSum;
+    }
 }
 
 class SparseVector {
-	Map<Integer, Integer> indexMap = new HashMap<>();
-	int n = 0;
-	SparseVector(int[] nums) {
-		for (int i = 0; i < nums.length; i++)
-			if (nums[i] != 0)
-				indexMap.put(i, nums[i]);
+    List<int[]> pairs;
 
-		/*
-			0:1
-			3:2
-			4:3
-		*/
+    SparseVector(int[] nums) {
+        pairs = new ArrayList<>();
+        for (int i = 0; i < nums.length; i++)
+            if (nums[i] != 0)
+                pairs.add(new int[] {i, nums[i]});
+    }
 
-		n = nums.length;
-		/* n = 5 */
-	}
+    // Return the dotProduct of two sparse vectors
+    public int dotProduct(SparseVector vec) {
+        int result = 0, p = 0, q = 0;
+        while (p < pairs.size() && q < vec.pairs.size()) {
+            if (pairs.get(p)[0] == vec.pairs.get(q)[0]) {
+                result += pairs.get(p)[1] * vec.pairs.get(q)[1];
+                p++;
+                q++;
+            } else if (pairs.get(p)[0] > vec.pairs.get(q)[0])
+                q++;
+            else
+                p++;
 
-	// Return the dotProduct of two sparse vectors
-	public int dotProduct(SparseVector vec) {
-		if (indexMap.size() == 0 || vec.indexMap.size() == 0) return 0;
-
-		if (indexMap.size() > vec.indexMap.size())
-			return vec.dotProduct(this);
-
-		int productSum = 0;
-
-		for (Map.Entry<Integer, Integer> entry : indexMap.entrySet()) {
-			int index = entry.getKey();
-			Integer vecValue = vec.indexMap.get(index);
-			if (vecValue == null) continue;
-			productSum += (entry.getValue() * vecValue);
-		}
-		return productSum;
-	}
+        }
+        return result;
+    }
 }

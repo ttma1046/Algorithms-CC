@@ -28,22 +28,23 @@ s and t consist of lowercase letters, uppercase letters, and digits.
 */
 class One_Edit_Distance_161 {
     public boolean isOneEditDistance(String s, String t) {
-        int ns = s.length();
-        int nt = t.length();
-
-        if (ns > nt)
+        int sLength = s.length();
+        int tLength = t.length();
+        
+        if (sLength > tLength)
             return isOneEditDistance(t, s);
-
-        if (nt - ns > 1) return false;
-
-        for (int i = 0; i < s.length(); ++i)
+        
+        if (tLength - sLength > 1)
+            return false;
+        
+        for (int i = 0; i < sLength; ++i)
             if (s.charAt(i) != t.charAt(i))
-                if (nt == ns)
+                if (sLength == tLength)
                     return s.substring(i + 1).equals(t.substring(i + 1));
                 else
                     return s.substring(i).equals(t.substring(i + 1));
-
-        return ns + 1 == nt;
+        
+        return sLength + 1 == tLength;
     }
 
     public static void main(String[] args) {

@@ -48,12 +48,12 @@ public class Find_Median_from_Data_Stream_295 {
 
         medianFinder.addNum(1);    // arr = [1]
         medianFinder.addNum(2);    // arr = [1, 2]
+
         System.out.println(medianFinder.findMedian()); // return 1.5 (i.e., (1 + 2) / 2)
         medianFinder.addNum(3);    // arr[1, 2, 3]
         System.out.println(medianFinder.findMedian()); // return 2.0
     }
 }
-
 
 class MedianFinderSort {
     List<Integer> temp;
@@ -91,6 +91,32 @@ class MedianFinderSort {
         return 0;
     }
 
+    public double findMedian() {
+        Collections.sort(temp);
+
+        int size = temp.size();
+        int mid = size / 2;
+
+        int index = 0;
+        int sum = 0;
+        for (int i = 0; i < size; i++) {
+            if (size % 2 == 0) {
+                if (i == mid - 1) {
+                    sum = temp.get(i);
+                } else if (i == mid) {
+                    sum += temp.get(i);
+                    return 
+                        (double)sum / 2;
+                }
+            } else {
+                if (i == mid) 
+                    return temp.get(i);
+            }
+        }
+
+        return 0;
+    }
+
     // Returns the median of current data stream
     public double findMedian() {
         Collections.sort(temp);
@@ -99,9 +125,7 @@ class MedianFinderSort {
         return (n & 1) == 1 ? 
             temp.get(n / 2) : ((double) temp.get(n / 2 - 1) + temp.get(n / 2)) * 0.5;
     }
-}
 
-class MedianFinder {
     PriorityQueue<Integer> lo = new PriorityQueue<>((a1, a2) -> a2 - a1);
     PriorityQueue<Integer> hi = new PriorityQueue<>();
 
@@ -118,9 +142,7 @@ class MedianFinder {
     double findMedian() {
         return lo.size() > hi.size() ? lo.peek() : ((double) lo.peek() + hi.peek()) * 0.5;
     }
-};
 
-class MedianFinder {
     PriorityQueue<Integer> maxHeap; //containing first half of numbers
     PriorityQueue<Integer> minHeap; //containing second half of numbers
 
@@ -151,10 +173,8 @@ class MedianFinder {
         // because max-heap will have one more element than the min-heap
         return maxHeap.peek();
     }
-}
 
-/*
-class MedianFinder {
+    /*
     List<Integer> temp;
     public MedianFinder() {
         temp = new ArrayList<>();
@@ -200,14 +220,9 @@ class MedianFinder {
         // than num
         // return n;
     }
-
-    // Returns the median of current data stream
-    public double findMedian() {
-        int n = temp.size();
-        return (n & 1) == 1 ? temp.get(n / 2) : ((double) temp.get(n / 2 - 1) + temp.get(n / 2)) * 0.5;
-    }
+    */
 }
-*/
+
 /**
  * Your MedianFinder object will be instantiated and called as such:
  * MedianFinder obj = new MedianFinder();

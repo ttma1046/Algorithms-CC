@@ -131,3 +131,9 @@ class Friends_Of_Appropriate_Ages_825 {
         // System.out.println(new Friends_Of_Appropriate_Ages_825().numFriendRequests(ages));
     }
 }
+
+/*
+1. x < 100 && y > 100
+2. x < y
+3. x >= 2y - 14
+*/

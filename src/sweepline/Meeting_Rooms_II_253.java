@@ -112,8 +112,10 @@ class Meeting_Rooms_II_253 {
         int room = 0;
         int endIndex = 0;
         for (int i = 0; i < starts.length; ++i) {
-            if (starts[i] < ends[endIndex]) room++;
-            else endIndex++;
+            if (starts[i] < ends[endIndex]) 
+                room++;
+            else 
+                endIndex++;
         }
         return room;
     }
@@ -204,8 +206,10 @@ class Meeting_Rooms_II_253 {
         int end = 0;
 
         for (int i = 0; i < starts.length; i++) {
-            if (starts[i] < ends[end]) rooms++;
-            else end++;
+            if (starts[i] < ends[end]) 
+                rooms++;
+            else 
+                end++;
         }
 
         return rooms;

@@ -1,4 +1,8 @@
 package twopointers;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /*
 Given an array of characters chars, compress it using the following algorithm:
 
@@ -37,6 +41,8 @@ chars[i] is a lowercase English letter, uppercase English letter, digit, or symb
 */
 class String_Compression_443 {
     public int compress(char[] chars) {
+        if(a == null || a.length == 0) return 0;
+
         int index = 0;
         int i = 0;
 
@@ -62,12 +68,32 @@ class String_Compression_443 {
     public static void main(String[] args) {
         String_Compression_443 obj = new String_Compression_443();
 
-        char[] chars = new char[] { 'a', 'a', 'b', 'b', 'c', 'c', 'c' };
+        // char[] chars = new char[] { 'a', 'a', 'b', 'b', 'c', 'c', 'c' };
 
-        System.out.println(obj.compress(chars));
+        //  System.out.println(obj.compress(chars));
+
+        Integer[] digits = obj.getDigits(12345);
+        System.out.println(Arrays.toString(digits));
     }
 
-    public int compress(char[] chars) {
+    public  Integer[] getDigits(int num) {
+        List<Integer> digits = new ArrayList<Integer>();
+        collectDigits(num, digits);
+        return digits.toArray(new Integer[] {});
+    }
+
+    private void collectDigits(int num, List<Integer> digits) {
+        System.out.println("num:" + num);
+        if(num / 10 > 0) {
+            System.out.println("reccu");
+            collectDigits(num / 10, digits);
+        }
+        
+        digits.add(num % 10);
+        System.out.println(num % 10);
+    }
+
+    public int compressII(char[] chars) {
         int len = 0; // also a pointer to modify array in-place
         int i = 0;
         while(i < chars.length) {
@@ -82,6 +108,7 @@ class String_Compression_443 {
                 for (char c : freq.toCharArray())
                     chars[++len] = c;
             }
+            
             len++;
             i = j;
         }
