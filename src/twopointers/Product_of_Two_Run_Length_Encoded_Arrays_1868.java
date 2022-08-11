@@ -1,4 +1,4 @@
-package leetcode;
+package twopointers;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -103,27 +103,85 @@ class Product_of_Two_Run_Length_Encoded_Arrays_1868 {
         Product_of_Two_Run_Length_Encoded_Arrays_1868 obj = new Product_of_Two_Run_Length_Encoded_Arrays_1868();
     }
 
-    /*
-    public List<List<Integer>> findRLEArrayII(int[][] encoded1, int[][] encoded2) {
-        int p1 = 0;
-        int p2 = 0;
+    public List<List<Integer>> findRLEArray(int[][] encoded1, int[][] encoded2) {
+        int index1 = 0;
+        int index2 = 0;
         List<List<Integer>> res = new ArrayList<>();
 
-        while(p1 < encoded1.length) {
-            int len = Math.min(encoded1[p1][1], encoded2[p2][1]);
-            int mult = encoded1[p1][0] * encoded2[p2][0];
+        while(index1 < encoded1.length) {
+            int len = Math.min(encoded1[index1][1], encoded2[index2][1]);
+            int mult = encoded1[index1][0] * encoded2[index2][0];
 
             if(res.size() > 0 && res.get(res.size() - 1).get(0) == mult) //to handle cases like [[1,3],[2,3]] * [[6,3],[3,3]] --> [[6,6]]
                 res.get(res.size() - 1).set(1, res.get(res.size() - 1).get(1) + len); //update previous mult in res instead of adding a new one
             else
                 res.add(Arrays.asList(mult, len));
 
-            encoded1[p1][1] -= len;
-            encoded2[p2][1] -= len;
-            if(encoded1[p1][1] == 0) p1++;
-            if(encoded2[p2][1] == 0) p2++;
+            encoded1[index1][1] -= len;
+            encoded2[index2][1] -= len;
+            
+            if(encoded1[index1][1] == 0) 
+                p1++;
+            if(encoded2[index2][1] == 0) 
+                p2++;
         }
+        
         return res;
     }
-    */
+    
+
+    public List<List<Integer>> findRLEArrayII(int[][] encoded1, int[][] encoded2) {
+        int i = 0,
+            j = 0;
+
+        int freqI = 0,
+            freqJ = 0;
+
+        List<int[]> list = new ArrayList<>();
+
+        int prod = 0;
+
+        while(i < encoded1.length && j < encoded2.length) {
+            prod = encoded1[i][0] * encoded2[j][0];
+            freqI = encoded1[i][1];
+            freqJ = encoded2[j][1];
+
+            if (freqI == freqJ) {
+                list.add(new int[] { prod, freqI });
+                i++;
+                j++;
+            } else if (freqI < freqJ) {
+                list.add(new int[] { prod, freqI });
+                encoded2[j][1] = freqJ - freqI;
+                i++;
+            } else {
+                list.add(new int[] { prod, freqJ });
+                encoded1[i][1] = freqI - freqJ;
+                j++;
+            }
+        }
+
+        List<List<Integer>> res = new ArrayList<>();
+
+        int[] curr = list.get(0);
+
+        for (i = 1; i < list.size(); ++i) {
+            if (curr[0] != list.get(i)[0]) {
+                List<Integer> temp = new ArrayList<>();
+                temp.add(curr[0]);
+                temp.add(curr[1]);
+                res.add(temp);
+
+                curr = list.get(i);
+            } else
+                curr[1] += list.get(i)[1];
+        }
+
+        List<Integer> last = new ArrayList<>();
+        last.add(curr[0]);
+        last.add(curr[1]);
+        res.add(last);
+
+        return res;
+    }
 }

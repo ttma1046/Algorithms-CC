@@ -72,27 +72,65 @@ class Interval_List_Intersections_986 {
         new int[][] {{1, 5}, {8, 12}, {15, 24}, {25, 26}}
         );
 
-        for(int[] item : result) 
-            for(int i : item) 
+        for(int[] item : result)
+            for(int i : item)
                 System.out.println(i);
     }
 
     public int[][] intervalIntersection(int[][] firstList, int[][] secondList) {
         List<int[]> res = new ArrayList<>();
 
-        int i = 0, j = 0;
-        int n = firstList.length, m = secondList.length;
+        int i = 0,
+            j = 0;
 
-        while(i < n && j < m) {
+        while(i < firstList.length && j < secondList.length) {
             int interStart = Math.max(firstList[i][0], secondList[j][0]);
             int interEnd = Math.min(firstList[i][1], secondList[j][1]);
 
-            if (interStart <= interEnd) res.add(new int[]{interStart, interEnd});
+            if (interStart <= interEnd)
+                res.add(new int[] {interStart, interEnd});
 
-            if (firstList[i][1] < secondList[j][1]) i++;
-            else j++;
+            if (firstList[i][1] < secondList[j][1])
+                i++;
+            else
+                j++;
         }
 
-        return res.toArray(new int[res.size()][]);
+        // return res.toArray(new int[res.size()][]);
+        int[][] result = new int[res.size()][2];
+
+        int index = 0;
+        for (int[] p : res)
+            result[index++] = p;
+
+        return result;
+    }
+
+    public int[][] intervalIntersection(int[][] firstList, int[][] secondList) {
+        int i = 0,
+            j = 0;
+
+        List<int[]> res = new ArrayList<>();
+
+        while(i < firstList.length && j < secondList.length) {
+            int low = Math.max(firstList[i][0], secondList[j][0]);
+            int high = Math.min(firstList[i][1], secondList[j][1]);
+
+            if (low <= high)
+                res.add(new int[] { low, high });
+
+            if (firstList[i][1] < secondList[j][1])
+                i++;
+            else
+                j++;
+        }
+
+        int[][] result = new int[res.size()][2];
+
+        int index = 0;
+        for (int[] p : res)
+            result[index++] = p;
+
+        return result;
     }
 }
